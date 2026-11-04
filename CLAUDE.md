@@ -32,8 +32,9 @@ own git root under the CloudBackend group. `README.md` here explains the layout 
   `https://mcp.cloudbackend.com/mcp/${user_config.cbe_tenant}`, the tenant from `plugin.json`'s `userConfig` (Claude
   Code asks at install; `scripts/connect-deploy.sh` serves the clients that do not). Nothing may name that host beyond
   its `/mcp/<tenant>` form; `guard.mjs` refuses it.
-- **Commit here; push only `mirror`.** The private GitHub repository is `rbcbe2025/expcbe` (`plugin.json`
-  `repository`); it is the `mirror` remote, and `release.sh` pushes `main` and the tags there. `main` is what testers get; work
+- **Commit here; push only `mirror`.** The public GitHub repository is `rbcbe2025/expcbe` (`plugin.json`
+  `repository`; private until the evening of 2026-11-04, so anything pushed is published); it is the `mirror` remote,
+  and `release.sh` pushes `main` and the tags there. `main` is what installs follow; work
   happens on `dev` and merges to `main` per release. No other remote, ever. **Never rename the plugin** (`cloudbackend`,
   `cloudbackend@cloudbackend`): a published plugin's name is its identity for every install.
 - **Archive, never delete.** Superseded files move to `_archive/<date>-<what>/` with an `ARCHIVED.md`. Generated

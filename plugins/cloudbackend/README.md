@@ -7,9 +7,7 @@ One install for building on CloudBackend PaaS with XIOS/3: the published skills 
 
 Version 2026.1104.1 · the plugin `cloudbackend@cloudbackend`
 
-**Claude Code, from GitHub** (the testers' path; the repository is private, so Claude Code needs a GitHub credential it
-can use without prompting: an SSH key loaded in `ssh-agent`, or `gh auth login` + `gh auth setup-git` with
-`CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` set in your shell):
+**Claude Code, from GitHub** (the public repository; no GitHub account needed, only git on your computer):
 
 ```bash
 claude plugin marketplace add rbcbe2025/expcbe
@@ -18,7 +16,7 @@ claude plugin install cloudbackend@cloudbackend
 
 The install asks once for your CloudBackend tenant (lowercase letters and digits, the name in your console address);
 that fills the deploy connector, `cloudbackend-deploy` at `https://mcp.cloudbackend.com/mcp/<tenant>`, which signs you in at your tenant on
-first use. `main` is what testers get; work happens on `dev`.
+first use. `main` is what an install follows; work happens on `dev`.
 
 **Claude Code, without GitHub access:** the same marketplace, served by the developer portal:
 

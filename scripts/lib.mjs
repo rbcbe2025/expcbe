@@ -35,7 +35,7 @@ export const DEPLOY_URL_FORM = `${HOST}/mcp/<tenant>`;
 export const TENANT_CONFIG_KEY = 'cbe_tenant';
 export const TENANT_PATTERN = '[a-z0-9]+';
 
-// The private GitHub repository that mirrors this one and serves as the testers' marketplace: plugin.json's
+// The public GitHub repository that mirrors this one and serves as the marketplace: plugin.json's
 // `repository` when it is set, else the `mirror` remote's GitHub URL (the remote IS the marketplace testers add),
 // else this placeholder in every generated install line until Robin names it.
 export const GITHUB_REPO = '<org>/claude-plugin';

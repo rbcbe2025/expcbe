@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # release.sh — the plugin release, stage by stage. Run by hand, on big, after review. The only push is to the `mirror`
-# remote (the private GitHub repository the testers' marketplace reads), and only when that remote exists.
+# remote (the public GitHub repository the marketplace reads), and only when that remote exists.
 #
 #   scripts/release.sh --dry-run            print every stage's commands and hand-offs; run nothing
 #   scripts/release.sh [--skip-evals] [--no-portal]
@@ -102,7 +102,7 @@ handoff "commit public/public/plugin/ and public/plugin.json in the hub (its own
 if git -C "$here" remote get-url mirror >/dev/null 2>&1; then
   if [ "$branch" = main ] || [ "$dry" = 1 ]; then run "git -C '$here' push mirror main --tags"
   else handoff "on branch $branch: merge into main first, then git push mirror main --tags (testers follow main)"; fi
-else handoff "no mirror remote yet: git remote add mirror <the private GitHub repository>, then git push mirror main --tags"; fi
+else handoff "no mirror remote yet: git remote add mirror <the GitHub repository>, then git push mirror main --tags"; fi
 note "after the push: claude plugin marketplace update cloudbackend && claude plugin update cloudbackend@cloudbackend on a tester's machine shows $v"
 
 stage g "the servers answer"

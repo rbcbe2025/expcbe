@@ -79,18 +79,19 @@ The plugin's version is pinned in `plugin.json` as `YYYY.MDD.N` (2026-11-04 → 
 day → `2026.1104.1`) and wins over the marketplace entry and the commit. A release is the tag `v<version>`.
 `scripts/release.sh` runs the stages in order; `--dry-run` prints every stage's commands and runs nothing.
 
-Two marketplaces serve the same plugin: the private GitHub repository `rbcbe2025/expcbe` (the `mirror` remote; `main` =
-what testers get, `dev` = work) with the relative source, and the portal's `plugin/marketplace.json` with an archive source (a marketplace
+Two marketplaces serve the same plugin: the public GitHub repository `rbcbe2025/expcbe` (the `mirror` remote; `main` =
+what installs get, `dev` = work; private until the evening of 2026-11-04) with the relative source, and the portal's `plugin/marketplace.json` with an archive source (a marketplace
 added by URL cannot resolve a relative path, so it points at the zip's absolute URL and pins its sha256).
 
-## For testers (a private marketplace)
+## Installing (the GitHub marketplace)
 
 - Install once: `claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`
   (the repository is `plugin.json`'s `repository`). The install asks for the CloudBackend tenant.
-- A private repository needs a GitHub credential Claude Code can use without prompting: an SSH key loaded in
-  `ssh-agent` (the shorthand probes `ssh -T git@github.com` and clones over SSH when it answers), or
-  `gh auth login` + `gh auth setup-git` with `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` set in the shell. Check this on each
-  tester's machine at onboarding; a missing credential makes updates stop silently.
+- The repository is public, so no GitHub account is needed, only git on the machine (Claude Code clones the
+  marketplace with it). Should it ever be private again: Claude Code then needs a GitHub credential it can use without
+  prompting (an SSH key loaded in `ssh-agent`, which the shorthand probes with `ssh -T git@github.com`, or
+  `gh auth login` + `gh auth setup-git` with `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` in the shell), and a missing one makes
+  updates stop silently.
 - Updates: `claude plugin marketplace update cloudbackend`, then `claude plugin update cloudbackend@cloudbackend`; or
   switch auto-update on for the marketplace under `/plugin` → Marketplaces (off by default for a marketplace you added).
 - Nothing to install beyond Claude Code: both local servers are Node and run from the plugin's files.

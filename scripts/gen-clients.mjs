@@ -128,9 +128,7 @@ const installBlock = `<!-- install:start -->
 
 Version ${version} · the plugin \`${PLUGIN_NAME}@${MARKETPLACE_NAME}\`
 
-**Claude Code, from GitHub** (the testers' path; the repository is private, so Claude Code needs a GitHub credential it
-can use without prompting: an SSH key loaded in \`ssh-agent\`, or \`gh auth login\` + \`gh auth setup-git\` with
-\`CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1\` set in your shell):
+**Claude Code, from GitHub** (the public repository; no GitHub account needed, only git on your computer):
 
 \`\`\`bash
 ${installGithub.join('\n')}
@@ -138,7 +136,7 @@ ${installGithub.join('\n')}
 
 The install asks once for your CloudBackend tenant (lowercase letters and digits, the name in your console address);
 that fills the deploy connector, \`${deploy.name}\` at \`${DEPLOY_URL_FORM}\`, which signs you in at your tenant on
-first use. \`${GITHUB_BRANCH_TESTERS}\` is what testers get; work happens on \`${GITHUB_BRANCH_WORK}\`.
+first use. \`${GITHUB_BRANCH_TESTERS}\` is what an install follows; work happens on \`${GITHUB_BRANCH_WORK}\`.
 
 **Claude Code, without GitHub access:** the same marketplace, served by the developer portal:
 
