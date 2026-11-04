@@ -9,7 +9,9 @@
 //     (CloudBackend's live server; a soft finding when unreachable, it is theirs).
 // A local server present but not answering is a hard finding (exit 1).
 import {spawn} from 'node:child_process';
-import {existsSync} from 'node:fs';
+import {existsSync, mkdtempSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {pathToFileURL} from 'node:url';
 import path from 'node:path';
 import {PLUGIN_DIR, HOST, SERVERS} from './lib.mjs';
 
@@ -105,6 +107,33 @@ else {
       else console.log(`\u2713 ${build.name}: lint_project on the seeded traps finds ${rules} (grammar ${result.grammar_version})`);
     }
   } catch (e) { hard++; console.log(`\u2717 ${build.name}: ${e.message}`); }
+}
+
+// ---- tenant --------------------------------------------------------------------------------------------------------
+// With an empty session folder, so nothing reaches an account: the tools are listed, status says not signed in, and
+// (--deep) the sign-in page is served on 127.0.0.1 with its content security policy.
+const tenant = SERVERS.find(s => s.key === 'tenant');
+const tenantEntry = path.join(PLUGIN_DIR, tenant.entry);
+if (!existsSync(tenantEntry)) { hard++; console.log(`\u2717 ${tenant.name}: ${tenant.entry} is missing`); }
+else {
+  try {
+    const sessions = mkdtempSync(path.join(tmpdir(), 'cbe-check-sessions-'));
+    const [info, list, status] = await stdio('node', [tenantEntry], {CBE_SESSION_DIR: sessions}, [['tools/list', {}], ['tools/call', {name: 'tenant_status', arguments: {}}]]);
+    const r = tooling(tenant.name, info, list.tools || [], tenant.tools);
+    console.log(r.lines.join('\n')); if (!r.ok) hard++;
+    const st = JSON.parse((status.content || [])[0].text);
+    if (st.signed_in !== false) { hard++; console.log(`\u2717 ${tenant.name}: tenant_status with no session answered ${JSON.stringify(st).slice(0, 120)}`); }
+    else console.log(`\u2713 ${tenant.name}: tenant_status with no session says not signed in`);
+    if (deep) {
+      process.env.CBE_SESSION_DIR = sessions;
+      const T = await import(pathToFileURL(tenantEntry).href);
+      const s = await T.TOOLS.tenant_signin.run({tenant: 'probe', open_browser: false});
+      const page = await fetch(s.signin_page);
+      const html = await page.text(), csp = page.headers.get('content-security-policy') || '';
+      if (page.status !== 200 || !/type="password"/.test(html) || !/script-src 'nonce-/.test(csp)) { hard++; console.log(`\u2717 ${tenant.name}: the sign-in page answered ${page.status}`); }
+      else console.log(`\u2713 ${tenant.name}: the sign-in page is served on 127.0.0.1 with its policy (${new URL(s.signin_page).origin})`);
+    }
+  } catch (e) { hard++; console.log(`\u2717 ${tenant.name}: ${e.message}`); }
 }
 
 // ---- deploy --------------------------------------------------------------------------------------------------------

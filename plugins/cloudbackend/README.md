@@ -14,9 +14,12 @@ claude plugin marketplace add rbcbe2025/expcbe
 claude plugin install cloudbackend@cloudbackend
 ```
 
-The install asks once for your CloudBackend tenant (lowercase letters and digits, the name in your console address);
-that fills the deploy connector, `cloudbackend-deploy` at `https://mcp.cloudbackend.com/mcp/<tenant>`, which signs you in at your tenant on
-first use. `main` is what an install follows; work happens on `dev`.
+Your account name (lowercase letters and digits, as in `https://<account>.db.cloudbackend.com/`) fills the deploy
+connector, `cloudbackend-deploy` at `https://mcp.cloudbackend.com/mcp/<tenant>`. Run from a terminal the install does not ask for it: add
+`--config cbe_tenant=<account>` to the install command, or set it later with
+`/plugin configure cloudbackend@cloudbackend`. The deploy connector signs in through the account's own sign-in
+realm, which the owner creates once; until it exists, `cloudbackend-tenant` signs you in on a page on your computer and
+deploys over the REST API. `main` is what an install follows; work happens on `dev`.
 
 **Claude Code, without GitHub access:** the same marketplace, served by the developer portal:
 
@@ -30,8 +33,8 @@ claude plugin install cloudbackend@cloudbackend
 **Updates:** `claude plugin marketplace update cloudbackend`, then `claude plugin update cloudbackend@cloudbackend` (a marketplace you added yourself does not update by itself;
 `/plugin` → Marketplaces can switch auto-update on).
 
-**Nothing else to install.** Both local servers are Node and run from the plugin's own files; Claude Code is the one
-requirement. The deploy connector signs you in at your tenant on its first call.
+**Nothing else to install.** The three local servers are Node and run from the plugin's own files; Claude Code is the
+one requirement. Signing in to your account happens in your browser, never in the chat.
 
 **claude.ai, Claude Desktop, Cowork:** the skills are uploaded from the developer portal's Tools page, the documentation
 server is the Claude Desktop extension offered there, and the deploy connector is added by hand as a custom connector
@@ -63,7 +66,8 @@ server is the Claude Desktop extension offered there, and the deploy connector i
 | --- | --- | --- |
 | `cloudbackend-docs` | inside the plugin (Node 22; `servers/docs/`) | documentation lookups, read-only: topics, REST operation cards with XML bodies, SDK method cards, the nine XIOS/3 reference lookups (components, operations, functions, methods, events, actions, concepts, lists, icons); reads the developer portal, needs no sign-in |
 | `cloudbackend-build` | inside the plugin (Node 22; `servers/build/`, authored in the plugin repository, tested by `servers/build/test.mjs`) | build tools for a XIOS/3 package, no tenant needed: lint_project (the tenant grammar G01-G20 before an upload; schema validation happens at upload) and benchmark_project (the measured block of a benchmark report) |
-| `cloudbackend-deploy` | CloudBackend's live server, `https://mcp.cloudbackend.com/mcp/<tenant>` | CloudBackend's live per-tenant deploy server (OAuth sign-in at your tenant): list_projects, upload_project, deploy, verify_deployment and the rest |
+| `cloudbackend-tenant` | inside the plugin (Node 22; `servers/tenant/`, authored in the plugin repository, tested by `servers/tenant/test.mjs`) | your CloudBackend account, signed in on a page on your computer (the password goes from your browser to CloudBackend, never through the chat): upload_project (a local package folder, linted first), deploy (a private Development deployment), verify_deployment (served bytes, not a 200), list_projects, and enable_deploy_connector (the owner creates the account's sign-in realm the deploy connector needs) |
+| `cloudbackend-deploy` | CloudBackend's live server, `https://mcp.cloudbackend.com/mcp/<tenant>` | CloudBackend's live per-tenant deploy server: list_projects, upload_project, deploy, verify_deployment and the rest. It signs in through the account's own sign-in realm, which the owner creates once (enable_deploy_connector on cloudbackend-tenant); until then cloudbackend-tenant is the route |
 <!-- servers:end -->
 
 `servers/docs/` is a copy of the documentation hub's Claude Desktop extension server, made by the repository's `scripts/sync-servers.mjs` (it carries a `VENDORED_FROM` note and a `MANIFEST.sha256`) and never edited here. `servers/build/index.mjs` is written in the plugin repository: a port of the deploy server's build tools that reads the tenant grammar from `skills/xios3-app-workflow/references/tenant-grammar.json`, so the rules the skill documents and the rules the tool applies are one file; `servers/build/test.mjs` tests it. Both servers are plain Node files: nothing is installed on your computer.

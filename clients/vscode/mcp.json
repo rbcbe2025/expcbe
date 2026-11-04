@@ -13,6 +13,13 @@
       "args": [
         "<plugin-dir>/servers/build/index.mjs"
       ]
+    },
+    "cloudbackend-tenant": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "<plugin-dir>/servers/tenant/index.mjs"
+      ]
     }
   }
 }

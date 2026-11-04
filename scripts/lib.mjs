@@ -42,9 +42,11 @@ export const GITHUB_REPO = '<org>/claude-plugin';
 export const GITHUB_BRANCH_TESTERS = 'main';
 export const GITHUB_BRANCH_WORK = 'dev';
 
-// The three servers the plugin's .mcp.json declares, one description each; gen-clients.mjs writes .mcp.json,
-// the client configs and the hub's plugin.json from this table, so no copy can disagree with another. The two local
-// ones run with node and nothing else: a tester needs Claude Code and no other install.
+// The four servers the plugin's .mcp.json declares, one description each; gen-clients.mjs writes .mcp.json,
+// the client configs and the hub's plugin.json from this table, so no copy can disagree with another. The three local
+// ones run with node and nothing else: a tester needs Claude Code and no other install. The tenant server is the
+// plugin's own route to an account (sign-in on a page on the user's computer, REST with the session it returns), for
+// accounts whose sign-in realm the deploy connector needs does not exist yet.
 export const SERVERS = [
   {key: 'docs', name: 'cloudbackend-docs', kind: 'local', runtime: 'node', tools: 13,
    entry: 'servers/docs/index.mjs',
@@ -52,8 +54,11 @@ export const SERVERS = [
   {key: 'build', name: 'cloudbackend-build', kind: 'local', runtime: 'node', tools: 2,
    entry: 'servers/build/index.mjs', test: 'servers/build/test.mjs',
    what: 'build tools for a XIOS/3 package, no tenant needed: lint_project (the tenant grammar G01-G20 before an upload; schema validation happens at upload) and benchmark_project (the measured block of a benchmark report)'},
+  {key: 'tenant', name: 'cloudbackend-tenant', kind: 'local', runtime: 'node', tools: 8,
+   entry: 'servers/tenant/index.mjs', test: 'servers/tenant/test.mjs', env: {CBE_SESSION_DIR: '${CLAUDE_PLUGIN_DATA}/sessions'},
+   what: 'your CloudBackend account, signed in on a page on your computer (the password goes from your browser to CloudBackend, never through the chat): upload_project (a local package folder, linted first), deploy (a private Development deployment), verify_deployment (served bytes, not a 200), list_projects, and enable_deploy_connector (the owner creates the account\'s sign-in realm the deploy connector needs)'},
   {key: 'deploy', name: 'cloudbackend-deploy', kind: 'remote', url_form: DEPLOY_URL_FORM,
-   what: 'CloudBackend\'s live per-tenant deploy server (OAuth sign-in at your tenant): list_projects, upload_project, deploy, verify_deployment and the rest'},
+   what: 'CloudBackend\'s live per-tenant deploy server: list_projects, upload_project, deploy, verify_deployment and the rest. It signs in through the account\'s own sign-in realm, which the owner creates once (enable_deploy_connector on cloudbackend-tenant); until then cloudbackend-tenant is the route'},
 ];
 export const serverByKey = key => SERVERS.find(s => s.key === key);
 

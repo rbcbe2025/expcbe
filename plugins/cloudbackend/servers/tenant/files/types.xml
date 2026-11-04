@@ -1,0 +1,177 @@
+<types xmlns="https://cloudbackend.com/datatype.xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><type name="AI Conversation" mime="text/xml" element="ai" xpath="/typesDoc[1]/types[1]/type[1]" global="true">
+  <description>AI Conversation carried in Chatbot.xml</description>
+  
+  <open id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open>
+  <edit id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit>
+  <icon>icon://robot</icon>
+  <index>
+    <key name="conversationId" xpath="/ai/@id"/>
+    <key name="session" xpath="/ai/@sessionName"/>
+  </index>
+  <search>@name</search>
+</type><type name="Certificate" mime="text/xml" element="certificate" xpath="/typesDoc[1]/types[1]/type[2]" global="true">
+  <description>Certificate definition</description>
+  <edit id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit>
+  <icon>icon://wax_seal</icon>
+  <listviews/>
+  <search>@domain</search>
+  <index>
+    <key name="domain" xpath="/certificate/@domain"/>
+    <key name="type" index="false" xpath="/certificate/@type"/>
+    <key name="created" xpath="/certificate/@created"/>
+    <key name="error" xpath="/certificate/error/@short"/>
+  </index>
+  <template>
+    <certificate type="letsencrypt" domain="" created="{parsedate(now)}"/>
+  </template>
+</type><type name="Client" mime="text/xml" element="client" xpath="/typesDoc[1]/types[1]/type[3]" global="true">
+  <description>Clients for CloudBackend Database</description>
+  
+  <icon>icon://tablet_computer</icon>
+  <listviews/>
+  <index>
+    <key name="type" xpath="/client/@type"/>
+    <key name="name" xpath="/client/@name"/>
+    <key name="description" xpath="/client/desc"/>
+  </index>
+  <search>@name</search>
+  <list folders="true" height="default" button="detail" sort="ascending" match="@name" camera="false">
+    <h1 xpath="@name"/>
+    <h2 xpath="type"/>
+  </list>
+  <template>
+    <client type="web" name="">
+      <desc/>
+    </client>
+  </template>
+</type><type name="CRM Mail" mime="text/xml" element="mail" xpath="/typesDoc[1]/types[1]/type[4]" global="true">
+  <description>Datatype for mails in CRM</description>
+  <open id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open>
+  <edit id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit>
+  <listviews/>
+  <icon>icon://mail</icon>
+  <index>
+    <key name="active" xpath="/mail/@active" index="true"/>
+    <key name="subject" xpath="/mail/subject" index="true"/>
+    <key name="sender" xpath="/mail/sender" index="true"/>
+    <key name="senderName" xpath="/mail/senderName" index="true"/>
+  </index>
+  <search>active</search>
+  <search>subject</search>
+  <template>
+    <mail name="" active="false" group="" created="{formatdate('{parsedate(now)}', 'yyyy/MM/dd')}" updated="{formatdate('{parsedate(now)}', 'yyyy/MM/dd')}" deleted="">
+      <description/>
+      <sender/>
+      <senderName/>
+      <replyTo/>
+      <replyToName/>
+      <subject/>
+      <body>
+        <h1>{get-label('Edit Header')}</h1>
+        <p>{get-label('Edit first paragraph.')}</p>
+      </body>
+    </mail>
+  </template>
+</type><type name="CRM Rule" mime="text/xml" element="rule" xpath="/typesDoc[1]/types[1]/type[5]" global="true">
+  <description>Datatype for Rules in CRM</description>
+  <open id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open>
+  <edit id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit>
+  <listviews/>
+  <icon>icon://symbol_paragraph</icon>
+  <index>
+    <key name="active" xpath="/rule/@active" index="true"/>
+    <key name="event" xpath="/rule/event/@type" index="true"/>
+    <key name="mail" xpath="/rule/mail/@name" index="true"/>
+    <key name="created" xpath="/rule/@created" index="true"/>
+  </index>
+  <search>active</search>
+  <template>
+    <rule name="{$fileName}" active="false" created="{formatdate('{parsedate(now)}', 'yyyy/MM/dd')}" updated="{formatdate('{parsedate(now)}', 'yyyy/MM/dd')}">
+      <event type="null"/>
+      <mail name="null"/>
+    </rule>
+  </template>
+</type><type name="Support Ticket" mime="text/xml" element="ticket" xpath="/typesDoc[1]/types[1]/type[6]" global="true">
+  <description>Support tickets for CloudBackend Database</description>
+  
+  <icon>icon://ticket</icon>
+  <listviews/>
+  <index>
+    <key name="section" xpath="/ticket/@section"/>
+    <key name="subsect" xpath="/ticket/@subsect"/>
+    <key name="desc" xpath="/ticket/@description"/>
+    <key name="assigned" xpath="/ticket/@assigned"/>
+    <key name="severity" xpath="/ticket/@severity"/>
+    <key name="status" xpath="/ticket/@status"/>
+    <key name="replyto" xpath="/ticket/@replyto"/>
+    <key name="tenantName" xpath="/ticket/@tenantName"/>
+    <key name="messuser" xpath="/ticket/message/@user"/>
+  </index>
+  <search>@name</search>
+  <list folders="true" height="default" button="detail" sort="ascending" match="@name">
+    <h1 xpath="@name"/>
+  </list>
+  <template>
+    <ticket tenantName="{$tenantName}" assigned="Pending" email="{#Profile#/profile/email}" firstname="{#Profile#/profile/firstname}" lastname="{#Profile#/profile/lastname}" lastlogin="{#Profile#/profile/lastlogin}" logins="{#Profile#/profile/logins}" section="{#CreateTicket#comboSection}" subsect="{$subSectionName}" severity="{#CreateTicket#severityFeedback}" status="New" replyto="{#CreateTicket#myEmail}" description="{#CreateTicket#short_description}">
+      <ext/>
+      <message user="{#Profile#/profile/username}" text="submit" name="{$user_alias}" date="{$date}" time="{$time}" tstp="{$tm}" lang="{#Profile#/profile/locale}">
+        {#CreateTicket#descriptionText}
+      </message>
+    </ticket>
+  </template>
+</type><type name="Database Application" mime="text/xml" element="application" namespace="https://xios3.com/app/1.0" xpath="/typesDoc[1]/types[1]/type[7]" global="true">
+  <description>Database Application (Package)</description>
+  <open id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/system/icons.xml</open>
+  <edit id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit>
+  <icon>icon://application_package</icon>
+  <listviews/>
+  <preview>xios://apps/system/layout/treeview.xsl</preview>
+  <search>@name</search>
+  <index>
+    <key name="name" xpath="/application/@name"/>
+    <key name="icon" index="false" xpath="/application/@icon"/>
+    <key name="db" value="db"/>
+    <key name="desc" xpath="/application/about/description"/>
+    <key name="version" xpath="/application/about/@version"/>
+    <key name="developer" xpath="/application/about/@author"/>
+    <key name="publisher" xpath="/application/about/@publisher"/>
+  </index>
+</type><type name="Proxy" mime="text/xml" element="proxy" namespace="https://cloudbackend.com/proxy.xsd" xpath="/typesDoc[1]/types[1]/type[8]" global="true">
+  <ext>cbc</ext>
+  <description>Proxy Configuration</description>
+  <open id="xios3.viewer" icon="icon://document_zoom_in" name="Viewer">xios://apps/system/viewer.xml</open>
+  <edit id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit>
+  <icon>icon://plug2</icon>
+  <listviews/>
+  <index>
+    <key name="proxyname" xpath="/proxy/@name"/>
+    <key name="service" xpath="/proxy/@service"/>
+  </index>
+  <search>@name</search>
+  <template>
+    <proxy xmlns="https://cloudbackend.com/proxy.xsd" name="" service="">
+      <http-path/>
+      <http-domain allow-override="false">https://</http-domain>
+      <http-header allow-override="false" name="Authorization" value=""/>
+    </proxy>
+  </template>
+</type><type name="Webhook" mime="text/xml" element="webhook" namespace="https://cloudbackend.com/webhooks.xsd" xpath="/typesDoc[1]/types[1]/type[9]" global="true">
+  <ext>cbc</ext>
+
+  <description>Webhook Configuration</description>
+  <open id="xios3.viewer" icon="icon://document_zoom_in" name="Viewer">xios://apps/system/viewer.xml</open>
+  <edit id="xios3.xmlpad" icon="icon://xml_editor" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit>
+  <icon>icon://webhook</icon>
+  <listviews/>
+  <index>
+    <key name="wh" xpath="/webhook/@name"/>
+  </index>
+  <search>@name</search>
+  <template>
+    <webhook xmlns="https://cloudbackend.com/webhooks.xsd" xmlns:xlink="http://www.w3.org/1999/xlink" name="{$hookName}" secret="false">
+      <container id="" xlink:href=""/>
+      <object name="" overwrite="false"/>
+      <apikeys/>
+    </webhook>
+  </template>
+</type><type element="type" mime="text/xml" name="Datatype" namespace="https://cloudbackend.com/datatype.xsd" xpath="/typesDoc[1]/types[1]/type[10]" global="true"><ext>xdt</ext><description>Datatype and Schema</description><open icon="icon://document_zoom_in" id="xios3.viewer" name="Viewer">xios://apps/system/viewer.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://atom2</icon><listviews/><index><key name="mime" xpath="/type/@mime"/><key name="element" xpath="/type/@element"/><key name="ns" xpath="/type/@namespace"/><key name="description" xpath="/type/description"/><key name="icon" xpath="/type/icon"/><key index="false" name="search" xpath="/type/search"/></index><search>@name</search><template><type element="" mime="" namespace=""><ext/><description/><open/><edit/><listviews/><icon/><index/><search/></type></template></type><type mime="application/xml" name="Group" xpath="/typesDoc[1]/types[1]/type[11]" global="true"><description>Group</description><open>xios://apps/system/lib/group.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://users3</icon><listviews/><search>@name</search></type><type element="role" mime="application/xml" name="Role" xpath="/typesDoc[1]/types[1]/type[12]" global="true"><description>Role type</description><icon>icon://security_badge</icon><open icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><listviews/><index><key name="roleid" xpath="@id"/></index><search>@name</search><template><role xmlns:xlink="http://www.w3.org/1999/xlink" id="" name="" xlink:actuate="onRequest" xlink:href="tenant://Groups/"/></template></type><type element="user" mime="application/xml" name="Identity" xpath="/typesDoc[1]/types[1]/type[13]" global="true"><description>Identity for users, sensors and machines</description><icon>icon://user</icon><open icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><listviews/><index/><search>@name</search></type><type xmlns:db="https://cloudbackend.com/db.xsd" element="db:result" mime="text/xml" name="Search Result" xpath="/typesDoc[1]/types[1]/type[14]" global="true"><description>Search result from querying containers</description><open>xios://apps/system/lib/folder.xml</open><icon>icon://folder</icon><search>@name</search></type><type element="section" mime="text/xml" name="XIOS3 Help" namespace="https://xios3.com/help/1.0" xpath="/typesDoc[1]/types[1]/type[15]" global="true"><description>Help Document</description><open icon="icon://question" id="xios3.help" name="Help Center">xios://apps/help/helpapp.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://document_help</icon><listviews/><preview>xios://apps/system/layout/treeview.xsl</preview><template><section><text><header size="3"/><p/></text></section></template></type><type element="keys" mime="text/xml" name="XIOS3 Locale" namespace="http://xios3.com/process/1.0" xpath="/typesDoc[1]/types[1]/type[16]" global="true"><description>Locale Language Translation</description><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://code_language</icon><listviews/><preview>xios://apps/system/layout/treeview.xsl</preview><search>@name</search><index><key name="translator" xpath="/keys/@translator"/></index><keys revised="{formatdate('{parsedate(now)}', 'yyyy/MM/dd')}" translator="#Profile#//firstname"><key id=""/></keys></type><type xmlns:xlink="http://www.w3.org/1999/xlink" element="development" mime="text/xml" name="XIOS3 Project" namespace="http://xios3.com/development/1.0" xpath="/typesDoc[1]/types[1]/type[17]" global="true"><description>Development (Project)</description><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://jar_earth</icon><listviews/><preview>xios://apps/system/layout/treeview.xsl</preview><search>@name</search><index><key name="name" xpath="/development/@name"/><key name="icon" xpath="/development/applications/application[xlink:href = ../@default]/@icon"/><key name="default" xpath="/development/applications/@default"/></index><template><development name=""><applications default=""><application icon="" xlink:href=""/></applications></development></template></type><type element="process" mime="text/xml" name="XIOS3 Process" namespace="http://xios3.com/process/1.0" xpath="/typesDoc[1]/types[1]/type[18]" global="true"><description>Process (Application Controller)</description><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://code_process</icon><listviews/><preview>xios://apps/system/layout/treeview.xsl</preview><search>@name</search><index><key name="name" xpath="/process/@name"/></index></type><type element="view" mime="text/xml" name="XIOS3 View" namespace="http://xios3.com/view/1.0" xpath="/typesDoc[1]/types[1]/type[19]" global="true"><description>View (User Interface)</description><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://code_view</icon><listviews/><preview>xios://apps/system/layout/treeview.xsl</preview><search>@name</search><index><key name="name" xpath="/view/@name"/><key name="icon" xpath="/view/@icon"/><key name="window" xpath="/view/@title"/><key name="version" xpath="/view/@version"/><key name="developer" xpath="/view/@author"/><key name="publisher" xpath="/view/@publisher"/></index></type><type mime="application/json" name="JSON Document" xpath="/typesDoc[1]/types[1]/type[28]" global="true"><ext>json</ext><description>JSON Document</description><open icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://document_json</icon><listviews/><preview/><search>@name</search></type><type mime="text/plain" name="Text Document" xpath="/typesDoc[1]/types[1]/type[21]" global="true"><ext>txt</ext><description>Text Document</description><open icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://document_txt</icon><listviews/><preview>xios://apps/system/layout/treeview.xsl</preview><search>@name</search></type><type mime="text/xml" name="XML Document" xpath="/typesDoc[1]/types[1]/type[22]" global="true"><mime>application/xml</mime><ext>xml</ext><ext>xhtml</ext><description>XML Document</description><open icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://document_tag</icon><listviews/><preview>xios://apps/system/layout/treeview.xsl</preview><search>@name</search></type><type element="xsl:stylesheet" mime="text/xml" name="XSL Stylesheet" namespace="http://www.w3.org/1999/XSL/Transform" xpath="/typesDoc[1]/types[1]/type[23]" global="true"><ext>xsl</ext><ext>xslt</ext><description>XSL Stylesheet</description><open icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://document_xsl</icon><listviews/><search>@name</search><template><xsl:stylesheet version="1.0"/></template></type><type mime="text/javascript" name="JavaScript" xpath="/typesDoc[1]/types[1]/type[24]" global="true"><mime>application/javascript</mime><mime>text/javascript; charset=ISO-8859-1</mime><ext>js</ext><description>JavaScript Code</description><open icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</open><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://code_javascript</icon><listviews/><search>@name</search></type><type mime="text/comma-separated-values" name="Comma Separated Values (CSV)" xpath="/typesDoc[1]/types[1]/type[25]" global="true"><mime>text/csv</mime><mime>application/csv</mime><ext>csv</ext><description>CSV database file used for import/export</description><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://table_selection_column</icon><listviews/><preview>xios://apps/system/layout/treeview.xsl</preview><search>@name</search></type><type mime="text/css" name="CSS Document" xpath="/typesDoc[1]/types[1]/type[26]" global="true"><ext>css</ext><description>CSS Document</description><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><icon>icon://document_css</icon><listviews/><search>@name</search></type><type mime="text/html" name="HTML Document" xpath="/typesDoc[1]/types[1]/type[27]" global="true"><ext>htm</ext><ext>html</ext><description>HTML File</description><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios://apps/xmlpad/xmlpad.xml</edit><description>HTML Document</description><icon>icon://document_tag</icon><listviews/><search>@name</search></type><type element="appstore" mime="text/xml" name="AppStore" xpath="/typesDoc[1]/types[1]/type[29]" global="true"><description>AppStore application meta data description</description><icon>icon://store</icon><listviews/><search>@name</search><edit icon="icon://xml_editor" id="xios3.xmlpad" name="XMLpad">xios/apps/xmlpad/xmlpad.xml</edit><index><key name="appid" xpath="/appstore/appid"/><key name="appname" xpath="/appstore/appname"/><key name="tag" xpath="/appstore/tag"/><key name="description" xpath="/appstore/description"/><key name="price" xpath="/appstore/price"/><key name="distributor" xpath="/appstore/distributor"/><key name="appicon" xpath="/appstore/appicon"/><key name="keywords" xpath="/appstore/keywords"/><key name="src" xpath="/appstore/source"/><key name="publisheddate" xpath="/appstore/published"/><key name="recommend" xpath="/appstore/@recommend"/></index><template><appstore id="" name=""><tag/><description/><price/><distributor/><keywords/><appicon>icon://</appicon><source/><published>{formatdate('{parsedate(now)}', 'yyyy/MM/dd')}</published></appstore></template></type></types>

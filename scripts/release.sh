@@ -75,9 +75,9 @@ stage d ".mcp.json, clients, README blocks, evals, the portal's marketplace, the
 run "node '$here/scripts/gen-clients.mjs'"
 run "node '$here/scripts/gen-evals.mjs'"
 
-stage e "guard, the build server's tests, validate, evals"
+stage e "guard, the local servers' tests, validate, evals"
 run "node '$here/scripts/guard.mjs'"
-run "node --test '$plugin/servers/build/test.mjs'"
+run "node --test '$plugin/servers/build/test.mjs' '$plugin/servers/tenant/test.mjs'"
 run "claude plugin validate '$plugin' --strict"
 run "claude plugin validate '$here' --strict"
 last=$(git -C "$here" tag --list 'v*' | sort -V | tail -1)
