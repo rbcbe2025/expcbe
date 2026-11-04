@@ -76,7 +76,7 @@ if (!existsSync(docsEntry)) { hard++; console.log(`✗ ${docs.name}: ${docs.entr
 else {
   try {
     const calls = [['tools/list', {}]];
-    if (deep) calls.push(['tools/call', {name: 'xios3_component', arguments: {name: 'grid'}}]);
+    if (deep) calls.push(['tools/call', {name: 'xios3_component', arguments: {names: 'grid'}}]);
     const [info, list, call] = await stdio('node', [docsEntry], {}, calls);
     const r = tooling(docs.name, info, list.tools || [], docs.tools);
     console.log(r.lines.join('\n')); if (!r.ok) hard++;
