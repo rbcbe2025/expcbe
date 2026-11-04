@@ -2,7 +2,7 @@
 
 The proxy guide (configuration and process code), the chatbot tutorial's proxy and process pages, and the code concept for binding a component to an external API. The workflow's hand-written references/ai-and-integrations-via-proxy.md builds on these.
 
-6 topics from the published XIOS/3 documentation, generated on 2026-11-04. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+6 topics from the published XIOS/3 documentation, generated on 2026-11-05. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

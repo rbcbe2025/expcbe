@@ -2,7 +2,7 @@
 
 The theme mechanism this skill builds on, as the published manual documents it: Theme (classic look-based themes, design tokens and their reserved colour roles, the frozen-fallback contract, Aurora as the reference token theme, a minimal token override, personalities), Style and classes, and the icon protocol with its palette-role colours. The design-tokens chapter of the Kanban tutorial that this file used to carry was folded into the Theme topic by the manual's 2026-09-30 edition.
 
-3 topics from the published XIOS/3 documentation, generated on 2026-11-04. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+3 topics from the published XIOS/3 documentation, generated on 2026-11-05. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

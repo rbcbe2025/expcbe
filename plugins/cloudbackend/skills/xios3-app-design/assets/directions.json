@@ -25,7 +25,7 @@
         "control-height": "30px", "radius-sm": "4px", "radius-md": "6px", "radius-lg": "10px"
       },
       "voice": {
-        "first_run": "Your workspace is ready. Add the first record to begin.",
+        "first_run": "Your workspace is ready. Add the first {item} to begin.",
         "empty": "Nothing here yet.",
         "saved": "Saved.",
         "failed": "Could not save. Check the connection and try again."
@@ -55,8 +55,8 @@
         "control-height": "34px", "radius-sm": "6px", "radius-md": "10px", "radius-lg": "16px"
       },
       "voice": {
-        "first_run": "Welcome. Start with your first project; everything else grows from there.",
-        "empty": "No projects yet. Choose New project to add the first one.",
+        "first_run": "Welcome. Start with your first {item}; everything else grows from there.",
+        "empty": "No {items} yet. Choose New {item} to add the first one.",
         "saved": "Saved.",
         "failed": "That did not save. Try again, or reload the page."
       }
@@ -85,8 +85,8 @@
         "control-height": "40px", "radius-sm": "8px", "radius-md": "12px", "radius-lg": "20px"
       },
       "voice": {
-        "first_run": "Hello. Your first booking is one tap away.",
-        "empty": "No bookings yet. The next one you add appears here.",
+        "first_run": "Hello. Your first {item} is one tap away.",
+        "empty": "No {items} yet. The next one you add appears here.",
         "saved": "Done. Your changes are saved.",
         "failed": "Something went wrong while saving. Nothing was lost; please try again."
       }
@@ -115,8 +115,8 @@
         "control-height": "44px", "radius-sm": "4px", "radius-md": "6px", "radius-lg": "8px"
       },
       "voice": {
-        "first_run": "Ready. Add the first job.",
-        "empty": "No jobs yet.",
+        "first_run": "Ready. Add the first {item}.",
+        "empty": "No {items} yet.",
         "saved": "Saved.",
         "failed": "Not saved. No signal? It will not retry by itself; try again when you are back online."
       }

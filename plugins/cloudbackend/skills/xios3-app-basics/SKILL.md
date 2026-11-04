@@ -265,10 +265,13 @@ easy to miss.
   has been down for 250 ms. A browser-automation drag that presses, moves and releases at once never
   starts one, and the test then reports drag and drop as broken. Press, wait longer than that, move in
   steps, then release.
-- **Icons:** do not ship a whole icon font for a few dozen icons (one common symbol font is 3.7 MB).
-  The runtime includes the Lucide icon collection (ISC licence, monochrome, recolourable); ship only the
-  icons you use as SVG, for example as CSS masks. The IconExperience collections need a licence to
-  publish on your own domain (use through the CloudBackend service is covered, per the docs).
+- **Icons:** prefer Lucide, the collection the runtime ships (ISC licence, monochrome, recoloured from the
+  theme): `icon="lucide"` on the theme, then `icon://<name>?look=lucide&color=<colour>` on every icon, the
+  `on-` colour on a filled button. Lucide names are lower case with hyphens (`plus`, `trash-2`); an
+  IconExperience name such as `folders2` draws nothing under the Lucide theme. xios3-app-design
+  `references/icons.md` has the names by role and what was measured on a deployment. Do not ship a whole
+  icon font for a few dozen icons (one common symbol font is 3.7 MB). The IconExperience collections need a
+  licence to publish on your own domain (use through the CloudBackend service is covered, per the docs).
 - **Layout stability:** reserve space for anything that renders after the first paint, never paint a
   footer before the content above it, and give icons fixed dimensions.
 - **Previewing markup inside your application:** a webshare answers with `X-Frame-Options: DENY`, so
@@ -298,10 +301,10 @@ Hand-written, measured on the hosted runtime (not from the manual; dated):
 
 ## Version and updates
 
-This is version 2026.11.4 of the xios3-app-basics skill, built from the CloudBackend documentation.
+This is version 2026.11.5 of the xios3-app-basics skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-basics` is newer than 2026.11.4, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-basics` is newer than 2026.11.5, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-basics%2F2026.11.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-basics - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-basics%2F2026.11.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-basics - it records the skill's name and version and nothing else. Never send it without that agreement.

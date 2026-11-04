@@ -1,6 +1,6 @@
 ---
 name: xios3-app-design
-description: "Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a product: a design brief and mood board from one sentence about the app, a token theme (palette seeds, type and shape knobs) the runtime derives every hover and border from, a layout kit (cards, list and detail, phone and desktop views, a navigation rail or menu), two small components (a status line, a screen watcher), and the data logic that goes with the screens (a list bound to a container, the detail to the selected object, the process writing). Use it whenever someone wants a XIOS/3 or CloudBackend app to look good, asks for a theme, colours, fonts, a brand, a mood board, a responsive or mobile layout, custom components, empty states or status messages, or a first version of the UI; whenever cloudbackend-saas-launch reaches step 2 (the application) or step 3 (the login screen's brand); and for any XIOS/3 view that still names colours in its markup."
+description: "Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a product: a design brief and mood board from one sentence about the app, a token theme (palette seeds, type and shape knobs) the runtime derives every hover and border from, Lucide icons recoloured from the theme, a layout kit (cards, list and detail, phone and desktop views, a navigation rail or menu), two small components (a status line, a screen watcher), and the data logic that goes with the screens (a list bound to a container, the detail to the selected object, the process writing). Use it whenever someone wants a XIOS/3 or CloudBackend app to look good, asks for a theme, colours, fonts, icons, a brand, a mood board, a responsive or mobile layout, custom components, empty states or status messages, or a first version of the UI; whenever cloudbackend-saas-launch reaches step 2 (the application) or step 3 (the login screen's brand); and for any XIOS/3 view that still names colours in its markup."
 ---
 
 # XIOS/3 application design
@@ -18,7 +18,9 @@ validates against the CloudBackend extension's schemas (the title inside `<descr
 directly in the toolbar rather than in its group, the status component's tag `statusline`); the kit has not
 been re-run on the runtime since, and four item attributes the schemas still refuse (`selected`, `detail`,
 `textstyle`, `detailstyle`) are with XIOS/3 to settle. The theme mechanism itself is the manual's
-(`references/look-and-feel.md`: the design-tokens tutorial, Theme, Style, Icon protocol).
+(`references/look-and-feel.md`: the design-tokens tutorial, Theme, Style, Icon protocol). On 2026-11-04 the kit
+moved to Lucide icons and its app was re-run on a Development deployment at 1280 and 375 px
+(`references/icons.md`, "Measured").
 
 ## The first version, in four moves
 
@@ -57,19 +59,27 @@ A token theme is a `<theme name="…" tokens="true">` in the manifest, above the
 - **Seeds** in `<colors>`: `primary`, `secondary`, `tertiary`, each with its `on-` text colour;
   `background`, `surface`, `on-surface`; `error`, `on-error`; and `lightIcon`, `darkIcon`, `grey` for the
   icon manager. The script checks every `on-` pair at 4.5:1 or better.
+- **Icons** in `icon="lucide"` on the `<theme>`: it selects the Lucide collection the runtime ships, outline icons
+  under a licence an app may publish on its own domain (`references/icons.md`).
 - **Knobs** in `<tokens>`: `font-sans`, `font-display`, `font-mono`, `text-sm|md|lg`, `weight-medium|bold`,
   `leading-normal`, `control-height` (the density dial), `radius-sm|md|lg`. The element name is the token
   name: `radius-md` becomes `--xios-radius-md`, readable from any CSS of your own.
 - **Derived**: hovers, borders, the selection tint, muted text. You never write them. A hex in a view is
-  the one value that stops following the theme, so there are none.
+  the one value that stops following the theme, so there are none: the one exception is the list icons' colour,
+  written without `#` (below).
 - `<components>` lists every component with `look="token"` (the common set, not only the ones used: a
   dialog brings its own buttons), and `<spinner>` carries an SVG, or every list load costs a 404.
 
 Rules that hold the look together: panels are cards with `class="xios-card"`; labels use
-`class="xios-type-label"` (small uppercase) and `xios-type-caption`; icons ask for a palette role,
-`icon://plus?color=primary`, `icon://delete?color=error`; type in render stylesheets uses the kit's
+`class="xios-type-label"` (small uppercase) and `xios-type-caption`; icons are Lucide, each written
+`icon://<name>?look=lucide&color=<colour>` with the colour by where it sits: the `on-` colour on a filled button
+(`on-primary`; Delete is a `class="xios-color-danger"` button with `on-error`), `primary` on a toolbar or a card,
+and inside an `iconlist` the primary seed written out (`color=4338ca`), because a list resolves colour names
+against the platform's theme. `references/icons.md` has the names by role and the reasons; `designkit.py icons
+app` checks them. Type in render stylesheets uses the kit's
 classes (`dk-h1`, `dk-eyebrow`, `dk-body`, `dk-muted`, `dk-pill`), which read the theme's variables.
-To rebrand, change `primary` (and `darkIcon` with it); a dark look is the `night` direction, not a toggle.
+To rebrand, change `primary` (and `darkIcon` with it) and run `app` again, which rewrites the list icons' colour;
+a dark look is the `night` direction, not a toggle.
 
 ## Layouts: one name, one file per screen size
 
@@ -132,6 +142,8 @@ runs in the window that imports it, where `Component`, `sys` and `CloneObject` a
 ## Before you hand it over
 
 - `python3 scripts/designkit.py check design/theme.xml`: contrast, `tokens="true"`, the spinner.
+- `python3 scripts/designkit.py icons app`: every icon a Lucide name with `look=lucide` and a colour (the `on-`
+  colour on a filled button, the seed written out inside a list).
 - No hex in any view or stylesheet of the app (`grep -n '#[0-9a-fA-F]\{3,6\}' app/views app/styles`).
 - Every state has words: the first run, the empty list, after a save, after a failure (the voice).
 - The phone layout at 390 px: nothing scrolls sideways; Back returns to the list.
@@ -142,16 +154,17 @@ runs in the window that imports it, where `Component`, `sys` and `CloneObject` a
 - `references/design-brief.md`: the recipe behind `brief`: how a direction is picked, the brief's template, what to change by hand.
 - `references/layouts.md`: the example's files one by one, the four patterns, the phone rules.
 - `references/data-logic.md`: the bindings and the writes with their markup; sample mode.
+- `references/icons.md`: Lucide through the icon protocol: the theme, the look and colour rules, the names by role, what was measured.
 - `references/look-and-feel.md` (generated from the manual): the design-tokens tutorial, Theme, Style, Icon protocol.
-- `assets/directions.json`: the six directions. `assets/example/`: the first version. `assets/ui/DesignKit/`: the components.
-- `scripts/designkit.py`: `brief`, `app`, `check`, `moodboard`. Standard library, no network.
+- `assets/directions.json`: the six directions. `assets/example/`: the first version. `assets/ui/DesignKit/`: the components. `assets/lucide-names.txt`: the runtime's Lucide names.
+- `scripts/designkit.py`: `brief`, `app`, `check`, `icons`, `moodboard`. Standard library, no network.
 
 ## Version and updates
 
-This is version 2026.11.4 of the xios3-app-design skill, built from the CloudBackend documentation.
+This is version 2026.11.5 of the xios3-app-design skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-design` is newer than 2026.11.4, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-design` is newer than 2026.11.5, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.11.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.11.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.

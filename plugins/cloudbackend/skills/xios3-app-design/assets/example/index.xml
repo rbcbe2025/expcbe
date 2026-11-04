@@ -7,7 +7,7 @@
      Advanced packaging: views/ (one per screen size), processes/, xsl/, styles/, ui/ (the design kit's
      two components), data/ (sample records to try the app without a tenant).
      Generated from the xios3-app-design skill's example by designkit.py app. -->
-<application xmlns:xlink="http://www.w3.org/1999/xlink" name="{{APP_NAME}}" icon="icon://clipboard_checks" instances="1">
+<application xmlns:xlink="http://www.w3.org/1999/xlink" name="{{APP_NAME}}" icon="icon://clipboard-check?look=lucide&amp;color={{ICON_COLOR}}" instances="1">
   <settings/>
   <about version="1.0"><description>{{APP_TITLE}}</description></about>
 

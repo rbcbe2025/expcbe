@@ -9,11 +9,11 @@
 
   <toolbar name="top">
     <group name="topLeft">
-      <buttonbox name="menu" text="Menu" hide="true"/>
+      <buttonbox name="menu" text="Menu" hide="true" icon="icon://menu?look=lucide&amp;color=primary"/>
     </group>
     <label name="brand" text="{{BRAND}}" class="dk-brand"/>
     <group name="topRight" align="right">
-      <buttonbox name="newItem" text="New {{ITEM}}" icon="icon://plus?color=primary"/>
+      <buttonbox name="newItem" text="New {{ITEM}}" icon="icon://plus?look=lucide&amp;color=primary"/>
     </group>
   </toolbar>
 
@@ -23,9 +23,9 @@
       <panel name="nav" type="rows" class="xios-card" width="200" height="100%" padding="12" gap="8">
         <label text="{{APP_TITLE}}" class="xios-type-label"/>
         <iconlist name="navList" layout="vertical" iconsize="20" itemheight="40" rename="false" deselect="false" scroll="false" width="100%" height="fill">
-          <item name="items" text="{{ITEMS_TITLE}}" icon="icon://clipboard_checks?color=primary" selected="true"/>
-          <item name="people" text="People" icon="icon://folders2?color=primary"/>
-          <item name="settings" text="Settings" icon="icon://note?color=primary"/>
+          <item name="items" text="{{ITEMS_TITLE}}" icon="icon://clipboard-check?look=lucide&amp;color={{ICON_COLOR}}" selected="true"/>
+          <item name="people" text="People" icon="icon://users?look=lucide&amp;color={{ICON_COLOR}}"/>
+          <item name="settings" text="Settings" icon="icon://settings?look=lucide&amp;color={{ICON_COLOR}}"/>
         </iconlist>
       </panel>
 
@@ -38,7 +38,7 @@
           </placeholder>
           <rule match="db:object">
             <item text="{substring-before(@name, '.xml')}" detail="{substring(@updated, 'startPos:0', 'endPos:10')}"
-                  icon="icon://clipboard_checks?color=primary"
+                  icon="icon://clipboard-check?look=lucide&amp;color={{ICON_COLOR}}"
                   textstyle="font-size: var(--xios-text-md, 13px); font-weight: var(--xios-weight-bold, 600);"
                   detailstyle="font-size: var(--xios-text-sm, 11px);"/>
           </rule>
@@ -48,7 +48,7 @@
       <panel name="detailCard" type="rows" class="xios-card" width="fill" height="100%" padding="16" gap="12" scroll="true">
         <buttonbox name="back" text="Back" hide="true"/>
         <panel name="detailEmpty" type="rows" width="100%" height="100%" align="center" valign="center">
-          <label class="xios-type-caption" text="Pick a {{ITEM}} to see it here."/>
+          <label class="xios-type-caption" text="Pick {{A_ITEM}} to see it here."/>
         </panel>
         <panel name="detailBody" type="rows" width="100%" height="auto" gap="12" hide="true">
           <render name="detail" href="../xsl/detail.xsl" width="100%" height="auto"/>
@@ -59,8 +59,8 @@
           </panel>
           <textarea name="notesInput" width="100%" height="120" placeholder="Notes"/>
           <panel name="actions" type="columns" width="100%" gap="8">
-            <button name="save" text="Save" default="true"/>
-            <button name="remove" text="Delete" icon="icon://delete?color=error"/>
+            <button name="save" text="Save" default="true" icon="icon://check?look=lucide&amp;color=on-primary"/>
+            <button name="remove" text="Delete" class="xios-color-danger" icon="icon://trash-2?look=lucide&amp;color=on-error"/>
           </panel>
         </panel>
       </panel>
