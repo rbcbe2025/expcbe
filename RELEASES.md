@@ -16,3 +16,4 @@ the same night (big's GitHub login has no push access); the repository went publ
 | Version | Date | Skills (hub index) | Servers (docs source commit; build in the plugin) | Notes |
 | --- | --- | --- | --- | --- |
 | 2026.1104.1 | 2026-11-04 | 2026-11-04 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped; portal and launch page deployed, servers checked live |
+| 2026.1104.2 | 2026-11-04 | 2026-11-04 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped |
