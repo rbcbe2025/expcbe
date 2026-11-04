@@ -34,11 +34,15 @@ claude plugin install cloudbackend@cloudbackend
 `/plugin` → Marketplaces can switch auto-update on).
 
 **Nothing else to install.** The three local servers are Node and run from the plugin's own files; Claude Code is the
-one requirement. Signing in to your account happens in your browser, never in the chat.
+one requirement. Signing in to your account happens in your browser (in the Claude desktop app, its built-in browser),
+never in the chat.
 
-**claude.ai, Claude Desktop, Cowork:** the skills are uploaded from the developer portal's Tools page, the documentation
-server is the Claude Desktop extension offered there, and the deploy connector is added by hand as a custom connector
-(`scripts/connect-deploy.sh <tenant> --print` prints the URL; Cowork reads `.mcp.json` but cannot fill the tenant).
+**claude.ai, Claude Desktop, Cowork:** Customize, Plugins, Add, Add marketplace: enter `rbcbe2025/expcbe`, install cloudbackend
+and turn on Sync automatically, so new versions arrive by themselves. A chat uses the skills; Cowork on your computer also
+runs the servers. Without an added marketplace, upload the skills from the developer portal's Tools page; the
+documentation server is the Claude Desktop extension offered there. The deploy connector is added by hand as a custom
+connector (`scripts/connect-deploy.sh <tenant> --print` prints the URL; Cowork reads `.mcp.json` but cannot fill
+the tenant).
 
 **Cursor, VS Code, Codex CLI, Gemini CLI:** unzip the plugin and use `clients/` (each file names `<plugin-dir>`).
 <!-- install:end -->

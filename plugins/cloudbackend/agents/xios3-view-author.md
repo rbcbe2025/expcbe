@@ -10,6 +10,8 @@ One top-level panel per view; every component carries the name `docs/spec.md` gi
 expressions address components by name; the desktop and the 390 px phone file share the same view name; no hex
 colour anywhere (the token block in `layout/` is the only source of colour); no `<select>`, `<option>` or `<a>`
 (the tenant's view dialect flattens them; raw HTML belongs in listview XSL); words for every state (empty,
-loading, saved, error). Look up a component's attributes with the docs connector (`xios3_component`) rather than
+loading, saved, error). Icons are Lucide: the theme carries `icon="lucide"`, every icon is
+`icon://<name>?look=lucide&amp;color=<colour>`, the `on-` colour on a filled button and the primary seed written out
+inside an `iconlist` (xios3-app-design `references/icons.md`; run `designkit.py icons` on the package). Look up a component's attributes with the docs connector (`xios3_component`) rather than
 guessing. Never touch a process, a data file or the manifest, and never upload: report the files you wrote and
 the component names you used, so the process author can bind to them.
