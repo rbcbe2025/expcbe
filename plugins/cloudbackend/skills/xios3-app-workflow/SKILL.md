@@ -262,22 +262,22 @@ tell them to change it, and do not use it.
 | Client | Has | The workflow here |
 | --- | --- | --- |
 | Claude Code (terminal or desktop) | the file system, sub-agents, a browser tool, `/cost`, a shell | every phase as written |
-| Claude Desktop | the plugin's connectors; no shell, no file system, no browser | the context file and the documents live in the conversation; W5's probes are a checklist the user runs; sub-agents become inline checklists |
-| claude.ai | the plugin's connectors | the same as Claude Desktop |
+| Claude Desktop | the documentation extension (the same docs server) and the deploy connector by URL; no shell, no file system, no browser | the context file and the documents live in the conversation; W5's probes are a checklist the user runs; sub-agents become inline checklists |
+| claude.ai | the skills, and the deploy connector by URL; no servers of its own | the same as Claude Desktop |
 | Cursor, VS Code and other agents | the connectors by URL, the skills as files | every phase; sub-agents and browser tools as the client has them |
 
 The connectors the CloudBackend plugin declares, and what each gives this workflow:
 
 | Connector | Tools | Used at |
 | --- | --- | --- |
-| `cloudbackend-docs` (https://mcp.cloudbackend.com/docs, no sign-in) | `cloudbackend_docs`, `cloudbackend_rest`, `cloudbackend_rest_list`, `cloudbackend_sdk`; the XIOS/3 lookups `xios3_component`, `xios3_operation`, `xios3_function`, `xios3_method`, `xios3_event`, `xios3_action`, `xios3_concepts`, `xios3_list`, `xios3_icons` | W1, W4, W7: a card by name; when it and a bundled reference disagree, the portal page decides |
-| `cloudbackend-build` (https://mcp.cloudbackend.com/build, no sign-in) | `lint_project`, `scaffold_project`, `benchmark_project` | W2, W4, W6, W9 |
+| `cloudbackend-docs` (part of the plugin: runs on your computer and reads the developer portal; in Claude Desktop the same server is the documentation extension) | `cloudbackend_docs`, `cloudbackend_rest`, `cloudbackend_rest_list`, `cloudbackend_sdk`; the XIOS/3 lookups `xios3_component`, `xios3_operation`, `xios3_function`, `xios3_method`, `xios3_event`, `xios3_action`, `xios3_concepts`, `xios3_list`, `xios3_icons` | W1, W4, W7: a card by name; when it and a bundled reference disagree, the portal page decides |
+| `cloudbackend-build` (part of the plugin: runs on your computer; needs Python 3.12 or uv, which the plugin installs into its own folder once) | `lint_project`, `scaffold_project`, `benchmark_project` | W2, W4, W6, W9 |
 | `cloudbackend-deploy` (https://mcp.cloudbackend.com/mcp/<tenant>, the user's own tenant, OAuth sign-in) | `list_projects`, `list_project_files`, `read_project_file`, `list_deployments`, `upload_project`, `deploy`, `lint_project`, `verify_deployment` | W0, W3, W4, W5, W8 |
 
-The deploy connector is per tenant, so the plugin does not add it for you: in Claude Code run the plugin's
-`scripts/connect-deploy.sh <tenant>`, or `claude mcp add --transport http cloudbackend-deploy
-https://mcp.cloudbackend.com/mcp/<tenant>`; in claude.ai or Claude Desktop add that URL as a custom
-connector; the sign-in page is the tenant's own. A tool result is at most about 150,000 characters and a
+The deploy connector is CloudBackend's own server and per tenant: Claude Code asks for the tenant's name once
+when the plugin is installed and adds `https://mcp.cloudbackend.com/mcp/<tenant>` itself; elsewhere add that
+URL as a custom connector (or run the plugin's `scripts/connect-deploy.sh <tenant>`); the sign-in page is the
+tenant's own. The docs and build servers never leave your computer. A tool result is at most about 150,000 characters and a
 call at most 240 seconds on claude.ai, so lint and verify sample and page; never send a whole package to a
 lookup tool.
 
@@ -359,8 +359,10 @@ Generated from the published manual at build time:
 
 ## Version and updates
 
-This is version 2026.11.4 of the xios3-app-workflow skill, built from the CloudBackend documentation.
+This is version 2026.11.4.2 of the xios3-app-workflow skill, built from the CloudBackend documentation.
 
-Installed through the CloudBackend plugin? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
+Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.4.2, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.4.2&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.

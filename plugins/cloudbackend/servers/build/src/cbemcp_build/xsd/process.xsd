@@ -1,0 +1,2177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" vc:minVersion="1.1" elementFormDefault="qualified">
+
+  <!-- ============================================================= -->
+  <!-- process scaffold (framework structure; not from the op docs)  -->
+  <!-- ============================================================= -->
+
+  <!-- Component and system events that a trigger can listen for, from the public
+       Events reference. Deliberately a union with xs:string rather than a plain
+       enumeration: applications define their own event names too (a listview or
+       render triggerEvent, or a Shell Command_<name>), so closing the list would
+       report valid markup as invalid. The union still drives completion — the
+       known names are offered with their documentation. -->
+  <xs:simpleType name="t_knownEvent">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Add">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the add tab (+) button is clicked.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AddColumn">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the button to add a column is clicked in the grid.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AddRow">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a new row is added to the grid.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AlignCenterRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is aligned in the center is released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AlignCenterSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is aligned in the center is selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AlignJustifiedRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has justified alignment is released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AlignJustifiedSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has justified alignment is selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AlignLeftRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is aligned to the left is released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AlignLeftSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is aligned to the left is selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AlignRightRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is aligned to the right is released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AlignRightSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is aligned to the right is selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Authorized">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the channel or login operation successfully has authorized a login.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BGColorRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has background color is released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BGColorSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has background color is selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Blur">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs the user clicks outside the component after having set focus to it.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BoldRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is bold is released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BoldSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is bold is selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BulletListRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when a bullet list has been released (unselected) inside a component that allows rich text editing.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BulletListSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when a bullet list has been selected inside a component that allows rich text editing.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Change">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the selected value of the component has been changed.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Changed">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the data bound to the component has been changed.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Close">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the component has been closed.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Closing">
+        <xs:annotation><xs:documentation xml:lang="en">In order for this event to occur the handle-close element must be set to the value true in the open operation when opening a view or the handle-close attribute is set on the view element element. The event occurs when the X is clicked to close the application.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ContextMenu">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the user right-clicks on the component.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DateChanged">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a new date has been set.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DecorationRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is underlined is released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DecorationSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is underlined is selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Delete">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a selected item in the component has been deleted.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Disabled">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a component is disabled, e.g. from the action disable.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DoubleClick">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the end user double-clicks on the left mouse button.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Drop">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when something is dropped onto the component.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Edit">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs after editing has been performed on data in the component. To initiate editing see: callMethod edit.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EditEnd">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs after the editfield is closed no matter if changes have been made.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Empty">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the component is emptied.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Enabled">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a component is enabled, e.g. from the action enable.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Enter">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when hitting the Enter key while the component is selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Escape">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the ESCAPE key is hit on the keyboard while the component is selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FGColorRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has foreground color has been released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FGColorSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has foreground color has been selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Focus">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when focus has been set on the component.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FontFamilyRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has font-family style has been released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FontFamilySelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has font-family style has been selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FontSizeRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has font-size style has been released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FontSizeSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that has font-size style has been selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Fullscreen">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the component is displayed in full screen.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Header">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the user clicks on the header of grid.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="HeaderContextMenu">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the user right-clicks on the header of grid.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Hide">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a component is hidden, e.g. from the action hide.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Hover">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the end user hovers over the component with the pointer.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="HttpHyperlink">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when a hyperlink (https://) is clicked inside a richtext component.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Init">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the component is rendered.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ItalicRelease">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is italic has been released.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ItalicSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when text that is italic has been selected.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Key">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a keyboard key has been pressed (onKeyDown) while the focus in on a supported component. The trigger does not contain any XML information.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Loaded">
+        <xs:annotation><xs:documentation xml:lang="en">This event is triggered by the view when the entire view with its components is setup and ready, i.e. loaded.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Login">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the channel operation requires a login to continue and open the channel. Typically when the login event is triggered, a login dialog should be displayed that prompts the end-user for a username and password.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="LoginFailure">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the login operation has failed to authorize a login.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Menu">
+        <xs:annotation><xs:documentation xml:lang="en">This event is fired from two different components in two different ways. For the calendar component the event occurs when the end user right-clicks (requests a contextMenu) on the Calendar component, while not selecting any appointments (data).</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Move">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the content of the component has been moved.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MoveItem">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the end user drags a selected item.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NumberListSelect">
+        <xs:annotation><xs:documentation xml:lang="en">(RichText component) This event occurs when a numbered list has been selected inside a RichText editor.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Opened">
+        <xs:annotation><xs:documentation xml:lang="en">This event is triggered by the view when the entire view with its components is visible. The event comes after the Loaded event.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Paste">
+        <xs:annotation><xs:documentation xml:lang="en">This event will occur when the user clicks on Ctrl+V. It will result in the paste-node being the trigger.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReadOnly">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a component is made read only, e.g. from the action readonly.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ReadWrite">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a component is made read/write, e.g. from the action readwrite.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Ready">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a component with external dependencies has been loaded and can accept interaction.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Release">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs on mouse up or when something is deselected depending on the specific component.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Saved">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs then the data bound to the component has been saved.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Select">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the component has been selected. It is equivalent to onclick (and in some cases to onmousedown).</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SelectedDate">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when a date is selected and displayed in the Calendar.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SelectedMore">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when an event has been extended from a single day to two or more while in single day view.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SetActive">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs once the view has been focused.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Show">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the component is displayed, e.g. from the action show.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubjectMore">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the More Details link is clicked in the Calendar Quick Event Scheduler.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Tab">
+        <xs:annotation><xs:documentation xml:lang="en">This event occurs when the tab button is hit.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TriggerEvent">
+        <xs:annotation><xs:documentation xml:lang="en">This event allows you to catch your own defined events from the ListView and Render components. In listview components the trigger will contain the selection data.</xs:documentation></xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="t_eventName">
+    <xs:union memberTypes="t_knownEvent xs:string"/>
+  </xs:simpleType>
+
+  <xs:complexType name="t_trigger">
+    <!-- trigger/@event, @step, @view, @component, @communicator are all exercised by reference examples. -->
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Binds an event to a step. A component event is a signal thrown to the process; the trigger runs the step named in its step attribute whenever that event occurs on the named view, optionally narrowed to a single component within it. The event data is available inside the step as the trigger expression (!). Use communicator instead of view to listen for events from a channel created by the channel operation.</p><pre><code>&lt;process name="Demo"&gt;<br/>&#32;&#32;&lt;trigger view="bushView" event="Loaded" step="init"/&gt;<br/>&#32;&#32;&lt;trigger view="mobileMenu" component="menu" event="Select" step="showPanel"/&gt;<br/>&lt;/process&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <!-- Declaration order is the order vscode-xml offers these in completion, so
+         it follows the house style for writing a trigger:
+             <trigger view="DE" component="tShowEula" event="Select" step="showEula"/>
+         Keep them in this order. -->
+
+    <!-- view is not required: a trigger listens either to a view (optionally
+         narrowed to one component) or to a communicator, and the reference's own
+         example <trigger communicator="xios" event="Login" step="20"/> has no
+         view at all. XSD 1.0 cannot express "exactly one of view/communicator",
+         and the 1.1 assertions that could are unsupported by vscode-xml, so this
+         is left open rather than rejecting valid markup. -->
+    <xs:attribute name="view" type="xs:string"/>
+    <xs:attribute name="component" type="xs:string"/>
+    <xs:attribute name="event" type="t_eventName" use="required"/>
+    <xs:attribute name="step" type="xs:string" use="required"/>
+    <xs:attribute name="communicator" type="xs:string"/>
+    <xs:attribute name="process" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_step">
+    <!-- @success/@error/@goto are schema-declared; only @id and @name appear in reference examples. -->
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>A named unit of process logic, run when a trigger, a call operation or a decision routes to its id. Contains aliases and operations, executed in document order. The success, error and goto attributes name the step to continue with; server errors returned by the callService operation are routed to the trigger event (!) of the step named in error.</p><pre><code>&lt;step id="init"&gt;<br/>&#32;&#32;&lt;operation name="bind" value="#componentList"&gt;<br/>&#32;&#32;&#32;&#32;&lt;component view="bushView" name="myBush" select="components"/&gt;<br/>&#32;&#32;&lt;/operation&gt;<br/>&lt;/step&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="alias" type="t_alias"/>
+      <xs:element ref="operation"/>
+      <!-- Shorthand for <operation name="debug">, which the reference uses as a
+           sibling of operations inside a step:
+             <operation name="groups" value="tenant">…</operation>
+             <debug value="$listResponse"/>
+           Only debug is admitted here; the other names in g_opChildren are
+           instructions belonging to a specific operation, not step-level steps. -->
+      <xs:element name="debug" type="op__leaf"/>
+    </xs:choice>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="description" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Free-text note about what the step does.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="success" type="xs:string"/>
+    <xs:attribute name="error" type="xs:string"/>
+    <xs:attribute name="goto" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_decision">
+    <!-- SCHEMA-DERIVED: the reference has no page for the process-level decision element and no example of it. Prose and example are inferred from the content model and from the decision operation, which branches the same way. Worth confirming against the runtime. -->
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>A branch point declared as a direct child of process, routing to a step by testing conditions. Each when is evaluated in document order and the first one that matches routes to its step; otherwise supplies the fallback. The same branching is available inside a step through the decision operation.</p><pre><code>&lt;decision id="chooseView"&gt;<br/>&#32;&#32;&lt;when test="{screen('phone')}" step="mobile"/&gt;<br/>&#32;&#32;&lt;otherwise step="desktop"/&gt;<br/>&lt;/decision&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="when" type="t_when"/>
+      <xs:element name="otherwise" type="t_otherwise"/>
+    </xs:choice>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_when">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Tests a condition inside a decision. test holds the condition to evaluate; exists tests whether the value on the parent resolves to an existing node. The first when whose condition is true routes to the step named in its step attribute.</p><pre><code>&lt;when test="{contains('{$loginLogo}', 'http')}" step="hasLogo"/&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="step" type="xs:string" use="required"/>
+    <xs:attribute name="exists" type="xs:boolean"/>
+    <xs:attribute name="test" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="t_otherwise">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Fallback branch of a decision. Routes to the step named in its step attribute when no preceding when condition matched.</p><pre><code>&lt;otherwise step="desktop"/&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="step" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:simpleType name="t_model">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="base"/>
+      <xs:enumeration value="browse"/>
+      <xs:enumeration value="data"/>
+      <xs:enumeration value="dataDoc"/>
+      <xs:enumeration value="define"/>
+      <xs:enumeration value="expand"/>
+      <xs:enumeration value="folder"/>
+      <xs:enumeration value="global"/>
+      <xs:enumeration value="new"/>
+      <xs:enumeration value="newsilent"/>
+      <xs:enumeration value="open"/>
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="value"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="t_alias" mixed="true">
+    <!-- @title and @when are schema-declared only; no reference example or prose covers them. -->
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Declares a named value for use later in the process, referenced from expressions as $name. The value attribute holds the expression to evaluate. The model attribute selects how the value is interpreted - for example data to hold an XML data document, or new and newsilent to create a new document. An alias with no value declares the name without assigning it.</p><pre><code>&lt;alias name="time" value="{format('hh:mm')}"/&gt;<br/>&lt;alias name="searchResults" value="home://search(/Documents/,type:text/xml)" model="data"/&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <!-- model="new"/"newsilent" creates a document whose initial content is the
+         alias's own child XML, so the content is application data and is skipped
+         rather than validated. A <dialog> child (see t_dialog) configures the
+         value for the models that prompt; it cannot be declared alongside the
+         wildcard without breaking unique particle attribution. -->
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <!-- Not required: production process code declares a bare <alias/> and
+         assigns to it later. -->
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="model" type="t_model"/>
+    <xs:attribute name="mode" type="xs:string"/>
+    <xs:attribute name="title" type="xs:string"/>
+    <xs:attribute name="value" type="xs:string"/>
+    <xs:attribute name="when">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="undefined"/>
+          <xs:enumeration value="empty"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- <dialog> configures a file/object picker for an alias model. -->
+  <xs:complexType name="t_dialog">
+    <!-- SCHEMA-DERIVED: the reference has no page for dialog and no example of it. Prose and example are inferred from the content model (t_dialogLabel/@name, t_dialogType/@mime) and from the alias open/new models. Worth confirming against the runtime. -->
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Configures a dialog that supplies the value of the enclosing alias, used with the alias models that open or create a document. title sets the dialog title and folder the location it starts in. The label children name the fields shown, and type restricts the selectable documents by MIME type.</p><pre><code>&lt;alias name="target" model="open"&gt;<br/>&#32;&#32;&lt;dialog title="Pick a document" folder="home://Documents/"&gt;<br/>&#32;&#32;&#32;&#32;&lt;label name="filename"&gt;Document&lt;/label&gt;<br/>&#32;&#32;&#32;&#32;&lt;type mime="text/xml"/&gt;<br/>&#32;&#32;&lt;/dialog&gt;<br/>&lt;/alias&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="label" type="t_dialogLabel"/>
+      <xs:element name="type" type="t_dialogType"/>
+    </xs:choice>
+    <xs:attribute name="title" type="xs:string"/>
+    <xs:attribute name="folder" type="xs:string"/>
+  </xs:complexType>
+
+  <!-- <label name="ok">Open Object</label> — a named button/label with text. -->
+  <xs:complexType name="t_dialogLabel">
+    <!-- SCHEMA-DERIVED: no reference page or example covers the dialog children. -->
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Names a field shown in an alias dialog. The name attribute identifies the field and the element's text content is the label displayed for it.</p><pre><code>&lt;label name="filename"&gt;Document&lt;/label&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- <type mime="text/xml"/> — a MIME filter for the dialog. -->
+  <xs:complexType name="t_dialogType">
+    <!-- SCHEMA-DERIVED: no reference page or example covers the dialog children. -->
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Restricts an alias dialog to documents of the given MIME type.</p><pre><code>&lt;type mime="text/xml"/&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="mime" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- <operations> declares the custom operations an application provides.
+       The declared @name values become usable as <operation name="..."> in
+       steps (accepted as open content by the host validator). -->
+  <xs:complexType name="t_operations">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Declares custom operations that the application supplies itself, making them available to the name attribute of operation elements alongside the built-in operations.</p>]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="operation" type="t_operationDecl" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_operationDecl">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Declaration of a single custom operation. name is the value used in an operation element's name attribute; href points at the JavaScript module implementing it and class names the exported class.</p>]]></xs:documentation>
+    </xs:annotation>
+    <!-- The same type as an operation call's @name, deliberately. The schema
+         holds two element declarations called "operation" — this one and the
+         instruction inside a step — and the language server resolves an
+         attribute to one of them by name. When they disagreed, declaring an
+         <operations> block cost the built-in operations their completion
+         everywhere in the document. -->
+    <xs:attribute name="name" type="t_operationName" use="required"/>
+    <xs:attribute name="href" type="xs:anyURI"/>
+    <xs:attribute name="class" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="process">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Root of a process document, and the container for the process logic of an application. Holds trigger elements that bind events to steps, step elements containing the operations to run, decision elements that branch between steps, and an operations element declaring custom operations.</p>]]></xs:documentation>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="operations" type="t_operations"/>
+      <xs:element name="script" type="t_processScript"/>
+      <xs:element name="trigger" type="t_trigger"/>
+      <xs:element name="step" type="t_step"/>
+      <xs:element name="decision" type="t_decision"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="author" type="xs:string"/>
+    <xs:attribute name="created" type="xs:string"/>
+    <xs:attribute name="description" type="xs:string"/>
+    <xs:attribute name="revised" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:element name="process" type="process"/>
+
+  <!-- A JavaScript file the process loads, so its steps can call the functions
+       it defines through the javascript operation. href is relative to the
+       process document. -->
+  <xs:complexType name="t_processScript" mixed="true">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Loads a JavaScript file alongside the process, so its steps can call the functions it defines. <code>href</code> is resolved relative to the process document.</p><pre><code>&lt;script href="javascript/database.js"/&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="href" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Where to load the script from, relative to the process document.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="name" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">An optional name for the script.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+
+
+  <!-- operation element. Per-@name typing needed XSD 1.1 CTA (unsupported by
+       vscode-xml), so it uses the op__any fallback: @name is required and
+       validated against the known operations; other attributes (e.g. value)
+       and child content are left open. -->
+  <xs:element name="operation" type="op__any"/>
+
+  <xs:complexType name="op__leaf" mixed="true">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>A child element of a process operation. Which children are meaningful depends on the parent operation, so see the documentation on the operation's name attribute, or on the individual instruction elements of the change, database, groups and tenant operations. Attributes are left open because they differ per instruction.</p>]]></xs:documentation>
+    </xs:annotation>
+    <!-- Open content: see the globally declared operation children below. -->
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="op__branch" mixed="true">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>A when or otherwise branch of the decision operation. Either routes to a step through the step attribute, or, when no step is given, executes the operations it contains. test holds the condition to evaluate and exists tests for the existence of the operation's value.</p><pre><code>&lt;operation name="decision" value="tenant://myTable"&gt;<br/>&#32;&#32;&lt;when exists="true"&gt;<br/>&#32;&#32;&#32;&#32;&lt;operation name="debug" value="Container exists"&gt;alert:plain&lt;/operation&gt;<br/>&#32;&#32;&lt;/when&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <!-- Open content: see the globally declared operation children below. -->
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="test" type="xs:string"/>
+    <xs:attribute name="exists" type="xs:string"/>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+
+  <!-- Content that is data rather than XIOS markup: arbitrary element names the
+       schema cannot know (HTTP header names) or an XML node-set the application
+       supplies. Skipped rather than validated, and deliberately NOT part of
+       g_opChildren so the instruction vocabulary stays closed and useful. -->
+  <xs:complexType name="op__payload" mixed="true">
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="op__any" mixed="true">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>A single instruction in a step. The name attribute selects which operation runs - hover it for that operation's own description and example. The value attribute usually carries the target the operation acts on, such as a component reference, a document URL or an expression; child elements configure the operation.</p><pre><code>&lt;operation name="action" value="#view1"&gt;<br/>&#32;&#32;&lt;component name="menu1" action="open"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <!-- Open content: see the globally declared operation children below. -->
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" use="required" type="t_operationName">
+    </xs:attribute>
+    <xs:anyAttribute namespace="##any" processContents="skip"/>
+  </xs:complexType>
+
+  <!-- operation: action -->
+  <xs:complexType name="op_action">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="component" type="op_action__component" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="action"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_action__component" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="action" type="t_componentAction" use="required"/>
+  </xs:complexType>
+
+  <!-- operation: bind -->
+  <xs:complexType name="op_bind">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="component" type="op_bind__component" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="paging" type="op_bind__paging" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="bind"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_bind__component">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="view" type="xs:string" use="required"/>
+    <xs:attribute name="select" type="xs:string"/>
+    <xs:attribute name="model" default="default">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="default"/>
+          <xs:enumeration value="none"/>
+          <xs:enumeration value="data"/>
+          <xs:enumeration value="clone"/>
+          <xs:enumeration value="base"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="transformer" type="xs:string"/>
+    <xs:attribute name="type" default="default">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="default"/>
+          <xs:enumeration value="focus"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="eval" type="xs:boolean" default="false"/>
+  </xs:complexType>
+  <xs:complexType name="op_bind__paging">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="size" type="xs:integer" use="required"/>
+    <xs:attribute name="ascending" type="xs:boolean" default="true"/>
+    <xs:attribute name="order" type="xs:string"/>
+  </xs:complexType>
+
+  <!-- operation: call -->
+  <xs:complexType name="op_call">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="trigger" type="op_call__trigger" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="yield" type="op_call__yield" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="param" type="op_call__param" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="timer" type="op_call__timer" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="call"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_call__trigger">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="model" type="xs:string" use="required"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_call__yield">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_call__param">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_call__timer">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="alias" type="xs:string"/>
+    <xs:attribute name="interval" type="xs:string"/>
+    <xs:attribute name="wait" type="xs:integer"/>
+  </xs:complexType>
+
+  <!-- operation: callMethod -->
+  <xs:complexType name="op_callMethod">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="method" type="op_callMethod__method" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="callMethod"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+    <xs:attribute name="wait" type="xs:boolean" default="false"/>
+    <xs:attribute name="then" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_callMethod__method">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="param" type="op_callMethod__method__param" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_callMethod__method__param" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="type" default="string">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="string"/>
+          <xs:enumeration value="boolean"/>
+          <xs:enumeration value="integer"/>
+          <xs:enumeration value="float"/>
+          <xs:enumeration value="null"/>
+          <xs:enumeration value="xml"/>
+          <xs:enumeration value="winEvt"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- operation: callService -->
+  <xs:complexType name="op_callService">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="body" type="op_callService__body" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="document" type="op_callService__document" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="expect" type="op_callService__expect" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="headers" type="op_callService__headers" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="method" type="op_callService__method" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="param" type="op_callService__param" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="silent" type="op_callService__silent" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="wait" type="op_callService__wait" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="only-url" type="op_callService__only-url" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="callService"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_callService__body">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string"/>
+    <xs:attribute name="eval" type="xs:string" default="true"/>
+  </xs:complexType>
+  <xs:complexType name="op_callService__document">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_callService__expect">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="attempts" type="xs:string" default="30"/>
+    <xs:attribute name="timeout" type="xs:string" default="10"/>
+  </xs:complexType>
+  <xs:complexType name="op_callService__headers">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_callService__method">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_callService__param">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_callService__silent">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_callService__wait">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_callService__only-url">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- operation: change -->
+  <xs:complexType name="op_change">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="store" type="op_change__store" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The store element offers five ways of storing data: append, replace, replaceText, prepend, insert, insertAfter, and insertInto. It defines that the information should be stored according to the option chosen in the type attribute.</p><pre><code>&lt;operation name="change" value="#view1#component1"&gt;<br/>&#32;&#32;&lt;store select="task/@complete" type="replaceText"&gt;true&lt;/store&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="move" type="op_change__move" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction of the change, database operations.</p><p>In change: Moves an XML node-set from one part of the document to another part</p><p>In database: The move instruction is used to move Objects and Containers and has two attributes, to and silent.</p><pre><code>&lt;operation name="database" value="home://Documents/MyDocument.xml"&gt;<br/>&#32;&#32;&lt;move to="home://Applications/" silent="true"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="delete" type="op_change__delete" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction of the change, database, groups operations.</p><p>In change: Deleting data is done by either deleting the current selection of a component or by supplying an XPath expression in the select attribute.</p><pre><code>&lt;operation name="change" value="home://Documents/"&gt;<br/>&#32;&#32;&lt;delete select="/db:result/db:object[@name='{$fileTitle}']"/&gt;<br/>&lt;/operation&gt;</code></pre><p>In database: The delete instruction is used to delete Objects and Containers and has two attributes, permanent and silent, both which are boolean type attributes.</p><pre><code>&lt;operation name="database" value="home://Documents/MyDocument.xml"&gt;<br/>&#32;&#32;&lt;delete permanent="true" silent="false"/&gt;<br/>&lt;/operation&gt;</code></pre><p>In groups: Deletes a group, role, or subgroup to a group.</p><pre><code>&lt;operation name="groups" value="$pathToGroup"&gt;<br/>&#32;&#32;&lt;delete type="group" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="change"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_change__store" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="select" type="xs:string"/>
+    <xs:attribute name="transformer" type="xs:string"/>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="append"/>
+          <xs:enumeration value="insert"/>
+          <xs:enumeration value="insertIntoText"/>
+          <xs:enumeration value="move"/>
+          <xs:enumeration value="prepend"/>
+          <xs:enumeration value="replace"/>
+          <xs:enumeration value="replaceText"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_change__move">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_change__delete">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="select" type="xs:string"/>
+  </xs:complexType>
+
+  <!-- operation: channel -->
+  <xs:complexType name="op_channel">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="name" type="op_channel__name" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="protocol" type="op_channel__protocol" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="adapter" type="op_channel__adapter" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="title" type="op_channel__title" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="authentication" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Credentials for a channel, alongside its name, protocol and adapter.</p><pre><code>&lt;authentication type="bearer"&gt;<br/>&#32;&#32;&lt;username&gt;{$apiKey}&lt;/username&gt;<br/>&#32;&#32;&lt;password/&gt;<br/>&lt;/authentication&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="channel"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_channel__name" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="op_channel__protocol__text">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="HTTPS"/>
+      <xs:enumeration value="XMLDB"/>
+      <xs:enumeration value="PROXY"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="op_channel__protocol">
+    <xs:simpleContent>
+      <xs:extension base="op_channel__protocol__text"/>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="op_channel__adapter">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="path" type="xs:string"/>
+    <xs:attribute name="in" type="xs:string"/>
+    <xs:attribute name="out" type="xs:string"/>
+    <xs:attribute name="type">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CompactJSON"/>
+          <xs:enumeration value="XSLT"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="op_channel__title" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- operation: close -->
+  <xs:complexType name="op_close">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="mode" type="op_close__mode" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="close"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_close__mode" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- operation: confirm -->
+  <xs:complexType name="op_confirm">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="type" type="op_confirm__type" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="initial" type="op_confirm__initial" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="message" type="op_confirm__message" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="modal" type="op_confirm__modal" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="ok" type="op_confirm__ok" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="cancel" type="op_confirm__cancel" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="title" type="op_confirm__title" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="icon" type="op_confirm__icon" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="height" type="op_confirm__height" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="confirm"/>
+  </xs:complexType>
+  <xs:complexType name="op_confirm__type">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="value" default="message">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="message"/>
+          <xs:enumeration value="confirm"/>
+          <xs:enumeration value="input"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="op_confirm__initial" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_confirm__message" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_confirm__modal" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_confirm__ok">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="step" type="xs:string"/>
+    <xs:attribute name="text" type="xs:string" default="OK"/>
+  </xs:complexType>
+  <xs:complexType name="op_confirm__cancel">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="step" type="xs:string"/>
+    <xs:attribute name="text" type="xs:string" default="Cancel"/>
+  </xs:complexType>
+  <xs:complexType name="op_confirm__title" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_confirm__icon" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_confirm__height" mixed="true">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- operation: create -->
+  <xs:complexType name="op_create" mixed="true">
+    <xs:attribute name="name" type="xs:string" use="required" fixed="create"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- operation: database -->
+  <xs:complexType name="op_database">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="acl" type="op_database__acl" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The acl (Access Control List) instruction contains information about access rights. Its attributes define which rights its child-elements will receive.</p><pre><code>&lt;operation name="database" value="$document"&gt;<br/>&#32;&#32;&lt;acl read="true" write="false" delete="false" changeACL="false"&gt;<br/>&#32;&#32;&#32;&#32;&lt;user group="{$groupid}"&gt;{$userid}&lt;/user&gt;<br/>&#32;&#32;&#32;&#32;&lt;group&gt;{$groupid}&lt;/group&gt;<br/>&#32;&#32;&lt;/acl&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="attach" type="op_database__attach" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The attach instruction is used to attach streams to Objects. It has two attributes to and slot.</p><pre><code>&lt;operation name="database" value="https://xios3.com/image.jpg"&gt;<br/>&#32;&#32;&lt;attach to="home://myFile.xml" slot="2"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="copy" type="op_database__copy" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The copy instruction is used to copy Objects and Containers and has two attributes, to and silent. The to attribute is a string type attribute, and is used to define the destination Container.</p><pre><code>&lt;operation name="database" value="home://Documents/MyDocument.xml"&gt;<br/>&#32;&#32;&lt;copy to="home://Applications/" silent="false"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="create" type="op_database__create" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction of the database, groups operations.</p><p>In database: The create instruction is used to create Objects or Containers and has two attributes, type and name.</p><pre><code>&lt;operation name="database" value="home://Documents/"&gt;<br/>&#32;&#32;&lt;create type="container" name="Contactbook"&gt;<br/>&#32;&#32;&#32;&#32;&lt;content&gt;Contact&lt;/content&gt;<br/>&#32;&#32;&lt;/create&gt;<br/>&lt;/operation&gt;</code></pre><p>In groups: Using the create instruction we can create new groups for different access-rights across applications or data The attribute value controls which parent-group is being used.</p><pre><code>&lt;operation name="groups" value="tenant"&gt;<br/>&#32;&#32;&lt;create type="subgroup" name="{$groupName}" alias="{$groupAlias}" public="public" applicant="open" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="delete" type="op_database__delete" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction of the change, database, groups operations.</p><p>In change: Deleting data is done by either deleting the current selection of a component or by supplying an XPath expression in the select attribute.</p><pre><code>&lt;operation name="change" value="home://Documents/"&gt;<br/>&#32;&#32;&lt;delete select="/db:result/db:object[@name='{$fileTitle}']"/&gt;<br/>&lt;/operation&gt;</code></pre><p>In database: The delete instruction is used to delete Objects and Containers and has two attributes, permanent and silent, both which are boolean type attributes.</p><pre><code>&lt;operation name="database" value="home://Documents/MyDocument.xml"&gt;<br/>&#32;&#32;&lt;delete permanent="true" silent="false"/&gt;<br/>&lt;/operation&gt;</code></pre><p>In groups: Deletes a group, role, or subgroup to a group.</p><pre><code>&lt;operation name="groups" value="$pathToGroup"&gt;<br/>&#32;&#32;&lt;delete type="group" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="detach" type="op_database__detach" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The detach instruction is used to detach attachments from Objects. It has only one attribute slot which is a numeric type attribute and defines the attachment slot to remove.</p><pre><code>&lt;operation name="database" value="home://Documents/myFile.xml"&gt;<br/>&#32;&#32;&lt;detach slot="3"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="link" type="op_database__link" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The link instruction is used to access Objects through a link for a certain amount of time from the CloudBackend database. Its termination can be specified through a max amount of downloads or a duration given in days, hours and minutes.</p>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="listen" type="op_database__listen" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The listen instruction is used to listen to changes made in a Container or a document. The Object to listen to is defined in the value attribute of the operation element.</p><pre><code>&lt;operation name="database" value="home://Documents/"&gt;<br/>&#32;&#32;&lt;listen event="Append" step="newFile"/&gt;<br/>&#32;&#32;&lt;listen event="Remove" step="deleteFile"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="mount" type="op_database__mount" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The mount instruction is used to mount a new database similarily to how channel sets up a new communication channel. The difference is that a new database uses an already established communication channel.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;mount name="my-mount" hidden="false"&gt;<br/>&#32;&#32;&#32;&#32;&lt;group path="tenant/myGroup"/&gt;<br/>&#32;&#32;&lt;/mount&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="move" type="op_database__move" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction of the change, database operations.</p><p>In change: Moves an XML node-set from one part of the document to another part</p><p>In database: The move instruction is used to move Objects and Containers and has two attributes, to and silent.</p><pre><code>&lt;operation name="database" value="home://Documents/MyDocument.xml"&gt;<br/>&#32;&#32;&lt;move to="home://Applications/" silent="true"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="publish" type="op_database__publish" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The publish instruction creates a new publication of a selection of Objects or Containers that may be externally accessed from the database without any authentication. Note: Publications can be found under main://.published or under a group, tenant://Groups/.published.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;publish suggest="{$nameSuggest}" id="{$trigger#@id}" alias="newUniqueName" exists="alreadyExists"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="rename" type="op_database__rename" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction of the database, groups operations.</p><p>In database: The rename instruction is used to rename Objects and Containers.</p><pre><code>&lt;operation name="database" value="home://document1.xml"&gt;<br/>&#32;&#32;&lt;rename to="document_hello.xml"/&gt;<br/>&lt;/operation&gt;</code></pre><p>In groups: Instruction to rename a role, group or the current users alias within the specified group.</p><pre><code>&lt;operation name="groups" value="$groupPath"&gt;<br/>&#32;&#32;&lt;rename name="Cool Bob" type="role" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="restore" type="op_database__restore" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The restore instruction restores previous versions of Objects or Containers that have been permanently deleted (when a Trashcan has not been used). It requires the Container-path where the Object/Container is located and the corresponding id.</p><pre><code>&lt;operation name="database" value="$containerPath"&gt;<br/>&#32;&#32;&lt;restore id="$objectId" name="new restored name.xml" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="share" type="op_database__share" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The share instruction is used to share Objects, documents, photos, and Containers with friends. Any Object or container which the user has created in the database can be selected to be shared.</p><pre><code>&lt;operation name="database" value="#view1#gridFilesToShare"&gt;<br/>&#32;&#32;&lt;share use-selection="true"&gt;<br/>&#32;&#32;&#32;&#32;&lt;users&gt;{#view1#gridSelectedFriends}&lt;/users&gt;<br/>&#32;&#32;&#32;&#32;&lt;comment&gt;{#view1#commentInputfield}&lt;/comment&gt;<br/>&#32;&#32;&lt;/share&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="shares" type="op_database__shares" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The shares instruction lists all shares from a whole group or a group filtered by a specific user. Note: The currently logged in users personal shares are instead available here main://.shares.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;shares id="{$groupid}:{$userid}" alias="bob"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="shortcut" type="op_database__shortcut" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The shortcut instruction allows you to add a shortcut. It has the following attributes "to","name" and"alias", allowing you to define which Container the shortcut should appear in, what its name will be and what its internal reference alias will be, respectively.</p><pre><code>&lt;operation name="database" value="!"&gt;<br/>&#32;&#32;&lt;shortcut to="{$atomFeed}" name="{#shortcutwizard#name}" alias="title"&gt;<br/>&#32;&#32;&#32;&#32;&lt;icon&gt;{$shortcutIcon}&lt;/icon&gt;<br/>&#32;&#32;&#32;&#32;&lt;target&gt;{#shortcutwizard#location}&lt;/target&gt;<br/>&#32;&#32;&#32;&#32;&lt;data&gt;&lt;/data&gt;<br/>&#32;&#32;&#32;&#32;&lt;startfolder&gt;&lt;/startfolder&gt;<br/>&#32;&#32;&lt;/shortcut&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="subscribe" type="op_database__subscribe" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The subscribe instruction is used to add a publication to your subscribed publications (published by other identities). This allows the logged in identity to subscribe to data being added, deleted, or modified in a published Container.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;subscribe name="Vacation 2024" userid="12884901892" id="4" password="test"/&gt;<br/>&#32;&#32;&lt;subscribe name="Vacation 2024" username="test4" password="test"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="subscribers" type="op_database__subscribers" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The subscribers instruction is used to receive a db:result Object that lists all subscribers of a specified publication by the currently logged in identity or a group that the identity has got access to.…</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;subscribers id="123" alias="MySubscribers"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="trashcan" type="op_database__trashcan" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The trashcan instruction is used to deal with the system trashcan. The value attribute is used for two different purposes depending on the value in the action attribute.</p><pre><code>&lt;operation name="database" value="xios"&gt;<br/>&#32;&#32;&lt;trashcan action="empty" silent="false"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="truncate" type="op_database__truncate" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The truncate operation handles a fast and easy way to, well, empty a Container. There are two attributes to let you chose in which fasion the emptying is done.</p><pre><code>&lt;operation name="database" value="{$pathToEmpty}"&gt;<br/>&#32;&#32;&lt;truncate silent="false" progress="true"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="unlink" type="op_database__unlink" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The unlink instruction is used to unlink published Objects or Containers links.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;unlink id="{#names#name1}"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="unlisten" type="op_database__unlisten" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The unlisten instruction is used to remove an Object or Container listener (see above). The Object to remove the listener from is defined in the value attribute of the operation element.</p><pre><code>&lt;operation name="database" value="home://Documents/"&gt;<br/>&#32;&#32;&lt;unlisten event="FileAdded"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="unpublish" type="op_database__unpublish" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The unpublish instruction allows you to remove a previously created publish (publication). Note: Publications can be found under main://.published or under a group, tenant://Groups/.published.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;unpublish id="{$publishId}"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="unshare" type="op_database__unshare" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The unshare instruction is used to unshare Objects or Containers that are already shared.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;unshare&gt;<br/>&#32;&#32;&#32;&#32;&lt;packages&gt;<br/>&#32;&#32;&#32;&#32;&#32;&#32;&lt;package id="{$shareId}"/&gt;<br/>&#32;&#32;&#32;&#32;&lt;/packages&gt;<br/>&#32;&#32;&lt;/unshare&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="unsubscribe" type="op_database__unsubscribe" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The subscribe instruction is used to remove a publication from the currently logged in identity subscriptions. Note: Subscriptions for the currently logged in identity can be found under main://.subscribed, a group can not subscribe to a publication and does not have this object.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;unsubscribe id="4" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="upload" type="op_database__upload" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The upload instruction is used to upload Objects to a destination Container. It has only one attribute to which is a string type attribute and defines the destination Container.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;upload to="home://Documents/"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="unmount" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The unmount instruction is used to unmount mounted database drives.</p><pre><code>&lt;operation name="database"&gt;<br/>&#32;&#32;&lt;unmount name="example"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="database"/>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__acl">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="user" type="op_database__acl__user" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="group" type="op_database__acl__group" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="read" type="xs:boolean" use="required"/>
+    <xs:attribute name="write" type="xs:boolean" use="required"/>
+    <xs:attribute name="delete" type="xs:boolean" use="required"/>
+    <xs:attribute name="changeACL" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__acl__user">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__acl__group">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__attach">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="to" type="xs:string" use="required"/>
+    <xs:attribute name="slot" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__copy">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="to" type="xs:string" use="required"/>
+    <xs:attribute name="silent" type="xs:boolean"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__create">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="author" type="op_database__create__author" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="summary" type="op_database__create__summary" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="acl" type="op_database__create__acl" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The acl (Access Control List) instruction contains information about access rights. Its attributes define which rights its child-elements will receive.</p><pre><code>&lt;operation name="database" value="$document"&gt;<br/>&#32;&#32;&lt;acl read="true" write="false" delete="false" changeACL="false"&gt;<br/>&#32;&#32;&#32;&#32;&lt;user group="{$groupid}"&gt;{$userid}&lt;/user&gt;<br/>&#32;&#32;&#32;&#32;&lt;group&gt;{$groupid}&lt;/group&gt;<br/>&#32;&#32;&lt;/acl&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="index" type="op_database__create__index" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="content" type="op_database__create__content" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Body content for an operation — the document or node-set it works with. Not validated: it is application data.</p>]]></xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Object"/>
+          <xs:enumeration value="Container"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="alias" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="rename" default="false">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="false"/>
+          <xs:enumeration value="true"/>
+          <xs:enumeration value="ask"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="path" type="xs:boolean"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__create__author">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__create__summary">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__create__acl">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:integer" use="required"/>
+    <xs:attribute name="read" type="xs:boolean" use="required"/>
+    <xs:attribute name="write" type="xs:boolean" use="required"/>
+    <xs:attribute name="delete" type="xs:boolean" use="required"/>
+    <xs:attribute name="changeACL" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__create__index">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="key" type="op_database__create__index__key" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="op_database__create__index__key">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="index" type="xs:boolean" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__create__content">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string"/>
+    <xs:attribute name="eval" default="false">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="true"/>
+          <xs:enumeration value="false"/>
+          <xs:enumeration value="pct"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="href" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__delete">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="permanent" type="xs:boolean"/>
+    <xs:attribute name="silent" type="xs:boolean"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__detach">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="slot" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__link">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="alias" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__listen">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="event" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Change"/>
+          <xs:enumeration value="Append"/>
+          <xs:enumeration value="Prepend"/>
+          <xs:enumeration value="Insert"/>
+          <xs:enumeration value="Replace"/>
+          <xs:enumeration value="ReplaceText"/>
+          <xs:enumeration value="RemoveNode"/>
+          <xs:enumeration value="RemoveChildren"/>
+          <xs:enumeration value="Insert"/>
+          <xs:enumeration value="Replace"/>
+          <xs:enumeration value="Remove"/>
+          <xs:enumeration value="NewFolder"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="step" type="xs:string" use="required"/>
+    <xs:attribute name="subfolders" type="xs:boolean" default="false"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__mount">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="group" type="op_database__mount__group" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="database" type="op_database__mount__database" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="memory" type="op_database__mount__memory" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="local" type="op_database__mount__local" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="published" type="op_database__mount__published" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Publication state of an object. Instruction of the database operation.</p>]]></xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="friendly" type="xs:string" use="required"/>
+    <xs:attribute name="hidden" type="xs:string" default="false"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__mount__group">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__mount__database">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__mount__memory">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__mount__local">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__mount__published">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__move">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="to" type="xs:string" use="required"/>
+    <xs:attribute name="silent" type="xs:boolean"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__publish">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="alias" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="suggest" type="xs:string"/>
+    <xs:attribute name="password" type="xs:string"/>
+    <xs:attribute name="visibility" default="public">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="private"/>
+          <xs:enumeration value="friends"/>
+          <xs:enumeration value="public"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="access" default="read">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="read"/>
+          <xs:enumeration value="create"/>
+          <xs:enumeration value="receive"/>
+          <xs:enumeration value="update"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="description" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__rename">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="to" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__restore">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__share">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="use-selection" type="xs:boolean" default="true"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__shares">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="alias" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__shortcut">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="icon" type="op_database__shortcut__icon" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="target" type="op_database__shortcut__target" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="data" type="op_database__shortcut__data" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="startfolder" type="op_database__shortcut__startfolder" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="to" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__shortcut__icon">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__shortcut__target">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__shortcut__data">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__shortcut__startfolder">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_database__subscribe">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="userid" type="xs:integer"/>
+    <xs:attribute name="username" type="xs:string"/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="password" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__subscribers">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="alias" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__trashcan">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="action" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="restore"/>
+          <xs:enumeration value="empty"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="silent" type="xs:boolean" default="true"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__truncate">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="silent" type="xs:boolean" default="true"/>
+    <xs:attribute name="progress" type="xs:boolean" default="false"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__unlink">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__unlisten">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="event" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__unpublish">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="group" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__unshare">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="suggest" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__unsubscribe">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_database__upload">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="to" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- operation: debug -->
+  <xs:complexType name="op_debug" mixed="true">
+    <xs:attribute name="name" type="xs:string" use="required" fixed="debug"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- operation: decision -->
+  <xs:complexType name="op_decision">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="when" type="op_decision__when" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="otherwise" type="op_decision__otherwise" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="decision"/>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_decision__when">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="exists" type="xs:boolean" default="false"/>
+    <xs:attribute name="test" type="xs:string"/>
+    <xs:attribute name="step" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_decision__otherwise">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="step" type="xs:string"/>
+  </xs:complexType>
+
+  <!-- operation: foreach -->
+  <xs:complexType name="op_foreach">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="operation" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="foreach"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- operation: friends -->
+  <xs:complexType name="op_friends">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="create" type="op_friends__create" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction of the database, groups operations.</p><p>In database: The create instruction is used to create Objects or Containers and has two attributes, type and name.</p><pre><code>&lt;operation name="database" value="home://Documents/"&gt;<br/>&#32;&#32;&lt;create type="container" name="Contactbook"&gt;<br/>&#32;&#32;&#32;&#32;&lt;content&gt;Contact&lt;/content&gt;<br/>&#32;&#32;&lt;/create&gt;<br/>&lt;/operation&gt;</code></pre><p>In groups: Using the create instruction we can create new groups for different access-rights across applications or data The attribute value controls which parent-group is being used.</p><pre><code>&lt;operation name="groups" value="tenant"&gt;<br/>&#32;&#32;&lt;create type="subgroup" name="{$groupName}" alias="{$groupAlias}" public="public" applicant="open" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="remove" type="op_friends__remove" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="friends"/>
+  </xs:complexType>
+  <xs:complexType name="op_friends__create">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_friends__remove">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="group" type="xs:string"/>
+    <xs:attribute name="user" type="xs:integer"/>
+  </xs:complexType>
+
+  <!-- operation: groups -->
+  <xs:complexType name="op_groups">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="accept" type="op_groups__accept" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Allows a user to accept an invitation to a group.</p><pre><code>&lt;operation name="groups"&gt;<br/>&#32;&#32;&lt;accept to="home://Groups/{$group}"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="acceptRequest" type="op_groups__acceptRequest" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Accepting a request to join a group, where the parent value points to the team</p><pre><code>&lt;operation name="groups" value="$groupPath"&gt;<br/>&#32;&#32;&lt;acceptRequest id="{$groupid}" reason="{$reason}" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="add" type="op_groups__add" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction to add a role to the given group via the value-attribute</p><pre><code>&lt;operation name="groups" value="$groupPath"&gt;<br/>&#32;&#32;&lt;add name="{$username}" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="addAvatar" type="op_groups__addAvatar" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The addAvatar instruction is used to save a group specific avatar for the user. This instruction also uses the value attribute of the operation element to define the URL to the image, which to use.</p><pre><code>&lt;operation name="groups" value="{$dropSrc}"&gt;<br/>&#32;&#32;&lt;addAvatar to="xios" left="0" top="0" width="128" height="128"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="ban" type="op_groups__ban" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Bans a user from a group and sends a comment/reason as to why the user has been banned.</p><pre><code>&lt;operation name="groups" value="tenant"&gt;<br/>&#32;&#32;&lt;ban name="bob1337" reason="to many bobs" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="create" type="op_groups__create" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction of the database, groups operations.</p><p>In database: The create instruction is used to create Objects or Containers and has two attributes, type and name.</p><pre><code>&lt;operation name="database" value="home://Documents/"&gt;<br/>&#32;&#32;&lt;create type="container" name="Contactbook"&gt;<br/>&#32;&#32;&#32;&#32;&lt;content&gt;Contact&lt;/content&gt;<br/>&#32;&#32;&lt;/create&gt;<br/>&lt;/operation&gt;</code></pre><p>In groups: Using the create instruction we can create new groups for different access-rights across applications or data The attribute value controls which parent-group is being used.</p><pre><code>&lt;operation name="groups" value="tenant"&gt;<br/>&#32;&#32;&lt;create type="subgroup" name="{$groupName}" alias="{$groupAlias}" public="public" applicant="open" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="delete" type="op_groups__delete" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Instruction of the change, database, groups operations.</p><p>In change: Deleting data is done by either deleting the current selection of a component or by supplying an XPath expression in the select attribute.</p><pre><code>&lt;operation name="change" value="home://Documents/"&gt;<br/>&#32;&#32;&lt;delete select="/db:result/db:object[@name='{$fileTitle}']"/&gt;<br/>&lt;/operation&gt;</code></pre><p>In database: The delete instruction is used to delete Objects and Containers and has two attributes, permanent and silent, both which are boolean type attributes.</p><pre><code>&lt;operation name="database" value="home://Documents/MyDocument.xml"&gt;<br/>&#32;&#32;&lt;delete permanent="true" silent="false"/&gt;<br/>&lt;/operation&gt;</code></pre><p>In groups: Deletes a group, role, or subgroup to a group.</p><pre><code>&lt;operation name="groups" value="$pathToGroup"&gt;<br/>&#32;&#32;&lt;delete type="group" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="deleteAvatar" type="op_groups__deleteAvatar" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This instruction is used to delete the current avatar for a specific group. It does not utilize the value attribute.</p><pre><code>&lt;operation name="groups" value="{$dropSrc}"&gt;<br/>&#32;&#32;&lt;deleteAvatar to="xios"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="invite" type="op_groups__invite" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Invite user/users to a group.</p><pre><code>&lt;operation name="groups" value="tenant/mygroup"&gt;<br/>&#32;&#32;&lt;invite&gt;<br/>&#32;&#32;&#32;&#32;&lt;message&gt;Hello!&lt;/message&gt;<br/>&#32;&#32;&lt;/invite&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="join" type="op_groups__join" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Using the join instruction lets you join a group upon an invite.</p><pre><code>&lt;operation name="groups"&gt;<br/>&#32;&#32;&lt;join to="{$groupid}" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="kick" type="op_groups__kick" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Kick a group member.</p><pre><code>&lt;operation name="groups" value="group"&gt;<br/>&#32;&#32;&lt;kick name="{$user}" reason="&lt;/3" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="reject" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This instruction answers to an invitation with a rejection, with a given reason.</p><pre><code>&lt;operation name="groups" value="$groupPath"&gt;<br/>&#32;&#32;&lt;reject id="$userid" reason="I must find my own way..." /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="request" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This instruction allows you to send a request as the current user to join a specified group. Value defines which group to join.</p><pre><code>&lt;operation name="groups" value="$groupPath"&gt;<br/>&#32;&#32;&lt;request name="bobert" reason="party pls" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="saveMeta" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The saveMeta instruction extracts meta data from a document named profile.xml in the group database. Works only on main group.</p><pre><code>&lt;operation name="groups" value="$channelName"&gt;<br/>&#32;&#32;&lt;saveMeta/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="status" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The status instruction sets the users status message and online status within the specified group.</p><pre><code>&lt;operation name="groups" value="$groupPath"&gt;<br/>&#32;&#32;&lt;status message="having a good day"&gt;available&lt;/status&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="unban" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The unban instruction relieves a user from a prior ban in the specified group.</p><pre><code>&lt;operation name="groups" value="$groupPath"&gt;<br/>&#32;&#32;&lt;unban reason="Good bob" name="bobert" /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="leave" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The leave instruction is used to leave the specified group as the current user. To specify which group the value attribute is set on the operation element.</p><pre><code>&lt;operation name="groups" value="$groupPath"&gt;<br/>&#32;&#32;&lt;leave /&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="list" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>By using the list operation we can retrieve information about groups in a list. The list operation can list the group members, banned users, applicants, invites, and roles of a group.</p><pre><code>&lt;operation name="groups" value="tenant"&gt;<br/>&#32;&#32;&lt;list type="groupMembers" offset="100" count="200" responseAlias="listResponse"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="groups"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__accept">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="to" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__acceptRequest">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="reason" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__add">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__addAvatar">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="height" type="xs:string"/>
+    <xs:attribute name="left" type="xs:string"/>
+    <xs:attribute name="to" type="xs:string"/>
+    <xs:attribute name="top" type="xs:string"/>
+    <xs:attribute name="width" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__ban">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="reason" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__create">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" default="group"/>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="alias" type="xs:string"/>
+    <xs:attribute name="public" type="xs:string" default="private"/>
+    <xs:attribute name="applicant" type="xs:string" default="review"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__delete">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" default="group"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__deleteAvatar">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="group" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__invite">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_groups__join">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="to" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_groups__kick">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" default="group"/>
+  </xs:complexType>
+
+  <!-- operation: login -->
+  <xs:complexType name="op_login">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="username" type="op_login__username" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="password" type="op_login__password" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="reset" type="op_login__reset" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="client" type="op_login__client" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="login"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_login__username">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_login__password">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_login__reset">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_login__client">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- operation: navigate -->
+  <xs:complexType name="op_navigate">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="call" type="op_navigate__call" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="navigate"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_navigate__call">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="axis">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="parent"/>
+          <xs:enumeration value="preceding"/>
+          <xs:enumeration value="following"/>
+          <xs:enumeration value="first"/>
+          <xs:enumeration value="last"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="element" type="xs:string"/>
+    <xs:attribute name="step" type="xs:string"/>
+  </xs:complexType>
+
+  <!-- operation: open -->
+  <xs:complexType name="op_open">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="param" type="op_open__param" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="name" type="op_open__name" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="position" type="op_open__position" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="trigger" type="op_open__trigger" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="step" type="op_open__step" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="debug" type="op_open__debug" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="browser" type="op_open__browser" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="action" type="op_open__action" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="context" type="op_open__context" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="focus" type="op_open__focus" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="handle-close" type="op_open__handle-close" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="window" type="op_open__window" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="open"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+    <xs:attribute name="secure" type="xs:boolean" default="false"/>
+  </xs:complexType>
+  <xs:complexType name="op_open__param">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_open__name">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_open__position">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="x" type="xs:integer"/>
+    <xs:attribute name="y" type="xs:integer"/>
+    <xs:attribute name="rel" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_open__trigger">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="model" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="data"/>
+          <xs:enumeration value="value"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_open__step">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_open__debug">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_open__browser">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="secure" type="xs:boolean"/>
+    <xs:attribute name="features" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_open__action">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_open__context">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_open__focus">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_open__handle-close">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_open__window">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="width" type="xs:integer"/>
+    <xs:attribute name="height" type="xs:integer"/>
+    <xs:attribute name="left" type="xs:integer"/>
+    <xs:attribute name="top" type="xs:integer"/>
+  </xs:complexType>
+
+  <!-- operation: print -->
+  <xs:complexType name="op_print">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="transform" type="op_print__transform" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="print"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+    <xs:attribute name="debug" type="xs:boolean" default="false"/>
+  </xs:complexType>
+  <xs:complexType name="op_print__transform">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="type" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="html"/>
+          <xs:enumeration value="xml"/>
+          <xs:enumeration value="xsl"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+
+  <!-- operation: rollBack -->
+  <xs:complexType name="op_rollBack">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="model" type="op_rollBack__model" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="documents" type="op_rollBack__documents" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="rollBack"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_rollBack__model">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_rollBack__documents">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- operation: save -->
+  <xs:complexType name="op_save">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="saveas" type="op_save__saveas" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="save"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_save__saveas">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- operation: search -->
+  <xs:complexType name="op_search" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="document" type="op_search__document" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="output" type="op_search__output" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="elements" type="op_search__elements" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="search"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_search__document">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="href" type="xs:string" use="required"/>
+    <xs:attribute name="xlink" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_search__output">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_search__elements">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="search" type="xs:string" use="required"/>
+    <xs:attribute name="ignore-elements" type="xs:string" use="required"/>
+    <xs:attribute name="ignore-terms" type="xs:string"/>
+  </xs:complexType>
+
+  <!-- operation: setSelection -->
+  <xs:complexType name="op_setSelection">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="component" type="op_setSelection__component" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="setSelection"/>
+  </xs:complexType>
+  <xs:complexType name="op_setSelection__component">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="item" type="op_setSelection__component__item" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="view" type="xs:string"/>
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_setSelection__component__item">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="select" type="xs:string"/>
+  </xs:complexType>
+
+  <!-- operation: share -->
+  <xs:complexType name="op_share">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="view" type="op_share__view" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="zone" type="op_share__zone" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="share"/>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_share__view">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="action" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="singleton"/>
+          <xs:enumeration value="clone"/>
+          <xs:enumeration value="end"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="direction">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="left"/>
+          <xs:enumeration value="right"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="user" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_share__zone">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="direction" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="right"/>
+          <xs:enumeration value="left"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="user" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- operation: split -->
+  <xs:complexType name="op_split">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="value" type="op_split__value" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="document" type="op_split__document" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="token" type="op_split__token" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="split"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="op_split__value">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_split__document">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="op_split__token">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <!-- operation: config -->
+  <xs:complexType name="op_config">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="getProperty" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Reads a stored property into an alias. Instruction of the config operation.</p><pre><code>&lt;operation name="config" value="cbe/intro"&gt;<br/>&#32;&#32;&lt;getProperty alias="introGuide"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="setProperty" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Writes a stored property. Instruction of the config operation.</p><pre><code>&lt;operation name="config" value="cbe/ai/docs"&gt;<br/>&#32;&#32;&lt;setProperty value="{$threadId}"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="config"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- operation: system -->
+  <xs:complexType name="op_system">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="logout" type="op__leaf" minOccurs="0" maxOccurs="unbounded">
+      <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Logs the current identity out. Instruction of the system operation.</p><pre><code>&lt;operation name="system"&gt;<br/>&#32;&#32;&lt;logout/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="system"/>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+  <!-- operation: tenant -->
+  <xs:complexType name="op_tenant">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="createUser" type="op_tenant__createUser" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The createUser operation defines 8 metrics that enables the developer to create a user to the Tenant. Two of which are optional/not requiered for the user to be created.</p>]]></xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="deleteUser" type="op_tenant__deleteUser" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Deleting users is done in two steps: First, call deleteUsers with type equal to requestdelete. This will trigger the cloudbackend system to send out an email to the enduser to verify the delete by clicking a link.</p><pre><code>&lt;operation name="tenant"&gt;<br/>&#32;&#32;&lt;deleteUser type="requestdelete" userid="userId" usedefault="true/false"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required" fixed="tenant"/>
+    <xs:attribute name="value" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_tenant__createUser">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="value" type="xs:string" use="required"/>
+    <xs:attribute name="username" type="xs:string"/>
+    <xs:attribute name="password" type="xs:string"/>
+    <xs:attribute name="firstname" type="xs:string"/>
+    <xs:attribute name="lastname" type="xs:string"/>
+    <xs:attribute name="email" type="xs:string"/>
+    <xs:attribute name="source" type="xs:string"/>
+    <xs:attribute name="responseAlias" type="xs:string"/>
+    <xs:attribute name="referralCode" type="xs:string"/>
+    <xs:attribute name="eulaVersion" type="xs:string"/>
+  </xs:complexType>
+  <xs:complexType name="op_tenant__deleteUser">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any namespace="##any" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" use="required"/>
+    <xs:attribute name="code" type="xs:string" use="required"/>
+    <xs:attribute name="username" type="xs:string" use="required"/>
+    <xs:attribute name="userid" type="xs:string" use="required"/>
+    <xs:attribute name="forgetuser" type="xs:string"/>
+    <xs:attribute name="deletecontent" type="xs:string"/>
+    <xs:attribute name="usedefault" type="xs:string"/>
+  </xs:complexType>
+  <!-- ============================================================= -->
+  <!-- Operation children, declared globally                         -->
+  <!-- ============================================================= -->
+  <!-- These were a closed xs:choice, which kept reporting valid markup as
+       invalid: each operation (tenant, database, groups, config, system, …) has
+       its own instruction set, and applications embed their own XML payloads
+       besides. The operation content model is now a skipped wildcard, and these
+       declarations are global so vscode-xml still offers them — with their
+       documentation — at that wildcard.
+       Little is given up: validating an operation's children was only ever a
+       check on the element name, since their attributes were already unvalidated
+       (anyAttribute/skip). `view` is absent because view.xsd already declares a
+       global element of that name; the wildcard still accepts it. -->
+
+  <!-- Instructions the reference documents but does not tie to an operation.
+       They stay globally declared so the editor still suggests them; everything
+       else is declared inside the op_* content model it belongs to, so a
+       decision no longer suggests `saveas` and a database call no longer
+       suggests `when`. Children of <operation> are matched by an xs:any with
+       processContents="skip", and for a wildcard the editor falls back to
+       offering every global element — which is why a global is a suggestion in
+       every operation at once. -->
+
+  <!-- What the action operation can do to a component. Enumerated so the editor
+       offers the set instead of leaving the attribute free text, where the only
+       suggestions were the editor's own guesses at words in the document.
+       A union, like the operation name below it: an action a newer runtime adds,
+       or one this list has missed, still validates rather than turning working
+       manifests red. Which actions apply to which component is per component —
+       see the "Actions" section of the reference — and is not expressed here. -->
+  <xs:simpleType name="t_componentAction">
+    <xs:union memberTypes="t_componentActionBuiltIn t_componentActionOther"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="t_componentActionOther">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z_][A-Za-z0-9_.\-]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="t_componentActionBuiltIn">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="activate"/>
+      <xs:enumeration value="add"/>
+      <xs:enumeration value="busy"/>
+      <xs:enumeration value="clear"/>
+      <xs:enumeration value="disable"/>
+      <xs:enumeration value="enable"/>
+      <xs:enumeration value="error"/>
+      <xs:enumeration value="focus"/>
+      <xs:enumeration value="hide"/>
+      <xs:enumeration value="open"/>
+      <xs:enumeration value="readonly"/>
+      <xs:enumeration value="readwrite"/>
+      <xs:enumeration value="release"/>
+      <xs:enumeration value="select"/>
+      <xs:enumeration value="set"/>
+      <xs:enumeration value="show"/>
+      <xs:enumeration value="unbind"/>
+      <xs:enumeration value="valid"/>
+      <xs:enumeration value="warning"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- The operation name. A union so that operations this project adds in
+       JavaScript (boot.addOperation("validate", ...) — see "Additional
+       Operations" in the XIOS/3 manual) validate alongside the built-in set,
+       which stays enumerated so completion and hover still describe each one. -->
+  <xs:simpleType name="t_operationName">
+    <xs:union memberTypes="t_operationNameBuiltIn t_operationNameCustom"/>
+  </xs:simpleType>
+
+  <!-- Operations added by the project. Any name the built-in list does not
+       already cover; the schema cannot know what a project registers. -->
+  <xs:simpleType name="t_operationNameCustom">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Za-z_][A-Za-z0-9_.\-]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="t_operationNameBuiltIn">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="action">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation enables the developer to perform a number of actions on components. All available actions are listed in the "Actions" section of the Reference manual, with examples and a list of components that the action can be applied to. This operation is asynchronous.</p><pre><code>&lt;operation name="action" value="#view1"&gt;<br/>&#32;&#32;&lt;component name="menu1" action="open"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="bind">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation enables users to bind data to components, thus utilizing the strength with XIOS/3 to have UI components intelligently bound to data models.</p><pre><code>&lt;operation name="bind" value="#view1#tree1"&gt;<br/>&#32;&#32;&lt;component view="view1" name="list2"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="call">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to call other steps.</p><pre><code>&lt;operation name="call" value="hideButton"&gt;<br/>&#32;&#32;&lt;timer wait="2000" alias="timerId"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="callMethod">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to execute methods on components and even to send parameters to them.</p><pre><code>&lt;operation name="callMethod" value="#view1#component3"&gt;<br/>&#32;&#32;&lt;method name="setValue"&gt;<br/>&#32;&#32;&#32;&#32;&lt;param type="string"&gt;hello&lt;/param&gt;<br/>&#32;&#32;&lt;/method&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="callService">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation allows XIOS/3 applications to communicate with external web services</p><pre><code>&lt;operation name="callService" value="query://statistics"&gt;<br/>&#32;&#32;&lt;document&gt;temp://result&lt;/document&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="change">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to manipulate XML data and is the key to using the Data Virtualization Layer.</p><pre><code>&lt;operation name="change" value="#view1#component1"&gt;<br/>&#32;&#32;&lt;store select="task/@complete" type="replaceText"&gt;true&lt;/store&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="channel">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to create a communicator that can communicate to a REST API or Web Service API. The channel can then either be used directly to access resources like static web sites, used from other operations like callService, or used as communications layer for more complex abstractions like databases and filesystems.</p><pre><code>&lt;operation name="channel"&gt;<br/>&#32;&#32;&lt;name&gt;https&lt;/name&gt;<br/>&#32;&#32;&lt;title&gt;HTTPS&lt;/title&gt;<br/>&#32;&#32;&lt;protocol&gt;HTTPS&lt;/protocol&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="config">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Reads and writes stored application properties, through getProperty and setProperty. Not in the published reference; taken from production process code.</p><pre><code>&lt;operation name="config" value="cbe/intro"&gt;<br/>&#32;&#32;&lt;getProperty alias="introGuide"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="system">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>System-level actions, such as logging the current identity out. Not in the published reference; taken from production process code.</p><pre><code>&lt;operation name="system"&gt;<br/>&#32;&#32;&lt;logout/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="download">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>Downloads a document to the user's device. Not in the published reference; taken from production process code.</p>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="close">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to close documents from XIOS/3, by clearing them from the cache.</p><pre><code>&lt;operation name="close" value="addUser"&gt;<br/>&#32;&#32;&lt;mode&gt;view&lt;/mode&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="confirm">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to display a confirmation dialog.</p><pre><code>&lt;operation name="confirm"&gt;<br/>&#32;&#32;&lt;message&gt;Something happened!&lt;/message&gt;<br/>&#32;&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="create">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to create an XML node-set by creating a new Object (temporary document).</p><pre><code>&lt;operation name="create" value="#Clipboard"&gt;<br/>&#32;&#32;&lt;clipboard/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="database">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation offers various ways of handling database instructions.</p><pre><code>&lt;operation name="database" value="https://xios3.com/image.jpg"&gt;<br/>&#32;&#32;&lt;attach to="home://myFile.xml" slot="2"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="debug">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to debug applications when developing for XIOS/3.</p><pre><code>&lt;operation name="debug" value="Text output in debug window"/&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="decision">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation defines a switch-statement which is used to test conditions.</p><pre><code>&lt;operation name="decision" value="tenant://myTable"&gt;<br/>&#32;&#32;&lt;when exists="true"&gt;<br/>&#32;&#32;&#32;&#32;&lt;operation name="debug" value="Container exists"&gt;alert:plain&lt;/operation&gt;<br/>&#32;&#32;&lt;/when&gt;<br/>&#32;&#32;&lt;when exists="false"&gt;<br/>&#32;&#32;&#32;&#32;&lt;operation name="debug" value="Container needs to be created"&gt;alert:plain&lt;/operation&gt;<br/>&#32;&#32;&lt;/when&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="foreach">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation allows you to iterate (loop) using a counter similar to a for( let i = 0; i &lt; 10; i++ ) { } construct. It also allows looping over an XML node set provided in the value attribute. For each iteration it makes, it will execute its child operations.</p><pre><code>&lt;operation name="foreach" value="home://Documents/#db:container/db:object"&gt;<br/>&#32;&#32;&lt;operation name="debug" value="Document {!#@name}"&gt;alert:plain&lt;/operation&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="friends">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation allows you to perform actions on friends or friend groups in the #Friends document (the user's list of friends).</p>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="groups">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation allows you to perform action and receive information from groups.</p><pre><code>&lt;operation name="groups"&gt;<br/>&#32;&#32;&lt;accept to="home://Groups/{$group}"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="login">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation allows you to connect to password protected web services.</p><pre><code>&lt;operation name="login" value="cbe"&gt;<br/>&#32;&#32;&lt;username&gt;{#Login#Username}&lt;/username&gt;<br/>&#32;&#32;&lt;password&gt;{#Login#Password}&lt;/password&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="navigate">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to navigate in the selection relative to XML documents.</p><pre><code>&lt;operation name="navigate" value="!"&gt;<br/>&#32;&#32;&lt;call axis="following" step="10"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="open">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to open process, view and application documents.</p><pre><code>&lt;operation name="open" value="$package#view[@name='view2']" /&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="print">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to print documents.</p><pre><code>&lt;operation name="print" value="{#view#richtext.getValue()}"/&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="rollBack">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to rollback transactions.</p><pre><code>&lt;operation name="rollBack" value="#TransactionManager"/&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="save">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to save XML documents.</p><pre><code>&lt;operation name="save" value="home://Documents/myfile.xml"/&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="search">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation makes the text content within an XML document searchable.</p><pre><code>&lt;operation name="search" value="{#Help#searchField}"&gt;<br/>&#32;&#32;&lt;document href="{$dataDoc}" xlink="load-all"/&gt;<br/>&#32;&#32;&lt;output&gt;#search&lt;/output&gt;<br/>&#32;&#32;&lt;elements search="section/text, document/text" ignore="code"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="setSelection">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to set selections on components that are already bound to data.</p><pre><code>&lt;operation name="setSelection" value="$selection"&gt;<br/>&#32;&#32;&lt;component view="Explorer" name="folderSelector"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="share">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used for actions related to Window Sharing and Gesture Based Collaboration.</p><pre><code>&lt;operation name="share"&gt;<br/>&#32;&#32;&lt;zone direction="right" user="goran"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="split">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>This operation is used to split a string into an XML node-set</p><pre><code>&lt;operation name="split" value="{$time}"&gt;<br/>&#32;&#32;&lt;value&gt;use&lt;/value&gt;<br/>&#32;&#32;&lt;document&gt;#arrTime&lt;/document&gt;<br/>&#32;&#32;&lt;token&gt;:&lt;/token&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="tenant">
+          <xs:annotation><xs:documentation xml:lang="en"><![CDATA[<p>The tenant operation defines operations related to the tenant e.g users and statistics.</p><pre><code>&lt;operation name="tenant"&gt;<br/>&#32;&#32;&lt;deleteUser type="requestdelete" userid="userId" usedefault="true/false"/&gt;<br/>&lt;/operation&gt;</code></pre>]]></xs:documentation></xs:annotation>
+        </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

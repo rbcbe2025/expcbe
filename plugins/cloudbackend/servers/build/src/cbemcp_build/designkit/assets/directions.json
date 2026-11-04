@@ -1,0 +1,187 @@
+{
+  "_about": "Six design directions for XIOS/3 applications. Each is a complete token theme (seeds = colours, knobs = type, spacing and shape; the runtime derives hovers, borders, selection and muted text from the seeds) plus the voice of its status lines. scripts/designkit.py picks one from the app's purpose, or you name one. Every on-* colour was checked against its surface at 4.5:1 or better.",
+  "directions": [
+    {
+      "id": "ledger",
+      "name": "Ledger",
+      "for": "finance, administration, back-office, inventory, CRM, anything with tables and numbers",
+      "keywords": ["invoice", "finance", "accounting", "budget", "expense", "payroll", "inventory", "stock", "order", "admin", "crm", "sales", "billing", "ledger", "report"],
+      "tone": ["precise", "calm", "dense"],
+      "layout": "list + detail with a left navigation rail; tables and totals; tabular numerals",
+      "seeds": {
+        "primary": "#1e3a8a", "on-primary": "#ffffff",
+        "secondary": "#0f766e", "on-secondary": "#ffffff",
+        "tertiary": "#b45309", "on-tertiary": "#ffffff",
+        "background": "#f3f5f9", "surface": "#ffffff", "on-surface": "#111827",
+        "error": "#b91c1c", "on-error": "#ffffff",
+        "lightIcon": "#ffffff", "darkIcon": "#1e3a8a", "grey": "#64748b"
+      },
+      "knobs": {
+        "font-sans": "'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif",
+        "font-display": "'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif",
+        "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+        "text-sm": "12px", "text-md": "13px", "text-lg": "15px",
+        "weight-medium": "500", "weight-bold": "600", "leading-normal": "1.45",
+        "control-height": "30px", "radius-sm": "4px", "radius-md": "6px", "radius-lg": "10px"
+      },
+      "voice": {
+        "first_run": "Your workspace is ready. Add the first record to begin.",
+        "empty": "Nothing here yet.",
+        "saved": "Saved.",
+        "failed": "Could not save. Check the connection and try again."
+      }
+    },
+    {
+      "id": "studio",
+      "name": "Studio",
+      "for": "agencies, creative and project tools, boards, marketing, portfolios",
+      "keywords": ["agency", "design", "creative", "portfolio", "board", "project", "studio", "marketing", "brand", "content", "campaign", "task", "team", "planning"],
+      "tone": ["bright", "confident", "warm"],
+      "layout": "cards on a soft background; a top bar with one primary action; board or list + detail",
+      "seeds": {
+        "primary": "#4338ca", "on-primary": "#ffffff",
+        "secondary": "#c2410c", "on-secondary": "#ffffff",
+        "tertiary": "#0e7490", "on-tertiary": "#ffffff",
+        "background": "#f4f4fb", "surface": "#ffffff", "on-surface": "#1e1b4b",
+        "error": "#b91c1c", "on-error": "#ffffff",
+        "lightIcon": "#ffffff", "darkIcon": "#4338ca", "grey": "#6b7280"
+      },
+      "knobs": {
+        "font-sans": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "font-display": "'Avenir Next', 'Segoe UI', system-ui, -apple-system, sans-serif",
+        "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+        "text-sm": "12px", "text-md": "14px", "text-lg": "16px",
+        "weight-medium": "500", "weight-bold": "700", "leading-normal": "1.5",
+        "control-height": "34px", "radius-sm": "6px", "radius-md": "10px", "radius-lg": "16px"
+      },
+      "voice": {
+        "first_run": "Welcome. Start with your first project; everything else grows from there.",
+        "empty": "No projects yet. Choose New project to add the first one.",
+        "saved": "Saved.",
+        "failed": "That did not save. Try again, or reload the page."
+      }
+    },
+    {
+      "id": "clinic",
+      "name": "Clinic",
+      "for": "health, wellness, bookings and appointments, coaching, anything people use while stressed",
+      "keywords": ["clinic", "health", "patient", "booking", "appointment", "wellness", "therapy", "care", "gym", "coach", "schedule", "calendar", "salon", "dentist", "vet"],
+      "tone": ["calm", "clear", "kind"],
+      "layout": "generous spacing, rounded cards, one task per screen, large controls",
+      "seeds": {
+        "primary": "#0f766e", "on-primary": "#ffffff",
+        "secondary": "#1d4ed8", "on-secondary": "#ffffff",
+        "tertiary": "#be123c", "on-tertiary": "#ffffff",
+        "background": "#eef6f5", "surface": "#ffffff", "on-surface": "#0f172a",
+        "error": "#b91c1c", "on-error": "#ffffff",
+        "lightIcon": "#ffffff", "darkIcon": "#0f766e", "grey": "#5f7470"
+      },
+      "knobs": {
+        "font-sans": "'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif",
+        "font-display": "'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif",
+        "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+        "text-sm": "13px", "text-md": "15px", "text-lg": "18px",
+        "weight-medium": "500", "weight-bold": "700", "leading-normal": "1.55",
+        "control-height": "40px", "radius-sm": "8px", "radius-md": "12px", "radius-lg": "20px"
+      },
+      "voice": {
+        "first_run": "Hello. Your first booking is one tap away.",
+        "empty": "No bookings yet. The next one you add appears here.",
+        "saved": "Done. Your changes are saved.",
+        "failed": "Something went wrong while saving. Nothing was lost; please try again."
+      }
+    },
+    {
+      "id": "field",
+      "name": "Field",
+      "for": "trades, fleets, sites, inspections, logistics, farms: used outdoors, with gloves, in sunlight",
+      "keywords": ["field", "fleet", "site", "inspection", "maintenance", "logistics", "delivery", "farm", "construction", "equipment", "vehicle", "route", "warehouse", "checklist", "safety"],
+      "tone": ["sturdy", "direct", "high-contrast"],
+      "layout": "big tap targets, one column on phones, strong status colours, little decoration",
+      "seeds": {
+        "primary": "#166534", "on-primary": "#ffffff",
+        "secondary": "#c2410c", "on-secondary": "#ffffff",
+        "tertiary": "#1d4ed8", "on-tertiary": "#ffffff",
+        "background": "#f6f3ec", "surface": "#fffdf9", "on-surface": "#1c1917",
+        "error": "#991b1b", "on-error": "#ffffff",
+        "lightIcon": "#ffffff", "darkIcon": "#166534", "grey": "#78716c"
+      },
+      "knobs": {
+        "font-sans": "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif",
+        "font-display": "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif",
+        "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+        "text-sm": "13px", "text-md": "15px", "text-lg": "18px",
+        "weight-medium": "600", "weight-bold": "700", "leading-normal": "1.4",
+        "control-height": "44px", "radius-sm": "4px", "radius-md": "6px", "radius-lg": "8px"
+      },
+      "voice": {
+        "first_run": "Ready. Add the first job.",
+        "empty": "No jobs yet.",
+        "saved": "Saved.",
+        "failed": "Not saved. No signal? It will not retry by itself; try again when you are back online."
+      }
+    },
+    {
+      "id": "night",
+      "name": "Night",
+      "for": "developer tools, monitoring, metrics, media, music, video, anything used for hours in a dim room",
+      "keywords": ["developer", "api", "monitor", "metrics", "log", "media", "music", "video", "game", "stream", "player", "analytics", "status", "console", "terminal"],
+      "tone": ["focused", "quiet", "technical"],
+      "layout": "dark surfaces, one accent, monospace for identifiers, dense lists",
+      "seeds": {
+        "primary": "#6fb6f2", "on-primary": "#0b1020",
+        "secondary": "#3ecf8e", "on-secondary": "#0b1020",
+        "tertiary": "#f5b83d", "on-tertiary": "#0b1020",
+        "background": "#0b1020", "surface": "#141a2e", "on-surface": "#e6ebf5",
+        "error": "#f87171", "on-error": "#0b1020",
+        "lightIcon": "#e6ebf5", "darkIcon": "#6fb6f2", "grey": "#8b9bb8"
+      },
+      "knobs": {
+        "font-sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+        "font-display": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
+        "font-mono": "ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace",
+        "text-sm": "12px", "text-md": "13px", "text-lg": "15px",
+        "weight-medium": "500", "weight-bold": "600", "leading-normal": "1.5",
+        "control-height": "32px", "radius-sm": "4px", "radius-md": "8px", "radius-lg": "12px"
+      },
+      "voice": {
+        "first_run": "Connected. Nothing to show until the first event arrives.",
+        "empty": "No entries.",
+        "saved": "Saved.",
+        "failed": "Write failed."
+      }
+    },
+    {
+      "id": "paper",
+      "name": "Paper",
+      "for": "notes, courses, documentation, writing, journals, recipes, anything read more than clicked",
+      "keywords": ["notes", "course", "learn", "school", "docs", "writing", "journal", "recipe", "book", "wiki", "lesson", "reading", "article", "study"],
+      "tone": ["quiet", "literate", "unhurried"],
+      "layout": "a reading column of 65 characters, serif headings, generous line height, few borders",
+      "seeds": {
+        "primary": "#1f5c45", "on-primary": "#ffffff",
+        "secondary": "#8a4b12", "on-secondary": "#ffffff",
+        "tertiary": "#1d4ed8", "on-tertiary": "#ffffff",
+        "background": "#f7f5ef", "surface": "#fffdf8", "on-surface": "#1f2937",
+        "error": "#991b1b", "on-error": "#ffffff",
+        "lightIcon": "#ffffff", "darkIcon": "#1f5c45", "grey": "#6b7280"
+      },
+      "knobs": {
+        "font-sans": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "font-display": "Georgia, 'Iowan Old Style', 'Times New Roman', serif",
+        "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+        "text-sm": "13px", "text-md": "15px", "text-lg": "18px",
+        "weight-medium": "500", "weight-bold": "700", "leading-normal": "1.65",
+        "control-height": "36px", "radius-sm": "4px", "radius-md": "8px", "radius-lg": "12px"
+      },
+      "voice": {
+        "first_run": "A blank page. Start writing whenever you like.",
+        "empty": "Nothing written yet.",
+        "saved": "Saved.",
+        "failed": "Could not save. Your text is still on the screen; copy it before you reload."
+      }
+    }
+  ],
+  "components_with_token_look": ["view", "button", "checkbox", "combobox", "grid", "iconlist", "input", "menu", "toolbar", "tree", "textarea", "tabstrip", "accordion", "label"],
+  "spinner_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"circular\" viewBox=\"25 25 50 50\" stroke=\"{{GREY}}\"><style>@keyframes dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:89,200;stroke-dashoffset:-35}100%{stroke-dasharray:89,200;stroke-dashoffset:-124}}@keyframes rotate{100%{transform:rotate(360deg)}}.circular{animation:rotate 2s linear infinite;transform-origin:center center}.path{stroke-dasharray:1,200;stroke-dashoffset:0;animation:dash 1.5s ease-in-out infinite;stroke-linecap:round}</style><circle class=\"path\" cx=\"50\" cy=\"50\" r=\"20\" fill=\"none\" stroke-width=\"2\" stroke-miterlimit=\"10\"/></svg>"
+}

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright XIOS/3 AB 2018. Written by Goran Panic. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="t_referenceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="action"/>
+      <xs:enumeration value="event"/>
+      <xs:enumeration value="method"/>
+      <xs:enumeration value="component"/>
+      <xs:enumeration value="operation"/>
+      <xs:enumeration value="extension"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="t_listType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value=""/>
+      <xs:enumeration value="ordered"/>
+      <xs:enumeration value="unordered"/>
+      <xs:enumeration value="indent"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="t_section">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="section" type="t_section" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="document" type="t_document" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="text" type="t_text" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="key" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string"/>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="icon" type="xs:string" use="optional"/>
+    <xs:attribute name="lcase" type="xs:string" use="optional"/>
+    <xs:attribute name="open" type="xs:boolean" use="optional"/>
+    <xs:attribute name="referenceType" type="t_referenceType" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="t_text">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="p" type="t_p" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="picture" type="t_picture" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="list" type="t_list" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="header" type="t_header" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="code" type="t_code" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+  </xs:complexType>
+  
+  <xs:complexType name="t_p" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="picture" type="t_picture" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="ref" type="t_ref" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="bold" minOccurs="0" maxOccurs="unbounded">
+      <xs:complexType>
+        <xs:simpleContent>
+          <xs:extension base="xs:string"/>
+        </xs:simpleContent>
+      </xs:complexType>
+    </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  
+  <xs:complexType name="t_document">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="document" type="t_document" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="text" type="t_text" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="key" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string"/>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="open" type="xs:string" use="optional"/>
+    <xs:attribute name="referenceType" type="t_referenceType" use="optional"/>
+    <xs:attribute name="lcase" type="xs:string" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="t_picture">
+    <xs:attribute name="href" type="xs:string" use="required"/>
+    <xs:attribute name="height" type="xs:int" use="required"/>
+    <xs:attribute name="width" type="xs:int" use="required"/>
+    <xs:attribute name="inline" type="xs:boolean" use="optional"/>
+    <xs:attribute name="border" type="xs:boolean" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="t_list">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="item" type="t_item" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+    <xs:attribute name="type" type="t_listType" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="t_item" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="picture" type="t_picture" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="bold" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string"/>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  
+  <xs:complexType name="t_header" mixed="true">
+    <xs:attribute name="size" type="xs:int" use="required"/>
+  </xs:complexType>
+  
+  <xs:complexType name="t_ref" mixed="true">
+  <!-- TODO RESTRICT ATTRIBUTE VALUES -->
+    <xs:attribute name="type" type="xs:string" use="optional"/>
+    <xs:attribute name="inline" type="xs:boolean" use="optional"/>
+    <xs:attribute name="href" type="xs:string" use="optional"/>
+    <xs:attribute name="xpath" type="xs:string" use="optional"/>
+    <xs:attribute name="target" type="xs:string" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="t_code" mixed="true">
+     <xs:attribute name="heading" type="xs:string" use="optional"/>
+     <xs:attribute name="rows" type="xs:int" use="optional"/>
+     <xs:attribute name="tested" type="xs:boolean" use="optional"/>
+  </xs:complexType>
+  
+  <xs:element name="section" type="t_section"/>
+</xs:schema>

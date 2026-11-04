@@ -1,0 +1,5 @@
+VENDORED_FROM: the cbemcp-build package, extracted from the deploy server's codebase (mcp-cloudbackend/cbemcp-build),
+the lint, scaffold and benchmark tools with the tenant grammar, the schemas and the design kit they read.
+Source: mcp-cloudbackend commit 981dfa9ab13e. Synced 2026-11-04 by scripts/sync-servers.mjs; never edited here.
+Served by `python -m cbemcp_build` over stdio from src/ (PYTHONPATH in the plugin's .mcp.json); its dependencies
+are installed by hooks/hooks.json (scripts/ensure-build-venv.sh) from requirements.txt.

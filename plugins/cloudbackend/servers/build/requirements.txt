@@ -1,0 +1,6 @@
+# cbemcp-build 1.0.0: what `python -m cbemcp_build` needs, pinned to the versions cbemcp's uv.lock
+# resolves (2026-11-04). For a venv that runs the vendored package from PYTHONPATH, eg. the
+# CloudBackend plugin's SessionStart hook; `uv sync` in this directory reads pyproject.toml instead.
+mcp==2.0.0
+xmlschema==4.3.2
+pydantic==2.13.4

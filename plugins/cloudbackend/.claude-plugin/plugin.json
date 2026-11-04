@@ -1,7 +1,7 @@
 {
   "name": "cloudbackend",
   "version": "2026.1104.0",
-  "description": "Build on CloudBackend PaaS with XIOS/3: the published skills (Singularity database, REST API, native SDKs, XIOS/3 applications and design, the SaaS launch path) and the hosted documentation and build connectors.",
+  "description": "Build on CloudBackend PaaS with XIOS/3: the published skills (Singularity database, REST API, native SDKs, XIOS/3 applications and design, the SaaS launch path and the build-and-deploy workflow), five workflow agents, the documentation and build servers running inside the plugin, and the per-tenant deploy connector.",
   "author": {
     "name": "CloudBackend",
     "url": "https://cloudbackend.com"
@@ -15,5 +15,13 @@
     "rest-api",
     "sdk",
     "saas"
-  ]
+  ],
+  "userConfig": {
+    "cbe_tenant": {
+      "type": "string",
+      "title": "CloudBackend tenant",
+      "description": "lowercase letters and digits; the name in your console address",
+      "required": true
+    }
+  }
 }

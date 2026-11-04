@@ -1,0 +1,208 @@
+{
+  "grammar_version": "2026.11.04",
+  "about": "The rules lint_project enforces on a XIOS/3 package before it goes to a CloudBackend PaaS tenant. The tenant's Deploy Wizard validates strictly where a local XVM is loose, and a webshare answers every path with the boot page, so most of these are traps the reader would otherwise find after deploying. This file is the one source: the tool reads it, and the prose in the workflow skill is written from it. A rule has an id, a title, the profile it belongs to (build rules run in both profiles, ship rules only in ship), its severity (error, warning or info), the message and the fix, both with {placeholders} the tool fills per finding.",
+  "profiles": {
+    "build": "What must hold before upload_project: the manifest, the grammar the strict validator rejects, references, secrets, size limits.",
+    "ship": "Everything in build, plus what the served files must satisfy on a webshare: ASCII, no colours outside the token theme, render stylesheets that stay fast, the URL prefix rule."
+  },
+  "allowed_xpath_functions": {
+    "status": "to be measured on a tenant",
+    "todo": "Robin: run each of these functions in a process step on a tenant deployment and record the date in measured_on. Until then the list is the union of the documented XIOS/3 functions and the XPath 1.0 core library; the tenant's strict validator may accept fewer, so a documented function can still be refused there.",
+    "measured_on": null,
+    "sources": [
+      "the XIOS/3 functions reference, 53 documented functions",
+      "the XPath 1.0 core function library",
+      "datadoc: seen in the absolute-path reference example, not documented on its own"
+    ],
+    "functions": [
+      "absolute-path", "apply-locale", "capitalize", "changedate", "changes", "channelname", "combine-path",
+      "concat", "contains", "count", "count-selection", "datatype", "document", "downcase", "emitter",
+      "escape-string", "file-exists", "filename", "folder-exists", "folderid", "foldername", "folderpath",
+      "format-bytes", "format-date", "get-label", "index-of", "is-alias", "is-color", "is-open", "is-running",
+      "is-text-type", "join", "local-name", "localizedate", "match", "parent", "parsedate", "position",
+      "random", "read", "replace", "screen", "selected-text", "selection", "substring", "substring-after",
+      "substring-before", "text-selection", "translate", "trim", "upcase", "xml", "xpath-escape",
+      "boolean", "ceiling", "false", "floor", "id", "lang", "last", "name", "namespace-uri", "normalize-space",
+      "not", "number", "round", "starts-with", "string", "string-length", "sum", "true",
+      "datadoc"
+    ]
+  },
+  "limits": {
+    "max_files": 500,
+    "max_file_bytes": 2097152,
+    "max_total_bytes": 8388608,
+    "font_file_warning_bytes": 204800
+  },
+  "rules": [
+    {
+      "id": "G00",
+      "title": "The manifest and the files it links validate against the XIOS/3 schemas",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file}: {reason}",
+      "fix": "The same schemas the VS Code extension and upload_project validate against; fix the element or attribute named, then lint again.",
+      "notes": "Every XML file reached from index.xml through xlink:href is validated. A <proxy> child of a channel operation is the one schema complaint the tenant deploys through (Deploy Anyway); it is reported under G17 instead."
+    },
+    {
+      "id": "G01",
+      "title": "The manifest is index.xml with an <application> root, version on <about> and never on <process>",
+      "profile": "build",
+      "severity": "error",
+      "message": "{detail}",
+      "fix": "Name the manifest index.xml at the package root, give it an <application> root and <about version=\"...\">, and take version off every <process> (the Deploy Wizard refuses it there)."
+    },
+    {
+      "id": "G02",
+      "title": "No view file named view.xml; view names unique",
+      "profile": "build",
+      "severity": "error",
+      "message": "{detail}",
+      "fix": "Name view files after the view (views/mainView.xml). Two <view> declarations may share a name only when each has its own screen= media query."
+    },
+    {
+      "id": "G03",
+      "title": "Expressions use only the allowed functions",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: {function}() is not an allowed function",
+      "fix": "Use a documented XIOS/3 function or an XPath 1.0 core function; the allowed list is allowed_xpath_functions in the grammar (its status says whether it has been measured on a tenant)."
+    },
+    {
+      "id": "G04",
+      "title": "The call operation names its step with value=",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: <operation name=\"call\"> uses step= instead of value=",
+      "fix": "<operation name=\"call\" value=\"stepId\"/>: value names the step; step= is not an attribute of call."
+    },
+    {
+      "id": "G05",
+      "title": "No <select>, <option> or <a> in views",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: <{tag}> is not a XIOS/3 component",
+      "fix": "The tenant dialect flattens raw HTML in views. Use <combobox> for a choice and a button, label or render for a link; raw HTML belongs only in a listview's XSL."
+    },
+    {
+      "id": "G06",
+      "title": "A process with <script href> has a start step",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: the process loads a script but has no <step id=\"start\">",
+      "fix": "Add <step id=\"start\"><alias name=\"myProcess\" value=\"started\"/></step>: without it a call made before the import finishes is skipped silently."
+    },
+    {
+      "id": "G07",
+      "title": "Every link resolves inside the package",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: {attr}=\"{href}\" {detail}",
+      "fix": "Link to a file that is in the package, by a path relative to the linking file that stays inside the package root."
+    },
+    {
+      "id": "G08",
+      "title": "Custom component tags are XML names that do not collide with native components",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: {detail}",
+      "fix": "Give the component a tag that is a plain XML name (letters, digits, '-', '_', '.') and is not the name of a built-in component.",
+      "notes": "A tag that is not an XML name is an error. A tag that shadows a native component name is a warning: validation lets the app's declaration win, but a reader of the view cannot tell the two apart."
+    },
+    {
+      "id": "G09",
+      "title": "Served text files are ASCII",
+      "profile": "ship",
+      "severity": "error",
+      "message": "{file} line {line}: non-ASCII character",
+      "fix": "The webshare labels an ASCII file ISO-8859-1 and a UTF-8 file UTF-8; other cases were not verified. Use character references in XML and HTML (&#246;) and \\u escapes in JavaScript."
+    },
+    {
+      "id": "G10",
+      "title": "Colours live in one token theme, never in views or styles",
+      "profile": "ship",
+      "severity": "error",
+      "message": "{detail}",
+      "fix": "Declare exactly one <theme tokens=\"true\"> in the manifest with literal values in <tokens> (including the font family) and the seeds in <colors>; read var(--xios-color-*) everywhere else. A hex as a var() fallback is allowed."
+    },
+    {
+      "id": "G11",
+      "title": "No fetch or XMLHttpRequest to external hosts in JavaScript",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: {detail}",
+      "fix": "Declare a proxy channel in the process and call the API with callService through it; the key stays in the proxy's configuration, never in the package."
+    },
+    {
+      "id": "G12",
+      "title": "No key- or token-shaped strings",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: a string shaped like {kind}",
+      "fix": "Everything in a deployed container is publicly readable. Remove the value, rotate it, and route the call through a proxy channel."
+    },
+    {
+      "id": "G13",
+      "title": "A tenant-shared package guards its writes to home://",
+      "profile": "build",
+      "severity": "warning",
+      "message": "{file} line {line}: a database write to {href} with no guard, in a package shared with the tenant",
+      "fix": "On a shared deployment home:// is each visitor's own drive. Create the container first inside <operation name=\"decision\" value=\"home://...\"><when exists=\"false\">, or write under tenant://."
+    },
+    {
+      "id": "G14",
+      "title": "Render stylesheets iterate with for-each and call-template, and emit no <br/>",
+      "profile": "ship",
+      "severity": "error",
+      "message": "{file} line {line}: {detail}",
+      "fix": "xsl:for-each with xsl:call-template renders a list in the runtime's XSLT engine far faster than xsl:apply-templates; a <br/> renders as two line breaks, so use block elements."
+    },
+    {
+      "id": "G15",
+      "title": "No font file over 200 KB",
+      "profile": "build",
+      "severity": "warning",
+      "message": "{file}: a font file of {size} bytes",
+      "fix": "The runtime includes the Lucide icons; ship only the glyphs you use as SVG, and a text font as a system stack or a subset."
+    },
+    {
+      "id": "G16",
+      "title": "At most 500 text files, 2 MB each, 8 MB in all",
+      "profile": "build",
+      "severity": "error",
+      "message": "{detail}",
+      "fix": "upload_project refuses a larger package; keep assets small and binary files out (they cannot be uploaded as text)."
+    },
+    {
+      "id": "G17",
+      "title": "A proxy channel is expected to be flagged by the Deploy Wizard",
+      "profile": "build",
+      "severity": "info",
+      "message": "{file} line {line}: <proxy> under a channel operation: expected, deploy with Deploy Anyway",
+      "fix": "Nothing to change. The wizard's verifier reports 'proxy is not a valid child of operation' for the documented proxy channel; the deployment goes through with Deploy Anyway."
+    },
+    {
+      "id": "G18",
+      "title": "The deployment name and URL prefix are lowercase letters and digits, not beginning with xios",
+      "profile": "ship",
+      "severity": "error",
+      "message": "{detail}",
+      "fix": "A deployment name is [a-z0-9]+ (it becomes the host name). The host's robots.txt disallows every path beginning with xios, and /xios/ is the host's own runtime, so choose another prefix."
+    },
+    {
+      "id": "G19",
+      "title": "Every trigger and every #view#component reference resolves to a named component",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: {detail}",
+      "fix": "Name every component in the view and spell the view and component names in the process exactly as the view does; a trigger that resolves to nothing fires nothing, silently."
+    },
+    {
+      "id": "G20",
+      "title": "With a <login>, the login process loads first and the app's own view and process load on request",
+      "profile": "build",
+      "severity": "error",
+      "message": "{file} line {line}: {detail}",
+      "fix": "Put <process xlink:actuate=\"onLoad\" xlink:href=\"xios://apps/login.xml\"/> before the main process, and xlink:actuate=\"onRequest\" on your own <view> and <process> elements."
+    }
+  ]
+}

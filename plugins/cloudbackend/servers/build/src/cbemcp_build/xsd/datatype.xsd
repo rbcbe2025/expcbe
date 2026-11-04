@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="https://cloudbackend.com/datatype.xsd"
+           xmlns="https://cloudbackend.com/datatype.xsd"
+           elementFormDefault="qualified">
+
+  <xs:simpleType name="SortType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ascending"/>
+      <xs:enumeration value="descending"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="type">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Datatypes are stored in a XML document format, where every datatype is represented by one XML document.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        
+        <xs:element name="action">
+          <xs:annotation>
+            <xs:documentation>Defines actions available in the right click context menu of Database Explorer to work with an object that match the datatype.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="text" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Name of the action in context menus.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="icon" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Specify an icon with its specific path or using the 'icon://' protocol.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="mode" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Sets an incoming alias in the called application with the value set in the 'mode' attribute.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="description" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Datatype description.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <xs:element name="edit" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Defines the default edit action when selecting edit in the right click context menu of an selected object in Database Explorer.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType mixed="true">
+            <xs:attribute name="name" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Name of application used for editing.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="icon" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Specify an icon with its specific path or using the 'icon://' protocol.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="id" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Specify the ID of a published application on the marketplace.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="ext">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the possible object file extensions matching that should render a match with the datatype.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <xs:element name="icon" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Specifies the datatype icon with its specific path or using the icon:// protocol.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <xs:element name="index" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Container element to hold additional child elements defining how meta-data extraction should be applied to objects that are XML documents.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:choice minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="key">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Defines a key/value to automatically extract from the source object that matches the datatype whenever the object is saved or updated.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="name">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">The key name.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="xpath">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">The xpath used to go into the source object and locate the value to be stored under the key.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="list" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines how objects belonging to the datatype should be rendered in Database Explorer when its view is set to custom.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <!-- Allows any element of any type from any namespace -->
+              <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+            </xs:sequence>
+            
+            <xs:attribute name="folders" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Display sub-container (folders) in the container listing.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="height" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Specifies the height of each object in the listing.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="button" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Specifies the name custom button displayed in the listing.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="sort" type="SortType">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">How should objects of the datatype be sorted, ascending or descending, based on the defined sort key.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="match" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Xpath expression to match object key/value with.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="camera" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Allow camera upload to the container or not.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="alphabet" type="xs:boolean">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Show alphabet in list for faster selection.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="listviews">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Path to custom listview XSL documents used to render a container with objects only belonging to this datatype and with its schema set to this datatype. *Do not use listviews in combination with the list element, as only one way to render listings may be used for the datatype.*</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="listview">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">A container element holding listview child elements that have a text value pointing to the XSL.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        
+        <xs:element name="mime">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Specifies the datatype icon with its specific path or using the icon:// protocol.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <xs:element name="open">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines the default open action when selecting open in the right click context menu of an selected object or double clicking on the object in Database Explorer.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType mixed="true">
+            <xs:attribute name="name" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Name of application used for editing.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="supersearch" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Name of application as search term to be used in the optional 'supersearch' application extension.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="icon" type="xs:anyURI">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Specify an icon with its specific path or using the 'icon://' protocol.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="id" type="xs:string">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">ID of a published application on the marketplace.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="preview">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Enables the definition of a XSL that should be used to render the datatype if the system is asked to preview an object belonging to the datatype.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+        <xs:element name="search">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Defines either the default @name attribute that refers to the name of an object, or the name of a specified key/value in the datatype.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      
+      <xs:attribute name="name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The name of the datatype.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="mime" type="xs:anyURI">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The main mime type of objects matching the datatype.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="element" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Match datatype based on the root element of an object.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="namespace" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Match datatype based on the set namespace of the root element of an object.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <!-- <xs:attribute name="xmlns" type="xs:string" fixed="https://cloudbackend.com/datatype.xsd">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">This attribute is used to declare the mandatory namespace of the datatype XML document.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute> -->
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

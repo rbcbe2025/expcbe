@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sample listing in the shape a container's listing has (db:result with one db:object per record), so the
+     app can be tried before a tenant exists. In sample mode the process binds the list to this document. -->
+<db:result xmlns:db="https://cloudbackend.com/db.xsd" xmlns:xlink="http://www.w3.org/1999/xlink" id="1" xlink:href="{{SAMPLE_URL}}">
+  <db:object id="101" name="Website relaunch.xml" updated="2026-10-08T09:12:00Z" xlink:href="{{SAMPLE_BASE}}/item1.xml"/>
+  <db:object id="102" name="Spring campaign.xml" updated="2026-10-06T15:40:00Z" xlink:href="{{SAMPLE_BASE}}/item2.xml"/>
+  <db:object id="103" name="Brand guidelines.xml" updated="2026-09-30T11:05:00Z" xlink:href="{{SAMPLE_BASE}}/item3.xml"/>
+</db:result>

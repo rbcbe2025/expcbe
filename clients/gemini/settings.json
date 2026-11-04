@@ -1,10 +1,20 @@
 {
   "mcpServers": {
     "cloudbackend-docs": {
-      "httpUrl": "https://mcp.cloudbackend.com/docs"
+      "command": "node",
+      "args": [
+        "<plugin-dir>/servers/docs/index.mjs"
+      ]
     },
     "cloudbackend-build": {
-      "httpUrl": "https://mcp.cloudbackend.com/build"
+      "command": "<plugin-dir>/.data/venv/bin/python",
+      "args": [
+        "-m",
+        "cbemcp_build"
+      ],
+      "env": {
+        "PYTHONPATH": "<plugin-dir>/servers/build/src"
+      }
     }
   }
 }

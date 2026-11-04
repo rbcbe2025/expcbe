@@ -1,0 +1,18 @@
+{
+  "description": "The build server's Python environment, set up once per machine",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/scripts/ensure-build-venv.sh", "${CLAUDE_PLUGIN_DATA}"],
+            "timeout": 900
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+/* app.css - rules of this application that go beyond the theme. Read the theme's variables, never write a colour:
+   a hex here is the one thing that stops following the palette. The kit's own rules are ui/DesignKit/designkit.css.
+   ASCII only. */
+.dk-brand{font-family:var(--xios-font-display,var(--xios-font-sans,system-ui,sans-serif));font-weight:var(--xios-weight-bold,700);font-size:var(--xios-text-lg,16px);letter-spacing:-.01em}

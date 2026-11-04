@@ -1,12 +1,24 @@
 {
   "mcpServers": {
     "cloudbackend-docs": {
-      "type": "http",
-      "url": "https://mcp.cloudbackend.com/docs"
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/servers/docs/index.mjs"
+      ]
     },
     "cloudbackend-build": {
+      "command": "sh",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/scripts/run-build-server.sh",
+        "${CLAUDE_PLUGIN_DATA}"
+      ],
+      "env": {
+        "PYTHONPATH": "${CLAUDE_PLUGIN_ROOT}/servers/build/src"
+      }
+    },
+    "cloudbackend-deploy": {
       "type": "http",
-      "url": "https://mcp.cloudbackend.com/build"
+      "url": "https://mcp.cloudbackend.com/mcp/${user_config.cbe_tenant}"
     }
   }
 }

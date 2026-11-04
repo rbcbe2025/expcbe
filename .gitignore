@@ -1,9 +1,18 @@
-# Build outputs: the hosted marketplace, index and zip are produced per release by scripts/gen-clients.mjs
-# and scripts/pack.mjs, then copied to the host. On disk, not in history.
+# Build outputs: the marketplace, index and zip the portal serves are produced per release by scripts/gen-clients.mjs
+# and scripts/pack.mjs, then copied into the hub's public/public/plugin/. On disk, not in history.
 dist/
 
-# Eval runs (claude plugin eval --json) are records of a run, not source.
+# Eval runs (claude plugin eval --json) are records of a run, not source. Reference transcripts (evals/baselines/)
+# are source and stay tracked.
 evals/results/
+plugins/cloudbackend/evals/results/
+
+# The build server's environment when the hook is run by hand for another client (clients/README.md), and any
+# Python bytecode: never content, never shipped (scripts/guard.mjs refuses them inside the plugin).
+plugins/cloudbackend/.data/
+__pycache__/
+*.pyc
+.venv/
 
 # Nothing is installed here (zero dependencies), so this is a guard against a stray npm install.
 node_modules/

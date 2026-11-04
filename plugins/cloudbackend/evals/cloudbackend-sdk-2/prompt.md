@@ -1,0 +1,8 @@
+---
+name: cloudbackend-sdk-2
+tags: [cloudbackend-sdk]
+max_turns: 10
+allowed_tools: [Read, Glob, Grep, Skill]
+---
+
+iOS app, Swift: what's the exact CloudBackend SDK call to log in, how do I wait for the callback before touching the account, and where's the reference documentation and the download? Keep it short.

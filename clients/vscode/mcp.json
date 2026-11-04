@@ -1,12 +1,22 @@
 {
   "servers": {
     "cloudbackend-docs": {
-      "type": "http",
-      "url": "https://mcp.cloudbackend.com/docs"
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "<plugin-dir>/servers/docs/index.mjs"
+      ]
     },
     "cloudbackend-build": {
-      "type": "http",
-      "url": "https://mcp.cloudbackend.com/build"
+      "type": "stdio",
+      "command": "<plugin-dir>/.data/venv/bin/python",
+      "args": [
+        "-m",
+        "cbemcp_build"
+      ],
+      "env": {
+        "PYTHONPATH": "<plugin-dir>/servers/build/src"
+      }
     }
   }
 }

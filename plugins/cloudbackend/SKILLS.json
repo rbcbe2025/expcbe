@@ -5,49 +5,49 @@
       "name": "cloudbackend-rest-api",
       "version": "2026.10.27.4",
       "content_hash": "a7622e9c368be433",
-      "sha256": "7d3d37bc5a481cea6dcb4c0803da5391fe3725af53e519b506e2ae3af8b797f6",
+      "sha256": "092b000b711e4ab4c5ad907b1e1a15e4d5f05ef28134b311729659af519714fd",
       "files": 15
     },
     {
       "name": "cloudbackend-saas-launch",
-      "version": "2026.11.4",
-      "content_hash": "6ed5f6d7e4fe4bbf",
-      "sha256": "e3f3b6ee57ba790059f59fb665dc7cc4af0e79a513d226383ddf328b55bd1ed0",
+      "version": "2026.11.4.2",
+      "content_hash": "67cfc0271c7b1ed0",
+      "sha256": "dcbdac2c328798efbeac8a86eb25c7dd5ecf8e8281942441f18efe35836b29f8",
       "files": 2
     },
     {
       "name": "cloudbackend-sdk",
       "version": "2026.10.10",
       "content_hash": "9aa7b4585b7152e8",
-      "sha256": "723f5eba7e9b6c583eac7ce156482f4657f2d988a4270a7a29be202a12b0831f",
+      "sha256": "24e5dc217596aad0f4549a2e88ea75f4d4f915467b181df6a5c317924ec0c78c",
       "files": 5
     },
     {
       "name": "singularity-database",
       "version": "2026.10.15",
       "content_hash": "45b61ebd39926550",
-      "sha256": "c4071c1be0a4007dd061abf4bc238874f7b30f1914437e0135eb88401921f846",
+      "sha256": "a5bb2c28fad907fe9c22578187c61c7f51021370eae0a81d6f0479ebf4e79f51",
       "files": 10
     },
     {
       "name": "xios3-app-basics",
       "version": "2026.11.4",
       "content_hash": "008f70826b1bc776",
-      "sha256": "78e7839ac6c8b3ddc712c219cda28c54abb074c6bab252b7d366698d1aeb1bb1",
+      "sha256": "67c3ba04648c3c04bcd6f410d81a03b1c0d86cfe49a6d257ab11fec204ccc385",
       "files": 11
     },
     {
       "name": "xios3-app-design",
       "version": "2026.11.4",
       "content_hash": "522867cf85fc2005",
-      "sha256": "fafe8cb53503d1764592d19760bb417cc522b554f5072baf808c205d010d49fe",
+      "sha256": "f7004ac211893831464656223de1cd1cb4b1a3e28223c5c56ff21034fe37a246",
       "files": 23
     },
     {
       "name": "xios3-app-workflow",
-      "version": "2026.11.4",
-      "content_hash": "6fab7c20547cc79c",
-      "sha256": "e5cdcdfbe480da3622884ed0479d7842791af7a93932b552830b8412a237bd06",
+      "version": "2026.11.4.2",
+      "content_hash": "7dd7f6ac3d6893bb",
+      "sha256": "a0f766ceb7d2ecdd12c840efd6f6d3a23d9791c3dd0561d7c4b43a3f6dc19811",
       "files": 14
     }
   ]

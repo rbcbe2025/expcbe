@@ -1,7 +1,7 @@
-// Shared by the scripts in this directory: where things are, the connector URLs, the version shape, sha256, a sorted
-// file walk, and a reader and a writer for zip files. Node's built-ins only; nothing to install.
+// Shared by the scripts in this directory: where things are, the servers and their URLs, the version shape, sha256, a
+// sorted file walk, and a reader and a writer for zip files. Node's built-ins only; nothing to install.
 import {createHash} from 'node:crypto';
-import {mkdirSync, readdirSync, readFileSync, statSync, writeFileSync} from 'node:fs';
+import {existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync} from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import zlib from 'node:zlib';
@@ -15,24 +15,44 @@ export const MARKETPLACE = path.join(ROOT, '.claude-plugin', 'marketplace.json')
 export const DIST = path.join(ROOT, 'dist');
 
 // The documentation hub, checked out next to this repo (or CBE_DOCS_HUB). Only its BUILT outputs are read here:
-// public/public/skills/ (the .skill zips and index.json), <corpus>/toc.json, and the publication guard it shares
-// with its own builds. Nothing under its sources, ever.
+// public/public/skills/ (the .skill zips and index.json), public/portal.json (the portal's address, which is where
+// the plugin's marketplace and zip are served), public/dist/mcpb/cloudbackend-docs/server/ (the staged documentation
+// server), <corpus>/toc.json, and the publication guard it shares with its own builds. Nothing under its sources, ever.
+// It writes the hub's public/plugin.json and public/public/plugin/ (the release copies the portal serves).
 export const HUB = path.resolve(process.env.CBE_DOCS_HUB || path.join(ROOT, '..', 'estate-docs'));
 export const SKILLS_INDEX = path.join(HUB, 'public', 'public', 'skills', 'index.json');
+export const PORTAL_FILE = path.join(HUB, 'public', 'portal.json');
+export const DOCS_SERVER_SRC = path.join(HUB, 'public', 'dist', 'mcpb', 'cloudbackend-docs', 'server');
+export const HUB_PLUGIN_DIR = path.join(HUB, 'public', 'public', 'plugin');
+// The build server's package, extracted from the deploy server's codebase next to this repo (or CBE_BUILD_SRC).
+export const BUILD_SERVER_SRC = path.resolve(process.env.CBE_BUILD_SRC || path.join(ROOT, '..', 'mcp-cloudbackend', 'cbemcp-build'));
 
+// CloudBackend's live deploy server. It is CloudBackend's, per tenant, and this is the ONLY thing it is used for:
+// the deploy connector's URL form. The documentation and build servers run inside the plugin.
 export const HOST = 'https://mcp.cloudbackend.com';
-export const CONNECTORS = [
-  {key: 'docs', name: 'cloudbackend-docs', url: `${HOST}/docs`,
-   what: 'documentation lookups: topics, REST operation cards with XML bodies, SDK method cards, XIOS/3 reference entries'},
-  {key: 'build', name: 'cloudbackend-build', url: `${HOST}/build`,
-   what: 'build tools for a XIOS/3 project: lint, scaffold, benchmark (no tenant needed)'},
-];
 export const DEPLOY_URL_FORM = `${HOST}/mcp/<tenant>`;
-export const PLUGIN_BASE_URL = `${HOST}/plugin`;
-export const MARKETPLACE_URL = `${PLUGIN_BASE_URL}/marketplace.json`;
-export const INDEX_URL = `${PLUGIN_BASE_URL}/index.json`;
-export const zipName = version => `${PLUGIN_NAME}-${version}.zip`;
-export const zipUrl = version => `${PLUGIN_BASE_URL}/${zipName(version)}`;
+export const TENANT_CONFIG_KEY = 'cbe_tenant';
+export const TENANT_PATTERN = '[a-z0-9]+';
+
+// The private GitHub repository that mirrors this one and serves as the testers' marketplace. Robin names it; until
+// then the placeholder stands in every generated install line. plugin.json's `repository` wins when it is set.
+export const GITHUB_REPO = '<org>/claude-plugin';
+export const GITHUB_BRANCH_TESTERS = 'main';
+export const GITHUB_BRANCH_WORK = 'dev';
+
+// The three servers the plugin's .mcp.json declares, one description each; gen-clients.mjs writes .mcp.json,
+// the client configs and the hub's plugin.json from this table, so no copy can disagree with another.
+export const SERVERS = [
+  {key: 'docs', name: 'cloudbackend-docs', kind: 'local', runtime: 'node', tools: 13,
+   entry: 'servers/docs/index.mjs',
+   what: 'documentation lookups, read-only: topics, REST operation cards with XML bodies, SDK method cards, the nine XIOS/3 reference lookups (components, operations, functions, methods, events, actions, concepts, lists, icons); reads the developer portal, needs no sign-in'},
+  {key: 'build', name: 'cloudbackend-build', kind: 'local', runtime: 'python', tools: 3,
+   module: 'cbemcp_build', src: 'servers/build/src', python: '>=3.12', launcher: 'scripts/run-build-server.sh',
+   what: 'build tools for a XIOS/3 project, no tenant needed: lint_project (the tenant grammar), scaffold_project (the design kit), benchmark_project'},
+  {key: 'deploy', name: 'cloudbackend-deploy', kind: 'remote', url_form: DEPLOY_URL_FORM,
+   what: 'CloudBackend\'s live per-tenant deploy server (OAuth sign-in at your tenant): list_projects, upload_project, deploy, verify_deployment and the rest'},
+];
+export const serverByKey = key => SERVERS.find(s => s.key === key);
 
 export const readJson = file => JSON.parse(readFileSync(file, 'utf8'));
 export function writeText(file, data) { mkdirSync(path.dirname(file), {recursive: true}); writeFileSync(file, data); }
@@ -40,6 +60,27 @@ export const writeJson = (file, value) => writeText(file, JSON.stringify(value, 
 export const sha256 = data => createHash('sha256').update(data).digest('hex');
 export const currentVersion = () => readJson(MANIFEST).version;
 export function fail(message) { console.error(message); process.exit(1); }
+
+/** The developer portal's address (the hub's public/portal.json url), without a trailing slash. */
+export function portalUrl() {
+  if (!existsSync(PORTAL_FILE)) fail(`the hub's public/portal.json is not at ${PORTAL_FILE} (set CBE_DOCS_HUB): the plugin is served from the portal, so its address is needed`);
+  const url = readJson(PORTAL_FILE).url;
+  if (!url || !/^https:\/\//.test(url)) fail(`public/portal.json has no https url`);
+  return url.replace(/\/$/, '');
+}
+/** Where the portal serves the plugin's marketplace, index and zip: <portal>/plugin. */
+export const pluginBaseUrl = () => `${portalUrl()}/plugin`;
+export const marketplaceUrl = () => `${pluginBaseUrl()}/marketplace.json`;
+export const indexUrl = () => `${pluginBaseUrl()}/index.json`;
+export const zipName = version => `${PLUGIN_NAME}-${version}.zip`;
+export const zipUrl = version => `${pluginBaseUrl()}/${zipName(version)}`;
+/** The GitHub repository as owner/name: plugin.json's `repository` (a string or {url}) when set, else the placeholder. */
+export function githubRepo() {
+  const r = readJson(MANIFEST).repository;
+  const raw = typeof r === 'string' ? r : r && r.url ? r.url : '';
+  const m = /github\.com[/:]([^/]+\/[^/.]+)/.exec(raw) || /^([\w.-]+\/[\w.-]+)$/.exec(raw);
+  return m ? m[1] : GITHUB_REPO;
+}
 
 // Versions read YYYY.MDD.N: the year, the month without a leading zero joined to the two-digit day, and a counter
 // per day from 0. 2026-11-04 → 2026.1104.0; a second release that day → 2026.1104.1; 2027-03-05 → 2027.305.0.
@@ -59,10 +100,12 @@ export const isoDate = (d = new Date()) => `${d.getFullYear()}-${two(d.getMonth(
 
 // Finder and SMB droppings are never content.
 const NOISE = name => name === '.DS_Store' || name.startsWith('._') || name.startsWith('.smbdelete');
+// Build caches and installed environments are never content either: nothing here ships or compares them.
+export const CACHE = name => name === '__pycache__' || name === '.venv' || name === 'venv' || name === 'node_modules' || name.endsWith('.pyc') || name === '.pytest_cache' || name === '.mypy_cache' || name === '.ruff_cache' || name.endsWith('.egg-info');
 /** Every file under dir as sorted paths relative to it; skip(rel) prunes a file or a whole directory. */
 export function listFiles(dir, {skip = () => false} = {}, rel = '') {
   return readdirSync(path.join(dir, rel)).sort().flatMap(name => {
-    if (NOISE(name)) return [];
+    if (NOISE(name) || CACHE(name)) return [];
     const child = rel ? `${rel}/${name}` : name;
     if (skip(child)) return [];
     return statSync(path.join(dir, child)).isDirectory() ? listFiles(dir, {skip}, child) : [child];
@@ -104,11 +147,12 @@ export function unzip(buf) {
   return entries;
 }
 
-/** A deterministic zip of [{name, data}]: names sorted, fixed timestamps, no extra fields. */
+/** A deterministic zip of [{name, data, mode?}]: names sorted, fixed timestamps, no extra fields; mode (a Unix file
+ *  mode such as 0o755) goes into the external attributes so a shell script unpacks executable. */
 export function zipBuffer(entries) {
   const locals = [], centrals = [];
   let offset = 0;
-  for (const {name, data} of [...entries].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
+  for (const {name, data, mode = 0o644} of [...entries].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
     const nameBytes = Buffer.from(name, 'utf8');
     const store = STORED.test(name);
     const body = store ? data : zlib.deflateRawSync(data, {level: 9});
@@ -117,7 +161,7 @@ export function zipBuffer(entries) {
       const b = Buffer.alloc(central ? 46 : 30);
       let o = 0;
       b.writeUInt32LE(central ? CENTRAL : LOCAL, o); o += 4;
-      if (central) { b.writeUInt16LE(20, o); o += 2; }       // version made by
+      if (central) { b.writeUInt16LE((3 << 8) | 20, o); o += 2; }   // version made by: Unix, so the mode below counts
       b.writeUInt16LE(20, o); o += 2;                        // version needed
       b.writeUInt16LE(0x0800, o); o += 2;                    // UTF-8 names
       b.writeUInt16LE(store ? 0 : 8, o); o += 2;
@@ -132,7 +176,7 @@ export function zipBuffer(entries) {
         b.writeUInt16LE(0, o); o += 2;                       // comment length
         b.writeUInt16LE(0, o); o += 2;                       // disk
         b.writeUInt16LE(0, o); o += 2;                       // internal attributes
-        b.writeUInt32LE(0, o); o += 4;                       // external attributes
+        b.writeUInt32LE(((mode & 0o7777) | 0o100000) >>> 0 << 16 >>> 0, o); o += 4;   // external attributes: the Unix mode
         b.writeUInt32LE(offset, o); o += 4;
       }
       return b;

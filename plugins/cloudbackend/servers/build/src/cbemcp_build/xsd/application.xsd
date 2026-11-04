@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           elementFormDefault="unqualified">
+
+  <xs:import namespace="http://www.w3.org/1999/xlink"
+             schemaLocation="http://www.w3.org/1999/xlink.xsd"/>
+
+  <xs:include schemaLocation="view.xsd" />
+  <xs:include schemaLocation="process.xsd" />
+
+  <xs:simpleType name="t_openArea">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="top" />
+      <xs:enumeration value="bottom" />
+      <xs:enumeration value="left" />
+      <xs:enumeration value="right" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="t_settings">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Application settings. The framework reads home, path, locale and open-area; applications add their own keys freely, so the content is open and not validated.</p><pre><code>&lt;settings&gt;<br/>&#32;&#32;&lt;path&gt;home://&lt;/path&gt;<br/>&#32;&#32;&lt;open-area&gt;right&lt;/open-area&gt;<br/>&#32;&#32;&lt;individualFolderView&gt;true&lt;/individualFolderView&gt;<br/>&lt;/settings&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <!-- Open content: production manifests carry application-specific settings
+         (individualFolderView, signupSource, …) beside the framework's own. XSD
+         1.0 cannot declare the known keys *and* a wildcard in one model without
+         breaking unique particle attribution, so the keys are documented above
+         rather than declared. t_openArea still documents the open-area values. -->
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="t_about">
+    <xs:annotation>
+      <xs:documentation xml:lang="en" />
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="description" type="xs:string" />
+      <xs:element name="license">
+        <xs:annotation>
+          <xs:documentation xml:lang="en"><![CDATA[<p>The application's licence. The text content is the licence name; xlink:href points at the licence document.</p><pre><code>&lt;license xlink:actuate="onRequest" xlink:href="https://xios3.com/license/lgpl_2.1.xml"&gt;GNU LGPL 2.1&lt;/license&gt;</code></pre>]]></xs:documentation>
+        </xs:annotation>
+        <!-- Text content plus the link: real manifests name the licence inline
+             (…>GNU LGPL 2.1</license>) and omit xlink:type, which defaults to
+             "simple". Both were previously rejected. -->
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attributeGroup ref="t_xlinkSimple"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="installed" type="xs:string" />
+    </xs:choice>
+    <xs:attribute name="logo" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Path to the application logo shown in the about dialog.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="author" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" />
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="copyright" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" />
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="created" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" />
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="loader" type="xs:boolean">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" />
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="publisher" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" />
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="revised" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" />
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="version" type="xs:string">
+      <xs:annotation>
+        <xs:documentation xml:lang="en" />
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- XIOS uses the simple-link subset of W3C XLink to pull views, processes and
+       resources in from separate documents. All optional: xlink:type defaults to
+       "simple" and real manifests omit it, and an inline view or process carries
+       no link attributes at all. -->
+  <xs:attributeGroup name="t_xlinkSimple">
+    <xs:attribute ref="xlink:type"/>
+    <xs:attribute ref="xlink:href"/>
+    <xs:attribute ref="xlink:role"/>
+    <xs:attribute ref="xlink:arcrole"/>
+    <xs:attribute ref="xlink:title"/>
+    <xs:attribute ref="xlink:show"/>
+    <xs:attribute ref="xlink:actuate"/>
+  </xs:attributeGroup>
+
+  <xs:complexType name="t_resources">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>Holds temporary data the application can use, as any number of item elements. An item either carries its data inline under a name, or links a document with xlink:href. These items are unrelated to the item elements of the list, menu and plate components — they carry data, not user interface.</p><pre><code>&lt;resources&gt;<br/>&#32;&#32;&lt;item name="defaults"&gt;<br/>&#32;&#32;&#32;&#32;&lt;colour&gt;red&lt;/colour&gt;<br/>&#32;&#32;&lt;/item&gt;<br/>&#32;&#32;&lt;item name="greeting"&gt;Hello&lt;/item&gt;<br/>&#32;&#32;&lt;item xlink:actuate="onRequest" xlink:href="home://Documents/countries.xml"/&gt;<br/>&lt;/resources&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="item" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation xml:lang="en"><![CDATA[<p>A piece of temporary application data, either inline under a name or linked with xlink:href. Inline content is arbitrary — text, or any XML node-set — and is not validated, since it is the application's own data rather than XIOS markup.</p><pre><code>&lt;item name="defaults"&gt;<br/>&#32;&#32;&lt;colour&gt;red&lt;/colour&gt;<br/>&lt;/item&gt;<br/>&lt;item xlink:actuate="onRequest" xlink:href="home://Documents/countries.xml"/&gt;</code></pre>]]></xs:documentation>
+        </xs:annotation>
+        <!-- mixed + skip: the payload is application data, so accept text and
+             any elements without trying to validate them. -->
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+          <!-- Not required: an item either carries inline data under a name, or
+               links a document with xlink:href and no name at all. -->
+          <xs:attribute name="name" type="xs:string" />
+          <xs:attributeGroup ref="t_xlinkSimple"/>
+          <!-- ##any, not ##other: the payload is application data and may carry
+               its own unqualified attributes. The declarations above still win,
+               so xlink:href is validated and offered in completion. -->
+          <xs:anyAttribute namespace="##any" processContents="skip" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="t_anyAttribute">
+    <xs:anyAttribute namespace="##other" processContents="skip" />
+  </xs:complexType>
+
+  <xs:complexType name="t_components">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Custom components bundled with the application.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="component">
+        <xs:complexType>
+          <xs:sequence>
+            <!-- An external script the component needs, loaded before it. Nests,
+                 because a dependency can itself depend on something: the manual's
+                 Fluent UI example loads office-ui-fabric-react, which needs
+                 ReactDOM, which needs React. -->
+            <xs:element name="dependency" type="t_componentDependency" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="skin" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:attribute name="href" type="xs:anyURI" use="required" />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="style" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="href" type="xs:anyURI" use="required" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Display / documentation name.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="tag" type="xs:string" use="required">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The XML tag name used in view UI XML (e.g. &lt;carousel/&gt;).</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="class" type="xs:string" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Exported JS class name the framework loader instantiates. For external components this is the ES-module exported class at href; for bundled components it is the name passed to boot.addComponent(). Omit for components without behaviour.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="href" type="xs:anyURI" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">URL of the JS module. Optional — components without behaviour (e.g. pure-XSL spinners) can omit it.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="container" type="xs:boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">"true" if the component hosts children. The class must extend Container.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="use-rules" type="xs:boolean" use="optional">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">"true" if the component uses the rules layer for rule-based data binding.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="t_componentDependency">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>An external script a custom component needs. <code>href</code> is where to load it from and <code>symbol</code> is the global it exports, which is how the component's JavaScript receives it. Nest a dependency inside another when it has its own.</p><pre><code>&lt;component name="FluentToggle" class="CA_FluentToggle" href="/Fluent/CA_FluentToggle.js" tag="fluent-toggle"&gt;<br/>&#32;&#32;&lt;dependency href="https://unpkg.com/office-ui-fabric-react@7/dist/office-ui-fabric-react.js" symbol="Fabric"&gt;<br/>&#32;&#32;&#32;&#32;&lt;dependency href="https://unpkg.com/react-dom@16.8.6/umd/react-dom.development.js" symbol="ReactDOM"/&gt;<br/>&#32;&#32;&lt;/dependency&gt;<br/>&#32;&#32;&lt;skin href="/Fluent/fluent.xsl"/&gt;<br/>&lt;/component&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="dependency" type="t_componentDependency" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="href" type="xs:anyURI" use="required">
+      <xs:annotation><xs:documentation xml:lang="en">URL of the script to load.</xs:documentation></xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="symbol" type="xs:string" use="optional">
+      <xs:annotation><xs:documentation xml:lang="en">The global the script exports. The component's init(dep) receives it as dep.&lt;symbol&gt;.</xs:documentation></xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="t_theme" mixed="true">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Theme definition; permissive content.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:anyAttribute namespace="##any" processContents="skip" />
+  </xs:complexType>
+
+  <xs:complexType name="t_access">
+    <xs:annotation>
+      <xs:documentation xml:lang="en" />
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="application" type="t_anyAttribute" />
+      <xs:element name="view" type="t_anyAttribute" />
+      <xs:element name="process" type="t_anyAttribute" />
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="t_login">
+    <xs:annotation>
+      <xs:documentation xml:lang="en" />
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="logo" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="background" minOccurs="0" maxOccurs="1">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="dark" type="xs:boolean" />
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="title" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="copyright" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="view" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="create" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="reset" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="client" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="eula" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="t_process">
+    <xs:complexContent>
+      <xs:extension base="process">
+        <xs:attribute name="step" type="xs:string">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Id of the step to start at when the xlinked process is invoked.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="t_xlinkSimple"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="t_appView">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"><![CDATA[<p>A view of the application: either declared inline, or linked from a separate document with xlink:href to keep the manifest modular.</p><pre><code>&lt;view name="Main" xlink:actuate="onLoad" xlink:href="views/mainUI.xml"/&gt;</code></pre>]]></xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="t_view">
+        <xs:attributeGroup ref="t_xlinkSimple"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="application">
+    <xs:annotation>
+      <xs:documentation xml:lang="en" />
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="share" type="xs:boolean" />
+        <xs:element name="settings" type="t_settings" />
+        <xs:element name="about" type="t_about" />
+        <xs:element name="components" type="t_components" />
+        <xs:element name="theme" type="t_theme" />
+        <xs:element name="style" type="t_style" />
+        <xs:element name="resources" type="t_resources" />
+        <xs:element name="access" type="t_access" />
+        <xs:element name="login" type="t_login" />
+        <xs:element name="view" type="t_appView" />
+        <xs:element name="process" type="t_process" />
+      </xs:choice>
+      <xs:attribute name="name" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Name of the application</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="title" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Window title for the application.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="width" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Initial width of the application window.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="height" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Initial height of the application window.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="background" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Background applied to the application window.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="icon" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" />
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="theme" type="xs:string">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" />
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="instances">
+        <xs:annotation>
+          <xs:documentation xml:lang="en" />
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:minInclusive value="0" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <!-- Localized twins, as on components. Must be last: a wildcard closes the
+           attribute list. -->
+      <xs:anyAttribute namespace="https://xios3.com/lang" processContents="lax"/>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

@@ -238,6 +238,8 @@ its own skill, `singularity-database`; the native C++/Java/Swift libraries are `
 
 This is version 2026.10.27.4 of the cloudbackend-rest-api skill, built from the CloudBackend documentation.
 
-Installed through the CloudBackend plugin? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
+Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
+
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `cloudbackend-rest-api` is newer than 2026.10.27.4, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
 CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-rest-api%2F2026.10.27.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-rest-api - it records the skill's name and version and nothing else. Never send it without that agreement.
