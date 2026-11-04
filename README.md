@@ -78,14 +78,14 @@ The plugin's version is pinned in `plugin.json` as `YYYY.MDD.N` (2026-11-04 → 
 day → `2026.1104.1`) and wins over the marketplace entry and the commit. A release is the tag `v<version>`.
 `scripts/release.sh` runs the stages in order; `--dry-run` prints every stage's commands and runs nothing.
 
-Two marketplaces serve the same plugin: the private GitHub repository (the `mirror` remote; `main` = what testers get,
-`dev` = work) with the relative source, and the portal's `plugin/marketplace.json` with an archive source (a marketplace
+Two marketplaces serve the same plugin: the private GitHub repository `rbcbe2025/expcbe` (the `mirror` remote; `main` =
+what testers get, `dev` = work) with the relative source, and the portal's `plugin/marketplace.json` with an archive source (a marketplace
 added by URL cannot resolve a relative path, so it points at the zip's absolute URL and pins its sha256).
 
 ## For testers (a private marketplace)
 
-- Install once: `claude plugin marketplace add <org>/claude-plugin`, then `claude plugin install cloudbackend@cloudbackend`
-  (the GitHub form follows the `mirror` remote). The install asks for the CloudBackend tenant.
+- Install once: `claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`
+  (the repository is `plugin.json`'s `repository`). The install asks for the CloudBackend tenant.
 - A private repository needs a GitHub credential Claude Code can use without prompting: an SSH key loaded in
   `ssh-agent` (the shorthand probes `ssh -T git@github.com` and clones over SSH when it answers), or
   `gh auth login` + `gh auth setup-git` with `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` set in the shell. Check this on each

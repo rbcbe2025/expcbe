@@ -7,6 +7,7 @@
     "url": "https://cloudbackend.com"
   },
   "homepage": "https://cloudbackend.com",
+  "repository": "https://github.com/rbcbe2025/expcbe",
   "license": "Apache-2.0",
   "keywords": [
     "cloudbackend",

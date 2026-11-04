@@ -26,15 +26,15 @@ own git root under the CloudBackend group. `README.md` here explains the layout 
   that variable in a server's args and env, not in its command; measured on 2.1.316). The deploy connector is `https://mcp.cloudbackend.com/mcp/${user_config.cbe_tenant}`, the
   tenant from `plugin.json`'s `userConfig` (Claude Code asks at install; `scripts/connect-deploy.sh` serves the clients
   that do not). Nothing may name that host beyond its `/mcp/<tenant>` form; `guard.mjs` refuses it.
-- **Commit here; push only `mirror`.** The private GitHub repository Robin names is added as the `mirror` remote
-  (`git remote add mirror …`) and `release.sh` pushes `main` and the tags there. `main` is what testers get; work
+- **Commit here; push only `mirror`.** The private GitHub repository is `rbcbe2025/expcbe` (`plugin.json`
+  `repository`); it is the `mirror` remote, and `release.sh` pushes `main` and the tags there. `main` is what testers get; work
   happens on `dev` and merges to `main` per release. No other remote, ever. **Never rename the plugin** (`cloudbackend`,
   `cloudbackend@cloudbackend`): a published plugin's name is its identity for every install.
 - **Archive, never delete.** Superseded files move to `_archive/<date>-<what>/` with an `ARCHIVED.md`. Generated
   trees (`skills/`, `servers/`, `evals/<case>/`, `clients/`, `dist/`) are regenerated, not archived.
 - **`.mcp.json`, the marketplace entry, `clients/`, the README's install, skills and servers blocks, `dist/`, and the
   hub's `public/plugin.json` are generated** by `node scripts/gen-clients.mjs`; the plugin's base URL is the portal's
-  address + `/plugin`, the GitHub form is `plugin.json`'s `repository`, else the `mirror` remote, else `lib.mjs`'s placeholder. Edit the generator.
+  address + `/plugin`, the GitHub form is `plugin.json`'s `repository` (`rbcbe2025/expcbe`), else the `mirror` remote, else `lib.mjs`'s placeholder. Edit the generator.
 - **The version is pinned** in `plugins/cloudbackend/.claude-plugin/plugin.json` (`YYYY.MDD.N`) and bumped only by
   `node scripts/bump-version.mjs`, which moves it only when `plugins/` differs from the last release tag `v<version>`.
 - **`node scripts/guard.mjs` must report 0 problems** before any commit that touches `plugins/` or `clients/`: no
