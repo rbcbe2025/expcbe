@@ -5,7 +5,7 @@ One install for building on CloudBackend PaaS with XIOS/3: the published skills 
 <!-- install:start -->
 ## Install
 
-Version 2026.1104.0 · the plugin `cloudbackend@cloudbackend`
+Version 2026.1104.1 · the plugin `cloudbackend@cloudbackend`
 
 **Claude Code, from GitHub** (the testers' path; the repository is private, so Claude Code needs a GitHub credential it
 can use without prompting: an SSH key loaded in `ssh-agent`, or `gh auth login` + `gh auth setup-git` with
@@ -27,7 +27,7 @@ claude plugin marketplace add https://robinsbackend-robinsbackend-portalx.cloudb
 claude plugin install cloudbackend@cloudbackend
 ```
 
-**One session, nothing installed:** `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1104.0.zip`
+**One session, nothing installed:** `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1104.1.zip`
 
 **Updates:** `claude plugin marketplace update cloudbackend`, then `claude plugin update cloudbackend@cloudbackend` (a marketplace you added yourself does not update by itself;
 `/plugin` → Marketplaces can switch auto-update on).
