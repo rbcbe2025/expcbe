@@ -106,6 +106,8 @@ test('the sign-in page: guards, the browser-side login, the stored session', asy
   const r = await run('tenant_signin', { tenant: 'acme', open_browser: false });
   assert.match(r.signin_page, /^http:\/\/127\.0\.0\.1:\d+\/signin\?state=[0-9a-f]{32}$/);
   assert.match(r.for_the_user, /never paste your password/i);
+  assert.match(r.browser, /built-in browser/, 'open_browser false points at the built-in browser');
+  assert.match(r.the_tab, /do not read, screenshot or click/);
   const page = await fetch(r.signin_page);
   assert.equal(page.status, 200);
   const csp = page.headers.get('content-security-policy');

@@ -641,7 +641,8 @@ async function tenantSignin({ tenant, open_browser = true }) {
   pending.set(state, { tenant, url, created: Date.now(), promise, resolve: resolveFn });
   const tried = open_browser ? openInBrowser(url) : false;
   return {
-    tenant, signin_page: url, browser: tried ? 'asked the system to open it' : 'not opened: give the user the address',
+    tenant, signin_page: url, browser: tried ? 'asked the system to open it' : 'not opened: open signin_page in your built-in browser if you have one, otherwise give the user the address',
+    the_tab: 'Leave the page to the user: do not read, screenshot or click in it while they sign in; close it once tenant_status says they are signed in.',
     for_the_user: 'Open the sign-in page and sign in with your CloudBackend e-mail or username and password (and the code CloudBackend e-mails, if your account uses one). '
       + 'Your browser sends them straight to CloudBackend; the plugin keeps only the session, in a file only you can read. Never paste your password into the chat.',
     valid_for: '15 minutes, on this computer only',
@@ -713,8 +714,8 @@ const ro = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, o
 export const TOOLS = {
   tenant_signin: {
     title: 'Sign in to a CloudBackend account',
-    description: 'Starts the sign-in to a CloudBackend PaaS account: a page on this computer (127.0.0.1, valid 15 minutes) where the user types their e-mail or username and password, and the e-mailed code when the account uses one. The browser sends them straight to CloudBackend; this server keeps only the session it returns, in a file only the user can read, and never returns it. The result carries the page\'s address for the user and whether the system browser was asked to open it. No password passes through the conversation.',
-    inputSchema: { type: 'object', properties: { tenant: { ...TENANT_ARG, description: 'The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/.' }, open_browser: { type: 'boolean', default: true, description: 'Ask the system to open the page in the default browser.' } }, required: ['tenant'] },
+    description: 'Starts the sign-in to a CloudBackend PaaS account: a page on this computer (127.0.0.1, valid 15 minutes) where the user types their e-mail or username and password, and the e-mailed code when the account uses one. The browser sends them straight to CloudBackend; this server keeps only the session it returns, in a file only the user can read, and never returns it. The result carries the page\'s address for the user and whether the system browser was asked to open it. In the Claude desktop app, pass open_browser false and open the address in the built-in browser. No password passes through the conversation.',
+    inputSchema: { type: 'object', properties: { tenant: { ...TENANT_ARG, description: 'The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/.' }, open_browser: { type: 'boolean', default: true, description: 'Ask the system to open the page in the default browser. False when the client opens the address itself, as the Claude desktop app does in its built-in browser.' } }, required: ['tenant'] },
     annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
     run: tenantSignin,
   },

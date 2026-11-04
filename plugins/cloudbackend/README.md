@@ -1,6 +1,6 @@
 # CloudBackend plugin for Claude
 
-One install for building on CloudBackend PaaS with XIOS/3: the published skills (the Singularity database, the REST API, the native SDKs, XIOS/3 applications and their design, the SaaS launch path, the build-and-deploy workflow), five workflow agents, and three servers. Documentation lookups and the build tools run inside the plugin, on your computer, with no sign-in (the documentation server reads the developer portal); deployment goes through CloudBackend's live server at your own tenant. The skills carry the method; a plugin update brings a newer set.
+One install for building on CloudBackend PaaS with XIOS/3: the published skills (the Singularity database, the REST API, the native SDKs, XIOS/3 applications and their design, the SaaS launch path, the build-and-deploy workflow), five workflow agents, and four servers. Documentation lookups and the build tools run inside the plugin, on your computer, with no sign-in (the documentation server reads the developer portal). Deployment goes through the plugin's tenant server, which signs you in on a page in your browser (in the Claude desktop app, its built-in browser), or through CloudBackend's live server at your own tenant once the account has its sign-in realm. The skills carry the method; a plugin update brings a newer set.
 
 <!-- install:start -->
 ## Install
@@ -59,7 +59,7 @@ server is the Claude Desktop extension offered there, and the deploy connector i
 | `xios3-app-workflow` | 2026.11.4.4 | Run the build-and-deploy workflow for a XIOS/3 application on CloudBackend PaaS, from an idea to a verified deployment and a benchmark report: an opening round and a plan card of defaults, a solution spec, the design hand-off, the data model, a scaffolded package built with sub-agents, a tenant-grammar lint before every upload, a Development deployment verified by content, UI probes in the browser, hardening (security, the login gate, SEO and GEO, analytics, clean-up), documentation and a manual, the console hand-off for Staging, Production and a domain, and a benchmark block that says what was measured. Shares cloudbackend-launch.md with cloudbackend-saas-launch. |
 <!-- skills:end -->
 
-`.mcp.json` declares the three servers:
+`.mcp.json` declares the four servers:
 
 <!-- servers:start -->
 | Server | Runs | Gives |

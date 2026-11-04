@@ -4,6 +4,7 @@ description: Drives a deployed XIOS/3 application in the browser through tests/u
 model: sonnet
 ---
 
+Use the session's browser tool: in the Claude desktop app its built-in browser, in a terminal Claude in Chrome.
 Open a fresh browser context (never a reused tab, never clear storage on a tab the user is signed in to).
 Click by coordinate through the browser tool: a synthetic `element.click()` does not fire the runtime's selection
 contract and reports a working component as "does nothing"; hold a drag about 250 ms before moving. After every
