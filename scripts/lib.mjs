@@ -1,5 +1,6 @@
 // Shared by the scripts in this directory: where things are, the servers and their URLs, the version shape, sha256, a
 // sorted file walk, and a reader and a writer for zip files. Node's built-ins only; nothing to install.
+import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync} from 'node:fs';
 import path from 'node:path';
@@ -34,8 +35,9 @@ export const DEPLOY_URL_FORM = `${HOST}/mcp/<tenant>`;
 export const TENANT_CONFIG_KEY = 'cbe_tenant';
 export const TENANT_PATTERN = '[a-z0-9]+';
 
-// The private GitHub repository that mirrors this one and serves as the testers' marketplace. Robin names it; until
-// then the placeholder stands in every generated install line. plugin.json's `repository` wins when it is set.
+// The private GitHub repository that mirrors this one and serves as the testers' marketplace: plugin.json's
+// `repository` when it is set, else the `mirror` remote's GitHub URL (the remote IS the marketplace testers add),
+// else this placeholder in every generated install line until Robin names it.
 export const GITHUB_REPO = '<org>/claude-plugin';
 export const GITHUB_BRANCH_TESTERS = 'main';
 export const GITHUB_BRANCH_WORK = 'dev';
@@ -74,12 +76,16 @@ export const marketplaceUrl = () => `${pluginBaseUrl()}/marketplace.json`;
 export const indexUrl = () => `${pluginBaseUrl()}/index.json`;
 export const zipName = version => `${PLUGIN_NAME}-${version}.zip`;
 export const zipUrl = version => `${pluginBaseUrl()}/${zipName(version)}`;
-/** The GitHub repository as owner/name: plugin.json's `repository` (a string or {url}) when set, else the placeholder. */
+/** The GitHub repository as owner/name: plugin.json's `repository` (a string or {url}) when set, else the `mirror`
+ *  remote's GitHub URL, else the placeholder. */
 export function githubRepo() {
+  const parse = raw => { const m = /github\.com[/:]([^/\s]+\/[^/\s.]+)/.exec(raw || '') || /^([\w.-]+\/[\w.-]+)$/.exec(raw || ''); return m ? m[1] : null; };
   const r = readJson(MANIFEST).repository;
-  const raw = typeof r === 'string' ? r : r && r.url ? r.url : '';
-  const m = /github\.com[/:]([^/]+\/[^/.]+)/.exec(raw) || /^([\w.-]+\/[\w.-]+)$/.exec(raw);
-  return m ? m[1] : GITHUB_REPO;
+  const fromManifest = parse(typeof r === 'string' ? r : r && r.url ? r.url : '');
+  if (fromManifest) return fromManifest;
+  let mirror = '';
+  try { mirror = execFileSync('git', ['-C', ROOT, 'remote', 'get-url', 'mirror'], {encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore']}).trim(); } catch { /* no mirror yet */ }
+  return parse(mirror) || GITHUB_REPO;
 }
 
 // Versions read YYYY.MDD.N: the year, the month without a leading zero joined to the two-digit day, and a counter

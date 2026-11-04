@@ -12,7 +12,7 @@ can use without prompting: an SSH key loaded in `ssh-agent`, or `gh auth login` 
 `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` set in your shell):
 
 ```bash
-claude plugin marketplace add <org>/claude-plugin
+claude plugin marketplace add rbcbe2025/expcbe
 claude plugin install cloudbackend@cloudbackend
 ```
 

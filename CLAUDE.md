@@ -34,7 +34,7 @@ own git root under the CloudBackend group. `README.md` here explains the layout 
   trees (`skills/`, `servers/`, `evals/<case>/`, `clients/`, `dist/`) are regenerated, not archived.
 - **`.mcp.json`, the marketplace entry, `clients/`, the README's install, skills and servers blocks, `dist/`, and the
   hub's `public/plugin.json` are generated** by `node scripts/gen-clients.mjs`; the plugin's base URL is the portal's
-  address + `/plugin`, the GitHub form is `plugin.json`'s `repository` or `lib.mjs`'s placeholder. Edit the generator.
+  address + `/plugin`, the GitHub form is `plugin.json`'s `repository`, else the `mirror` remote, else `lib.mjs`'s placeholder. Edit the generator.
 - **The version is pinned** in `plugins/cloudbackend/.claude-plugin/plugin.json` (`YYYY.MDD.N`) and bumped only by
   `node scripts/bump-version.mjs`, which moves it only when `plugins/` differs from the last release tag `v<version>`.
 - **`node scripts/guard.mjs` must report 0 problems** before any commit that touches `plugins/` or `clients/`: no
