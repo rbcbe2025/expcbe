@@ -134,8 +134,16 @@ via:` line (`references/deploy-rules.md`, "Three routes to the tenant"):
 1. **The deploy connector.** Call its `list_projects` once. It answers only when the account has its own
    sign-in realm; a failed sign-in or a connection error moves on.
 2. **The tenant server** (`cloudbackend-tenant`, Claude Code and Cowork). `tenant_status`; when it is not
-   signed in, `tenant_signin` with the account name and give the user the page's address in one line: they
-   sign in there, in their own browser, and the password goes from that page to CloudBackend. Then
+   signed in, open its sign-in page for the user. They sign in there, and the password goes from that page
+   to CloudBackend:
+   - In the Claude desktop app, whose built-in browser is among your tools: `tenant_signin` with the account
+     name and `open_browser: false`, then open `signin_page` in the built-in browser and tell the user in one
+     line to sign in in that tab. Leave the tab to them: do not read, screenshot or click in it until
+     `tenant_status` says they are signed in, then close it.
+   - Elsewhere: `tenant_signin` with the account name opens the page in the default browser; give the user
+     its address in one line as well.
+   If the page cannot be reached, Claude runs on another computer than the user's browser (over SSH, in a
+   cloud session) and `127.0.0.1` points at the wrong one: take the console route. Then
    `tenant_status` with `wait_seconds` waits for them. Its `deploy_connector` line says whether the account
    has the realm; when it has not and the user is the owner, offer `enable_deploy_connector` once, as a
    question, because it changes the account.
@@ -198,7 +206,8 @@ Gate: lint 0 errors, upload validated, deploy returned a URL. Evidence: `W4 buil
    address and compare `index.xml` yourself when a shell is there; otherwise the user's browser check.
    "Live" is claimed from `index_xml_match` being true, never from a 200: a webshare answers 200 with the
    boot page for every unknown path.
-2. The UI probes in `tests/ui-probes.md`, in the browser when one is connected: a fresh browser context,
+2. The UI probes in `tests/ui-probes.md`, in the browser when one is connected (in the Claude desktop app
+   its built-in browser, in a terminal Claude in Chrome): a fresh browser context,
    trusted clicks, one assertion after **each** action, the 390 px pass, the console and the network read
    after each probe. `references/verification-checklist.md` has the probe format and the repair loop
    (console error → trigger spelling → expressions → the panel; a CloudBackend call matched to its REST card
@@ -274,7 +283,8 @@ the console themselves; the deploy connector signs them in on the account's own 
 server signs them in on a page on their own computer whose form sends the password straight from their
 browser to CloudBackend and keeps only the session, in a file only they can read. So this skill never sees a
 password or a token: never type one into a page for the user, and never read the tenant server's session
-file. Identities and sign-ins are the user's, in a private window. A browser action that
+file. When the sign-in page is in a tab you can see, as in the desktop app's built-in browser, leave it to the
+user: do not read, screenshot or click in it until `tenant_status` says they are signed in. Identities and sign-ins are the user's, in a private window. A browser action that
 changes the tenant gets its own yes at the time. The full rule, with the reasons, is in
 `cloudbackend-saas-launch` "Credentials: never"; it applies here unchanged. If the user pastes a secret,
 tell them to change it, and do not use it.
@@ -283,7 +293,7 @@ tell them to change it, and do not use it.
 
 | Client | Has | The workflow here |
 | --- | --- | --- |
-| Claude Code (terminal or desktop) | the file system, sub-agents, a browser tool, `/cost`, a shell, all four plugin servers | every phase as written |
+| Claude Code (terminal or desktop) | the file system, sub-agents, a browser tool (the desktop app's built-in browser, or Claude in Chrome), `/cost`, a shell, all four plugin servers | every phase as written; in the desktop app the tenant server's sign-in page opens in the built-in browser (W0) |
 | Cowork | the plugin's local servers on the user's computer, a browser tool where connected | every phase; sub-agents become inline checklists |
 | Claude Desktop | the documentation extension (the same docs server) and the deploy connector by URL once the account has its sign-in realm; no shell, no file system, no browser | the context file and the documents live in the conversation; deploys go through the console with the user's help until the realm exists; W5's probes are a checklist the user runs; sub-agents become inline checklists |
 | claude.ai | the skills, and the deploy connector by URL once the account has its sign-in realm; no servers of its own | the same as Claude Desktop |
@@ -366,6 +376,8 @@ Each with the rule or tool that catches it:
 - A comparison with React that nobody measured — the wording rules in `references/benchmark-method.md`.
 - Asking for the password because the deploy connector cannot sign in: the account has no sign-in realm yet.
   The tenant server's sign-in page takes the password in the user's browser — `references/deploy-rules.md`.
+- Reading or screenshotting the sign-in tab while the user types: their user name and the e-mailed code are
+  on it. Open the page, then wait with `tenant_status` — W0.
 
 ## Bundled references
 
@@ -388,10 +400,10 @@ Generated from the published manual at build time:
 
 ## Version and updates
 
-This is version 2026.11.4.4 of the xios3-app-workflow skill, built from the CloudBackend documentation.
+This is version 2026.11.4.5 of the xios3-app-workflow skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.4.4, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.4.5, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.4.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.4.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.

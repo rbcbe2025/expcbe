@@ -27,7 +27,7 @@ account and stays: ask before calling it. `tenant_status` reports whether the re
 
 | Tool | What it does | What to read in the result |
 | --- | --- | --- |
-| `tenant_signin` | Opens a sign-in page on `127.0.0.1` for 15 minutes; the user signs in there (and enters the e-mailed code when the account uses one) | `signin_page`: give it to the user; never ask for the password |
+| `tenant_signin` | Opens a sign-in page on `127.0.0.1` for 15 minutes in the default browser; the user signs in there (and enters the e-mailed code when the account uses one). With `open_browser: false` it only starts the page, for a client that opens it itself, as the Claude desktop app does in its built-in browser | `signin_page`: open it in the built-in browser or give it to the user; leave the tab to them; never ask for the password |
 | `tenant_status` | Signed in or not, identity and role, whether CloudBackend still accepts the session, whether the realm exists; `wait_seconds` waits for an open page | `signed_in`, `role`, `deploy_connector` |
 | `list_projects` | The folders under `home://Applications/` and `tenant://Applications/`, and the identity's webshares with what each serves and its stage | which address already serves what |
 | `upload_project` | Copies the local package folder (`path`, the one holding `index.xml`) to `home://Applications/<project_name>/`; lints it with profile `build` first and uploads nothing while an error stands; binaries included; dot-files and `node_modules` left out. **Replaces by path; deletes nothing.** | `uploaded`, `lint`, `on_the_tenant_not_in_the_folder` |
@@ -37,7 +37,14 @@ account and stays: ask before calling it. `tenant_status` reports whether the re
 | `tenant_signout` | Ends the session at CloudBackend and deletes it from the computer | `signed_out` |
 
 The session lives in a file only the user can read and is never in a tool result; a 401 deletes it, and
-`tenant_signin` starts a new one. Promotion beyond Development is a console step on every route.
+`tenant_signin` starts a new one.
+
+**Where the sign-in page opens.** The page is served on the computer the plugin runs on. In the Claude desktop
+app, open it in the built-in browser: the user types there, and you do not read, screenshot or click in that tab
+until `tenant_status` says they are signed in; then close it. In a terminal, `tenant_signin` asks the system to
+open the default browser. When Claude runs on another computer than the user's browser (over SSH, or in a cloud
+session), `127.0.0.1` points at the wrong computer and the page cannot load: take the console route. Checked
+2026-11-04: the page loads in the desktop app's built-in browser and reaches CloudBackend's API from there. Promotion beyond Development is a console step on every route.
 
 ## The deploy connector (`cloudbackend-deploy`, one per tenant)
 

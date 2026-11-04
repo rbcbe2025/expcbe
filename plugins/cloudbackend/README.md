@@ -5,7 +5,7 @@ One install for building on CloudBackend PaaS with XIOS/3: the published skills 
 <!-- install:start -->
 ## Install
 
-Version 2026.1104.2 · the plugin `cloudbackend@cloudbackend`
+Version 2026.1104.3 · the plugin `cloudbackend@cloudbackend`
 
 **Claude Code, from GitHub** (the public repository; no GitHub account needed, only git on your computer):
 
@@ -28,7 +28,7 @@ claude plugin marketplace add https://robinsbackend-robinsbackend-portalx.cloudb
 claude plugin install cloudbackend@cloudbackend
 ```
 
-**One session, nothing installed:** `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1104.2.zip`
+**One session, nothing installed:** `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1104.3.zip`
 
 **Updates:** `claude plugin marketplace update cloudbackend`, then `claude plugin update cloudbackend@cloudbackend` (a marketplace you added yourself does not update by itself;
 `/plugin` → Marketplaces can switch auto-update on).
@@ -56,7 +56,7 @@ server is the Claude Desktop extension offered there, and the deploy connector i
 | `singularity-database` | 2026.10.15 | Model data for CloudBackend's Singularity database, the object-oriented database behind CloudBackend PaaS. Covers its building blocks (tenant, identity, group, role, database, container, object, item, stream, key/value, datatype, ACL, sharing, publish/subscribe, webhook) and how to design with them: containers as folders or tables, datatypes as schemas, key/values as columns, ACL bits and inheritance, per-identity databases, tenant:// and home:// drives. |
 | `xios3-app-basics` | 2026.11.4 | Build web applications with XIOS/3 — the declarative XML application platform where a view (UI markup), a process (triggers → steps → operations) and data documents make an application, and the Data Virtualization Layer binds components straight to XML in the CloudBackend Singularity database (home://, tenant://). |
 | `xios3-app-design` | 2026.11.4 | Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a product: a design brief and mood board from one sentence about the app, a token theme (palette seeds, type and shape knobs) the runtime derives every hover and border from, a layout kit (cards, list and detail, phone and desktop views, a navigation rail or menu), two small components (a status line, a screen watcher), and the data logic that goes with the screens (a list bound to a container, the detail to the selected object, the process writing). |
-| `xios3-app-workflow` | 2026.11.4.4 | Run the build-and-deploy workflow for a XIOS/3 application on CloudBackend PaaS, from an idea to a verified deployment and a benchmark report: an opening round and a plan card of defaults, a solution spec, the design hand-off, the data model, a scaffolded package built with sub-agents, a tenant-grammar lint before every upload, a Development deployment verified by content, UI probes in the browser, hardening (security, the login gate, SEO and GEO, analytics, clean-up), documentation and a manual, the console hand-off for Staging, Production and a domain, and a benchmark block that says what was measured. Shares cloudbackend-launch.md with cloudbackend-saas-launch. |
+| `xios3-app-workflow` | 2026.11.4.5 | Run the build-and-deploy workflow for a XIOS/3 application on CloudBackend PaaS, from an idea to a verified deployment and a benchmark report: an opening round and a plan card of defaults, a solution spec, the design hand-off, the data model, a scaffolded package built with sub-agents, a tenant-grammar lint before every upload, a Development deployment verified by content, UI probes in the browser, hardening (security, the login gate, SEO and GEO, analytics, clean-up), documentation and a manual, the console hand-off for Staging, Production and a domain, and a benchmark block that says what was measured. Shares cloudbackend-launch.md with cloudbackend-saas-launch. |
 <!-- skills:end -->
 
 `.mcp.json` declares the four servers:
@@ -66,7 +66,7 @@ server is the Claude Desktop extension offered there, and the deploy connector i
 | --- | --- | --- |
 | `cloudbackend-docs` | inside the plugin (Node 22; `servers/docs/`) | documentation lookups, read-only: topics, REST operation cards with XML bodies, SDK method cards, the nine XIOS/3 reference lookups (components, operations, functions, methods, events, actions, concepts, lists, icons); reads the developer portal, needs no sign-in |
 | `cloudbackend-build` | inside the plugin (Node 22; `servers/build/`, authored in the plugin repository, tested by `servers/build/test.mjs`) | build tools for a XIOS/3 package, no tenant needed: lint_project (the tenant grammar G01-G20 before an upload; schema validation happens at upload) and benchmark_project (the measured block of a benchmark report) |
-| `cloudbackend-tenant` | inside the plugin (Node 22; `servers/tenant/`, authored in the plugin repository, tested by `servers/tenant/test.mjs`) | your CloudBackend account, signed in on a page on your computer (the password goes from your browser to CloudBackend, never through the chat): upload_project (a local package folder, linted first), deploy (a private Development deployment), verify_deployment (served bytes, not a 200), list_projects, and enable_deploy_connector (the owner creates the account's sign-in realm the deploy connector needs) |
+| `cloudbackend-tenant` | inside the plugin (Node 22; `servers/tenant/`, authored in the plugin repository, tested by `servers/tenant/test.mjs`) | your CloudBackend account, signed in on a page on your computer (the password goes from your browser to CloudBackend, never through the chat): upload_project (a local package folder, linted first), deploy (a Development deployment: private in the console, yet anyone with its address can open it unless the app has a login), verify_deployment (served bytes, not a 200), list_projects, and enable_deploy_connector (the owner creates the account's sign-in realm the deploy connector needs) |
 | `cloudbackend-deploy` | CloudBackend's live server, `https://mcp.cloudbackend.com/mcp/<tenant>` | CloudBackend's live per-tenant deploy server: list_projects, upload_project, deploy, verify_deployment and the rest. It signs in through the account's own sign-in realm, which the owner creates once (enable_deploy_connector on cloudbackend-tenant); until then cloudbackend-tenant is the route |
 <!-- servers:end -->
 
