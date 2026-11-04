@@ -9,7 +9,7 @@
      Generated from the xios3-app-design skill's example by designkit.py app. -->
 <application xmlns:xlink="http://www.w3.org/1999/xlink" name="{{APP_NAME}}" icon="icon://clipboard_checks" instances="1">
   <settings/>
-  <about version="1.0">{{APP_TITLE}}</about>
+  <about version="1.0"><description>{{APP_TITLE}}</description></about>
 
 {{THEME}}
 
@@ -17,7 +17,7 @@
     <component name="Screen" tag="screen" class="CA_Screen" href="ui/DesignKit/CA_Screen.js" container="false">
       <skin href="ui/DesignKit/screen.xsl"/>
     </component>
-    <component name="Status" tag="status" class="CA_Status" href="ui/DesignKit/CA_Status.js" container="false">
+    <component name="Status" tag="statusline" class="CA_Status" href="ui/DesignKit/CA_Status.js" container="false">
       <skin href="ui/DesignKit/status.xsl"/>
     </component>
   </components>

@@ -23,7 +23,8 @@ on screen.
 
 ```xml
 <toolbar name="top">                                  <!-- may sit before the root panel -->
-  <group name="topLeft"><buttonbox name="menu" text="Menu" hide="true"/><label name="brand" text="Planboard" class="dk-brand"/></group>
+  <group name="topLeft"><buttonbox name="menu" text="Menu" hide="true"/></group>
+  <label name="brand" text="Planboard" class="dk-brand"/>
   <group name="topRight" align="right"><buttonbox name="newItem" text="New project" icon="icon://plus?color=primary"/></group>
 </toolbar>
 <panel name="root" type="rows" width="100%" height="100%">        <!-- the one top-level panel -->
@@ -46,7 +47,7 @@ on screen.
       </panel>
     </panel>
   </panel>
-  <status name="status"/>
+  <statusline name="status"/>
   <screen name="screen"/>
 </panel>
 ```

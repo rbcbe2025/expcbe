@@ -13,7 +13,11 @@ and Delete, a status line, and a phone layout. The user sees a mood board before
 they get has no colour in it.
 
 Everything here was run on the hosted runtime (2026.6.0) on 2026-10-09, from a webshare, in Chrome at
-1280 and 390 px; the dated notes say what was measured. The theme mechanism itself is the manual's
+1280 and 390 px; the dated notes say what was measured. On 2026-11-04 three constructs changed so the package
+validates against the CloudBackend extension's schemas (the title inside `<description>`, the brand label
+directly in the toolbar rather than in its group, the status component's tag `statusline`); the kit has not
+been re-run on the runtime since, and four item attributes the schemas still refuse (`selected`, `detail`,
+`textstyle`, `detailstyle`) are with XIOS/3 to settle. The theme mechanism itself is the manual's
 (`references/look-and-feel.md`: the design-tokens tutorial, Theme, Style, Icon protocol).
 
 ## The first version, in four moves
@@ -92,7 +96,8 @@ an `iconlist` is the empty state and shows only while the list has no rows.
 Declared in the manifest's `<components>` and placed last in the root panel; both are ES modules in
 `ui/DesignKit/` with their skins (`screen.xsl`, `status.xsl`) and `designkit.css`.
 
-- **`<status name="status"/>`** (`CA_Status`): a bar at the bottom of the window. From a process:
+- **`<statusline name="status"/>`** (`CA_Status`): a bar at the bottom of the window. The tag is `statusline`, not `status`,
+  because `status` is a native view element (the schemas refuse it inside a panel; changed 2026-11-04). From a process:
   `callMethod` on `#App#status`, method `notify`, two string params: the text and the kind (`info`, `ok`,
   `error`, `busy`). `info` and `ok` fade after four seconds; `error` and `busy` stay until `clear()` or the
   reader dismisses them (the `Dismiss` event). Every write in the example ends in one line here, in the
@@ -143,8 +148,8 @@ runs in the window that imports it, where `Component`, `sys` and `CloneObject` a
 
 ## Version and updates
 
-This is version 2026.10.10.5 of the xios3-app-design skill, built from the CloudBackend documentation.
+This is version 2026.11.4 of the xios3-app-design skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.10.10.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.11.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.

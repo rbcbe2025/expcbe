@@ -9,8 +9,8 @@
   <toolbar name="top">
     <group name="topLeft">
       <buttonbox name="menu" text="Menu"/>
-      <label name="brand" text="{{BRAND}}" class="dk-brand"/>
     </group>
+    <label name="brand" text="{{BRAND}}" class="dk-brand"/>
     <group name="topRight" align="right">
       <buttonbox name="newItem" text="New" icon="icon://plus?color=primary"/>
     </group>
@@ -62,7 +62,7 @@
       </panel>
 
     </panel>
-    <status name="status"/>
+    <statusline name="status"/>
     <screen name="screen"/>
   </panel>
 </view>

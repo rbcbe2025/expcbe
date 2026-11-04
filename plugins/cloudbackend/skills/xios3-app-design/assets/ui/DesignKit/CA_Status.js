@@ -8,10 +8,10 @@
 // getValue() is the text showing now, "" when nothing is.
 //
 // External component (ES module): declared in the manifest as
-//   <component name="Status" tag="status" class="CA_Status" href="ui/DesignKit/CA_Status.js" container="false">
+//   <component name="Status" tag="statusline" class="CA_Status" href="ui/DesignKit/CA_Status.js" container="false">
 //     <skin href="ui/DesignKit/status.xsl"/>
 //   </component>
-// and placed last in the view's root panel: <status name="status"/>. Its CSS is designkit.css.
+// and placed last in the view's root panel: <statusline name="status"/> (the tag is not "status": that is a native view element). Its CSS is designkit.css.
 // ASCII only: a webshare labels .js files ISO-8859-1.
 
 const KINDS = ['info', 'ok', 'error', 'busy'];
