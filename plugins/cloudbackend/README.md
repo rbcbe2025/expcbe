@@ -56,7 +56,7 @@ until the plugin is listed there.
 | `cloudbackend-docs` | `https://mcp.cloudbackend.com/docs` | Documentation lookups: topics, REST operation cards with XML bodies, SDK method cards, XIOS/3 reference entries. |
 | `cloudbackend-build` | `https://mcp.cloudbackend.com/build` | Build tools for a XIOS/3 project: lint, scaffold, benchmark. No tenant needed. |
 
-`agents/` is reserved for the XIOS/3 workflow agents (Claude Code only) and `evals/` for the cases `claude plugin eval` grades; both arrive with the workflow skill.
+`agents/` holds the five XIOS/3 workflow agents the `xios3-app-workflow` skill delegates to on Claude Code (a view author, a process author, a grammar reviewer, a UI tester, a benchmark reporter; `agents/README.txt` lists them). Other clients run the same five as inline checklists. `evals/` is for the cases `claude plugin eval` grades; they arrive with the workflow skill's evals.
 
 ## Deploying: the per-tenant connector
 
