@@ -1,0 +1,372 @@
+# XIOS/3 — reference index
+
+Every component, process operation, event, function, action and method, one line each. Open the linked page for attributes, children and examples.
+
+Every entry links to its reference page on the XIOS/3 developer portal (https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud). Generated 2026-11-04.
+
+## Components (55)
+
+- **[Accordion](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/accordion)** — This component defines a set of vertical sliding panels resembling an accordion.
+- **[App](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/app)** — This component allows an application to run as a component within another application.
+- **[Boxlist](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/boxlist)** — Defines an boxlist plate component that gives a searchable overview of a list of some sort.
+- **[Breadcrumbs](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/breadcrumbs)** — Creates a clickable path into a structure, like a path to an Object.
+- **[Bush](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/bush)** — Defines a bush, which is a tree type of component that uses lazy loading to build the tree and expands the tree when the user click on branches.
+- **[Button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)** — Defines a clickable button with a text label.
+- **[ButtonBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/buttonbox)** — Defines a button looking box located inside its parent component, such as Container, Group, Menu, or ToolBar.
+- **[Calendar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/calendar)** — Defines a visually flexible and highly interactive calendar component that can be navigated by week or month.
+- **[Carousel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/carousel)** — The carousel component shows one child panel at a time and lets the user move between panels as slides.
+- **[CheckBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/checkbox)** — Defines a checkbox that changes its state from checked to unchecked when clicked and then vice versa when clicked again.
+- **[Clock](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/clock)** — Defines a clock component that shows an analog or digital clock.
+- **[CodeEditor](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/codeeditor)** — The CodeEditor component is a specialized XML editing interface designed for structured markup validation and editing.
+- **[Color](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/color)** — Defines a visual color picker and/or an inputfield for entering colors in hexadecimal format and the picker.
+- **[ColorPicker](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/colorpicker)**
+- **[ComboBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/combobox)** — Defines a component that displays and allows for selection of item values.
+- **[Container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/container)** — Use the container component if you want to create a repeating list of something by building up the design of each list item with ordinary UI components and…
+- **[DataItem](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/dataitem)** — Defines a component that creates data-dependent menu items.
+- **[Date](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/date)** — Defines a date component that is used to format and display date values.
+- **[Divider](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/divider)** — Defines a divider component, which is a simple component that is used to separate item elements in the Menu component.
+- **[Dummy](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/dummy)** — The dummy component acts as a component placeholder to avoid warnings about non-existing components.
+- **[FileList](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/filelist)** — If you are going to display content from the Data Virtualization Layer with information organized as a filesystem abstraction with Databases, Containers, and…
+- **[Form](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/form)** — Defines a form component that is used to stack and populate traditional form components such as Input, ComboBox and TextArea.
+- **[Grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)** — The grid component is used to present a large amount of data in cell format.
+- **[Group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/group)** — Defines a group Container component that will group several components and let them share behavior.
+- **[HTML](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/html)** — Defines a html
+- **[IconList](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/iconlist)** — The iconlist component is used to visualize lists of things with an icon and a text label describing the icon.
+- **[Identity](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/identity)** — Defines an identity plate component that gives an overview of identities.
+- **[Image](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/image)** — The image component displays an image or icon in the user interface with various options for how to show it under different conditions.
+- **[Input](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/input)** — Defines a single-line, editable input field that can be styled in several different ways.
+- **[Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/item)** — The item is not a stand-alone component, rather it defines item child elements for the list, menu, and plate components.
+- **[Label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/label)** — Defines a text label, used mainly to display small or large amounts of text.
+- **[List](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list)** — Defines a list component that displays item entries populated by data bound to it.
+- **[ListView](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/listview)** — Defines a very flexible component that is driven by an XSLT document as well as data, which means in order for the component to work you need to have a…
+- **[Map](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/map)** — Defines a map component utilizing Google Maps.
+- **[Menu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menu)** — Defines a menu plate that contains item elements, which are defined as child elements called Menu Items.
+- **[Menu Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menu-item)** — Defines static menu items in application menus.
+- **[MenuBar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menubar)** — Defines a menubar that is filled with menu component elements.
+- **[Panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel)** — Defines a panel, which are infrastructure building blocks in applications, used for arranging other components and creating a desirable layout.
+- **[Plate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/plate)** — Defines a plate component that serves as a Container for Plate Item elements.
+- **[Plate Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/plate-item)** — Defines static items in the Plate component.
+- **[QR](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/qr)** — Defines a QR code, in the form of a scannable QR code.
+- **[Radio](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/radio)** — Defines a radio button, in the form of a clickable circle with an optional text label.
+- **[Render](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/render)** — The Render component is used to display a single XML document using an XSLT document and requires that you bind data to the component.
+- **[RichText](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/richtext)** — Defines a Rich Text Editor that makes it possible for end users to style and format text.
+- **[Shell](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/shell)** — Defines a text-based command line interface.
+- **[Slider](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/slider)** — The slider component allow the selection of any value between the min and max values or if the slider has a plate component as a child element, the selection…
+- **[TabStrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)** — The tabstrip component handles and shows tabs.
+- **[TextArea](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/textarea)** — Defines a Text Area used for displaying and editing text that needs several lines.
+- **[Toggle](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toggle)** — A toggle is a switch between two mutually exclusive states — typically on/off, enabled/disabled, or active/inactive.
+- **[ToolBar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar)** — The toolbar component is a Container for a specific set of child components.
+- **[Tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tree)** — Defines a tree view.
+- **[Upload](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/upload)** — Allows for uploads from the user's computer or device.
+- **[Video](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/video)** — A simple player for video streams.
+- **[View](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view)** — The view element is the root element for all view documents (UI markup files) that represents the V in the MVC (Model View Controller) design pattern.
+- **[WidgetPane](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/widgetpane)** — A widgetpane is a container that arranges a group of widgets on a grid.
+
+## Operations (29)
+
+- **[action](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/action)** — This operation enables the developer to perform a number of actions on components.
+- **[bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)** — This operation enables users to bind data to components, thus utilizing the strength with XIOS/3 to have UI components intelligently bound to data models.
+- **[call](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/call)** — This operation is used to call other steps.
+- **[callMethod](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callmethod)** — This operation will is used to execute methods on components and even to send parameters to them.
+- **[callService](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callservice)** — This operations allows XIOS/3 applications to communicate with external web services
+- **[change](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/change)** — This operation is used to manipulate XML data and is the key to using the Data Virtualization Layer.
+- **[channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/channel)** — This operation is used to create a communicator that can communicate to a REST API or Web Service API.
+- **[close](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/close)** — This operation is used to close documents from XIOS/3, by clearing them from the cache.
+- **[confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm)** — This operation is used to display a confirmation dialog.
+- **[create](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/create)** — This operation is used to create an XML node-set by creating a new Object (temporary document).
+- **[database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/database)** — This operation offers various ways of handling database instructions.
+- **[debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug)** — This operation is used to debug applications when developing for XIOS/3.
+- **[decision](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/decision)** — This operation defines a switch-statement which is used to test conditions.
+- **[foreach](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/foreach)** — This operation allows you to iterate (loop) using a counter similar to a for( let i = 0; i < 10; i++ ) { } construct.
+- **[friends](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/friends)** — This operation allows you to perform actions on friends or friend groups in the #Friends document (the user's list of friends).
+- **[groups](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/groups)** — This operation allows you to perform action and receive information from groups.
+- **[login](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/login)** — This operation allows you to connect to password protected web services.
+- **[navigate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/navigate)** — This operation is used to navigate in the selection relative to XML documents.
+- **[open](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/open)** — This operation is used to open process, view and application documents.
+- **[print](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/print)** — This operation is used to print documents.
+- **[rollBack](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/rollback)** — This operation is used to rollback transactions.
+- **[save](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/save)** — This operation is used to save XML documents.
+- **[search](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/search)** — This operation makes the text content within an XML document searchable.
+- **[setSelection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/setselection)** — This operation is used to set selections on components that are already bound to data.
+- **[share](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/share)** — This operation is used for actions related to Window Sharing and Gesture Based Collaboration.
+- **[split](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/split)** — This operation is used to split a string into an XML node-set
+- **[stats](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/stats)** — The stats operation turns a raw XML feed into a chart-ready XML document, declaratively.
+- **[tenant](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/tenant)** — The tenant operation defines operations related to the tenant e.g users and statistics.
+- **[test](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/test)** — This operation runs a test suite given to it.
+
+## Events (76)
+
+- **[Add](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/add)** — This event occurs when the add tab (+) button is clicked.
+- **[AddColumn](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/addcolumn)** — This event occurs when the button to add a column is clicked in the grid.
+- **[AddRow](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/addrow)** — This event occurs when a new row is added to the grid.
+- **[AlignCenterRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/aligncenterrelease)** — This event occurs when text that is aligned in the center is released.
+- **[AlignCenterSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/aligncenterselect)** — This event occurs when text that is aligned in the center is selected.
+- **[AlignJustifiedRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/alignjustifiedrelease)** — This event occurs when text that has justified alignment is released.
+- **[AlignJustifiedSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/alignjustifiedselect)** — This event occurs when text that has justified alignment is selected.
+- **[AlignLeftRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/alignleftrelease)** — This event occurs when text that is aligned to the left is released.
+- **[AlignLeftSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/alignleftselect)** — This event occurs when text that is aligned to the left is selected.
+- **[AlignRightRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/alignrightrelease)** — This event occurs when text that is aligned to the right is released.
+- **[AlignRightSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/alignrightselect)** — This event occurs when text that is aligned to the right is selected.
+- **[Authorized](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/authorized)** — This event occurs when the channel or login operation successfully has authorized a login.
+- **[BGColorRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/bgcolorrelease)** — This event occurs when text that has background color is released.
+- **[BGColorSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/bgcolorselect)** — This event occurs when text that has background color is selected.
+- **[Blur](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/blur)** — This event occurs the user clicks outside the component after having set focus to it.
+- **[BoldRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/boldrelease)** — This event occurs when text that is bold is released.
+- **[BoldSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/boldselect)** — This event occurs when text that is bold is selected.
+- **[BulletListRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/bulletlistrelease)** — This event occurs when a bullet list has been released (unselected) inside a component that allows rich text editing.
+- **[BulletListSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/bulletlistselect)** — This event occurs when a bullet list has been selected inside a component that allows rich text editing.
+- **[Change](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/change)** — This event occurs when the selected value of the component has been changed.
+- **[Changed](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/changed)** — This event occurs when the data bound to the component has been changed.
+- **[Close](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/close)** — This event occurs when the component has been closed.
+- **[Closing](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/closing)** — In order for this event to occur the handle-close element must be set to the value true in the open operation when opening a view or the handle-close…
+- **[ContextMenu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/contextmenu)** — This event occurs when the user right-clicks on the component.
+- **[DateChanged](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/datechanged)** — This event occurs when a new date has been set.
+- **[DecorationRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/decorationrelease)** — This event occurs when text that is underlined is released.
+- **[DecorationSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/decorationselect)** — This event occurs when text that is underlined is selected.
+- **[Delete](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/delete)** — This event occurs when a selected item in the component has been deleted.
+- **[Disabled](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/disabled)** — This event occurs when a component is disabled, e.g. from the action disable.
+- **[DoubleClick](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/doubleclick)** — This event occurs when the end user double-clicks on the left mouse button.
+- **[Drop](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/drop)** — This event occurs when something is dropped onto the component.
+- **[Edit](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/edit)** — This event occurs after editing has been performed on data in the component.
+- **[EditEnd](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/editend)** — This event occurs after the editfield is closed no matter if changes have been made.
+- **[Empty](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/empty)** — This event occurs when the component is emptied.
+- **[Enabled](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/enabled)** — This event occurs when a component is enabled, e.g. from the action enable.
+- **[Enter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/enter)** — This event occurs when hitting the Enter key while the component is selected.
+- **[Escape](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/escape)** — This event occurs when the ESCAPE key is hit on the keyboard while the component is selected.
+- **[FGColorRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/fgcolorrelease)** — This event occurs when text that has foreground color has been released.
+- **[FGColorSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/fgcolorselect)** — This event occurs when text that has foreground color has been selected.
+- **[Focus](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/focus)** — This event occurs when focus has been set on the component.
+- **[FontFamilyRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/fontfamilyrelease)** — This event occurs when text that has font-family style has been released.
+- **[FontFamilySelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/fontfamilyselect)** — This event occurs when text that has font-family style has been selected.
+- **[FontSizeRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/fontsizerelease)** — This event occurs when text that has font-size style has been released.
+- **[FontSizeSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/fontsizeselect)** — This event occurs when text that has font-size style has been selected.
+- **[Fullscreen](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/fullscreen)** — This event occurs when the component is displayed in full screen.
+- **[Header](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/header)** — This event occurs when the user clicks on the header of grid.
+- **[HeaderContextMenu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/headercontextmenu)** — This event occurs when the user right-clicks on the header of grid.
+- **[Hide](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/hide)** — This event occurs when a component is hidden, e.g. from the action hide.
+- **[Hover](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/hover)** — This event occurs when the end user hovers over the component with the pointer.
+- **[HttpHyperlink](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/httphyperlink)** — This event occurs when a hyperlink (https://) is clicked inside a richtext component.
+- **[Init](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/init)** — This event occurs when the component is rendered.
+- **[ItalicRelease](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/italicrelease)** — This event occurs when text that is italic has been released.
+- **[ItalicSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/italicselect)** — This event occurs when text that is italic has been selected.
+- **[Key](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/key)** — This event occurs when a keyboard key has been pressed (onKeyDown) while the focus in on a supported component.
+- **[Loaded](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/loaded)** — This event is triggered by the view when the entire view with its components is setup and ready, i.e. loaded.
+- **[Login](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/login)** — This event occurs when the channel operation requires a login to continue and open the channel.
+- **[LoginFailure](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/loginfailure)** — This event occurs when the login operation has failed to authorize a login.
+- **[Menu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/menu)** — This event is fired from two different components in two different ways.
+- **[Move](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/move)** — This event occurs when the content of the component has been moved.
+- **[MoveItem](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/moveitem)** — This event occurs when the end user drags a selected item.
+- **[NumberListSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/numberlistselect)** — This event occurs when a numbered list has been selected inside a RichText editor.
+- **[Opened](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/opened)** — This event is triggered by the view when the entire view with its components is visible.
+- **[Paste](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/paste)** — This event will occur when the user clicks on Ctrl+V. It will result in the paste-node being the trigger.
+- **[ReadOnly](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/readonly)** — This event occurs when a component is made read only, e.g. from the action readonly.
+- **[ReadWrite](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/readwrite)** — This event occurs when a component is made read/write, e.g. from the action readwrite.
+- **[Ready](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/ready)** — This event occurs when a component with external dependencies has been loaded and can accept interaction.
+- **[Release](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/release)** — This event occurs on mouse up or when something is deselected depending on the specific component.
+- **[Saved](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/saved)** — This event occurs then the data bound to the component has been saved.
+- **[Select](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/select)** — This event occurs when the component has been selected.
+- **[SelectedDate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/selecteddate)** — This event occurs when a date is selected and displayed in the Calendar.
+- **[SelectedMore](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/selectedmore)** — This event occurs when an event has been extended from a single day to two or more while in single day view.
+- **[SetActive](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/setactive)** — This event occurs once the view has been focused.
+- **[Show](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/show)** — This event occurs when the component is displayed, e.g. from the action show.
+- **[SubjectMore](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/subjectmore)** — This event occurs when the More Details link is clicked in the Calendar Quick Event Scheduler.
+- **[Tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/tab)** — This event occurs when the tab button is hit.
+- **[TriggerEvent](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/triggerevent)** — This event allows you to catch your own defined events from the ListView and Render components.
+
+## Functions (53)
+
+- **[absolute-path](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/absolute-path)** — A function that resolves a relative path to a document.
+- **[apply-locale](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/apply-locale)** — A function that applies language localization to any XML document.
+- **[capitalize](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/capitalize)** — A function that returns the passed string as capitalized.
+- **[changedate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/changedate)** — A function that allows to add or subtract time for a given date and/or time.
+- **[changes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/changes)** — A function that returns the number of changes that have been made to a document since it was loaded or saved.
+- **[channelname](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/channelname)** — A function that returns the name of the communication channel which provides the document.
+- **[combine-path](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/combine-path)** — A function that combine path segments into a single path.
+- **[concat](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/concat)** — A function that returns a concatenation of its parameters.
+- **[contains](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/contains)** — A function that checks if a string contains a specific string.
+- **[count](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/count)** — A function that returns the number of elements matching your XPath.
+- **[count-selection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/count-selection)** — A function that returns the length of a selection.
+- **[datatype](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/datatype)** — A function that returns the datatype XML of the passed Object.
+- **[document](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/document)** — A function that returns the name of a document without Object extensions (eg. .xml) or Container path.
+- **[downcase](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/downcase)** — A function that returns the passed string in lowercase.
+- **[emitter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/emitter)** — Returns the id of the emitting component for the event.
+- **[escape-string](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/escape-string)** — A function that escapes strings for inclusion in expressions and JSON literals.
+- **[file-exists](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/file-exists)** — A function that returns either true or false depending if an Object (file) exists when passed an Object path.
+- **[filename](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/filename)** — A function that returns the name of the Object (file) from the URL given to it.
+- **[folder-exists](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/folder-exists)** — A function that returns either true or false depending on if a Container (folder) exists when passed a Container path.
+- **[folderid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/folderid)** — A function that returns the id of a Container (folder) when passed a Container path.
+- **[foldername](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/foldername)** — A function that returns the name of the Container (folder) in which the document is located.
+- **[folderpath](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/folderpath)** — A function that returns the full Container path of the Object.
+- **[format-bytes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/format-bytes)** — A function that converts bytes into megabytes (MB), gigabytes (GB) etc.
+- **[format-date](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/format-date)** — A function that returns a specified date formatted according to a specificed format.
+- **[get-label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/get-label)** — A function that returns the locale (localized language version) value of the passed label.
+- **[index-of](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/index-of)** — A function that returns the index of a specific string.
+- **[is-alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/is-alias)** — A function that checks if an alias has been defined and returns either true() if set or false() it the alias has not been set.
+- **[is-color](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/is-color)** — A function that returns true() if the supplied parameter is a hex color in the format #fff, #ffffff, or #000,#fff for color ranges.
+- **[is-open](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/is-open)** — A function that returns true() or false() depending if a view is open or not.
+- **[is-running](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/is-running)** — A function that returns the number of instances running of an application.
+- **[is-text-type](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/is-text-type)** — A function that returns true() or false() depending on if a mime-type is a text based type or not.
+- **[join](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/join)** — A function that concatenates all the nodes of the node set in the first argument using the optional delimiter string of the second argument.
+- **[local-name](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/local-name)** — A function that returns the name of the attribute or element without the namespace.
+- **[localizedate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/localizedate)** — A function that returns the passed system date string as localized to the user's settings.
+- **[match](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/match)** — A function that returns the string of the first match.
+- **[parent](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/parent)** — A function that takes a trigger or component as input and then provides the current data binding or state of the parent component.
+- **[parsedate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/parsedate)** — A function that parses a string that represents a date and returns it in the requested format.
+- **[position](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/position)** — A function that returns the position of the element requested by the XPath parameter.
+- **[random](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/random)** — A function that returns a random number between x and y.
+- **[read](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/read)** — A function that returns a read-only version of the passed document.
+- **[replace](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/replace)** — A function that returns a string where a substring has been replaced.
+- **[screen](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/screen)** — Evaluates a given media query string using the browser native function window.matchMedia().
+- **[selected-text](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/selected-text)** — A function that returns the user selected text in the currently active view.
+- **[selection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/selection)** — A function that returns the XPath selection of the event object or alias.
+- **[substring](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/substring)** — A function that returns a substring as requested by the parameters passed.
+- **[substring-after](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/substring-after)** — A function that returns the reminder of the string after the pattern in the second parameter.
+- **[substring-before](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/substring-before)** — A function that returns the reminder of the string before the pattern in the second parameter.
+- **[text-selection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/text-selection)** — A function that returns the XPath selection of the event object or alias.
+- **[translate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/translate)** — The translate function returns the first argument string with occurrences of characters in the second argument string replaced by the character at the…
+- **[trim](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/trim)** — A function that returns a string where all whitespace characters in the front and back of the string are removed.
+- **[upcase](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/upcase)** — A function that returns the passed string in uppercase.
+- **[xml](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/xml)** — A function that returns a string that contains XML-like contents into XML.
+- **[xpath-escape](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/xpath-escape)** — Whenever you are expanding expressions within XPath, literals escaping single and double quotes becomes a problem.
+
+## Actions (19)
+
+- **[activate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/activate)** — The activate action is used to set a component to be the active component in a page.
+- **[add](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/add)** — The add action is used to dynamically create (add) components inside other components.
+- **[busy](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/busy)** — The busy action will set the component component in a busy, non-responsive state.
+- **[clear](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/clear)** — The clear action clears the value inside Input fields and Textarea.
+- **[disable](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/disable)** — The disable action will make a component grayed out in the GUI and disable all end user interaction to the component.
+- **[enable](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/enable)** — The enable action is the opposite of the disable action and will return the component to its original state.
+- **[error](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/error)** — The error action sets the component in an error state that the component may visualize.
+- **[focus](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/focus)** — This action will give focus to a component, e.g. an input field.
+- **[hide](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/hide)** — The hide action will make a component disappear from the GUI until it is visualized again using the show action.
+- **[open](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/open)** — The open action is used to open ContextMenus.
+- **[readonly](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/readonly)** — The readonly action sets the component in read only mode, meaning that it does not accept any user input that would modify the bound data.
+- **[readwrite](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/readwrite)** — The readwrite action sets the component in write enabled mode, meaning that it accepts user input that would modify the bound data.
+- **[release](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/release)** — The release action is used when simulating an end user interaction with the GUI, performing an event which deselects a component in the GUI without end user…
+- **[select](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/select)** — The select action is used when simulating an end user interaction with the GUI, performing an event which selects a component in the GUI without end user…
+- **[set](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/set)** — The set action sets a simple string value to a component.
+- **[show](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/show)** — The show action is the opposite of the hide action and will return the component to its original state, making it visible and interactive for end user events.
+- **[unbind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/unbind)** — The unbind action is used to unbind data that has been bound to a component using the bind operation.
+- **[valid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/valid)** — The valid action sets the component to a valid (non-error) state that the component may visualize.
+- **[warning](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/actions/warning)** — The warning action sets the component to a warning state that the component may visualize.
+
+## Action Urls (5)
+
+- **[lastLogins](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/action-urls/lastlogins)** — An actionURL that lists the last logins to a specific group, providing an db:container document.
+- **[leaveGroup](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/action-urls/leavegroup)** — An actionURL that allows the user to leave a group.
+- **[search](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/action-urls/search)** — An actionURL that returns a composite database result of search results matching the search query in the Container supplied and any sub-Containers.
+- **[searchUser](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/action-urls/searchuser)** — An actionURL that returns an XML node-set of information about a user, including id and alias.
+- **[tap](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/action-urls/tap)** — An actionURL that enables one to tap into a container on a different database, if they're given the corresponding container-id (cid).
+
+## Methods (109)
+
+- **[activate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/activate)** — The activate-method is used to set focus to a component.
+- **[addWidget](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/addwidget)** — The addWidget-method adds a new widget to a widgetpane while it is running, without the widget having to be listed in the XML up front.
+- **[appointmentColor](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/appointmentcolor)** — The appointmentColor method is used to set an color to an appointment in the Calendar component.
+- **[attach](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/attach)** — The attach-method is used to attach views to each other.
+- **[changeInterval](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/changeinterval)** — Changes the time interval that an hour should be divided to when displayed.
+- **[clear](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/clear)** — The clear-method is used to clear the contents of the component.
+- **[clearContent](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/clearcontent)** — The clearContent method is used to clear the contents of the Container component.
+- **[closeWidget](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/closewidget)** — The closeWidget-method removes a widget from a widgetpane.
+- **[copyToClipboard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/copytoclipboard)** — The copyToClipboard method allows for copying of XML data to the clipboard.
+- **[deselect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/deselect)** — The deselect method will deselect the selected row inside a component, such as the grid.
+- **[detach](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/detach)** — The detach method is used to detach views for each other.
+- **[disableAutoSpellcheck](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/disableautospellcheck)** — The disableAutoSpellcheck method is used to disable automatic spellchecking in the RichText component.
+- **[edit](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/edit)** — The edit-method is used to rename a document inside, for example, the listview component.
+- **[enableAutoSpellcheck](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/enableautospellcheck)** — The enableAutoSpellcheck method is used to enable automatic spellchecking in the RichText component.
+- **[execCommand](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/execcommand)** — The execCommand method is used to perform a command to a component.
+- **[executeCommand](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/executecommand)** — The executeCommand method is used to pass a command to the RichText component.
+- **[flashTab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/flashtab)** — The flashTab method is used to create that appearance that a tab is flashing by switching the selected and unselected visual mode of a tab.
+- **[focus](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/focus)** — The focus-method is used to set focus on windows.
+- **[focusItem](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/focusitem)** — The focusItem method focuses the selection on an item in the listview.
+- **[focusSelection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/focusselection)** — The focusSelection-method is used to set focus on single selection inside the component.
+- **[getCurrentLabel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getcurrentlabel)** — The getCurrentLabel method retrieves the label of the selected node in the tree component.
+- **[getDataLocation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getdatalocation)** — The getDataLocation returns the data that is selected in the component.
+- **[getDateValue](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getdatevalue)** — The getDateValue method returns the date that was clicked in the calendar (clock component)
+- **[getDimension](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getdimension)** — The getDimension method allows you to fetch the height and width of a window or component.
+- **[getEndDate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getenddate)** — Retrieves the value of the endDate key/value from the selected appointment.
+- **[getEndTime](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getendtime)** — Retrieves the value of the endTime key/value from the selected appointment.
+- **[getLat](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getlat)** — Retrieves the latitude value from the selected coordinate.
+- **[getLineBottomMargin](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getlinebottommargin)** — The getLineBottomMargin method is used to read the paragraphs bottom margin.
+- **[getLineTopMargin](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getlinetopmargin)** — The getLineTopMargin method is used to read the paragraphs top margin.
+- **[getLng](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getlng)** — Retrieves the longitude value from the selected coordinate.
+- **[getMapType](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getmaptype)** — Retrieves the map type currently used in the component.
+- **[getNodePath](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getnodepath)** — The getNodePath method retrieves the full node path of the selection in the Tree component.
+- **[getParam](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getparam)** — The getParam method retrieves the value of the named parameter.
+- **[getPaste](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getpaste)** — The getPaste method is used by the Calendar component in order to retrieve clipboard information.
+- **[getSelected](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getselected)** — Retrieves the XML data bound to the selected component rendered by a Container.
+- **[getSelectedItem](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getselecteditem)** — Retrieves the selected item in a listview.
+- **[getSelectedText](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getselectedtext)** — Retrieves the selected text in the component.
+- **[getSelection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getselection)** — Retrieves the selection in the calendar component.
+- **[getSelectionLength](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getselectionlength)** — The getSelectionLength method retrieves the length of the content in the component.
+- **[getSelectionValue](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getselectionvalue)** — The getSelectionValue method retrieves the selected value of the content in the component.
+- **[getSrcDataLocation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getsrcdatalocation)** — The getSrcDataLocation method retrives the document bound to the component, when regular Expressions might return xlinked documents.
+- **[getStartDate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getstartdate)** — Retrieves the startDate key/value of the selection.
+- **[getStartTime](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getstarttime)** — Retrieves the startTime key/value of the selection.
+- **[getText](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/gettext)** — Retrieves the content of the text() node.
+- **[getValue](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getvalue)** — The getValue method retrieves the value of the content in the component.
+- **[getZoom](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/getzoom)** — Retrieves the zoom currently used in the component.
+- **[gotoLine](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/gotoline)** — The gotoLine method selects the defined line in the CodeEditor component.
+- **[goToPage](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/gotopage)** — The goToPage-method jumps a paging widgetpane straight to a given page.
+- **[haveSelection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/haveselection)** — The haveSelection method is used to check if a listview has a selection.
+- **[hideColumn](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/hidecolumn)** — This method is used to hide a visible column in a grid.
+- **[insertHyperlink](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/inserthyperlink)** — The insertHyperlink method is used to insert a hyperlink (home:// or https://) in to a richtext component.
+- **[insertImage](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/insertimage)** — The insertImage is used to insert an insert an image in to a component.
+- **[insertText](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/inserttext)** — The insertText is used to insert an insert text in to a component.
+- **[maximize](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/maximize)** — The maximize method is used to maximize windows.
+- **[minimize](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/minimize)** — The minimize method is used to minimize windows.
+- **[modStyle](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/modstyle)** — The modStyle method is used to insert CSS styles in to components dealing with the richtext component.
+- **[navigateUp](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/navigateup)** — The navigateUp-method is used to navigate the parent of the current selection in the tree component.
+- **[nextPage](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/nextpage)** — The nextPage-method moves a paging widgetpane forward to the next page.
+- **[nodeExpanded](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/nodeexpanded)** — The nodeExpanded method is used to determine if the selected node is expanded or not.
+- **[pasteFromClipboard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/pastefromclipboard)** — The pasteFromClipboard method allows for paste of XML data from the clipboard.
+- **[pause](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/pause)** — Pauses the media playing the in the component.
+- **[play](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/play)** — Starts playing the currently selected media in the component.
+- **[prevPage](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/prevpage)** — The prevPage-method moves a paging widgetpane back to the previous page.
+- **[print](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/print)** — The print method is used to print out a document.
+- **[printPresentation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/printpresentation)** — The printPresentation method is used to print an Editor component document.
+- **[release](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/release)** — The release-method is used to simulate the release command on components.
+- **[releaseEnter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/releaseenter)** — The releaseEnter-method simulates the release of the Enter-button.
+- **[removeList](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/removelist)** — The removeList is used to remove a selected list in the RichText component.
+- **[resetSelection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/resetselection)** — The resetSelection method is used to reset the selecion in a component.
+- **[restore](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/restore)** — The restore method is used to restore a view (application) window to the desktop.
+- **[restoreAppDlg](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/restoreappdlg)** — Restores the application window from the application toolbar to the desktop.
+- **[saveChanges](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/savechanges)** — The saveChanges-method saves the layout edits made in a widgetpane to storage.
+- **[search](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/search)** — The search method allows you to search within a document.
+- **[searchMap](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/searchmap)** — The searchMap method allows you to search for a location in a map.
+- **[selectAll](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/selectall)** — The selectAll method is used to select all rows.
+- **[selectFirstRow](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/selectfirstrow)** — The selectFirstRow method is used to set selection to the first item in the grid
+- **[selectLastRow](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/selectlastrow)** — The selectLastRow method is used to set selection to the last item in the grid
+- **[selectTab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/selecttab)** — The selectTab-method is used to set which tab is to be shown in the tabstrip from the process language.
+- **[setDemoMode](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setdemomode)** — The setDemoMode-method turns demo mode on or off for every widget in a widgetpane.
+- **[setDimension](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setdimension)** — The setDimension method is used to change the dimension (width and height) of a view (application gui).
+- **[setEditableMode](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/seteditablemode)** — The setEditableMode method is used to enable or disable editing of the component.
+- **[setEditMode](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/seteditmode)** — The setEditMode-method turns edit mode on or off for a widgetpane.
+- **[setFont](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setfont)** — The setFont methods will set a new font on the component.
+- **[setIcon](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/seticon)** — The setIcon method allows the developer to set a new icon for a view window, by passing a parameter containing the URL to the new icon.
+- **[setImage](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setimage)** — The setImage-method allows the developer to set a background image on a view.
+- **[setLabel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setlabel)** — The setLabel method allows the developer to change the label set for input fields.
+- **[setLineIndent](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setlineindent)** — The setLineIndent method allows the developer to set an indentation in pixels in a richtext component.
+- **[setLineMargin](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setlinemargin)** — The setLineMargin method allows the developer to change the line height in a richtext component.
+- **[setParam](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setparam)** — This is used on the listview-component to send a parameter to the XSLT.
+- **[setRange](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setrange)** — Sets the time range of the Calendar component.
+- **[setSelect](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setselect)** — The setSelect method is used to select a component, but has the option to decide if it should fire a Select event.
+- **[setSelectedDate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setselecteddate)** — The setSelectedDate method is used to selected a date in a calendar component, making it stand out from the non selected.
+- **[setSelectionEx](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setselectionex)** — The setSelectionEx method will set the selection expression in the tree component.
+- **[setSelectionRoot](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setselectionroot)** — The setSelectionRoot method will set selection to the root.
+- **[setSkin](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setskin)** — The setSkin method is used to set XSL skin renderers for the clock component when in calendar mode.
+- **[setTitle](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/settitle)** — The setTitle method is used to set a title and/or subtitle to the view or the title of a panel.
+- **[setType](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/settype)** — Sets the display type of the calendar component.
+- **[setValue](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setvalue)** — This method will set a value to a component.
+- **[setView](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setview)** — The setView-method is used to change XSLT documents in render components while keeping the data bound to the component.
+- **[setWeekStartDay](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/setweekstartday)** — Sets the first day of the week for the calendar component.
+- **[showColumn](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/showcolumn)** — This method is used to show a hidden column in a grid.
+- **[sortColumn](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/sortcolumn)** — This method is used to define how a grid should be sorted.
+- **[takeEnter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/takeenter)** — The takeEnter-method simulates the press of the Enter key.
+- **[toggleCheckable](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/togglecheckable)** — Toggles the mode of the menu Item to true or false.
+- **[toggleNode](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/togglenode)** — The toggleNode-method toggles a node in the tree component.
+- **[update](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/update)** — The update-method updates the data bound to a component.
+- **[updateData](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/updatedata)** — Makes an update to the data document bound to the component.
+- **[updateRedraw](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/updateredraw)** — The updateRedraw-method redraws the component thus applying new data (or parameters) that might have been passed to it.
+- **[wordWrap](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/wordwrap)** — The wordWrap-method methods defines if what type of word-wrap should be used.

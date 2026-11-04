@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "cloudbackend-docs": {
+      "type": "http",
+      "url": "https://mcp.cloudbackend.com/docs"
+    },
+    "cloudbackend-build": {
+      "type": "http",
+      "url": "https://mcp.cloudbackend.com/build"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "cloudbackend",
+  "owner": {
+    "name": "CloudBackend"
+  },
+  "metadata": {
+    "description": "CloudBackend PaaS and XIOS/3 developer tooling for Claude: the published skills plus the hosted documentation and build connectors.",
+    "version": "2026.1104.0"
+  },
+  "plugins": [
+    {
+      "name": "cloudbackend",
+      "source": "./plugins/cloudbackend",
+      "description": "Build on CloudBackend PaaS with XIOS/3: the published skills (Singularity database, REST API, native SDKs, XIOS/3 applications and design, the SaaS launch path) and the hosted documentation and build connectors.",
+      "version": "2026.1104.0",
+      "author": {
+        "name": "CloudBackend",
+        "url": "https://cloudbackend.com"
+      },
+      "homepage": "https://cloudbackend.com",
+      "license": "Apache-2.0",
+      "keywords": [
+        "cloudbackend",
+        "xios3",
+        "singularity-database",
+        "rest-api",
+        "sdk",
+        "saas"
+      ],
+      "category": "development"
+    }
+  ]
+}

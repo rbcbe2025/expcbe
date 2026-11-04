@@ -1,0 +1,54 @@
+{
+  "generated": "2026-11-04",
+  "skills": [
+    {
+      "name": "cloudbackend-rest-api",
+      "version": "2026.10.27.4",
+      "content_hash": "a7622e9c368be433",
+      "sha256": "7d3d37bc5a481cea6dcb4c0803da5391fe3725af53e519b506e2ae3af8b797f6",
+      "files": 15
+    },
+    {
+      "name": "cloudbackend-saas-launch",
+      "version": "2026.11.4",
+      "content_hash": "6ed5f6d7e4fe4bbf",
+      "sha256": "e3f3b6ee57ba790059f59fb665dc7cc4af0e79a513d226383ddf328b55bd1ed0",
+      "files": 2
+    },
+    {
+      "name": "cloudbackend-sdk",
+      "version": "2026.10.10",
+      "content_hash": "9aa7b4585b7152e8",
+      "sha256": "723f5eba7e9b6c583eac7ce156482f4657f2d988a4270a7a29be202a12b0831f",
+      "files": 5
+    },
+    {
+      "name": "singularity-database",
+      "version": "2026.10.15",
+      "content_hash": "45b61ebd39926550",
+      "sha256": "c4071c1be0a4007dd061abf4bc238874f7b30f1914437e0135eb88401921f846",
+      "files": 10
+    },
+    {
+      "name": "xios3-app-basics",
+      "version": "2026.11.4",
+      "content_hash": "008f70826b1bc776",
+      "sha256": "78e7839ac6c8b3ddc712c219cda28c54abb074c6bab252b7d366698d1aeb1bb1",
+      "files": 11
+    },
+    {
+      "name": "xios3-app-design",
+      "version": "2026.10.10.5",
+      "content_hash": "90f4fdc3932b8532",
+      "sha256": "a10518298588207e483f83b9bde9d027ca28c07c8bbf0b0b274c8e3bf5a949b8",
+      "files": 23
+    },
+    {
+      "name": "xios3-app-workflow",
+      "version": "2026.11.4",
+      "content_hash": "6fab7c20547cc79c",
+      "sha256": "e5cdcdfbe480da3622884ed0479d7842791af7a93932b552830b8412a237bd06",
+      "files": 14
+    }
+  ]
+}

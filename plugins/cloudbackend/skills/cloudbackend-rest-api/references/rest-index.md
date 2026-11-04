@@ -1,0 +1,557 @@
+# CloudBackend REST API — every operation
+
+513 operations in 13 tags, from the published OpenAPI specification (CloudBackend Singularity REST API). Base URL `https://api.cloudbackend.com/v1`; every body is XML. One line per operation: method, path, what it does. The full card for each — parameters, bodies, status codes, a curl example — is in `rest/<tag>.md`.
+
+⚠ marks an operation the specification itself says is not confirmed against a test case.
+
+## Group (120) — `rest/group.md`
+
+- `POST /group` — Create a group
+- `DELETE /group` — Delete a group
+- `PUT /group` — Rename a group
+- `GET /role` — List roles for a group
+- `POST /role` — Create a custom role
+- `PUT /role` — Rename a role
+- `DELETE /role` — Remove a role
+- `PUT /groupapplication` — Update group application
+- `GET /groupdb` — Query group database
+- `POST /groupdb` — Get group entry
+- `PUT /groupdb` — Update group entry
+- `GET /groupinvite` — List invited users
+- `POST /groupinvite` — Invite a user to a group
+- `DELETE /groupinvite` — Reject group invite
+- `GET /groupjoinrequests` — List join group requests
+- `POST /groupjoinrequests` — Request group membership
+- `PUT /groupmembership` — Accept join group request
+- `DELETE /groupmembership` — Reject group join request
+- `GET /groups/{group_id}` — Get group info
+- `GET /groups/{group_id}/webshares` — List webshares for a group
+- `DELETE /groups/{group_id}/webshares/{webshare_id}` — Delete a webshare
+- `GET /groups/{group_id}/webshares/{webshare_id}` — Get a group webshare
+- `POST /groups/{group_id}/webshares/{webshare_id}` — Update a group webshare
+- `PUT /groupvisibility` — Update group visibility
+- `PUT /onlinestatus` — Update online status
+- `GET /onlinestatus` — Get online status
+- `PUT /membershipvisibility` — Update membership visibility
+- `GET /groupbanuser` — List banned users
+- `POST /groupbanuser` — Ban a user from a group
+- `DELETE /groupbanuser` — Unban a user
+- `DELETE /groupkickuser` — Kick a user from a group
+- `GET /groupusers` — List group users
+- `POST /leavegroup` — Leave a group
+- `POST /associatedinvite` — Validate invite key
+- `DELETE /call/{group_id}` — Proxy DELETE to external API
+- `GET /call/{group_id}` — Proxy GET to external API
+- `POST /call/{group_id}` — Proxy POST to external API
+- `PUT /call/{group_id}` — Proxy PUT to external API
+- `DELETE /gkeys/{group_id}` — Delete group keys
+- `GET /gkeys/{group_id}` — List group keys
+- `POST /gkeys/{group_id}` — Create a group key
+- `DELETE /gkeys/{group_id}/{key_id}` — Delete a group key
+- `GET /gkeys/{group_id}/{key_id}` — Get a group key
+- `PUT /gkeys/{group_id}/{key_id}` — Modify a group key
+- `GET /gkeys/{group_id}/{key_id};acl` — Get group key ACL
+- `PUT /gkeys/{group_id}/{key_id};acl` — Modify group key ACL
+- `GET /groups/{group_id}/bans` — List banned users
+- `DELETE /groups/{group_id}/bans/{member_user_id}` — Remove a ban
+- `GET /groups/{group_id}/bans;acl` — Get bans ACL
+- `PUT /groups/{group_id}/bans;acl` — Modify bans ACL
+- `GET /groups/{group_id}/invitations` — List group invitations
+- `GET /groups/{group_id}/invitations;acl` — Get invitations ACL
+- `PUT /groups/{group_id}/invitations;acl` — Modify invitations ACL
+- `DELETE /groups/{group_id}/purge` — Purge deleted items from database
+- `GET /groups/{group_id}/requests` — List group requests
+- `GET /groups/{group_id}/requests;acl` — Get requests ACL
+- `PUT /groups/{group_id}/requests;acl` — Modify requests ACL
+- `POST /groups/{group_id}/roles` — Create a role
+- `GET /groups/{group_id}/roles/{role_id};acl` — Get role ACL
+- `PUT /groups/{group_id}/roles/{role_id};acl` — Modify role ACL
+- `GET /groups/{group_id}/roles;acl` — Get roles ACL
+- `PUT /groups/{group_id}/roles;acl` — Modify roles ACL
+- `GET /groups/{group_id}/subgroups` — List group tree
+- `POST /groups/{group_id}/subgroups` — Create a subgroup
+- `GET /groups/{group_id}/subgroups;acl` — Get subgroups ACL
+- `PUT /groups/{group_id}/subgroups;acl` — Modify subgroups ACL
+- `GET /groups/{group_id}/users;acl` — Get users ACL
+- `PUT /groups/{group_id}/users;acl` — Modify users ACL
+- `GET /groups/{group_id}/webshares;acl` — Get webshares ACL
+- `PUT /groups/{group_id}/webshares;acl` — Modify webshares ACL
+- `GET /gwebshares/{group_id}` — List group webshares
+- `POST /hook/{group_id}/{webhook_name}` — Trigger webhook handler
+- `GET /hook/signkey` — Generate webhook signing key
+- `POST /invitationValidation` — Validate group invitation key
+- `GET /organizations/{group_id}` — Get organization details
+- `DELETE /organizations/{group_id}/member/{user_id}` — Remove a member from an organization
+- `GET /organizations/{group_id}/member/{user_id}` — Get organization member
+- `PUT /organizations/{group_id}/member/{user_id}` — Change an organization member's email
+- `GET /organizations/{group_id}/organizations` — List suborganizations
+- `POST /organizations/{group_id}/organizations` — Create a suborganization
+- `GET /organizations/{group_id}/taggedusers` — List tagged users
+- `DELETE /organizations/{group_id}/users` — Delete user invitation
+- `GET /organizations/{group_id}/users` — List organization users
+- `POST /organizations/{group_id}/users` — Invite users to organization
+- `PUT /organizations/{group_id}/users` — Invite users to organization
+- `GET /organizations/{group_id}/users/{user}` — Get organization user
+- `DELETE /organizations/{group_id}/users/{user}` — Delete invitation by email
+- `GET /organizations/{group_id}/usersearch` — Search organization users
+- `GET /tproducts/{group_id}` — Get group products
+- `POST /users/{user_id}/accounts/invites` — Send association invite
+- `DELETE /users/{user_id}/accounts/invites/{invite_id}` — Delete association invite
+- `PUT /users/{user_id}/accounts/invites/{invite_id}` — Resend association invite
+- `GET /wsg[0_9]/{group_id}` — List group public webshares
+- `GET /wsg[0_9]/{group_id}/{webshare_id}` — Get group webshare information
+- `POST /wsg[0_9]/{group_id}/{webshare_id}` — Create a container in a group webshare
+- `POST /wsg[0_9]/{group_id}/{webshare_id}/{path}` — Create group webshare container
+- `GET /wsg[0_9]/{group_id}/{webshare_id}/{path}` — Browse or download from a group webshare
+- `POST /changegroupalias` — Change group alias
+- `GET /testemail` — List test emails
+- `DELETE /testemail` — Delete test emails
+- `GET /testexchangerate` — Get exchange rate
+- `GET /groupmemberships` — List group memberships
+- `GET /rolemember` — List role members
+- `POST /rolemember` — Add role member
+- `DELETE /rolemember` — Remove role member
+- `GET /contact` — List contacts
+- `POST /contact` — Add a contact
+- `PUT /contact` — Set contact visibility
+- `DELETE /contact` — Remove a contact
+- `GET /contactrole` — List contact roles
+- `POST /contactrole` — Create a contact role
+- `DELETE /contactrole` — Delete a contact role
+- `GET /friendlist` — List friends
+- `GET /memberroles` — List a member's roles
+- `POST /querygroup` — Query the group database
+- `POST /sendemail` — Send batch emails
+- `GET /emailgroup` — List email groups
+- `POST /emailgroup` — Add an email group
+- `DELETE /emailgroup` — Delete an email group
+- `GET /diskusage` — Get disk usage
+
+## Identity (72) — `rest/identity.md`
+
+- `GET /avatar/{user_id}` — Get user avatar
+- `GET /users/{user_id}/eula` — Get EULA acceptance
+- `PUT /users/{user_id}/eula` — Accept EULA
+- `PUT /users/{user_id}/config/user;locale` — Set user locale config
+- `GET /mygroups` — Get user groups
+- `GET /users/{user_id}` — Get user info
+- `DELETE /users/{user_id}` — Delete a user (async)
+- `POST /users/{user_id}` — Change password
+- `GET /userdb` — Query user database
+- `PUT /userdb` — Update user entry
+- `POST /userdb` — Get user entry
+- `GET /users/{user_id}/delete` — Request user deletion
+- `DELETE /users/{user_id}/delete` — Delete a user (async)
+- `DELETE /deleteuser` — Delete a user by username
+- `GET /usersearch` — Search for users
+- `GET /usersearch/{username}` — Search for a user by name
+- `GET /activate` — Create a tenant (send activation email)
+- `POST /activate` — Activate user account
+- `GET /avatar/{user_id}/{size}` — Get user avatar
+- `PUT /changegroupowner` — Change group owner
+- `POST /event` — Send an event
+- `POST /logout` — Log out (invalidate session)
+- `POST /push/{user_id}` — Register device for push notifications
+- `GET /recover` — Request password recovery email
+- `POST /recover` — Change password with recovery code
+- `POST /sendVerificationCode` — Send verification code email
+- `GET /users/{user_id}/account` — Get account info
+- `POST /users/{user_id}/account` — Change or cancel account
+- `GET /users/{user_id}/accounts` — List account associations
+- `POST /users/{user_id}/accounts` — Create account association
+- `DELETE /users/{user_id}/accounts/{association_id}` — Delete account association
+- `GET /users/{user_id}/activate` — Request activation e-mail
+- `POST /users/{user_id}/activate` — Activate user
+- `GET /users/{user_id}/activateUser` — Request activation e-mail
+- `POST /users/{user_id}/activateUser` — Activate user
+- `GET /users/{user_id}/config` — Get full user config
+- `PUT /users/{user_id}/config` — Replace full user config
+- `DELETE /users/{user_id}/config` — Delete user config
+- `PATCH /users/{user_id}/config` — Merge into user config
+- `POST /users/{user_id}/config` — Merge into user config (POST form)
+- `GET /users/{user_id}/encryption` — Get encryption key
+- `POST /users/{user_id}/encryption` — Create encryption key
+- `PUT /users/{user_id}/encryption` — Update encryption key
+- `GET /users/{user_id}/eula/{version}` — Get accepted EULA version
+- `PUT /users/{user_id}/eula/{version}` — Accept EULA version
+- `GET /users/{user_id}/libraries` — List media libraries
+- `POST /users/{user_id}/libraries` — Create a media library
+- `GET /users/{user_id}/libraries/categories` — List library categories
+- `GET /users/{user_id}/libraries/{library_id}` — List media libraries
+- `PUT /users/{user_id}/libraries/{library_id}` — Modify a media library
+- `GET /users/{user_id}/libraries/{library_id}/categories/{category_id}/values` — List category values
+- `GET /users/{user_id}/libraries/{library_id}/categories/{category_id}/values/{value_id}/values` — List nested category values
+- `GET /users/{user_id}/libraries/{library_id}/states` — List library index states
+- `GET /users/{user_id}/mfa` — Get MFA status
+- `POST /users/{user_id}/mfa` — Change MFA type
+- `GET /users/{user_id}/xtenantmappings` — List cross-tenant identity mappings
+- `POST /users/{user_id}/xtenantmappings` — Add a cross-tenant identity mapping
+- `DELETE /users/{user_id}/xtenantmappings` — Remove cross-tenant identity mappings
+- `GET /users/{user_id}/referralcode` — Get user referral code
+- `GET /users/{user_id}/session` — Create user session
+- `DELETE /users/{user_id}/session` — Clear all user sessions
+- `POST /users/{user_id}/session` — Clear current session
+- `GET /validatevat` — Validate VAT number
+- `POST /verifyUser` — Verify user identity
+- `GET /notification` — Get notification config
+- `PUT /notification` — Update notification config
+- `POST /user` — Create a user
+- `GET /lastlogins` — List last logins
+- `GET /library` — Query a library
+- `POST /queryuser` — Query the user database
+- `GET /stats/users/client/{client_name}` — Get client user count
+- `GET /admin/deployments/stats` — Get end user statistics
+
+## Tenant (68) — `rest/tenant.md`
+
+- `POST /emailrules/{organization_id}` — Upload email rules
+- `GET /emailrules/{organization_id}` — Get email rules
+- `GET /accounttype/{tenant_id}` — List account types
+- `POST /accounttype/{tenant_id}` — Create an account type
+- `DELETE /accounttype/{tenant_id}` — Delete an account type
+- `PUT /accounttype/{tenant_id}` — Update an account type
+- `GET /locale` — Get locale
+- `PUT /locale` — Set locale
+- `PUT /locales` — Replace the strings of a locale
+- `PATCH /locales` — Add or change strings of a locale
+- `GET /locales/{locale}` — Get the strings of a locale
+- `DELETE /locales/{locale}` — Delete all strings of a locale
+- `GET /locales/{locale}/entries/{key}` — Get one string of a locale
+- `PUT /locales/{locale}/entries/{key}` — Set one string of a locale
+- `DELETE /locales/{locale}/entries/{key}` — Delete one string of a locale
+- `GET /products/{tenant_id}` — List products
+- `POST /products/{tenant_id}` — Create or update a product
+- `DELETE /products/{tenant_id}` — Delete a product
+- `GET /tenantOptions/{tenant_id}` — Get tenant options
+- `POST /tenantOptions/{tenant_id}` — Set tenant options
+- `DELETE /tenantOptions/{tenant_id}` — Delete tenant options
+- `GET /signupreferralsettings/{group_id}` — Get signup referral settings
+- `POST /signupreferralsettings/{group_id}` — Update signup referral settings
+- `GET /signupreferral/{group_id}` — Generate a referral code
+- `POST /signupreferral/{group_id}` — Grant code-generation allowances
+- `DELETE /signupreferral/{group_id}` — Retract a referral code
+- `GET /signupreferral/{group_id}/list` — List generated referral codes
+- `GET /signupreferral/{group_id}/users` — List who may generate referral codes
+- `GET /users` — List tenant users
+- `GET /campaign` — Activate or test a campaign code
+- `DELETE /cancelSubscription` — Confirm subscription cancellation
+- `GET /cancelSubscription` — Request subscription cancellation
+- `POST /clients/{tenant_group_id}` — Create a client
+- `GET /coupon` — Activate or test a coupon
+- `GET /deleteTenant` — Request tenant deletion code
+- `POST /deleteTenant` — Delete a tenant
+- `DELETE /objects/purge` — Purge deleted data of the tenant
+- `GET /statistictenant/users` — Get user count
+- `GET /tenantkey` — Get tenant keys
+- `GET /users/{user_id}/billing` — Get billing info
+- `PUT /users/{user_id}/billing` — Update billing info
+- `GET /users/{user_id}/invoices/{purchase_id}` — Get invoice
+- `GET /users/{user_id}/invoices` — List unpaid invoices
+- `POST /users/{user_id}/invoices/{invoice_id}/credit-notes` — Credit an invoice
+- `POST /users/{user_id}/invoices/{invoice_id}/payments` — Mark an invoice as paid
+- `GET /users/{user_id}/purchases` — List purchases
+- `POST /users/{user_id}/purchases` — Create a purchase
+- `POST /users/{user_id}/tpurchases` — Create PayPal purchase URL (not implemented)
+- `GET /vat-numbers/` — List tenant VAT numbers
+- `POST /vat-numbers/` — Add a tenant VAT number
+- `DELETE /vat-numbers/{vat_number}` — Delete a tenant VAT number (test tenants)
+- `GET /tenantgroup` — Get tenant group
+- `GET /paypalcredentials/{tenant_id}` — Get PayPal credentials
+- `POST /paypalcredentials/{tenant_id}` — Set PayPal credentials
+- `DELETE /paypalcredentials/{tenant_id}` — Delete PayPal credentials
+- `POST /deleteoldfreeusers/{tenant_id}` — Delete old free users
+- `GET /organizations/check` — Check whether a tenant name is available
+- `GET /organizations/{group_id}/bandwidth` — Get tenant bandwidth usage
+- `GET /stripecredentials/{tenant_id}` — Get Stripe credentials
+- `POST /stripecredentials/{tenant_id}` — Set Stripe credentials
+- `DELETE /stripecredentials/{tenant_id}` — Delete Stripe credentials
+- `GET /stats/users` — Get grouped user statistics
+- `GET /stats/users/active` — Get last login count
+- `GET /stats/users/logins` — Get total login count
+- `GET /stats/users/subscriptions` — Get premium user statistics
+- `GET /stats/revenue` — Get revenue statistics
+- `GET /admin/users/total` — Get deployment statistics
+- `POST /emailcredentials` — Add email credentials
+
+## Sharing (65) — `rest/sharing.md`
+
+- `GET /wsg0/{tenant_id}/{webshare_id}/{filename}` — Download a file from a public webshare
+- `GET /wsg1/{tenant_id}/{webshare_id}/{filename}` — Download a file from a private webshare
+- `GET /ws2/{user_id}/{webshare_name}` — List files in a webshare
+- `POST /ws2/{user_id}/{webshare_name}` — Create a container in a webshare
+- `POST /groups/{group_id}/webshares/{webshare_id}/{container_id}` — Upload a file to a webshare container
+- `POST /share` — Create a share
+- `GET /share` — List my shares
+- `DELETE /share` — Delete a share
+- `POST /listmyshare` — Get share details
+- `POST /users/{user_id}/webshares` — Create a webshare
+- `GET /users/{user_id}/webshares` — List webshares
+- `GET /users/{user_id}/webshares/{webshare_id}` — Get webshare details
+- `DELETE /users/{user_id}/webshares/{webshare_id}` — Delete a webshare
+- `POST /users/{user_id}/webshares/{webshare_id}` — Update a webshare
+- `GET /users/{user_id}/favorites` — List favorites
+- `POST /users/{user_id}/favorites` — Add a webshare to favorites
+- `GET /users/{user_id}/favorites/{favorite_id}` — Get a favorite webshare
+- `DELETE /users/{user_id}/favorites/{favorite_id}` — Remove a favorite
+- `POST /users/{user_id}/favorites/{favorite_id}` — Copy favorite content
+- `PUT /users/{user_id}/favorites/{favorite_id}` — Update a favorite
+- `GET /users/{user_id}/favorites/{favorite_id}/webshare` — List files in a favorited webshare
+- `POST /users/{user_id}/favorites/{favorite_id}/webshare` — Create a container in a favorited webshare
+- `GET /userlink` — List user links
+- `POST /userlink` — Create a user link
+- `DELETE /userlink` — Delete a user link
+- `GET /gwebshares/blocked` — List blocked webshares
+- `POST /gwebshares/block` — Block a group webshare
+- `POST /gwebshares/unblock` — Unblock a group webshare
+- `GET /public/users/{username}/{webshare_path}` — Redirect to webshare location
+- `GET /users/{user_id}/followinvites` — List follow invites
+- `DELETE /users/{user_id}/followinvites/{invite_id}` — Decline follow invite
+- `GET /users/{user_id}/xtenant` — List cross-tenant grants
+- `POST /users/{user_id}/xtenant` — Grant cross-tenant access
+- `DELETE /users/{user_id}/xtenant` — Remove cross-tenant grants
+- `DELETE /users/{user_id}/webshares/{webshare_id}/followers` — Delete webshare invite
+- `GET /users/{user_id}/webshares/{webshare_id}/followers` — List webshare followers
+- `PUT /users/{user_id}/webshares/{webshare_id}/followers` — Update webshare followers
+- `DELETE /users/{user_id}/webshares/{webshare_id}/followers/{favorite_id}` — Remove a webshare follower
+- `GET /users/{user_id}/webshares/{webshare_id}/followers/{favorite_id}` — List webshare followers
+- `PUT /users/{user_id}/webshares/{webshare_id}/resources` — Remove webshare resources
+- `POST /webshares/block` — Block a user webshare
+- `GET /webshares/blocked` — List blocked webshares
+- `GET /webshares/domain` — Get webshare domain info
+- `POST /webshares/domain` — Add a webshare domain
+- `DELETE /webshares/domain` — Delete a webshare domain
+- `POST /webshares/invite/{user_id}` — Invite users to webshare
+- `POST /webshares/unblock` — Unblock a user webshare
+- `GET /webshares/{user_id}` — List user webshares
+- `GET /webshares/{user_id}/{webshare_name}/qr` — Download webshare QR code
+- `GET /ws[0_9]/{user_id}/{webshare_id}` — Get webshare feed
+- `POST /ws[0_9]/{user_id}/{webshare_id}/{path}` — Create webshare container
+- `GET /ws[0_9]/{user_id}/{webshare_id}/{path}` — Browse or download from a webshare
+- `GET /wsd` — Get webshare by domain
+- `POST /wsd` — Create container in domain webshare (parameter form)
+- `GET /wsd/{domain}` — Get domain webshare content
+- `POST /wsd/{domain}` — Create container in domain webshare
+- `PUT /acl` — Set temporary ACLs
+- `GET /containergroupshares` — List available group shares
+- `GET /containershares` — List container shares
+- `GET /objectshares` — List object shares
+- `GET /sharedobject` — Load a shared object
+- `PUT /sharedobject` — Update a shared object
+- `GET /sharedobjectcheck` — Check a shared object for changes
+- `PUT /sharedobjectsave` — Save a shared object
+- `GET /wsd/{domain}/{path}` — Get an object from a domain webshare
+
+## Object (51) — `rest/object.md`
+
+- `GET /object` — Load an object
+- `POST /object` — Create an object or object
+- `DELETE /object` — Delete an object
+- `PUT /object` — Rename an object
+- `PUT /objectsave` — Save or update an object
+- `GET /metadata` — Get object metadata
+- `PUT /metadata` — Save object metadata
+- `GET /objects/{container_id}` — List objects in a container
+- `GET /objects/{container_id}/{object_id}` — Get XML content of an object
+- `PUT /objects/{container_id}/{object_id}` — Change XML content of an object
+- `GET /objects/{container_id}/:{name}` — Get XML content of an object by name
+- `PUT /objects/{container_id}/:{name}` — Change XML content of an object by name
+- `POST /objectcopy` — Copy an object
+- `POST /stream` — Get or copy streams
+- `PUT /stream` — Rename a stream
+- `DELETE /stream` — Delete a stream
+- `GET /stream` — List object streams
+- `GET /appendstream` — List append streams
+- `GET /keys/{user_id}` — List user keys
+- `POST /keys/{user_id}` — Create a user key
+- `DELETE /keys/{user_id}/{key_id}` — Delete a user key
+- `GET /keys/{user_id}/{key_id}` — Get a user key
+- `PUT /keys/{user_id}/{key_id}` — Modify a user key
+- `POST /objects/{container_id}/{object_id}/stream` — Upload to next free stream
+- `GET /objects/{container_id}/{object_id}/{stream_id}` — Get object stream
+- `POST /objects/{container_id}/{object_id}/{stream_id}` — Upload a stream to an object
+- `GET /objects/{container_id}/{object_id}/{stream_id}/session` — Get object stream (not a session)
+- `GET /objects/{container_id}/{object_id}/{stream_id}/{filename}` — Get object stream with a file name in the URL
+- `POST /objects/{container_id}/{object_id}/{stream_id}/{filename}` — Upload a stream with a file name in the URL
+- `GET /objects/{container_id}/{object_id}/session` — Create object session
+- `POST /objects/{container_id}/{object_id}/restore` — Restore a deleted object
+- `GET /objects/{container_id}/{object_id};acl` — Get object ACL
+- `PUT /objects/{container_id}/{object_id};acl` — Modify object ACL
+- `POST /objects/{container_id}/{object_id}/tmpurl` — Create a temporary decryption URL
+- `GET /objects/{container_id}/{object_id}/tmpurl/{session}` — Download decrypted object
+- `GET /objects/{container_id}/{object_id}/tmpurl/{session}/{filename}` — Download decrypted object with a file name in the URL
+- `GET /objects/{container_id}/{object_id}/tmpurl/{session}/{filename}/delete` — Delete a decryption session
+- `DELETE /users/{user_id}/favorites/{favorite_id}/{container_id}/objects/{object_id}` — Delete object in favorite
+- `POST /users/{user_id}/favorites/{favorite_id}/{container_id}/objects/{object_id}` — Restore object in favorite
+- `PUT /users/{user_id}/favorites/{favorite_id}/{container_id}/objects/{object_id}` — Rename object in favorite
+- `PUT /objectmove` — Move an object
+- `POST /upload/{container_id}` — Upload a file
+- `GET /metadataextract` — Extract object metadata
+- `GET /editurl` — Get an external editor URL for an object
+- `GET /objectacl` — Get object ACL
+- `PUT /objectacl` — Set object ACL
+- `PUT /touchkey` — Touch a key
+- `POST /zoho/{save_key}` — Zoho editor save callback
+- `GET /pixlr/{save_key}` — Pixlr editor load and save callback
+- `POST /pixlr/{save_key}` — Pixlr editor save callback (POST, not implemented)
+- `POST /upload/{group_id}/{container_id}/{md5}` — Append a file to an object's main stream
+
+## Other (48) — `rest/other.md`
+
+- `GET /spellcheck` — List spell-check languages
+- `POST /spellcheck` — Spell-check text
+- `DELETE /unsubscribe` — Unsubscribe email
+- `DELETE /` — Delete session (no-op)
+- `GET /` — Get session (no-op)
+- `GET /agreement/{agreementName}/{group_id}` — Get agreement version
+- `POST /agreement/{agreementName}/{group_id}` — Accept agreement
+- `DELETE /apikey` — Delete an API key
+- `GET /apikey` — List API keys
+- `POST /apikey` — Create an API key
+- `PUT /apikey` — Modify an API key
+- `POST /downloadzip/{user_id}/webshares` — Download webshares as zip
+- `DELETE /node` — Delete all nodes of a tenant
+- `POST /node` — Create a node
+- `GET /node/list/{tenant name}` — List tenant nodes
+- `DELETE /node/{node_id}` — Delete a node
+- `GET /node/{node_id}` — Get a node
+- `PUT /node/{node_id}` — Modify a node
+- `GET /organizations` — List organizations
+- `POST /organizations` — Create an organization
+- `POST /organizations/{group_id}` — Create an organization (alias)
+- `GET /organizations/{group_id}/api/calls` — Get total API calls per month
+- `GET /organizations/{group_id}/api/calls/user/{user_id}` — Get API calls for a user
+- `GET /organizations/{group_id}/api/calls/user/{user_id}/block` — Get user blocked status
+- `POST /organizations/{group_id}/api/calls/user/{user_id}/block` — Block user from APIs
+- `GET /organizations/{group_id}/api/calls/user/{user_id}/unblock` — Get user blocked status
+- `POST /organizations/{group_id}/api/calls/user/{user_id}/unblock` — Unblock user from APIs
+- `GET /organizations/{group_id}/api/calls/users` — Get API calls per user
+- `GET /organizations/{group_id}/api/calls/users/blocked` — List blocked users
+- `GET /pricelist` — Get price list
+- `GET /publicpricelist` — Get public price list
+- `DELETE /ratings` — Remove a rating
+- `GET /ratings` — Get ratings
+- `POST /ratings` — Rate an item
+- `POST /referral` — Validate a referral code
+- `DELETE /users/{user_id}/config/{config_path}` — Delete config values
+- `GET /users/{user_id}/config/{config_path}` — Get config values
+- `PATCH /users/{user_id}/config/{config_path}` — Patch config values
+- `POST /users/{user_id}/config/{config_path}` — Modify config values
+- `PUT /users/{user_id}/config/{config_path}` — Set config values
+- `DELETE /users/{user_id}/config/{config_path}{config_key}` — Delete config key
+- `GET /users/{user_id}/config/{config_path}{config_key}` — Get config key value
+- `PUT /users/{user_id}/config/{config_path}{config_key}` — Set config key value
+- `GET /users/{user_id}/emailconfigs` — List email configurations
+- `PUT /users/{user_id}/emailconfigs` — Modify email configuration
+- `GET /version` — Get API version
+- `GET /healthcheck` — Health check
+- `POST /callai` — Proxy a request to the AI provider
+
+## Container (43) — `rest/container.md`
+
+- `POST /container` — Create a child container
+- `PUT /container` — Modify a container
+- `GET /container` — Query a container
+- `DELETE /container` — Delete a child container
+- `GET /containeracl` — Get container ACL
+- `PUT /containeracl` — Set container ACL
+- `POST /objects/{container_id}` — Upload a file
+- `POST /container/search` — Search objects in a container
+- `GET /containerxml` — Get container XML
+- `GET /containerpath/{container_id}/{path}` — Get container by path
+- `GET /containers/{container_id}` — List container contents
+- `GET /containers/{container_id}/{child_container_id}` — Get container info
+- `POST /containers/{container_id}/{child_container_id}` — Restore a deleted container
+- `GET /containers/{container_id}/{child_container_id};acl` — Get container ACL
+- `PUT /containers/{container_id}/{child_container_id};acl` — Modify container ACL
+- `GET /containers/{container_id}/:{name}` — Get child container by name
+- `POST /containers/{container_id}/:{name}` — Restore a deleted container (not supported by name)
+- `GET /containers/{container_id};acl` — Get container ACL
+- `PUT /containers/{container_id};acl` — Modify container ACL
+- `POST /downloadzip/{user_id}` — Download multiple containers as zip
+- `GET /downloadzip/{user_id}/containers/{container_id}` — Download container as zip
+- `POST /downloadzip/{user_id}/containers/{container_id}` — Download multiple containers as zip
+- `GET /downloadzip/{user_id}/favorites/{favorite_id}/containers/{container_id}` — Download favorite container as zip
+- `GET /downloadzip/{user_id}/webshares/{webshare_name}/containers/{container_id}` — Download webshare container as zip
+- `POST /downloadzip/{user_id}/webshares/{webshare_name}/containers/{container_id}` — Download webshare container as zip
+- `GET /links/{user_id}/{link_id}` — Download a linked object
+- `GET /path/{container_id}` — Get container path
+- `GET /search/{container_id}` — Search containers and objects
+- `GET /tags/{container_id}` — Search files by tag
+- `GET /users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}` — Browse favorite webshare
+- `POST /users/{user_id}/favorites/{favorite_id}/{container_id}` — Upload file to favorite
+- `DELETE /users/{user_id}/favorites/{favorite_id}/{container_id}/containers/{child_container_id}` — Delete container in favorite
+- `POST /users/{user_id}/favorites/{favorite_id}/{container_id}/containers/{child_container_id}` — Restore container in favorite
+- `PUT /users/{user_id}/favorites/{favorite_id}/{container_id}/containers/{child_container_id}` — Rename container in favorite
+- `GET /users/{user_id}/libraries/{library_id}/containers` — List library containers
+- `POST /users/{user_id}/libraries/{library_id}/containers` — Add containers to library
+- `DELETE /users/{user_id}/libraries/{library_id}/containers/{container_id}` — Remove container from library
+- `POST /users/{user_id}/webshares/{webshare_id}/{container_id}` — Upload file to webshare
+- `PUT /movecontainer` — Move a container
+- `POST /container/{container_id}` — Create child container
+- `POST /containersplit` — Split a container into its own root
+- `POST /query` — Query containers
+- `POST /querycontainer` — Query containers
+
+## Publish and Subscribe (19) — `rest/publish-and-subscribe.md`
+
+- `POST /port` — Create a port
+- `POST /ports` — Create multiple ports
+- `DELETE /lifestreams/{user_id}` — Delete a lifestream thread
+- `GET /lifestreams/{user_id}` — List public lifestream entries
+- `POST /lifestreams/{user_id}` — Add a lifestream entry
+- `DELETE /lifestreams/{user_id}/{event_id}` — Delete a lifestream entry
+- `GET /lifestreams/{user_id}/{event_id}` — Get a lifestream entry
+- `POST /lifestreams/{user_id}/{event_id}` — Modify a lifestream entry
+- `PUT /lifestreams/{user_id}/{event_id}{attribute}` — Modify lifestream entry attribute
+- `DELETE /users/{user_id}/lifestream` — Delete a lifestream thread
+- `GET /users/{user_id}/lifestream` — List own lifestream entries
+- `POST /users/{user_id}/lifestream` — Add a lifestream entry
+- `DELETE /users/{user_id}/lifestream/{event_id}` — Delete a lifestream entry
+- `GET /users/{user_id}/lifestream/{event_id}` — Get a lifestream entry
+- `POST /users/{user_id}/lifestream/{event_id}` — Modify a lifestream entry
+- `PUT /users/{user_id}/lifestream/{event_id}{attribute}` — Modify lifestream entry attribute
+- `POST /message` — Send a message
+- `GET /createportshare[0_9]/{user}/{webshare}` — Create a port listening to a webshare
+- `POST /createportshare[0_9]/{user}/{webshare}` — Create a port listening to a webshare (not implemented)
+
+## Authentication (15) — `rest/authentication.md`
+
+- `POST /login` — Log in
+- `DELETE /login` — Log out (no-op)
+- `GET /sessions` — List active sessions
+- `DELETE /sessions` — Delete all sessions
+- `POST /sessions` — End the current session
+- `POST /auth` — Authenticate SyncML user
+- `GET /logout` — List active sessions (alias of /sessions)
+- `DELETE /logout` — Delete all sessions (alias of /sessions)
+- `GET /userauth` — Validate user and get HA1 session
+- `GET /openidlogin` — OpenID 2.0 login (AppDirect marketplace)
+- `GET /keycloak` — Keycloak login entry point
+- `POST /keycloak` — Initialize Keycloak for the tenant
+- `GET /oauthprovider` — List enabled login providers
+- `POST /oauthprovider` — Enable a login provider
+- `GET /oauthproviders` — List supported login providers
+
+## Drive (5) — `rest/drive.md`
+
+- `PUT /drive` — Rename a drive
+- `GET /drive` — List drives
+- `PATCH /drive` — Resize a drive
+- `GET /driveinfo` — Get drive info
+- `PUT /driveuploadsize` — Set the drive maximum upload size
+
+## Jobs (3) — `rest/jobs.md`
+
+- `GET /jobs` — List jobs
+- `GET /jobs/{job_id}` — Get job details
+- `POST /jobs/{job_id}/abort` — Abort a job
+
+## Share (2) — `rest/share.md`
+
+- `GET /availableshares` — List available shares
+- `GET /sharelist` — Get share details
+
+## Webshare (2) — `rest/webshare.md`
+
+- `POST /wsauth/{user_id}/{webshare_id}` — Authenticate for webshare
+- `GET /ws2/{user_id}` — List webshares for a user

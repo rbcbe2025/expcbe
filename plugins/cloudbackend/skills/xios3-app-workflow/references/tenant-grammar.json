@@ -1,0 +1,28 @@
+{
+  "grammar_version": "2026.11.4",
+  "_comment": "The one source for lint_project (the build connector) and tenant-grammar.md. profile: build = error before any upload; ship = error before promotion, warning before; warning/info never block. G00 is the schema validation upload_project already runs.",
+  "profiles": ["build", "ship"],
+  "rules": [
+    {"id": "G00", "profile": "build", "severity": "error", "title": "Schema validation", "message": "The manifest and every XML file reachable through xlink:href validate against the published schemas", "fix": "Read the validator's message; the reference card for the element names its attributes and children"},
+    {"id": "G01", "profile": "build", "severity": "error", "title": "Manifest shape", "message": "index.xml has the root <application>; version sits on <about>, never on <process>", "fix": "Move version to <about version=\"...\">", "measured": "2026-10-07"},
+    {"id": "G02", "profile": "build", "severity": "error", "title": "View file names", "message": "No view file is named view.xml; view names are unique", "fix": "Name views after their screen"},
+    {"id": "G03", "profile": "build", "severity": "error", "title": "XPath functions", "message": "Expressions use only the XPath functions the tenant's verifier accepts; number() is rejected", "fix": "Rewrite with the functions the reference documents", "allowed_xpath_functions": {"status": "to be measured on a tenant", "known_rejected": ["number"], "warn_outside": "XPath 1.0 core"}},
+    {"id": "G04", "profile": "build", "severity": "error", "title": "call value=", "message": "call names its target with value=, not step=", "fix": "<call value=\"...\"/>"},
+    {"id": "G05", "profile": "build", "severity": "error", "title": "Flattened HTML in views", "message": "No <select>, <option> or <a> in a view: the tenant's view dialect flattens them; raw HTML renders only through listview XSL", "fix": "Use the reference's components, or move the markup into listview XSL"},
+    {"id": "G06", "profile": "build", "severity": "error", "title": "Start step with scripts", "message": "A <process> with <script href> has <step id=\"start\">", "fix": "Add the start step", "measured": "2026-09-26"},
+    {"id": "G07", "profile": "build", "severity": "error", "title": "Package-local hrefs", "message": "Every xlink:href resolves inside the package; no ..", "fix": "Fix the path or add the file"},
+    {"id": "G08", "profile": "build", "severity": "error", "title": "Custom component tags", "message": "Tags in <components> are NCNames and do not collide with native component names", "fix": "Prefix them (CA_...)"},
+    {"id": "G09", "profile": "ship", "severity": "error", "title": "ASCII text files", "message": "Every served text file is ASCII; non-ASCII is escaped", "fix": "Escape as &#x...;, \\XXXX or \\uXXXX", "measured": "2026-09-25"},
+    {"id": "G10", "profile": "ship", "severity": "error", "title": "One token block", "message": "No hex colours in views or styles; exactly one scoped token block with literal values and an explicit font-family", "fix": "Tokens in layout/, as the design kit generates them"},
+    {"id": "G11", "profile": "build", "severity": "error", "title": "External calls through a proxy", "message": "No fetch( or XMLHttpRequest to an external host; external calls go through a proxy channel and callService", "fix": "See ai-and-integrations-via-proxy.md"},
+    {"id": "G12", "profile": "build", "severity": "error", "title": "No secrets in the package", "message": "No key- or token-shaped strings anywhere in the package", "fix": "Move the value to the proxy's configuration; rotate it if it was committed"},
+    {"id": "G13", "profile": "build", "severity": "warning", "title": "home:// writes on a public share", "message": "A tenant-target package writes to home:// without a guard; a public share has no home:// drive", "fix": "Guard the step on a signed-in user, or write to the tenant container"},
+    {"id": "G14", "profile": "ship", "severity": "error", "title": "XSL for-each over node sets", "message": "Render XSL uses for-each with call-template over node sets, not apply-templates with match patterns; no <br/>", "fix": "Rewrite the template", "measured": "2026-09-25"},
+    {"id": "G15", "profile": "ship", "severity": "warning", "title": "Font weight", "message": "A font file over 200 KB", "fix": "A subset, or the runtime's own icon set"},
+    {"id": "G16", "profile": "build", "severity": "error", "title": "Upload limits", "message": "At most 500 files, 2 MB each, 8 MB in all, text only", "fix": "Split, minify, or upload binaries through the console"},
+    {"id": "G17", "profile": "build", "severity": "info", "title": "proxy under channel", "message": "<proxy> under a channel operation: expected, deploy with Deploy Anyway", "fix": "Nothing", "measured": "2026-10-07"},
+    {"id": "G18", "profile": "ship", "severity": "error", "title": "Deployment prefix", "message": "The deployment or URL prefix is [a-z0-9]+ and does not begin with xios", "fix": "Rename", "measured": "2026-09-27"},
+    {"id": "G19", "profile": "build", "severity": "error", "title": "Named components resolve", "message": "Every trigger's view and component, and every {#view#component} reference, resolves to a named component", "fix": "Name the component, or fix the spelling"},
+    {"id": "G20", "profile": "build", "severity": "error", "title": "Login manifest order", "message": "With <login>: the xios://apps/login.xml process is onLoad before the main process; the app's own view and process are onRequest", "fix": "Reorder the manifest"}
+  ]
+}

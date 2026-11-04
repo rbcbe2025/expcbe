@@ -1,0 +1,17 @@
+# Build outputs: the hosted marketplace, index and zip are produced per release by scripts/gen-clients.mjs
+# and scripts/pack.mjs, then copied to the host. On disk, not in history.
+dist/
+
+# Eval runs (claude plugin eval --json) are records of a run, not source.
+evals/results/
+
+# Nothing is installed here (zero dependencies), so this is a guard against a stray npm install.
+node_modules/
+
+# OS and editor noise
+.DS_Store
+._*
+
+# Machine-local Claude Code state
+.claude/settings.local.json
+**/.claude/worktrees/

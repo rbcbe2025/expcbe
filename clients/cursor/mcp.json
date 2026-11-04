@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "cloudbackend-docs": {
+      "url": "https://mcp.cloudbackend.com/docs"
+    },
+    "cloudbackend-build": {
+      "url": "https://mcp.cloudbackend.com/build"
+    }
+  }
+}

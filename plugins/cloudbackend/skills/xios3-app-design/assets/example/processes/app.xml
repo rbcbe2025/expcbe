@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- {{APP_TITLE}}: the logic. One process for both views (they share the name App and every component name).
+
+     The data: {{ITEMS}} are objects in the container {{ITEMS_URL}}; the list is bound to the container's
+     listing (db:result), the detail to the selected object's own document, so the runtime keeps both in step
+     with the database. The process writes (create, change + save, delete); the views only show.
+
+     Sample mode (alias sample = true): the list is bound to a sample listing instead of the container, and
+     New / Save / Delete say so instead of writing, so the app can be tried before a tenant exists. -->
+<process xmlns:xlink="http://www.w3.org/1999/xlink" name="appProcess">
+  <trigger view="App" event="Loaded" step="init"/>
+  <trigger view="App" component="screen" event="Screen" step="screenChanged"/>
+  <trigger view="App" component="menu" event="Select" step="toggleNav"/>
+  <trigger view="App" component="navList" event="Select" step="navPick"/>
+  <trigger view="App" component="items" event="Select" step="showItem"/>
+  <trigger view="App" component="newItem" event="Select" step="newItem"/>
+  <trigger view="App" component="save" event="Select" step="saveItem"/>
+  <trigger view="App" component="remove" event="Select" step="deleteItem"/>
+  <trigger view="App" component="back" event="Select" step="backToList"/>
+
+  <!-- start: where the records are, which screen we are on -->
+  <step id="init">
+    <alias name="sample" value="{{SAMPLE}}" model="value"/>
+    <alias name="itemsUrl" value="{{ITEMS_URL}}" model="value"/>
+    <alias name="sampleUrl" value="{{SAMPLE_URL}}" model="value"/>
+    <alias name="navOpen" value="false" model="value"/>
+    <alias name="itemUrl" value="" model="value"/>
+    <operation name="decision">
+      <when test="'{$sample}' = 'true'">
+        <operation name="bind" value="{$sampleUrl}">
+          <component view="App" name="items" select="/db:result"/>
+        </operation>
+      </when>
+      <otherwise>
+        <!-- the container is created on first run, so a new identity lands on an empty list, not an error -->
+        <operation name="decision" value="{$itemsUrl}">
+          <when exists="false">
+            <operation name="database" value="{{ITEMS_PARENT}}">
+              <create type="container" name="{{ITEMS_NAME}}"/>
+            </operation>
+          </when>
+        </operation>
+        <operation name="bind" value="{$itemsUrl}">
+          <component view="App" name="items" select="/db:result"/>
+        </operation>
+      </otherwise>
+    </operation>
+    <alias name="screen" value="{#App#screen.getValue()}" model="value"/>
+    <operation name="call" value="applyScreen"/>
+    <operation name="callMethod" value="#App#status">
+      <method name="notify">
+        <param type="string">{{VOICE_FIRST_RUN}}</param>
+        <param type="string">info</param>
+      </method>
+    </operation>
+  </step>
+
+  <!-- the screen: the rail on tablet and desktop, a menu on phones -->
+  <step id="applyScreen">
+    <operation name="decision">
+      <when test="'{$screen}' = 'phone'">
+        <operation name="action" value="#App">
+          <component name="menu" action="show"/>
+          <component name="nav" action="hide"/>
+        </operation>
+      </when>
+      <otherwise>
+        <operation name="action" value="#App">
+          <component name="menu" action="hide"/>
+          <component name="nav" action="show"/>
+        </operation>
+      </otherwise>
+    </operation>
+  </step>
+
+  <step id="screenChanged">
+    <alias name="screen" value="{#App#screen%screen}" model="value"/>
+    <operation name="call" value="applyScreen"/>
+  </step>
+
+  <step id="toggleNav">
+    <operation name="decision">
+      <when test="'{$navOpen}' = 'true'">
+        <alias name="navOpen" value="false" model="value"/>
+        <operation name="action" value="#App">
+          <component name="nav" action="hide"/>
+        </operation>
+      </when>
+      <otherwise>
+        <alias name="navOpen" value="true" model="value"/>
+        <operation name="action" value="#App">
+          <component name="nav" action="show"/>
+        </operation>
+      </otherwise>
+    </operation>
+  </step>
+
+  <step id="navPick">
+    <operation name="decision">
+      <when test="'{$screen}' = 'phone'">
+        <alias name="navOpen" value="false" model="value"/>
+        <operation name="action" value="#App">
+          <component name="nav" action="hide"/>
+        </operation>
+      </when>
+    </operation>
+    <operation name="callMethod" value="#App#status">
+      <method name="notify">
+        <param type="string">Only {{ITEMS_TITLE}} exists in this first version.</param>
+        <param type="string">info</param>
+      </method>
+    </operation>
+  </step>
+
+  <!-- one record: the detail is the object's own document, bound to the render and the fields -->
+  <step id="showItem">
+    <alias name="itemUrl" value="{#App#items#@xlink:href}" model="value"/>
+    <operation name="bind" value="{$itemUrl}">
+      <component view="App" name="detail" select="/"/>
+    </operation>
+    <operation name="bind" value="{$itemUrl}">
+      <component view="App" name="titleInput" select="/item/title"/>
+    </operation>
+    <operation name="bind" value="{$itemUrl}">
+      <component view="App" name="stateInput" select="/item/status"/>
+    </operation>
+    <operation name="bind" value="{$itemUrl}">
+      <component view="App" name="notesInput" select="/item/notes"/>
+    </operation>
+    <operation name="action" value="#App">
+      <component name="detailEmpty" action="hide"/>
+      <component name="detailBody" action="show"/>
+    </operation>
+    <operation name="decision">
+      <when test="'{$screen}' = 'phone'">
+        <operation name="action" value="#App">
+          <component name="listCard" action="hide"/>
+          <component name="detailCard" action="show"/>
+        </operation>
+      </when>
+    </operation>
+  </step>
+
+  <step id="backToList">
+    <operation name="action" value="#App">
+      <component name="detailCard" action="hide"/>
+      <component name="listCard" action="show"/>
+    </operation>
+  </step>
+
+  <!-- new: one dialog for the name; the object's name is the title with forbidden characters removed -->
+  <step id="newItem">
+    <operation name="confirm">
+      <type value="input"/>
+      <title>New {{ITEM}}</title>
+      <message>What is the {{ITEM}} called?</message>
+      <modal>false</modal>
+      <ok step="createItem" text="Add"/>
+      <cancel step="cancel" text="Cancel"/>
+    </operation>
+  </step>
+
+  <step id="createItem" error="writeFailed">
+    <alias name="newTitle" value="{!}" model="value"/>
+    <alias name="newName" value="{translate($newTitle, '?/\()*:|%&amp;&lt;&quot;!', '')}" model="value"/>
+    <alias name="stamp" value="{format-date('now', 'yyyy-MM-dd')}" model="value"/>
+    <operation name="decision">
+      <when test="'{$sample}' = 'true'">
+        <!-- sample data: the listing in memory gets a row that opens the sample "new" document -->
+        <operation name="change" value="{$sampleUrl}">
+          <store select="/db:result" type="append">
+            <db:object xmlns:db="https://cloudbackend.com/db.xsd" xmlns:xlink="http://www.w3.org/1999/xlink" name="{$newName}.xml" updated="{$stamp}" xlink:href="{{SAMPLE_BASE}}/new.xml"/>
+          </store>
+        </operation>
+        <operation name="callMethod" value="#App#status">
+          <method name="notify">
+            <param type="string">Added to the sample list. Nothing is saved without a tenant.</param>
+            <param type="string">ok</param>
+          </method>
+        </operation>
+      </when>
+      <otherwise>
+        <operation name="database" value="{$itemsUrl}">
+          <create type="object" name="{$newName}.xml" rename="true">
+            <content type="text/xml">
+<item><title>{$newTitle}</title><status>Planned</status><notes></notes><created>{$stamp}</created></item>
+            </content>
+          </create>
+        </operation>
+        <operation name="callMethod" value="#App#status">
+          <method name="notify">
+            <param type="string">{{VOICE_SAVED}} Pick it in the list to fill it in.</param>
+            <param type="string">ok</param>
+          </method>
+        </operation>
+      </otherwise>
+    </operation>
+  </step>
+
+  <!-- save: the fields go into the document, then the document is stored -->
+  <step id="saveItem" error="writeFailed">
+    <operation name="decision">
+      <when test="'{$itemUrl}' = ''">
+        <operation name="callMethod" value="#App#status">
+          <method name="notify">
+            <param type="string">Pick a {{ITEM}} first.</param>
+            <param type="string">info</param>
+          </method>
+        </operation>
+      </when>
+      <when test="'{$sample}' = 'true'">
+        <operation name="change" value="{$itemUrl}">
+          <store select="/item/title" type="replaceText">{#App#titleInput}</store>
+        </operation>
+        <operation name="change" value="{$itemUrl}">
+          <store select="/item/status" type="replaceText">{#App#stateInput}</store>
+        </operation>
+        <operation name="change" value="{$itemUrl}">
+          <store select="/item/notes" type="replaceText">{#App#notesInput}</store>
+        </operation>
+        <operation name="callMethod" value="#App#status">
+          <method name="notify">
+            <param type="string">Changed on this screen. Sample data is not saved.</param>
+            <param type="string">ok</param>
+          </method>
+        </operation>
+      </when>
+      <otherwise>
+        <operation name="change" value="{$itemUrl}">
+          <store select="/item/title" type="replaceText">{#App#titleInput}</store>
+        </operation>
+        <operation name="change" value="{$itemUrl}">
+          <store select="/item/status" type="replaceText">{#App#stateInput}</store>
+        </operation>
+        <operation name="change" value="{$itemUrl}">
+          <store select="/item/notes" type="replaceText">{#App#notesInput}</store>
+        </operation>
+        <operation name="save" value="{$itemUrl}"/>
+        <operation name="callMethod" value="#App#status">
+          <method name="notify">
+            <param type="string">{{VOICE_SAVED}}</param>
+            <param type="string">ok</param>
+          </method>
+        </operation>
+      </otherwise>
+    </operation>
+  </step>
+
+  <!-- delete: ask first -->
+  <step id="deleteItem">
+    <operation name="decision">
+      <when test="'{$itemUrl}' = ''">
+        <operation name="callMethod" value="#App#status">
+          <method name="notify">
+            <param type="string">Pick a {{ITEM}} first.</param>
+            <param type="string">info</param>
+          </method>
+        </operation>
+      </when>
+      <otherwise>
+        <operation name="confirm">
+          <type value="confirm"/>
+          <title>Delete this {{ITEM}}?</title>
+          <message>It is removed for everyone who can see it. This cannot be undone.</message>
+          <modal>true</modal>
+          <ok step="deleteConfirmed" text="Delete"/>
+          <cancel step="cancel" text="Keep"/>
+        </operation>
+      </otherwise>
+    </operation>
+  </step>
+
+  <step id="deleteConfirmed" error="writeFailed">
+    <operation name="decision">
+      <when test="'{$sample}' = 'true'">
+        <operation name="callMethod" value="#App#status">
+          <method name="notify">
+            <param type="string">Deleting needs a tenant. Sample data stays as it is.</param>
+            <param type="string">info</param>
+          </method>
+        </operation>
+      </when>
+      <otherwise>
+        <operation name="database" value="{$itemUrl}">
+          <delete permanent="true"/>
+        </operation>
+        <alias name="itemUrl" value="" model="value"/>
+        <operation name="action" value="#App">
+          <component name="detailBody" action="hide"/>
+          <component name="detailEmpty" action="show"/>
+        </operation>
+        <operation name="callMethod" value="#App#status">
+          <method name="notify">
+            <param type="string">Deleted.</param>
+            <param type="string">ok</param>
+          </method>
+        </operation>
+      </otherwise>
+    </operation>
+  </step>
+
+  <step id="writeFailed">
+    <operation name="callMethod" value="#App#status">
+      <method name="notify">
+        <param type="string">{{VOICE_FAILED}}</param>
+        <param type="string">error</param>
+      </method>
+    </operation>
+  </step>
+
+  <step id="cancel"/>
+</process>
