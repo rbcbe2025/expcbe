@@ -7,14 +7,10 @@
       ]
     },
     "cloudbackend-build": {
-      "command": "<plugin-dir>/.data/venv/bin/python",
+      "command": "node",
       "args": [
-        "-m",
-        "cbemcp_build"
-      ],
-      "env": {
-        "PYTHONPATH": "<plugin-dir>/servers/build/src"
-      }
+        "<plugin-dir>/servers/build/index.mjs"
+      ]
     }
   }
 }

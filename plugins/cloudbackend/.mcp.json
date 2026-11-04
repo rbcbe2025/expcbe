@@ -7,14 +7,10 @@
       ]
     },
     "cloudbackend-build": {
-      "command": "sh",
+      "command": "node",
       "args": [
-        "${CLAUDE_PLUGIN_ROOT}/scripts/run-build-server.sh",
-        "${CLAUDE_PLUGIN_DATA}"
-      ],
-      "env": {
-        "PYTHONPATH": "${CLAUDE_PLUGIN_ROOT}/servers/build/src"
-      }
+        "${CLAUDE_PLUGIN_ROOT}/servers/build/index.mjs"
+      ]
     },
     "cloudbackend-deploy": {
       "type": "http",

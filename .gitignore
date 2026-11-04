@@ -7,13 +7,6 @@ dist/
 evals/results/
 plugins/cloudbackend/evals/results/
 
-# The build server's environment when the hook is run by hand for another client (clients/README.md), and any
-# Python bytecode: never content, never shipped (scripts/guard.mjs refuses them inside the plugin).
-plugins/cloudbackend/.data/
-__pycache__/
-*.pyc
-.venv/
-
 # Nothing is installed here (zero dependencies), so this is a guard against a stray npm install.
 node_modules/
 

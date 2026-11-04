@@ -7,8 +7,9 @@
 // material (publication-guard.json skills_allow_hosts); here it is allowed where the plugin is served from the portal
 // or reads it: the skills, the vendored documentation server (built and guarded in the hub, it reads the portal),
 // dist/ (the marketplace and index the portal serves), the plugin README, this repository's README and RELEASES.md.
-// Everywhere else it is a leak. Vendored material (skills/, servers/, the generated eval cases, which quote the skills'
-// own evals verbatim) is not our wording, so the naming check skips it; a term to fix there is fixed at its source.
+// Everywhere else it is a leak. Vendored material (skills/, servers/, _archive/, the generated eval cases, which quote
+// the skills' own evals verbatim) is not our wording, so the naming check skips it; a term to fix there is fixed at its
+// source. The leak checks (paths, hosts) run everywhere.
 // Also refuses what breaks an install or a publication: a top-level bin/ (blocks the claude.ai sync), node_modules/,
 // bytecode caches or a virtual environment inside the plugin, and any mention of the deploy host beyond its per-tenant
 // form (the documentation and build servers run inside the plugin; nothing may point at a hosted /docs, /build or
@@ -31,7 +32,7 @@ const skillsPrefix = plugin('skills') + '/';
 const serversPrefix = plugin('servers') + '/';
 const docsServerPrefix = plugin('servers/docs') + '/';
 const evalsPrefix = plugin('evals') + '/';
-const vendored = rel => rel.startsWith(skillsPrefix) || rel.startsWith(serversPrefix) || (rel.startsWith(evalsPrefix) && rel !== plugin('evals/README.md'));   // the eval cases carry the skills' own evals verbatim
+const vendored = rel => rel.startsWith(skillsPrefix) || rel.startsWith(serversPrefix) || rel.startsWith('_archive/') || (rel.startsWith(evalsPrefix) && rel !== plugin('evals/README.md'));   // the eval cases carry the skills' own evals verbatim; _archive/ holds superseded copies
 const portalAllowed = rel => rel.startsWith(skillsPrefix) || rel.startsWith(docsServerPrefix) || rel.startsWith('dist/')
   || rel === plugin('README.md') || rel === 'README.md' || rel === 'RELEASES.md';
 const hostEscape = HOST.replace(/^https?:\/\//, '').replace(/\./g, '\\.');

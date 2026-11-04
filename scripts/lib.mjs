@@ -18,15 +18,15 @@ export const DIST = path.join(ROOT, 'dist');
 // The documentation hub, checked out next to this repo (or CBE_DOCS_HUB). Only its BUILT outputs are read here:
 // public/public/skills/ (the .skill zips and index.json), public/portal.json (the portal's address, which is where
 // the plugin's marketplace and zip are served), public/dist/mcpb/cloudbackend-docs/server/ (the staged documentation
-// server), <corpus>/toc.json, and the publication guard it shares with its own builds. Nothing under its sources, ever.
-// It writes the hub's public/plugin.json and public/public/plugin/ (the release copies the portal serves).
+// server), <corpus>/toc.json, and the publication guard it shares with its own builds; plus each skill's
+// _skills/<skill>/evals/evals.json, the one read under its sources (gen-evals.mjs). It writes the hub's
+// public/plugin.json and public/public/plugin/ (the release copies the portal serves). The build server is authored
+// in this repository (plugins/cloudbackend/servers/build/), a Node port of the deploy server's Python build tools.
 export const HUB = path.resolve(process.env.CBE_DOCS_HUB || path.join(ROOT, '..', 'estate-docs'));
 export const SKILLS_INDEX = path.join(HUB, 'public', 'public', 'skills', 'index.json');
 export const PORTAL_FILE = path.join(HUB, 'public', 'portal.json');
 export const DOCS_SERVER_SRC = path.join(HUB, 'public', 'dist', 'mcpb', 'cloudbackend-docs', 'server');
 export const HUB_PLUGIN_DIR = path.join(HUB, 'public', 'public', 'plugin');
-// The build server's package, extracted from the deploy server's codebase next to this repo (or CBE_BUILD_SRC).
-export const BUILD_SERVER_SRC = path.resolve(process.env.CBE_BUILD_SRC || path.join(ROOT, '..', 'mcp-cloudbackend', 'cbemcp-build'));
 
 // CloudBackend's live deploy server. It is CloudBackend's, per tenant, and this is the ONLY thing it is used for:
 // the deploy connector's URL form. The documentation and build servers run inside the plugin.
@@ -43,14 +43,15 @@ export const GITHUB_BRANCH_TESTERS = 'main';
 export const GITHUB_BRANCH_WORK = 'dev';
 
 // The three servers the plugin's .mcp.json declares, one description each; gen-clients.mjs writes .mcp.json,
-// the client configs and the hub's plugin.json from this table, so no copy can disagree with another.
+// the client configs and the hub's plugin.json from this table, so no copy can disagree with another. The two local
+// ones run with node and nothing else: a tester needs Claude Code and no other install.
 export const SERVERS = [
   {key: 'docs', name: 'cloudbackend-docs', kind: 'local', runtime: 'node', tools: 13,
    entry: 'servers/docs/index.mjs',
    what: 'documentation lookups, read-only: topics, REST operation cards with XML bodies, SDK method cards, the nine XIOS/3 reference lookups (components, operations, functions, methods, events, actions, concepts, lists, icons); reads the developer portal, needs no sign-in'},
-  {key: 'build', name: 'cloudbackend-build', kind: 'local', runtime: 'python', tools: 3,
-   module: 'cbemcp_build', src: 'servers/build/src', python: '>=3.12', launcher: 'scripts/run-build-server.sh',
-   what: 'build tools for a XIOS/3 project, no tenant needed: lint_project (the tenant grammar), scaffold_project (the design kit), benchmark_project'},
+  {key: 'build', name: 'cloudbackend-build', kind: 'local', runtime: 'node', tools: 2,
+   entry: 'servers/build/index.mjs', test: 'servers/build/test.mjs',
+   what: 'build tools for a XIOS/3 package, no tenant needed: lint_project (the tenant grammar G01-G20 before an upload; schema validation happens at upload) and benchmark_project (the measured block of a benchmark report)'},
   {key: 'deploy', name: 'cloudbackend-deploy', kind: 'remote', url_form: DEPLOY_URL_FORM,
    what: 'CloudBackend\'s live per-tenant deploy server (OAuth sign-in at your tenant): list_projects, upload_project, deploy, verify_deployment and the rest'},
 ];

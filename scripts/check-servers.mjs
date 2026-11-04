@@ -1,12 +1,10 @@
 #!/usr/bin/env node
-// check-servers.mjs [--deep] [--python <path>] — do the plugin's servers answer, with the tools the plugin promises?
+// check-servers.mjs [--deep] — do the plugin's servers answer, with the tools the plugin promises?
 //   · cloudbackend-docs: `node plugins/cloudbackend/servers/docs/index.mjs` over stdio (initialize, tools/list); the
 //     tool count against lib.mjs's table, every tool titled and annotated. --deep also calls xios3_component("grid"),
 //     which reads the developer portal, so the answer proves the portal address baked into the server.
-//   · cloudbackend-build: `python -m cbemcp_build` with PYTHONPATH=servers/build/src, the python being --python,
-//     $CLAUDE_PLUGIN_DATA/venv/bin/python, or plugins/cloudbackend/.data/venv/bin/python (what ensure-build-venv.sh
-//     makes when run by hand). Skipped with a line when the server is not synced; a soft finding when no environment
-//     exists on this machine.
+//   · cloudbackend-build: `node plugins/cloudbackend/servers/build/index.mjs` over stdio, the tool count against the
+//     table; --deep also runs lint_project on a seeded trap package and expects the grammar's findings.
 //   · cloudbackend-deploy: GET <host>/health, or the OAuth resource metadata of a tenant path on older builds
 //     (CloudBackend's live server; a soft finding when unreachable, it is theirs).
 // A local server present but not answering is a hard finding (exit 1).
@@ -17,7 +15,6 @@ import {PLUGIN_DIR, HOST, SERVERS} from './lib.mjs';
 
 const args = process.argv.slice(2);
 const deep = args.includes('--deep');
-const pythonArg = args.includes('--python') ? args[args.indexOf('--python') + 1] : null;
 const TIMEOUT = 60_000;
 
 /** One stdio MCP session: newline-delimited JSON-RPC; resolves with the answers to each request in turn. */
@@ -92,19 +89,22 @@ else {
 }
 
 // ---- build ---------------------------------------------------------------------------------------------------------
-const buildSrc = path.join(PLUGIN_DIR, build.src);
-if (!existsSync(path.join(buildSrc, build.module, '__init__.py'))) console.log(`· ${build.name}: ${build.src}/${build.module} is not synced yet (node scripts/sync-servers.mjs): skipped`);
+const buildEntry = path.join(PLUGIN_DIR, build.entry);
+if (!existsSync(buildEntry)) { hard++; console.log(`\u2717 ${build.name}: ${build.entry} is missing`); }
 else {
-  const candidates = [pythonArg, process.env.CLAUDE_PLUGIN_DATA && path.join(process.env.CLAUDE_PLUGIN_DATA, 'venv', 'bin', 'python'), path.join(PLUGIN_DIR, '.data', 'venv', 'bin', 'python')].filter(Boolean);
-  const python = candidates.find(existsSync);
-  if (!python) { soft++; console.log(`· ${build.name}: no Python environment on this machine (tried ${candidates.join(', ')}); make one: sh plugins/cloudbackend/scripts/ensure-build-venv.sh plugins/cloudbackend/.data`); }
-  else {
-    try {
-      const [info, list] = await stdio(python, ['-m', build.module], {PYTHONPATH: buildSrc, PYTHONDONTWRITEBYTECODE: '1'}, [['tools/list', {}]]);
-      const r = tooling(build.name, info, list.tools || [], build.tools);
-      console.log(r.lines.join('\n')); if (!r.ok) hard++;
-    } catch (e) { hard++; console.log(`✗ ${build.name} (${python}): ${e.message}`); }
-  }
+  try {
+    const calls = [['tools/list', {}]];
+    if (deep) calls.push(['tools/call', {name: 'lint_project', arguments: {profile: 'build', files: [{path: 'index.xml', content: '<application name="probe"><about version="1.0"/><process version="1"/></application>'}, {path: 'views/view.xml', content: '<view name="V"><select name="s"><option>a</option></select></view>'}]}}]);
+    const [info, list, call] = await stdio('node', [buildEntry], {}, calls);
+    const r = tooling(build.name, info, list.tools || [], build.tools);
+    console.log(r.lines.join('\n')); if (!r.ok) hard++;
+    if (deep) {
+      const result = JSON.parse((call.content || [])[0].text);
+      const rules = [...new Set(result.errors.map(e => e.rule))].sort().join(', ');
+      if (call.isError || result.ok !== false) { hard++; console.log(`\u2717 ${build.name}: lint_project on the seeded traps answered ${call.isError ? 'an error' : 'ok'}`); }
+      else console.log(`\u2713 ${build.name}: lint_project on the seeded traps finds ${rules} (grammar ${result.grammar_version})`);
+    }
+  } catch (e) { hard++; console.log(`\u2717 ${build.name}: ${e.message}`); }
 }
 
 // ---- deploy --------------------------------------------------------------------------------------------------------

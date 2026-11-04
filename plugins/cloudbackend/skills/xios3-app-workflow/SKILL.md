@@ -145,8 +145,8 @@ Gate: `docs/spec.md` exists and the user said yes. Evidence: `W1 spec — docs/s
 
 Hand the spec to `xios3-app-design` and run its four moves: the brief, the mood board, the token theme,
 the layouts for desktop and the 390 px phone. Its one question is the direction ("this look, or another?").
-With a shell, `scripts/designkit.py` does the work; without one, the design skill says what to do by hand,
-and the build connector's `scaffold_project` produces the same first version from the spec at W4.
+With a shell and Python, `scripts/designkit.py` writes the files; without them, the design skill says what to
+do by hand from its example files. Either way that first version is what W4 builds on.
 Gate: the design skill's hand-over checklist. Evidence: `W2 design — direction <name>; design/ N files · user yes <UTC>`.
 
 ### W3 Data
@@ -159,8 +159,7 @@ Gate: the launch path's step-1 check. Evidence: `W3 data — <datatype> in tenan
 
 ### W4 Build
 
-1. `scaffold_project` (build connector) from the spec, or the design kit's `app` output: the advanced
-   package of `references/project-layout.md`.
+1. The design kit's first version from W2, laid out as the advanced package of `references/project-layout.md`.
 2. Author the views and the processes against that scaffold. With sub-agents, the view author and the
    process author run in parallel on separate files, then the grammar reviewer reads the whole package;
    without them, write in the order data → view → process and run the reviewer's checklist yourself
@@ -271,7 +270,7 @@ The connectors the CloudBackend plugin declares, and what each gives this workfl
 | Connector | Tools | Used at |
 | --- | --- | --- |
 | `cloudbackend-docs` (part of the plugin: runs on your computer and reads the developer portal; in Claude Desktop the same server is the documentation extension) | `cloudbackend_docs`, `cloudbackend_rest`, `cloudbackend_rest_list`, `cloudbackend_sdk`; the XIOS/3 lookups `xios3_component`, `xios3_operation`, `xios3_function`, `xios3_method`, `xios3_event`, `xios3_action`, `xios3_concepts`, `xios3_list`, `xios3_icons` | W1, W4, W7: a card by name; when it and a bundled reference disagree, the portal page decides |
-| `cloudbackend-build` (part of the plugin: runs on your computer; needs Python 3.12 or uv, which the plugin installs into its own folder once) | `lint_project`, `scaffold_project`, `benchmark_project` | W2, W4, W6, W9 |
+| `cloudbackend-build` (part of the plugin: runs on your computer, nothing to install) | `lint_project`, `benchmark_project` | W4, W6, W9 |
 | `cloudbackend-deploy` (https://mcp.cloudbackend.com/mcp/<tenant>, the user's own tenant, OAuth sign-in) | `list_projects`, `list_project_files`, `read_project_file`, `list_deployments`, `upload_project`, `deploy`, `lint_project`, `verify_deployment` | W0, W3, W4, W5, W8 |
 
 The deploy connector is CloudBackend's own server and per tenant: Claude Code asks for the tenant's name once
@@ -359,10 +358,10 @@ Generated from the published manual at build time:
 
 ## Version and updates
 
-This is version 2026.11.4.2 of the xios3-app-workflow skill, built from the CloudBackend documentation.
+This is version 2026.11.4.3 of the xios3-app-workflow skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.4.2, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.4.3, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.4.2&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.4.3&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.

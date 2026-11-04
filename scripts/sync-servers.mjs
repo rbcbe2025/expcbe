@@ -1,22 +1,19 @@
 #!/usr/bin/env node
-// sync-servers.mjs [--check] [--only docs|build] — the only way a server enters this plugin.
-//   docs   the documentation server: the hub's staged Claude Desktop extension server (public/dist/mcpb/cloudbackend-docs/
-//          server/: index.mjs with the portal address filled in, search-core.mjs, xios3-reference.mjs; built there by
-//          scripts/build-mcpb.mjs and guarded there) → plugins/cloudbackend/servers/docs/
-//   build  the build server: the cbemcp-build package next to this repo (or CBE_BUILD_SRC): its package (src/cbemcp_build
-//          or cbemcp_build at the top), requirements.txt, and the tenant grammar, the XSDs and the design kit it carries
-//          → plugins/cloudbackend/servers/build/ (the package under src/, so .mcp.json's PYTHONPATH finds it)
-// Each destination gets a VENDORED_FROM marker (what, which commit, when) and MANIFEST.sha256 (one line per file).
-// Copies nothing from node_modules, .venv or __pycache__ (caches and installed environments are not source), and
-// refuses the whole sync when a copied text file carries what the hub's publication guard forbids (a workspace path,
-// a test-tenant host): the plugin is published, so a provenance note upstream must do without them.
+// sync-servers.mjs [--check] — the only way the documentation server enters this plugin.
+//   docs   the hub's staged Claude Desktop extension server (public/dist/mcpb/cloudbackend-docs/server/: index.mjs with
+//          the portal address filled in, search-core.mjs, xios3-reference.mjs; built there by scripts/build-mcpb.mjs and
+//          guarded there) -> plugins/cloudbackend/servers/docs/
+// The build server (servers/build/) is authored in this repository and is not synced. The destination gets a
+// VENDORED_FROM marker (what, which commit, when) and MANIFEST.sha256 (one line per file). Copies nothing from
+// node_modules, .venv or __pycache__, and refuses the whole sync when a copied text file carries what the hub's
+// publication guard forbids (a workspace path, a test-tenant host other than the portal's): the plugin is published.
 // A source that is not there yet is reported with the path expected, exit 1. --check writes nothing and exits 1 on
-// any difference between the sources and what is on disk.
+// any difference between the source and what is on disk.
 import {execFileSync} from 'node:child_process';
 import {existsSync, readFileSync, rmSync, statSync} from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {PLUGIN_DIR, HUB, DOCS_SERVER_SRC, BUILD_SERVER_SRC, SERVERS, listFiles, readJson, sha256, writeText, isoDate, fail} from './lib.mjs';
+import {PLUGIN_DIR, HUB, DOCS_SERVER_SRC, SERVERS, listFiles, sha256, writeText, isoDate, fail} from './lib.mjs';
 
 // The hub's publication guard decides what a copied file may not say: its internal path literals and patterns (a
 // home directory, a mounted volume, the workspace's project names) and the test-tenant hosts. The documentation
@@ -26,10 +23,7 @@ if (!existsSync(guardModule)) fail(`the hub's guard module is not at ${guardModu
 const {loadPublicationGuard, findLeaks} = await import(pathToFileURL(guardModule).href);
 const guard = loadPublicationGuard(HUB);
 
-const args = process.argv.slice(2);
-const check = args.includes('--check');
-const only = args.includes('--only') ? args[args.indexOf('--only') + 1] : null;
-if (only && !['docs', 'build'].includes(only)) fail('--only takes docs or build');
+const check = process.argv.includes('--check');
 const TEXT = /\.(md|txt|json|mjs|js|cjs|py|sh|toml|xml|xsl|xsd|css|html|svg|ya?ml|csv|cfg|ini|in)$/i;
 const SKIP = rel => /(^|\/)(node_modules|\.venv|venv|__pycache__|\.git|\.pytest_cache|\.mypy_cache|\.ruff_cache|tests?)(\/|$)/.test(rel) || /\.pyc$/.test(rel) || /\.egg-info(\/|$)/.test(rel);
 
@@ -62,46 +56,9 @@ function planDocs() {
   return {entries, marker, summary: `${files.length} files, ${tools.size} tools`};
 }
 
-function planBuild() {
-  const src = BUILD_SERVER_SRC;
-  const problems = [];
-  if (!existsSync(src)) return {problems: [`the build server's package is not at ${src} (set CBE_BUILD_SRC): the cbemcp-build extraction has not landed yet`]};
-  const pkgIn = ['src/cbemcp_build', 'cbemcp_build'].find(p => existsSync(path.join(src, p, '__init__.py')));
-  if (!pkgIn) problems.push(`${src}: no cbemcp_build package (src/cbemcp_build/__init__.py or cbemcp_build/__init__.py)`);
-  else if (!existsSync(path.join(src, pkgIn, '__main__.py'))) problems.push(`${src}/${pkgIn}: no __main__.py, so \`python -m cbemcp_build\` cannot serve stdio`);
-  const req = ['requirements.txt'].find(p => existsSync(path.join(src, p)));
-  if (!req) problems.push(`${src}: no requirements.txt (the hook installs it into the plugin's data directory)`);
-  if (problems.length) return {problems};
-  const entries = [];
-  const add = (fromRel, toRel) => {
-    const from = path.join(src, fromRel);
-    if (statSync(from).isDirectory()) for (const rel of listFiles(from, {skip: SKIP})) entries.push({rel: `${toRel}/${rel}`, data: readFileSync(path.join(from, rel)), mode: statSync(path.join(from, rel)).mode});
-    else entries.push({rel: toRel, data: readFileSync(from), mode: statSync(from).mode});
-  };
-  add(pkgIn, 'src/cbemcp_build');
-  add(req, 'requirements.txt');
-  for (const extra of ['README.md', 'LICENSE', 'pyproject.toml']) if (existsSync(path.join(src, extra))) add(extra, extra);
-  // What the package must carry: the tenant grammar, the schemas and the design kit. Inside the package they travel
-  // with it; at the top of cbemcp-build they are copied beside src/.
-  const carried = {'tenant-grammar.json': /(^|\/)tenant-grammar\.json$/, 'XSDs': /\.xsd$/, 'design kit': /(^|\/)designkit\//};
-  for (const [what, re] of Object.entries(carried)) {
-    if (entries.some(e => re.test(e.rel))) continue;
-    const top = listFiles(src, {skip: SKIP}).filter(rel => re.test(rel) && !rel.startsWith('src/'));
-    if (top.length) for (const rel of top) add(rel, rel);
-    else problems.push(`${src}: the ${what} is neither in the package nor at the top; the build tools need it`);
-  }
-  if (problems.length) return {problems};
-  const marker = ['VENDORED_FROM: the cbemcp-build package, extracted from the deploy server\'s codebase (mcp-cloudbackend/cbemcp-build),',
-    'the lint, scaffold and benchmark tools with the tenant grammar, the schemas and the design kit they read.',
-    `Source: ${gitInfo(src)}. Synced ${isoDate()} by scripts/sync-servers.mjs; never edited here.`,
-    'Served by `python -m cbemcp_build` over stdio from src/ (PYTHONPATH in the plugin\'s .mcp.json); its dependencies',
-    'are installed by hooks/hooks.json (scripts/ensure-build-venv.sh) from requirements.txt.', ''].join('\n');
-  return {entries, marker, summary: `${entries.length} files from ${pkgIn}`};
-}
-
-const plans = {docs: planDocs, build: planBuild};
+const plans = {docs: planDocs};
 let failed = 0, changed = 0;
-for (const key of Object.keys(plans).filter(k => !only || k === only)) {
+for (const key of Object.keys(plans)) {
   const dest = path.join(PLUGIN_DIR, 'servers', key);
   const plan = plans[key]();
   if (plan.problems) { failed++; console.log(`✗ ${key}: ${plan.problems.join('\n    ')}`); continue; }
@@ -109,7 +66,7 @@ for (const key of Object.keys(plans).filter(k => !only || k === only)) {
   for (const e of plan.entries) {
     if (!TEXT.test(e.rel)) continue;
     for (const l of findLeaks(e.data.toString('utf8'), guard)) {
-      if (key === 'docs' && l.kind === 'test host' && (guard.skillsAllowHosts || []).includes(String(l.match).toLowerCase())) continue;
+      if (l.kind === 'test host' && (guard.skillsAllowHosts || []).includes(String(l.match).toLowerCase())) continue;   // the docs server reads the portal
       leaks.push(`${e.rel}: ${l.kind} ${l.match}`);
     }
   }

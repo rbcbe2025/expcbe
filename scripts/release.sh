@@ -6,16 +6,16 @@
 #   scripts/release.sh [--skip-evals] [--no-portal]
 #
 # Stages (plan 2026-11-04, Phase 2 parts C and E):
-#   0  clean trees and tool versions          a  build the skills in the hub          b  sync the skills and the servers
+#   0  clean trees and tool versions          a  build the skills in the hub          b  sync the skills and the docs server
 #   c  bump the version if plugins/ changed   d  .mcp.json, clients, README blocks, evals, marketplace, hub plugin.json
-#   e  guard, validate, evals                 f  pack, commit, tag, publish             g  the servers answer
+#   e  guard, build tests, validate, evals    f  pack, commit, tag, publish             g  the servers answer
 #   h  portal                                 i  record (RELEASES.md, the hub's _reports/plugin/<date>.json)
 # Publishing (f) copies dist/{marketplace.json,index.json,<zip>} into the hub's public/public/plugin/ (older zips stay,
 # an installed archive source keeps resolving) and pushes main and the tags to `mirror`; without that remote it prints
 # the hand-off. Evals (e) run with pinned models only when plugins/cloudbackend/SKILLS.json or evals/ changed since the
 # last tag; --skip-evals skips them regardless. Environment: CBE_DOCS_HUB (the hub checkout; default ../estate-docs),
-# CBE_BUILD_SRC (the build server's package; default ../mcp-cloudbackend/cbemcp-build), RELEASE_EXTRA_REPOS (paths
-# whose trees stage 0 also requires clean), RELEASE_EVAL_MODEL / RELEASE_JUDGE_MODEL (stage e; defaults below).
+# RELEASE_EXTRA_REPOS (paths whose trees stage 0 also requires clean), RELEASE_EVAL_MODEL / RELEASE_JUDGE_MODEL
+# (stage e; defaults below).
 set -euo pipefail
 here=$(cd "$(dirname "$0")/.." && pwd)
 hub=$(cd "${CBE_DOCS_HUB:-$here/../estate-docs}" 2>/dev/null && pwd || echo "${CBE_DOCS_HUB:-$here/../estate-docs}")
@@ -49,7 +49,7 @@ for repo in "$here" "$hub" ${RELEASE_EXTRA_REPOS:-}; do
 done
 branch=$(git -C "$here" rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?')
 note "branch $branch (testers follow main; a release is cut from main)"
-note "node $(node --version 2>/dev/null || echo missing) · claude $(claude --version 2>/dev/null | head -1 || echo missing) (evals need 2.1.269+) · $(python3 --version 2>/dev/null || echo 'python3 missing') · uv $(uv --version 2>/dev/null | cut -d' ' -f2 || echo missing)"
+note "node $(node --version 2>/dev/null || echo missing) · claude $(claude --version 2>/dev/null | head -1 || echo missing) (evals need 2.1.269+) · $(python3 --version 2>/dev/null || echo 'python3 missing') (the hub's skills build)"
 
 stage a "build the skills in the hub"
 run "python3 '$hub/_tools/build_skills.py'"
@@ -59,12 +59,12 @@ if [ "$dry" = 0 ] && [ -n "$(git -C "$hub" status --porcelain -- public/public/s
 fi
 [ "$dry" = 1 ] && handoff "if public/public/skills changed, commit in the hub before continuing"
 
-stage b "sync the skills and the servers into the plugin"
+stage b "sync the skills and the documentation server into the plugin"
 run "node '$here/scripts/sync-skills.mjs'"
 run "node '$here/scripts/sync-skills.mjs' --check"
 run "node '$here/scripts/sync-servers.mjs'"
 run "node '$here/scripts/sync-servers.mjs' --check"
-[ "$dry" = 1 ] && note "a server whose source is not there yet stops the release here (exit 1)"
+[ "$dry" = 1 ] && note "a documentation server not staged in the hub yet stops the release here (exit 1)"
 
 stage c "the version"
 run "node '$here/scripts/bump-version.mjs'"
@@ -75,8 +75,9 @@ stage d ".mcp.json, clients, README blocks, evals, the portal's marketplace, the
 run "node '$here/scripts/gen-clients.mjs'"
 run "node '$here/scripts/gen-evals.mjs'"
 
-stage e "guard, validate, evals"
+stage e "guard, the build server's tests, validate, evals"
 run "node '$here/scripts/guard.mjs'"
+run "node --test '$plugin/servers/build/test.mjs'"
 run "claude plugin validate '$plugin' --strict"
 run "claude plugin validate '$here' --strict"
 last=$(git -C "$here" tag --list 'v*' | sort -V | tail -1)
@@ -114,10 +115,10 @@ else run "cd '$hub/public' && npm run build:xios && scripts/deploy-big.sh portal
 
 stage i "record"
 skills_gen=$(jsonf "$plugin/SKILLS.json" 'o.generated')
-docs_src=$(vendored docs); build_src=$(vendored build)
-row="| $v | $today | $skills_gen | docs: ${docs_src:-?} · build: ${build_src:-?} | $( [ "$evals" = 0 ] && echo 'evals skipped' || echo 'evals: see evals/results' ) |"
+docs_src=$(vendored docs); build_src="in the plugin"
+row="| $v | $today | $skills_gen | docs: ${docs_src:-?} · build: $build_src | $( [ "$evals" = 0 ] && echo 'evals skipped' || echo 'evals: see evals/results' ) |"
 note "RELEASES.md row: $row"
 run "printf '%s\n' '$row' >> '$here/RELEASES.md' && git -C '$here' add RELEASES.md && git -C '$here' commit -m 'release $v: record'"
-run "mkdir -p '$hub/_reports/plugin' && node -e \"require('fs').writeFileSync('$hub/_reports/plugin/$today.json', JSON.stringify({version:'$v',date:'$today',skills_generated:'$skills_gen',servers:{docs:'${docs_src:-?}',build:'${build_src:-?}'},evals:$evals,portal:$portal},null,2)+'\\n')\""
+run "mkdir -p '$hub/_reports/plugin' && node -e \"require('fs').writeFileSync('$hub/_reports/plugin/$today.json', JSON.stringify({version:'$v',date:'$today',skills_generated:'$skills_gen',servers:{docs:'${docs_src:-?}',build:'$build_src'},evals:$evals,portal:$portal},null,2)+'\\n')\""
 handoff "the report in the hub's _reports/plugin/ is committed there by the hub's own workflow"
 printf '\nrelease %s: done%s\n' "$v" "$( [ "$dry" = 1 ] && echo ' (dry run)' )"
