@@ -10,9 +10,9 @@
     },
     {
       "name": "cloudbackend-saas-launch",
-      "version": "2026.11.4.3",
-      "content_hash": "d9f9861744ab774c",
-      "sha256": "867ba140a4f8b72afffc3181faeaf081f4b54551eec1dbb4770d1b2affac51a7",
+      "version": "2026.11.4.4",
+      "content_hash": "53197aad3ebfafca",
+      "sha256": "3865cd9fa42d1956f626b83ac44dcf2c51793fd53c58a032c32eaf1919978338",
       "files": 2
     },
     {
@@ -45,9 +45,9 @@
     },
     {
       "name": "xios3-app-workflow",
-      "version": "2026.11.4.3",
-      "content_hash": "b517eee15f46dd9b",
-      "sha256": "371318b4fab1f8a97d9b0c8f3b70be9190c4abbf56aa73a1bcf34f159ad0f691",
+      "version": "2026.11.4.4",
+      "content_hash": "e97a433002cb6add",
+      "sha256": "f88caa5ef95372d0a51a344ec63de452763df0eae700ebb13b812195233b3b76",
       "files": 14
     }
   ]

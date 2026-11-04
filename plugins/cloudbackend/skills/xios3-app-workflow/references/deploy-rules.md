@@ -1,10 +1,43 @@
-# Deploy rules — what the connector's tools do, and the rules when it is not there
+# Deploy rules — the three routes to the tenant, what their tools do, and the rules underneath
 
 Hand-written, 2026-11-04. The manual's deployment pages (xios3-app-basics `references/deployment.md`)
 describe the console's Deploy Wizard and the stages; `references/deployment-pipeline.md` records what each
-click does to the address. This page covers the deploy connector's tools, the facts a tool cannot hide
-from you (a 409, a stuck share, a page that is not the page), and the REST rules for pushing files by
-hand.
+click does to the address. This page covers the three routes files take to the tenant, the tools of the two
+that are tools, the facts a tool cannot hide from you (a 409, a stuck share, a page that is not the page),
+and the REST rules for pushing files by hand.
+
+## Three routes to the tenant
+
+Take the first that answers, in this order, and say which one in the evidence line.
+
+| Route | Needs | Sign-in | Clients |
+| --- | --- | --- | --- |
+| The deploy connector, `cloudbackend-deploy` | the account's own sign-in realm | the account's sign-in page, through the connector | Claude Code, claude.ai, Claude Desktop, Cowork, other agents |
+| The tenant server, `cloudbackend-tenant` | the plugin; nothing on the account | a page on the user's computer: the form sends the password from their browser to CloudBackend, the plugin keeps only the session | Claude Code, Cowork |
+| The console, with the user's help | a browser | the user signs in at `https://<tenant>.db.cloudbackend.com/` themselves | every client; a browser tool performs the clicks, otherwise the user does |
+
+**The sign-in realm.** The deploy connector checks every call against a token from the account's own
+sign-in realm (Keycloak, one realm per account). An account created before that realm existed has none, and
+then the connector cannot sign in at all: `/mcp` shows it as failed, not as waiting for a sign-in. The owner
+or an administrator creates it with one call, `POST /keycloak` (REST card `postv1keycloak`);
+`enable_deploy_connector` on the tenant server makes that call after the user's sign-in. It is a change to the
+account and stays: ask before calling it. `tenant_status` reports whether the realm exists.
+
+## The tenant server (`cloudbackend-tenant`, inside the plugin)
+
+| Tool | What it does | What to read in the result |
+| --- | --- | --- |
+| `tenant_signin` | Opens a sign-in page on `127.0.0.1` for 15 minutes; the user signs in there (and enters the e-mailed code when the account uses one) | `signin_page`: give it to the user; never ask for the password |
+| `tenant_status` | Signed in or not, identity and role, whether CloudBackend still accepts the session, whether the realm exists; `wait_seconds` waits for an open page | `signed_in`, `role`, `deploy_connector` |
+| `list_projects` | The folders under `home://Applications/` and `tenant://Applications/`, and the identity's webshares with what each serves and its stage | which address already serves what |
+| `upload_project` | Copies the local package folder (`path`, the one holding `index.xml`) to `home://Applications/<project_name>/`; lints it with profile `build` first and uploads nothing while an error stands; binaries included; dot-files and `node_modules` left out. **Replaces by path; deletes nothing.** | `uploaded`, `lint`, `on_the_tenant_not_in_the_folder` |
+| `deploy` | Writes the boot page `index.html` and `.types.xml` into the project, creates the webshare or reuses the one that already serves this project, writes the console's pipeline record when there is none (an existing record is left alone), returns `https://<tenant>-<identity>-<name>.cloudbackend.cloud`. Development only; refuses an address that serves another project | `url`, `share` (created or reused), `pipeline` |
+| `verify_deployment` | Fetches the served files anonymously and compares their bytes with the local folder (`path`) or the stored copy; names the boot page when it answered instead | `verdict`, `index_xml_match`, `mismatches` with `served_is_fallback_page`, `share.bound` |
+| `enable_deploy_connector` | Creates the account's sign-in realm (owner or administrator only) | `realm`: created or already exists |
+| `tenant_signout` | Ends the session at CloudBackend and deletes it from the computer | `signed_out` |
+
+The session lives in a file only the user can read and is never in a tool result; a 401 deletes it, and
+`tenant_signin` starts a new one. Promotion beyond Development is a console step on every route.
 
 ## The deploy connector (`cloudbackend-deploy`, one per tenant)
 
@@ -48,9 +81,9 @@ stored.
   on one measured redeploy a gated app served open for about two minutes before the gate was restored.
   Verify after every change that touches the deployment, not once.
 
-## Without the connector: the console and the REST rules
+## The console route and the REST rules
 
-Files reach the tenant through the console's Upload Files dialog (CLI `upload`, after `cd` into the
+On the console route files reach the tenant through the console's Upload Files dialog (CLI `upload`, after `cd` into the
 app's container; it replaces by file name), the VS Code / Cursor extension, or your own REST calls with
 the cloudbackend-rest-api skill. For sub-folders, "Folders first" in `references/deployment-pipeline.md`:
 create the containers before their files, each folder into its own container.

@@ -1,6 +1,6 @@
 {
   "name": "cloudbackend",
-  "version": "2026.1104.1",
+  "version": "2026.1104.2",
   "description": "Build on CloudBackend PaaS with XIOS/3: the published skills (Singularity database, REST API, native SDKs, XIOS/3 applications and design, the SaaS launch path and the build-and-deploy workflow), five workflow agents, the documentation and build servers running inside the plugin, and the per-tenant deploy connector.",
   "author": {
     "name": "CloudBackend",

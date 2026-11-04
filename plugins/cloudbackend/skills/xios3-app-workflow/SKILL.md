@@ -55,7 +55,7 @@ one to decide which step is next.
 - customers are: individuals
 - deployment name: tasktrack
 - branches: sign-up: manual | payment: invoice   (pre-flight: no CRM, no Price plans)
-- files reach the tenant via: upload_project (deploy connector)
+- files reach the tenant via: upload_project (cloudbackend-tenant, signed in on the user's sign-in page)
 - client: Claude Code; browser tool: yes; sub-agents: yes
 
 ## App
@@ -73,7 +73,7 @@ one to decide which step is next.
 - [ ] 5 Teams and roles  - [deferred: Price plans] 6 Price plans  - [ ] 7 Deploy
 
 ## Build
-- [x] W0 open — plan card 2026-11-04 09:02 UTC; client Claude Code; deploy connector yes; browser yes
+- [x] W0 open — plan card 2026-11-04 09:02 UTC; client Claude Code; route tenant server; browser yes
 - [x] W1 spec — docs/spec.md: 4 features, 3 screens, 1 kind (task, 3 fields) · user yes 09:14 UTC
 - [x] W4 build — lint build 0E/2W (G10 font-family added; G15 n/a); upload 14 files ok; deploy dev https://acme-emmadev-tasktrack.cloudbackend.cloud 10:12 UTC
 - [ ] W8 ship — unverified: Shared, Staging and Production are the user's clicks; verify after each
@@ -96,8 +96,9 @@ context file already answered:
 
 1. The app in one sentence, and for whom (if the prompt did not say).
 2. The tenant's name, or "none yet" (then `cloudbackend-saas-launch` takes over until the tenant exists).
-3. What is connected here: the deploy connector (`cloudbackend-deploy`), the docs and build connectors, a
-   browser tool, sub-agents. Say what each absence costs in one line; do not stop for it.
+3. What is connected here: the deploy connector (`cloudbackend-deploy`), the tenant server
+   (`cloudbackend-tenant`), the docs and build connectors, a browser tool, sub-agents. Say what each
+   absence costs in one line; do not stop for it.
 
 **The plan card goes in the same reply**, eight lines the user reads in a minute, each a decision and its
 reason, ending with "reply to change any of these; otherwise I go on":
@@ -124,12 +125,26 @@ wizard's verifier, the address rules and the login gate only show from a deploym
 
 ### W0 Open
 
-Read `cloudbackend-launch.md`. Run the opening round and the plan card. Write `## App` and `## Build`. If
-the deploy connector is connected, call `list_projects` once: it proves the connector and the tenant in
-one call, and its failure turns "files reach the tenant via" into the console (see `references/deploy-rules.md`,
-"Without the connector"). Open `cloudbackend-saas-launch` for the pre-flight if the context file has no
-`branches:` line yet.
-Gate: the plan card was sent; silence is a go. Evidence: `W0 open — plan card <UTC>; client <name>; deploy connector yes|no; browser yes|no`.
+Read `cloudbackend-launch.md`. Run the opening round and the plan card. Write `## App` and `## Build`. Open
+`cloudbackend-saas-launch` for the pre-flight if the context file has no `branches:` line yet.
+
+Pick the route files take to the tenant, the first that answers, and write it on the `files reach the tenant
+via:` line (`references/deploy-rules.md`, "Three routes to the tenant"):
+
+1. **The deploy connector.** Call its `list_projects` once. It answers only when the account has its own
+   sign-in realm; a failed sign-in or a connection error moves on.
+2. **The tenant server** (`cloudbackend-tenant`, Claude Code and Cowork). `tenant_status`; when it is not
+   signed in, `tenant_signin` with the account name and give the user the page's address in one line: they
+   sign in there, in their own browser, and the password goes from that page to CloudBackend. Then
+   `tenant_status` with `wait_seconds` waits for them. Its `deploy_connector` line says whether the account
+   has the realm; when it has not and the user is the owner, offer `enable_deploy_connector` once, as a
+   question, because it changes the account.
+3. **The console, with the user's help.** The user opens `https://<tenant>.db.cloudbackend.com/` and signs in
+   themselves. A browser tool then performs the clicks, each change with its own yes; without one, give the
+   click path in words and wait for "done" after each step.
+
+Say in one line which route was taken and why the ones before it were not.
+Gate: the plan card was sent; silence is a go. Evidence: `W0 open — plan card <UTC>; client <name>; route deploy connector|tenant server|console; browser yes|no`.
 
 ### W1 Spec
 
@@ -166,17 +181,21 @@ Gate: the launch path's step-1 check. Evidence: `W3 data — <datatype> in tenan
    ("Running without sub-agents", below).
 3. `lint_project` with profile `build` before **every** upload. Zero errors is the gate; warnings are
    recorded with their rule ids. `references/tenant-grammar.md` says what each rule means and the fix.
-4. The throwaway deploy, as soon as the first list binds: `upload_project` with `validate` on, then
-   `deploy` from `home` (a private Development deployment). `references/deploy-rules.md` says what the
-   two calls do, what a 409 on a seed means (kept, correct), and the rules for pushing files without the
-   connector.
+4. The throwaway deploy, as soon as the first list binds, on W0's route: `upload_project`, then `deploy`
+   from `home` (a private Development deployment). On the deploy connector `upload_project` takes the files
+   with `validate` on; on the tenant server it takes the local `app/` folder as `path`, lints it first and
+   uploads nothing while an error stands. On the console route the user uploads with the Upload Files
+   dialog and runs the Deploy Wizard. `references/deploy-rules.md` says what each call does, what a 409 on
+   a seed means (kept, correct), and the REST rules.
 One question, only when the spec lists a channel the plan card left open: "the provider for <channel>?"
 Gate: lint 0 errors, upload validated, deploy returned a URL. Evidence: `W4 build — lint build 0E/nW (<ids>); upload N files ok; deploy dev <url> <UTC>`.
 
 ### W5 Verify
 
-1. `verify_deployment` (deploy connector): the served files against the stored ones by checksum, the
-   login gate as the pipeline document and the manifest state it, `llms.txt` real or the fallback page.
+1. `verify_deployment` on W0's route: the served files compared by checksum with the stored ones (deploy
+   connector) or with the local `app/` folder (tenant server, `path`), the login gate as the pipeline record
+   and the manifest state it, `llms.txt` served or the fallback page. On the console route, fetch the
+   address and compare `index.xml` yourself when a shell is there; otherwise the user's browser check.
    "Live" is claimed from `index_xml_match` being true, never from a 200: a webshare answers 200 with the
    boot page for every unknown path.
 2. The UI probes in `tests/ui-probes.md`, in the browser when one is connected: a fresh browser context,
@@ -228,9 +247,10 @@ to Staging → Configure Login Page with the logo as `https://` + the Staging ho
 box → Mark Verified → Promote to Production → Connect Domain with the `A` record the launch path names).
 After **each** promotion run `verify_deployment` on the new host: the content, and the gate, because a
 promotion that drops the login configuration serves the app open. Write the customer's address card: the
-Production address or the domain, never the console's. When a browser tool drives the console, each action
-that changes the tenant gets its own yes, and Deploy Anyway a fresh one, as `cloudbackend-saas-launch`
-says.
+Production address or the domain, never the console's. The console is the user's: they open
+`https://<tenant>.db.cloudbackend.com/` and sign in themselves, and never type their password for you. When a
+browser tool drives it, each action that changes the tenant gets its own yes, and Deploy Anyway a fresh one,
+as `cloudbackend-saas-launch` says; without one, give one step at a time and wait for "done".
 One question: "domain: none for now, or yours?"
 Gate: the launch path's step-7 check, plus `verify_deployment` on Production with `index_xml_match` true and
 the gate as specified. Evidence: `W8 ship — Production <url>; verify match=true gate=<verdict>; domain <none|name> · user confirmed <UTC>`.
@@ -249,9 +269,12 @@ Gate: every row has a Source; no comparison row exists without a twin measured o
 
 ## Credentials: never
 
-Never ask for, accept or repeat a password, referral code, session token or API key; the user signs in to
-the console themselves, and the deploy connector signs them in through its own OAuth page, so this skill
-never sees a token. Identities and sign-ins are the user's, in a private window. A browser action that
+Never ask for, accept or repeat a password, referral code, session token or API key. The user signs in to
+the console themselves; the deploy connector signs them in on the account's own sign-in page; the tenant
+server signs them in on a page on their own computer whose form sends the password straight from their
+browser to CloudBackend and keeps only the session, in a file only they can read. So this skill never sees a
+password or a token: never type one into a page for the user, and never read the tenant server's session
+file. Identities and sign-ins are the user's, in a private window. A browser action that
 changes the tenant gets its own yes at the time. The full rule, with the reasons, is in
 `cloudbackend-saas-launch` "Credentials: never"; it applies here unchanged. If the user pastes a secret,
 tell them to change it, and do not use it.
@@ -260,9 +283,10 @@ tell them to change it, and do not use it.
 
 | Client | Has | The workflow here |
 | --- | --- | --- |
-| Claude Code (terminal or desktop) | the file system, sub-agents, a browser tool, `/cost`, a shell | every phase as written |
-| Claude Desktop | the documentation extension (the same docs server) and the deploy connector by URL; no shell, no file system, no browser | the context file and the documents live in the conversation; W5's probes are a checklist the user runs; sub-agents become inline checklists |
-| claude.ai | the skills, and the deploy connector by URL; no servers of its own | the same as Claude Desktop |
+| Claude Code (terminal or desktop) | the file system, sub-agents, a browser tool, `/cost`, a shell, all four plugin servers | every phase as written |
+| Cowork | the plugin's local servers on the user's computer, a browser tool where connected | every phase; sub-agents become inline checklists |
+| Claude Desktop | the documentation extension (the same docs server) and the deploy connector by URL once the account has its sign-in realm; no shell, no file system, no browser | the context file and the documents live in the conversation; deploys go through the console with the user's help until the realm exists; W5's probes are a checklist the user runs; sub-agents become inline checklists |
+| claude.ai | the skills, and the deploy connector by URL once the account has its sign-in realm; no servers of its own | the same as Claude Desktop |
 | Cursor, VS Code and other agents | the connectors by URL, the skills as files | every phase; sub-agents and browser tools as the client has them |
 
 The connectors the CloudBackend plugin declares, and what each gives this workflow:
@@ -271,12 +295,16 @@ The connectors the CloudBackend plugin declares, and what each gives this workfl
 | --- | --- | --- |
 | `cloudbackend-docs` (part of the plugin: runs on your computer and reads the developer portal; in Claude Desktop the same server is the documentation extension) | `cloudbackend_docs`, `cloudbackend_rest`, `cloudbackend_rest_list`, `cloudbackend_sdk`; the XIOS/3 lookups `xios3_component`, `xios3_operation`, `xios3_function`, `xios3_method`, `xios3_event`, `xios3_action`, `xios3_concepts`, `xios3_list`, `xios3_icons` | W1, W4, W7: a card by name; when it and a bundled reference disagree, the portal page decides |
 | `cloudbackend-build` (part of the plugin: runs on your computer, nothing to install) | `lint_project`, `benchmark_project` | W4, W6, W9 |
-| `cloudbackend-deploy` (https://mcp.cloudbackend.com/mcp/<tenant>, the user's own tenant, OAuth sign-in) | `list_projects`, `list_project_files`, `read_project_file`, `list_deployments`, `upload_project`, `deploy`, `lint_project`, `verify_deployment` | W0, W3, W4, W5, W8 |
+| `cloudbackend-tenant` (part of the plugin: runs on your computer; the user signs in on a page it opens, the password goes from their browser to CloudBackend) | `tenant_signin`, `tenant_status`, `tenant_signout`, `list_projects`, `upload_project` (a local folder, linted first), `deploy`, `verify_deployment`, `enable_deploy_connector` | W0, W4, W5, W8 when the deploy connector cannot sign in |
+| `cloudbackend-deploy` (https://mcp.cloudbackend.com/mcp/<tenant>, the user's own tenant; signs in through the account's own sign-in realm) | `list_projects`, `list_project_files`, `read_project_file`, `list_deployments`, `upload_project`, `deploy`, `lint_project`, `verify_deployment` | W0, W3, W4, W5, W8 |
 
-The deploy connector is CloudBackend's own server and per tenant: Claude Code asks for the tenant's name once
-when the plugin is installed and adds `https://mcp.cloudbackend.com/mcp/<tenant>` itself; elsewhere add that
-URL as a custom connector (or run the plugin's `scripts/connect-deploy.sh <tenant>`); the sign-in page is the
-tenant's own. The docs and build servers never leave your computer. A tool result is at most about 150,000 characters and a
+The deploy connector is CloudBackend's own server and per tenant. In Claude Code the account name fills its
+address: `--config cbe_tenant=<account>` on the install command, or `/plugin configure cloudbackend@cloudbackend`
+later; elsewhere add `https://mcp.cloudbackend.com/mcp/<tenant>` as a custom connector (or run the plugin's
+`scripts/connect-deploy.sh <tenant>`). It signs in only when the account has its own sign-in realm:
+`tenant_status` says whether it does, and the owner creates it once with `enable_deploy_connector`. Until then the
+tenant server is the route on Claude Code and Cowork, and the console with the user's help everywhere else.
+The docs, build and tenant servers run on your computer. A tool result is at most about 150,000 characters and a
 call at most 240 seconds on claude.ai, so lint and verify sample and page; never send a whole package to a
 lookup tool.
 
@@ -336,6 +364,8 @@ Each with the rule or tool that catches it:
   G14.
 - SEO promises a webshare cannot keep (true 404s, prerendering) — `references/seo-geo-on-a-webshare.md`.
 - A comparison with React that nobody measured — the wording rules in `references/benchmark-method.md`.
+- Asking for the password because the deploy connector cannot sign in: the account has no sign-in realm yet.
+  The tenant server's sign-in page takes the password in the user's browser — `references/deploy-rules.md`.
 
 ## Bundled references
 
@@ -343,7 +373,7 @@ Hand-written, measured and dated where the manual is silent:
 
 - `references/project-layout.md` — the advanced package, what may ship in the container, and the templates for the spec, the README, the manual, the API note and the probe list.
 - `references/tenant-grammar.md` — the lint rules G01–G20 in words, with the fix for each; `references/tenant-grammar.json` is the same table as data, the one source the build connector's `lint_project` loads.
-- `references/deploy-rules.md` — what `upload_project`, `deploy` and `verify_deployment` do and return; the rules for pushing files without the connector; shares and slugs; the publish-then-load race.
+- `references/deploy-rules.md` — the three routes to the tenant (deploy connector, tenant server, console with the user's help), what `upload_project`, `deploy` and `verify_deployment` do and return on each; the sign-in realm; the REST rules; shares and slugs; the publish-then-load race.
 - `references/verification-checklist.md` — verify by content, the probe format and the three probe rules, the repair loop, the 390 px pass, write-back reads, Lighthouse per client.
 - `references/security-legal-checklist.md` — the rows and their checks; a checklist, not legal advice.
 - `references/seo-geo-on-a-webshare.md` — what a webshare can and cannot do for search and answer engines, and what works.
@@ -358,10 +388,10 @@ Generated from the published manual at build time:
 
 ## Version and updates
 
-This is version 2026.11.4.3 of the xios3-app-workflow skill, built from the CloudBackend documentation.
+This is version 2026.11.4.4 of the xios3-app-workflow skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.4.3, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.4.4, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.4.3&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.4.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.

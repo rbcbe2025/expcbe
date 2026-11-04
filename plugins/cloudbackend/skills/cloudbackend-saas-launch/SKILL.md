@@ -115,9 +115,11 @@ first. Say so in the plan card, so a small first version reads as the plan and n
 ## Credentials: never
 
 Never ask for, accept or repeat a password, referral code, session token or API key. The user signs in to
-the console themselves and clicks the owner-only buttons themselves. When code must call the REST API,
-the user logs in in their own terminal and exposes the token to the program through an environment
-variable; the code reads it from there. If the user pastes a secret into the conversation, tell them to
+the console themselves and clicks the owner-only buttons themselves. The CloudBackend plugin's tenant server
+signs the user in on a page on their own computer: the form sends the password from their browser to
+CloudBackend, and only the session is kept, never shown to you; give the user that page, never ask for the
+password. When code must call the REST API, the user logs in in their own terminal and exposes the token to
+the program through an environment variable; the code reads it from there. If the user pastes a secret into the conversation, tell them to
 change it and do not use it.
 
 The same line covers identities: you never create an account or an identity on a hosted service and never
@@ -175,7 +177,7 @@ first and each folder uploaded into its own: xios3-app-basics `references/deploy
 | --- | --- | --- |
 | The CloudBackend developer portal (https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud) | The documentation these skills are rendered from: every topic, the REST cards, the tutorials, search | The primary source: open the link a reference gives, and send the user there |
 | MCP server **cloudbackend-docs**, if connected (it serves the same documentation) | `cloudbackend_docs`, `cloudbackend_rest`, `cloudbackend_rest_list`, `cloudbackend_sdk` | A quick lookup by name; when it and a reference disagree, the portal page decides |
-| The CloudBackend plugin's other servers, if connected: **cloudbackend-build** (part of the plugin, on the user's computer) and **cloudbackend-deploy** (CloudBackend's server for the user's own tenant, OAuth sign-in) | `lint_project`, `benchmark_project`; `list_projects`, `list_deployments`, `upload_project`, `deploy`, `verify_deployment` | xios3-app-workflow calls them at its phases; with the deploy connector, files reach the tenant through `upload_project` and a deployment is verified by content |
+| The CloudBackend plugin's other servers, if connected: **cloudbackend-build** and **cloudbackend-tenant** (part of the plugin, on the user's computer; the tenant server signs the user in on a page it opens, the password going from their browser to CloudBackend) and **cloudbackend-deploy** (CloudBackend's server for the user's own tenant; it signs in only once the account has its own sign-in realm) | `lint_project`, `benchmark_project`; `tenant_signin`, `tenant_status`, `enable_deploy_connector`; `list_projects`, `list_deployments`, `upload_project`, `deploy`, `verify_deployment` | xios3-app-workflow calls them at its phases and picks the route (deploy connector, tenant server, or the console with the user's help); files reach the tenant through `upload_project` and a deployment is verified by content |
 | The CloudBackend PaaS console | Everything owner-only, and every click this path names | The user does these; give exact paths |
 | Chrome extension **CloudBackend Developer Tools** | The documentation offline, the omnibox keyword `cbe`, a XIOS/3 inspector in DevTools, a Console for the tenant | The user inspecting a running app, or looking something up beside the console |
 | The VS Code / Cursor extension and the CLI | Cloud source sync, IntelliSense; 70+ commands (`groups`, `publish`, `meta` …) | Editing projects locally; the CLI commands the steps name |
@@ -250,10 +252,10 @@ finish with the same "check it worked" discipline.
 
 ## Version and updates
 
-This is version 2026.11.4.3 of the cloudbackend-saas-launch skill, built from the CloudBackend documentation.
+This is version 2026.11.4.4 of the cloudbackend-saas-launch skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `cloudbackend-saas-launch` is newer than 2026.11.4.3, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `cloudbackend-saas-launch` is newer than 2026.11.4.4, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.4.3&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.4.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch - it records the skill's name and version and nothing else. Never send it without that agreement.
