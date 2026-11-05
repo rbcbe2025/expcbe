@@ -69,8 +69,11 @@ on every page. The `<theme>` does not reach the login screen: the login applicat
 - A `logo` and a `background` that name a file next to `index.xml` rendered: the login application resolves them
   against the app. The console's Login Configurator was not re-measured; give it a full `https://` address to the logo,
   as the launch path's step 3 says.
-- The card is 470 px wide. On a phone narrower than that it runs off the screen; that is the login application's to fix,
-  and it has been reported to XIOS/3.
+- The card is 470 px wide, so on a phone narrower than that it runs off the screen. The boot page that the CloudBackend
+  plugin's tenant server and the deploy connector write carries a short script that gives each view frame one rule, and
+  with it the card fits the screen 12 px from each edge on the sign-in, sign-up and reset pages (measured at 375 px).
+  A deployment made with the console's Deploy Wizard has the console's boot page and keeps the overflow. The real fix,
+  a responsive card, is the login application's and has been reported to XIOS/3.
 - Without a published `Tenant` container, the login's lookup of the tenant's licence text answers 404 in the browser
   console. The screen works.
 
