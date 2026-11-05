@@ -7,3 +7,25 @@ the repository's `scripts/gen-evals.mjs` from each skill's own evals and never e
 and on two cases a `baseline` grader against a reference transcript. `results/` (ignored by git) is where a run writes
 its report. The release pipeline runs the suite with pinned models and skips it when the skills are unchanged since
 the last release.
+
+## Runs
+
+**2026-11-05, the first run.** On big (Claude Code 2.1.316; 2.1.267 on the Mac answers that `plugin eval` is in early
+access), `--trust-plugin --ablation none --runs 1 --model claude-sonnet-5-5 --judge-model claude-sonnet-5-5
+--max-cost-usd 15`, plugin 2026.1105.2, 38 cases, 25 turns each. Overall score 0.58, 10 cases at 1.0, $11.70, 17 minutes.
+
+| Skill | Cases at 1.0 | Note |
+| --- | --- | --- |
+| cloudbackend-rest-api | 3 of 3 | |
+| cloudbackend-sdk | 2 of 2 | |
+| singularity-database | 1 of 4 | full answers; the judge failed one or more assertions each |
+| xios3-app-basics | 1 of 3 | full answers; the judge failed one or more assertions each |
+| xios3-app-design | 1 of 6 | the runs had no shell to run `designkit.py`, and some stopped to ask before writing |
+| cloudbackend-saas-launch | 1 of 8 | full answers; the judge failed one or more assertions each |
+| xios3-app-workflow | 1 of 12 | the plugin's servers are not started in the sandbox (no `mocks/`), so the runs said "no deploy tools" |
+
+What the run says about the suite, before it says anything about the skills: the workflow cases need stand-ins for the
+docs, build, tenant and deploy servers (`mocks/<server>/`) or `--allow-real-servers`; one `llm` grader per case fails the
+whole case on one missed assertion, so a grader per assertion would show which facts are missing; and the cases offer
+only Read, Glob, Grep and Skill, so a case that expects files or a `designkit.py` run cannot show them. No baseline arm
+was run (`--ablation none`), so there is no with/without delta yet.
