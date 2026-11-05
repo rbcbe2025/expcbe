@@ -10,9 +10,9 @@
     },
     {
       "name": "cloudbackend-saas-launch",
-      "version": "2026.11.5.4",
-      "content_hash": "5169670f30ab7318",
-      "sha256": "d31bf46ec15107c7bec9214c61ae105e5c8482cf967e768aadf587567424dd0d",
+      "version": "2026.11.5.5",
+      "content_hash": "e6d0f548f35e32a5",
+      "sha256": "0e1237e394b4282e6154d5e3a9a86e875f8fc9021d0d32fefeb7c47623684c25",
       "files": 2
     },
     {
@@ -31,17 +31,17 @@
     },
     {
       "name": "xios3-app-basics",
-      "version": "2026.11.5.2",
-      "content_hash": "ef981356459589b3",
-      "sha256": "e2f51c6dd879cbcb5dc977fe08c0ce87fc27af1fd8fc802b6abd56c2c8b12f6e",
+      "version": "2026.11.5.3",
+      "content_hash": "d88a2e2bc02a74b4",
+      "sha256": "2178acf1420b8893b751ed887c9739bb6a40c037c53eafc4ffffa6c5539e65cb",
       "files": 11
     },
     {
       "name": "xios3-app-design",
-      "version": "2026.11.5.5",
-      "content_hash": "54a80ad97779719b",
-      "sha256": "12079d2d3691c170a441301690c236e3725dd05ab3b09ef3900f46a0fea299c5",
-      "files": 26
+      "version": "2026.11.5.9",
+      "content_hash": "db359d914c7782ed",
+      "sha256": "cfa8aa9aff3d3295a22b28bff268966265d43cdfbbaceb37d13d9565507d8003",
+      "files": 28
     },
     {
       "name": "xios3-app-workflow",

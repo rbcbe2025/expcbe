@@ -17,6 +17,15 @@
   <trigger view="App" component="save" event="Select" step="saveItem"/>
   <trigger view="App" component="remove" event="Select" step="deleteItem"/>
   <trigger view="App" component="back" event="Select" step="backToList"/>
+  <trigger view="App" component="signOut" event="Select" step="signOut"/>
+
+  <!-- sign out: ends the session at CloudBackend and in the browser; the login screen comes back. The button shows only
+       when the app has a login (the kit writes it with the login option), whose session="true" keeps the sign-in across reloads. -->
+  <step id="signOut">
+    <operation name="system">
+      <logout/>
+    </operation>
+  </step>
 
   <!-- start: where the records are, which screen we are on -->
   <step id="init">

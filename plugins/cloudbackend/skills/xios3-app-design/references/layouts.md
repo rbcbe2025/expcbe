@@ -13,7 +13,7 @@ webshare on sample data). `designkit.py app` writes these files with the placeho
 | `processes/app.xml` | the logic for both views: bind, pick, New, Save, Delete, the screen, the status lines | `ITEMS_URL`, `ITEMS_PARENT`, `ITEMS_NAME`, `SAMPLE`, `SAMPLE_URL`, `SAMPLE_BASE`, `ITEM`, `ITEMS_TITLE`, the four `VOICE_*` |
 | `xsl/detail.xsl` | the render over one record: eyebrow (status), title, notes, created | `ITEM` |
 | `styles/app.css` | the app's own rules beyond the theme (the brand label); reads `--xios-*`, names no colour | none |
-| `ui/DesignKit/` | `CA_Status.js` + `status.xsl`, `CA_Screen.js` + `screen.xsl`, `designkit.css` | none |
+| `ui/DesignKit/` | `CA_Status.js` + `status.xsl`, `CA_Screen.js` + `screen.xsl`, `designkit.css`, and `theme.css` (the stylesheet that styles every runtime component from the theme; the theme's view component loads it, `references/theme.md`) | none |
 | `data/` | a sample listing (`items.xml`, the `db:result` shape) and four records, for sample mode | `SAMPLE_URL`, `SAMPLE_BASE`, `ITEM` |
 
 Every component is named, and the names are the same in both views; the process never knows which file is
@@ -67,6 +67,10 @@ Same names, `type="rows"` everywhere, `width="100%"`:
   Back reverses it. The desktop file has the same `back` button with `hide="true"`, so the process's
   `backToList` step is harmless there.
 - The two inputs stack instead of sharing a row; the textarea is shorter.
+- A row of buttons is a panel with `class="dk-wrap"` (the example's Save and Delete): on a phone its buttons share the
+  row two by two instead of running off the screen. Not a row of fields: `dk-wrap` gives each child its content's width,
+  so a `fill` field shrinks.
+- With a login, the toolbar carries Sign out (`signOut`), revealed by the login option.
 - Nothing scrolled sideways at 390 px; the status bar spans the width (`designkit.css`,
   `body[data-screen="phone"]`).
 

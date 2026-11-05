@@ -13,16 +13,18 @@ and password-reset pages in the same design. This page says how to set it up, wh
    app's logo above it, the title "Log in" and a welcome line, and the app's primary colour on the button and the links.
 3. **Wired so nothing opens before sign-in.** The app's views and process are `xlink:actuate="onRequest"`, the login
    application's process is declared first with `onLoad`, and the desktop view is declared first.
+4. **Signed in across reloads, with a way out.** `<login session="true">`, and a visible Sign out in the app.
 
 `python3 scripts/designkit.py app --design design/design.json --out app --login` does all of it: the `<login>` element,
 `logo.svg` (a text mark in the display face, light on the dark page), `login-bg.svg` and the wiring.
-`--login-page light` draws a pale grey grid page instead. `python3 scripts/designkit.py login app` checks the result and
-exits 1 if any part is missing. `design/login.xml` (from `brief`) is the element on its own, to paste by hand.
+`--login-page light` draws a pale grey grid page instead. `python3 scripts/designkit.py login app` checks the result (the
+three ways in, the texts, the logo and page, the wiring, `session="true"` and a visible Sign out) and exits 1 if any part
+is missing. `design/login.xml` (from `brief`) is the element on its own, to paste by hand.
 
 ## The element
 
 ```xml
-<login>
+<login session="true">
   <background dark="true">login-bg.svg</background>
   <logo>logo.svg</logo>
   <title>Log in</title>
@@ -48,6 +50,21 @@ exits 1 if any part is missing. `design/login.xml` (from `brief`) is the element
 | `button` | the sign-in button's text (default "Sign in") | the login application's code, measured |
 | `buttonColor`, `linkColor` | the button's and the links' colour (`linkColor` falls back to `buttonColor`) | the login application's code, measured |
 | `createPrompt` | the line before the sign-up link | the login application's code, measured |
+| `session="true"` (attribute) | keeps the sign-in across reloads | the runtime's code (below) |
+
+## Staying signed in
+
+The login application hands the attribute to the CloudBackend channel as `<login session="…">`. With `true`, the
+runtime's authenticator stores the session the sign-in returns in the browser's `localStorage` (`:session_<tenant>`, with
+`:expire_<tenant>` seven days ahead), moves the expiry forward on every request, and on the next load resumes the stored
+session instead of showing the sign-in page; a rejected session brings the sign-in page back. Its logout removes both
+keys. Without the attribute nothing is stored, so every reload signs the user out (read in the runtime's `system.js`,
+2026.6.0, on 2026-11-05).
+
+Two consequences for the app. It needs a visible **Sign out**: the example carries a `signOut` button (hidden until the
+login option reveals it) whose step runs the runtime's logout (`<operation name="system"><logout/></operation>`), which
+ends the session and brings the sign-in page back. And a shared computer keeps the user signed in for up to a week of
+use, which belongs in the app's help text when it matters.
 
 The login application also reads `support`, `eula`, `view` (a login view of your own), `username`, `password`, and titles,
 descriptions and buttons for its pages under `signup`, `recovery` and `newPassword`. Their defaults read well
@@ -80,6 +97,10 @@ on every page. The `<theme>` does not reach the login screen: the login applicat
   without the plugin's boot page script (3 of 3 loads each way). It is the runtime's, reported to XIOS/3; the screen
   works. Do not chase it as an app error.
 
+- The sign-in page's look on plugin deployments: the boot page gives it the system type, 44 px filled fields with a
+  focus ring in the button colour, a 44 px button and an 18 px card radius (measured at 375 px, 2026-11-05;
+  `references/theme.md`, "The login screen").
+
 - **What opens after sign-in**, measured with a signed-in user at 467 px: the app's first declared view (the desktop
   one, as the kit declares it) and its process. The login application does not look at a view's `screen=` query, so a
   phone never gets the phone view after sign-in. The kit's desktop view therefore adapts on a narrow screen: the process
@@ -89,6 +110,9 @@ on every page. The `<theme>` does not reach the login screen: the login applicat
   returned to the list.
 
 Not measured yet:
+
+- **The kept session across a reload on a deployment**, and Sign out clearing it: the attribute's effect is read in the
+  runtime's code; the first run with a signed-in user is still to come.
 
 - **Sign-up and reset on a tenant without the CRM.** The flows send e-mail through the tenant's CRM. Keep both links,
   and set up the CRM before Production (cloudbackend-saas-launch, step 4).

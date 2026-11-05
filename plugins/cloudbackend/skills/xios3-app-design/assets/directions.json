@@ -17,12 +17,14 @@
         "lightIcon": "#ffffff", "darkIcon": "#1e3a8a", "grey": "#64748b"
       },
       "knobs": {
-        "font-sans": "'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif",
-        "font-display": "'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif",
+        "font-sans": "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "font-display": "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
         "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
-        "text-sm": "12px", "text-md": "13px", "text-lg": "15px",
-        "weight-medium": "500", "weight-bold": "600", "leading-normal": "1.45",
-        "control-height": "30px", "radius-sm": "4px", "radius-md": "6px", "radius-lg": "10px"
+        "text-xs": "11px", "text-sm": "13px", "text-md": "14px", "text-lg": "16px", "text-xl": "22px",
+        "weight-normal": "400", "weight-medium": "500", "weight-bold": "600",
+        "leading-tight": "1.2", "leading-normal": "1.45", "leading-body": "1.55", "tracking-label": "0.06em",
+        "space-1": "2px", "space-2": "4px", "space-3": "8px", "space-4": "12px", "space-5": "16px", "space-6": "24px",
+        "control-height": "36px", "control-pad-x": "14px", "control-gap": "8px", "radius-sm": "6px", "radius-md": "8px", "radius-lg": "12px"
       },
       "voice": {
         "first_run": "Your workspace is ready. Add the first {item} to begin.",
@@ -47,12 +49,14 @@
         "lightIcon": "#ffffff", "darkIcon": "#4338ca", "grey": "#6b7280"
       },
       "knobs": {
-        "font-sans": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-        "font-display": "'Avenir Next', 'Segoe UI', system-ui, -apple-system, sans-serif",
+        "font-sans": "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "font-display": "'Avenir Next', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
         "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
-        "text-sm": "12px", "text-md": "14px", "text-lg": "16px",
-        "weight-medium": "500", "weight-bold": "700", "leading-normal": "1.5",
-        "control-height": "34px", "radius-sm": "6px", "radius-md": "10px", "radius-lg": "16px"
+        "text-xs": "11px", "text-sm": "13px", "text-md": "15px", "text-lg": "17px", "text-xl": "22px",
+        "weight-normal": "400", "weight-medium": "500", "weight-bold": "600",
+        "leading-tight": "1.2", "leading-normal": "1.45", "leading-body": "1.55", "tracking-label": "0.06em",
+        "space-1": "2px", "space-2": "4px", "space-3": "8px", "space-4": "12px", "space-5": "16px", "space-6": "24px",
+        "control-height": "40px", "control-pad-x": "14px", "control-gap": "8px", "radius-sm": "8px", "radius-md": "12px", "radius-lg": "16px"
       },
       "voice": {
         "first_run": "Welcome. Start with your first {item}; everything else grows from there.",
@@ -77,12 +81,14 @@
         "lightIcon": "#ffffff", "darkIcon": "#0f766e", "grey": "#5f7470"
       },
       "knobs": {
-        "font-sans": "'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif",
-        "font-display": "'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif",
+        "font-sans": "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "font-display": "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
         "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
-        "text-sm": "13px", "text-md": "15px", "text-lg": "18px",
-        "weight-medium": "500", "weight-bold": "700", "leading-normal": "1.55",
-        "control-height": "40px", "radius-sm": "8px", "radius-md": "12px", "radius-lg": "20px"
+        "text-xs": "11px", "text-sm": "14px", "text-md": "16px", "text-lg": "18px", "text-xl": "22px",
+        "weight-normal": "400", "weight-medium": "500", "weight-bold": "600",
+        "leading-tight": "1.2", "leading-normal": "1.45", "leading-body": "1.55", "tracking-label": "0.06em",
+        "space-1": "2px", "space-2": "4px", "space-3": "8px", "space-4": "12px", "space-5": "16px", "space-6": "24px",
+        "control-height": "44px", "control-pad-x": "14px", "control-gap": "8px", "radius-sm": "10px", "radius-md": "14px", "radius-lg": "18px"
       },
       "voice": {
         "first_run": "Hello. Your first {item} is one tap away.",
@@ -107,12 +113,14 @@
         "lightIcon": "#ffffff", "darkIcon": "#166534", "grey": "#78716c"
       },
       "knobs": {
-        "font-sans": "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif",
-        "font-display": "system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif",
+        "font-sans": "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "font-display": "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
         "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
-        "text-sm": "13px", "text-md": "15px", "text-lg": "18px",
-        "weight-medium": "600", "weight-bold": "700", "leading-normal": "1.4",
-        "control-height": "44px", "radius-sm": "4px", "radius-md": "6px", "radius-lg": "8px"
+        "text-xs": "11px", "text-sm": "14px", "text-md": "16px", "text-lg": "18px", "text-xl": "22px",
+        "weight-normal": "400", "weight-medium": "500", "weight-bold": "600",
+        "leading-tight": "1.2", "leading-normal": "1.45", "leading-body": "1.55", "tracking-label": "0.06em",
+        "space-1": "2px", "space-2": "4px", "space-3": "8px", "space-4": "12px", "space-5": "16px", "space-6": "24px",
+        "control-height": "44px", "control-pad-x": "14px", "control-gap": "8px", "radius-sm": "8px", "radius-md": "10px", "radius-lg": "14px"
       },
       "voice": {
         "first_run": "Ready. Add the first {item}.",
@@ -137,12 +145,14 @@
         "lightIcon": "#e6ebf5", "darkIcon": "#6fb6f2", "grey": "#8b9bb8"
       },
       "knobs": {
-        "font-sans": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-        "font-display": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-        "font-mono": "ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace",
-        "text-sm": "12px", "text-md": "13px", "text-lg": "15px",
-        "weight-medium": "500", "weight-bold": "600", "leading-normal": "1.5",
-        "control-height": "32px", "radius-sm": "4px", "radius-md": "8px", "radius-lg": "12px"
+        "font-sans": "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "font-display": "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+        "text-xs": "11px", "text-sm": "13px", "text-md": "15px", "text-lg": "17px", "text-xl": "22px",
+        "weight-normal": "400", "weight-medium": "500", "weight-bold": "600",
+        "leading-tight": "1.2", "leading-normal": "1.45", "leading-body": "1.55", "tracking-label": "0.06em",
+        "space-1": "2px", "space-2": "4px", "space-3": "8px", "space-4": "12px", "space-5": "16px", "space-6": "24px",
+        "control-height": "40px", "control-pad-x": "14px", "control-gap": "8px", "radius-sm": "8px", "radius-md": "12px", "radius-lg": "16px"
       },
       "voice": {
         "first_run": "Connected. Nothing to show until the first event arrives.",
@@ -167,12 +177,14 @@
         "lightIcon": "#ffffff", "darkIcon": "#1f5c45", "grey": "#6b7280"
       },
       "knobs": {
-        "font-sans": "system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
-        "font-display": "Georgia, 'Iowan Old Style', 'Times New Roman', serif",
+        "font-sans": "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+        "font-display": "'Iowan Old Style', 'Charter', Georgia, ui-serif, serif",
         "font-mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
-        "text-sm": "13px", "text-md": "15px", "text-lg": "18px",
-        "weight-medium": "500", "weight-bold": "700", "leading-normal": "1.65",
-        "control-height": "36px", "radius-sm": "4px", "radius-md": "8px", "radius-lg": "12px"
+        "text-xs": "11px", "text-sm": "14px", "text-md": "16px", "text-lg": "18px", "text-xl": "22px",
+        "weight-normal": "400", "weight-medium": "500", "weight-bold": "600",
+        "leading-tight": "1.2", "leading-normal": "1.45", "leading-body": "1.55", "tracking-label": "0.06em",
+        "space-1": "2px", "space-2": "4px", "space-3": "8px", "space-4": "12px", "space-5": "16px", "space-6": "24px",
+        "control-height": "40px", "control-pad-x": "14px", "control-gap": "8px", "radius-sm": "6px", "radius-md": "10px", "radius-lg": "14px"
       },
       "voice": {
         "first_run": "A blank page. Start writing whenever you like.",
@@ -182,6 +194,6 @@
       }
     }
   ],
-  "components_with_token_look": ["view", "button", "checkbox", "combobox", "grid", "iconlist", "input", "menu", "toolbar", "tree", "textarea", "tabstrip", "accordion", "label"],
+  "components_with_token_look": ["accordion", "boxlist", "breadcrumbs", "bush", "button", "calendar", "checkbox", "codeeditor", "collapse", "color", "combobox", "date", "filelist", "grid", "group", "identity", "iconlist", "input", "label", "listview", "menu", "menubar", "panel", "radio", "shell", "slider", "tabstrip", "textarea", "toggle", "toolbar", "tree", "upload"],
   "spinner_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"circular\" viewBox=\"25 25 50 50\" stroke=\"{{GREY}}\"><style>@keyframes dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:89,200;stroke-dashoffset:-35}100%{stroke-dasharray:89,200;stroke-dashoffset:-124}}@keyframes rotate{100%{transform:rotate(360deg)}}.circular{animation:rotate 2s linear infinite;transform-origin:center center}.path{stroke-dasharray:1,200;stroke-dashoffset:0;animation:dash 1.5s ease-in-out infinite;stroke-linecap:round}</style><circle class=\"path\" cx=\"50\" cy=\"50\" r=\"20\" fill=\"none\" stroke-width=\"2\" stroke-miterlimit=\"10\"/></svg>"
 }

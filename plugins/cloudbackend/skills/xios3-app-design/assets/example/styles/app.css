@@ -5,4 +5,4 @@
 /* The desktop view on a narrow screen (after sign-in the login application opens the first view declared, whatever the
    screen): the visible card fills the width (the runtime lays the body out in fixed grid columns, so one column it is);
    the process shows one card at a time, as on the phone view. Measured 2026-11-05 at 375 px. */
-@media (max-width:600px){.dk-body{grid-template-columns:minmax(0,1fr)!important}.dk-list,.dk-detail{width:auto!important;flex:1 1 auto!important;min-width:0!important}}
+@media (max-width:600px){.dk-main{grid-template-columns:minmax(0,1fr)!important}.dk-list,.dk-detail{width:auto!important;flex:1 1 auto!important;min-width:0!important}}

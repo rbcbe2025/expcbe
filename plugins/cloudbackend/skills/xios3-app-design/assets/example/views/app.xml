@@ -14,11 +14,12 @@
     <label name="brand" text="{{BRAND}}" class="dk-brand"/>
     <group name="topRight" align="right">
       <buttonbox name="newItem" text="New {{ITEM}}" icon="icon://plus?look=lucide&amp;color=primary"/>
+      <buttonbox name="signOut" text="Sign out" hide="true" icon="icon://log-out?look=lucide&amp;color=primary"/>
     </group>
   </toolbar>
 
   <panel name="root" type="rows" width="100%" height="100%">
-    <panel name="body" type="columns" class="dk-body" width="100%" height="fill" padding="12" gap="12">
+    <panel name="body" type="columns" class="dk-main" width="100%" height="fill" padding="12" gap="12">
 
       <panel name="nav" type="rows" class="xios-card" width="200" height="100%" padding="12" gap="8">
         <label text="{{APP_TITLE}}" class="xios-type-label"/>
@@ -38,9 +39,7 @@
           </placeholder>
           <rule match="db:object">
             <item text="{substring-before(@name, '.xml')}" detail="{substring(@updated, 'startPos:0', 'endPos:10')}"
-                  icon="icon://clipboard-check?look=lucide&amp;color={{ICON_COLOR}}"
-                  textstyle="font-size: var(--xios-text-md, 13px); font-weight: var(--xios-weight-bold, 600);"
-                  detailstyle="font-size: var(--xios-text-sm, 11px);"/>
+                  icon="icon://clipboard-check?look=lucide&amp;color={{ICON_COLOR}}"/>
           </rule>
         </iconlist>
       </panel>
@@ -58,7 +57,7 @@
             <input name="stateInput" width="160" placeholder="Status"/>
           </panel>
           <textarea name="notesInput" width="100%" height="120" placeholder="Notes"/>
-          <panel name="actions" type="columns" width="100%" gap="8">
+          <panel name="actions" type="columns" class="dk-wrap" width="100%" gap="8">
             <button name="save" text="Save" default="true" icon="icon://check?look=lucide&amp;color=on-primary"/>
             <button name="remove" text="Delete" class="xios-color-danger" icon="icon://trash-2?look=lucide&amp;color=on-error"/>
           </panel>

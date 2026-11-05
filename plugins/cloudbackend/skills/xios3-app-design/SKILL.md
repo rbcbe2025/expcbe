@@ -1,6 +1,6 @@
 ---
 name: xios3-app-design
-description: "Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a product: a design brief and mood board from one sentence about the app, a token theme (palette seeds, type and shape knobs) the runtime derives every hover and border from, Lucide icons recoloured from the theme, a layout kit (cards, list and detail, phone and desktop views), two small components, a login screen with sign in, sign up and forgot password in the CloudBackend PaaS sign-in's look, and the data logic behind the screens. Use it whenever someone wants a XIOS/3 or CloudBackend app to look good, asks for a theme, colours, fonts, icons, a brand, a mood board, a responsive or mobile layout, custom components, empty states or status messages, or a first version of the UI; whenever cloudbackend-saas-launch reaches step 2 (the application) or step 3 (the login screen's brand); and for any XIOS/3 view that still names colours in its markup."
+description: "Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a modern product: a brief and mood board from one sentence, a custom token theme covering every runtime component with a responsive stylesheet after Apple's design principles on a Tailwind-like scale (no component or dialog keeps its default look), Lucide icons, a layout kit (cards, list and detail, phone and desktop views), two small components, a login screen with sign in, sign up and forgot password that stays signed in across reloads, and the data logic behind the screens. Use it whenever someone wants a XIOS/3 or CloudBackend app to look good or modern, asks for a theme, colours, fonts, icons, a brand, a mood board, a responsive or mobile layout, custom components, empty states or status messages, or a first version of the UI; when components look default or users are signed out on reload; at cloudbackend-saas-launch steps 2 and 3; and for any XIOS/3 view that names colours in its markup."
 ---
 
 # XIOS/3 application design
@@ -15,12 +15,14 @@ they get has no colour in it.
 Everything here was run on the hosted runtime (2026.6.0) on 2026-10-09, from a webshare, in Chrome at
 1280 and 390 px; the dated notes say what was measured. On 2026-11-04 three constructs changed so the package
 validates against the CloudBackend extension's schemas (the title inside `<description>`, the brand label
-directly in the toolbar rather than in its group, the status component's tag `statusline`); the kit has not
-been re-run on the runtime since, and four item attributes the schemas still refuse (`selected`, `detail`,
-`textstyle`, `detailstyle`) are with XIOS/3 to settle. The theme mechanism itself is the manual's
+directly in the toolbar rather than in its group, the status component's tag `statusline`); two item attributes the
+schemas still refuse (`selected`, `detail`) are with XIOS/3 to settle (`textstyle` and `detailstyle` left the kit on
+2026-11-05, when the theme took over the list rows' type). The theme mechanism itself is the manual's
 (`references/look-and-feel.md`: the design-tokens tutorial, Theme, Style, Icon protocol). On 2026-11-04 the kit
 moved to Lucide icons and its app was re-run on a Development deployment at 1280 and 375 px
-(`references/icons.md`, "Measured").
+(`references/icons.md`, "Measured"). On 2026-11-05 the theme grew to cover every runtime component through `theme.css`,
+measured with a gallery of every common component at 375 and 1280 px in a light and a dark direction
+(`references/theme.md`, "Measured").
 
 ## The first version, in four moves
 
@@ -52,7 +54,16 @@ user adds the files through the console's Projects section (or the VS Code / Cur
 Then iterate with the user on the running app: a field, a screen, a second kind of record. The skill
 `xios3-app-basics` has the component reference; this skill keeps the look consistent while you add.
 
-## The theme: seeds, knobs, derived
+## The theme: seeds, knobs, derived, and every component
+
+Always give the app a custom theme that covers every component; never leave a runtime component on its default look.
+It has two parts, both written by `designkit.py`: the token theme in the manifest, and the kit's stylesheet
+`ui/DesignKit/theme.css`, which the theme's view component loads into every view. Only some runtime components follow a
+token theme on their own (panel, label, toggle, slider, accordion, date, menus and dialogs, among others, keep a legacy
+look), so the stylesheet styles all of them from the theme's values: Apple's principles (the system type, quiet surfaces,
+one accent, soft depth, a translucent top bar, 44 px touch targets) on a Tailwind-like scale (a 4 px grid, breakpoints at
+640 and 1024 px), responsive, with reduced motion respected. `references/theme.md` has the coverage measured, the
+runtime's `--xc-*` hooks the stylesheet sets, the responsive rules and how to extend it.
 
 A token theme is a `<theme name="…" tokens="true">` in the manifest, above the view:
 
@@ -61,16 +72,20 @@ A token theme is a `<theme name="…" tokens="true">` in the manifest, above the
   icon manager. The script checks every `on-` pair at 4.5:1 or better.
 - **Icons** in `icon="lucide"` on the `<theme>`: it selects the Lucide collection the runtime ships, outline icons
   under a licence an app may publish on its own domain (`references/icons.md`).
-- **Knobs** in `<tokens>`: `font-sans`, `font-display`, `font-mono`, `text-sm|md|lg`, `weight-medium|bold`,
-  `leading-normal`, `control-height` (the density dial), `radius-sm|md|lg`. The element name is the token
+- **Knobs** in `<tokens>`: `font-sans`, `font-display`, `font-mono`, `text-xs|sm|md|lg|xl`, `weight-normal|medium|bold`,
+  `leading-tight|normal|body`, `tracking-label`, `space-1` to `space-6` (the 4 px grid), `control-height` (the density
+  dial: 36 to 44 px), `control-pad-x`, `control-gap`, `radius-sm|md|lg`. The element name is the token
   name: `radius-md` becomes `--xios-radius-md`, readable from any CSS of your own.
 - **Derived**: hovers, borders, the selection tint, muted text. You never write them. A hex in a view is
   the one value that stops following the theme, so there are none: the one exception is the list icons' colour,
   written without `#` (below).
-- `<components>` lists every component with `look="token"` (the common set, not only the ones used: a
-  dialog brings its own buttons), and `<spinner>` carries an SVG, or every list load costs a 404.
+- `<components>` lists every component with `look="token"` (all 32 in `assets/directions.json`, not only the ones
+  used: a dialog brings its own buttons), the view component as
+  `<view look="token"><style href="ui/DesignKit/theme.css"/></view>`, and `<spinner>` carries an SVG, or every list load
+  costs a 404. `designkit.py check` fails on a missing component or a missing stylesheet.
 
-Rules that hold the look together: panels are cards with `class="xios-card"`; labels use
+Rules that hold the look together: a row of buttons is a panel with `class="dk-wrap"`, so it wraps on a phone instead
+of running off the screen; panels are cards with `class="xios-card"`; labels use
 `class="xios-type-label"` (small uppercase) and `xios-type-caption`; icons are Lucide, each written
 `icon://<name>?look=lucide&color=<colour>` with the colour by where it sits: the `on-` colour on a filled button
 (`on-primary`; Delete is a `class="xios-color-danger"` button with `on-error`), `primary` on a toolbar or a card,
@@ -109,7 +124,11 @@ button, sign-up and reset pages in the same design). `designkit.py app --login` 
 `create`, `createPrompt` and `reset` always set, "Log in" and a welcome line, the primary colour on the button and links,
 a navy grid page (`login-bg.svg`) and a text-mark logo (`logo.svg`), and wires the manifest: views and process
 `onRequest`, the login process first, the desktop view first. `designkit.py login app` checks it.
-`references/login.md` has the element, the settings the manual leaves out (`button`, `buttonColor`, `linkColor`,
+`<login session="true">` keeps the user signed in across reloads: the runtime then stores the session in the browser for 7
+days of use and resumes it, and without the attribute every reload signs the user out. With a kept session the app shows a
+Sign out (the example's `signOut` button, which runs the runtime's `system` logout and brings the login screen back);
+`designkit.py app --login` writes both and `designkit.py login app` checks them.
+`references/login.md` has the element, the settings the manual leaves out (`session`, `button`, `buttonColor`, `linkColor`,
 `createPrompt`), what was measured on a deployment (after sign-in the desktop view opens on every screen, so it adapts
 to a narrow one), and what is not measured yet: sign-up without the CRM.
 
@@ -153,14 +172,16 @@ runs in the window that imports it, where `Component`, `sys` and `CloneObject` a
 
 ## Before you hand it over
 
-- `python3 scripts/designkit.py check design/theme.xml`: contrast, `tokens="true"`, the spinner.
+- `python3 scripts/designkit.py check design/theme.xml`: contrast, `tokens="true"`, the spinner, every component
+  `look="token"`, and the view component loading `ui/DesignKit/theme.css` (which must be in the package).
 - With a login: `python3 scripts/designkit.py login app`: sign in, sign up and forgot password, the texts, the logo
-  and page, the wiring.
+  and page, the wiring, `session="true"` and a visible Sign out.
 - `python3 scripts/designkit.py icons app`: every icon a Lucide name with `look=lucide` and a colour (the `on-`
   colour on a filled button, the seed written out inside a list).
 - No hex in any view or stylesheet of the app (`grep -n '#[0-9a-fA-F]\{3,6\}' app/views app/styles`).
 - Every state has words: the first run, the empty list, after a save, after a failure (the voice).
-- The phone layout at 390 px: nothing scrolls sideways; Back returns to the list.
+- The phone layout at 390 px: nothing scrolls sideways (rows of buttons are `dk-wrap`); Back returns to the list; the top
+  bar keeps its buttons; a dialog opens inside the screen.
 - The brief and the mood board are in the project (`design/`), and the user said yes to the direction.
 
 ## Bundled
@@ -169,17 +190,18 @@ runs in the window that imports it, where `Component`, `sys` and `CloneObject` a
 - `references/layouts.md`: the example's files one by one, the four patterns, the phone rules.
 - `references/data-logic.md`: the bindings and the writes with their markup; sample mode.
 - `references/login.md`: the login screen with all three ways in: the element, the settings, the wiring, what was measured.
+- `references/theme.md`: the theme that covers every component: why a token theme alone is not enough, the runtime's hooks, the principles, the responsive rules, dialogs and the login screen, what was measured.
 - `references/icons.md`: Lucide through the icon protocol: the theme, the look and colour rules, the names by role, what was measured.
 - `references/look-and-feel.md` (generated from the manual): the design-tokens tutorial, Theme, Style, Icon protocol.
-- `assets/directions.json`: the six directions. `assets/example/`: the first version. `assets/ui/DesignKit/`: the components. `assets/lucide-names.txt`: the runtime's Lucide names.
+- `assets/directions.json`: the six directions. `assets/example/`: the first version. `assets/ui/DesignKit/`: the components and `theme.css`. `assets/lucide-names.txt`: the runtime's Lucide names.
 - `scripts/designkit.py`: `brief`, `app` (with `--login`), `check`, `login`, `icons`, `moodboard`. Standard library, no network.
 
 ## Version and updates
 
-This is version 2026.11.5.5 of the xios3-app-design skill, built from the CloudBackend documentation.
+This is version 2026.11.5.9 of the xios3-app-design skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-design` is newer than 2026.11.5.5, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-design` is newer than 2026.11.5.9, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.11.5.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.11.5.9&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.
