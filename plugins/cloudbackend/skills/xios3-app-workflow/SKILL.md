@@ -127,6 +127,11 @@ lint precedes every upload, a deployment is verified by content before anyone te
 hand-off comes after hardening. Deploy a throwaway early, at W4, as soon as the first list binds: the
 wizard's verifier, the address rules and the login gate only show from a deployment.
 
+Every phase ends the same way, also when the user asked for that one step alone: write its evidence line
+(the `Evidence:` shape under its gate) into `## Build` of `cloudbackend-launch.md`, creating the file first
+when it is missing (see "The context file"), and quote the line in the reply. A step done without its line
+written is not done.
+
 ### W0 Open
 
 Read `cloudbackend-launch.md`. Run the opening round and the plan card. Write `## App` and `## Build`. Open
@@ -421,10 +426,10 @@ Generated from the published manual at build time:
 
 ## Version and updates
 
-This is version 2026.11.5.6 of the xios3-app-workflow skill, built from the CloudBackend documentation.
+This is version 2026.11.5.7 of the xios3-app-workflow skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.5.6, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.5.7, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.5.6&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.5.7&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.

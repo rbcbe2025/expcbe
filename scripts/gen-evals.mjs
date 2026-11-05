@@ -34,13 +34,14 @@ const CASE_TOOLS = ['Read', 'Glob', 'Grep', 'Skill', 'Write', 'Edit', 'Bash'];
 // Stand-ins whose tool list is the real stdio server's: mocks/<server>/_tools.json ← servers/<dir>/index.mjs tools/list.
 const STDIO_MOCKS = [{server: 'cloudbackend-tenant', dir: 'tenant'}];
 // Files a case's prompt takes for granted, from evals/fixtures/<fixture>/ here, copied to <into> in the run's directory.
-// A case's list is copied in order. The cases that pick up a project in progress get its app and its documents (the
-// context file at W4, the spec, the probe list); the two sign-in cases get the app alone, as their prompts say.
+// A case's list is copied in order. The cases past the first deploy get the app and the project's documents (the
+// context file with W4 done, the spec, the probe list); the cases at or before the first deploy (3: uploaded, not yet
+// deployed; 11 and 12: the app is ready) get the app alone, as their prompts say.
 const APP = {fixture: 'tasktrack', into: 'app'}, PROJECT = {fixture: 'tasktrack-project', into: '.'};
 const FIXTURES = {
   'xios3-app-workflow-2': [{fixture: 'broken-package', into: '.'}],
-  ...Object.fromEntries([3, 5, 6, 7, 8, 9].map(n => [`xios3-app-workflow-${n}`, [APP, PROJECT]])),
-  ...Object.fromEntries([11, 12].map(n => [`xios3-app-workflow-${n}`, [APP]])),
+  ...Object.fromEntries([5, 6, 7, 8, 9].map(n => [`xios3-app-workflow-${n}`, [APP, PROJECT]])),
+  ...Object.fromEntries([3, 11, 12].map(n => [`xios3-app-workflow-${n}`, [APP]])),
 };
 const FIXTURE_DIR = path.join(ROOT, 'evals', 'fixtures');
 // Deterministic graders for the assertions about tool calls (evals/checks.json here; its "about" says why).

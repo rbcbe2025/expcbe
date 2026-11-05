@@ -45,9 +45,9 @@
     },
     {
       "name": "xios3-app-workflow",
-      "version": "2026.11.5.6",
-      "content_hash": "9226d39e63ffc585",
-      "sha256": "85ca1ec712908b7eaa503b98405e75e6851a16903c371a2335076233a599e866",
+      "version": "2026.11.5.7",
+      "content_hash": "d03be9dd6d9130e1",
+      "sha256": "d7ddf4a05bdb2a9faf9189171f7c7e06bba746202c3493df054b46105a7c097c",
       "files": 14
     }
   ]
