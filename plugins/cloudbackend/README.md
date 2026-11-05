@@ -5,7 +5,7 @@ One install for building on CloudBackend PaaS with XIOS/3: the published skills 
 <!-- install:start -->
 ## Install
 
-Version 2026.1105.6 · the plugin `cloudbackend@cloudbackend`
+Version 2026.1105.7 · the plugin `cloudbackend@cloudbackend`
 
 **Claude Code, from GitHub** (the public repository; no GitHub account needed, only git on your computer):
 
@@ -28,7 +28,7 @@ claude plugin marketplace add https://robinsbackend-robinsbackend-portalx.cloudb
 claude plugin install cloudbackend@cloudbackend
 ```
 
-**One session, nothing installed:** `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1105.6.zip`
+**One session, nothing installed:** `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1105.7.zip`
 
 **Updates:** `claude plugin marketplace update cloudbackend`, then `claude plugin update cloudbackend@cloudbackend` (a marketplace you added yourself does not update by itself;
 `/plugin` → Marketplaces can switch auto-update on).
@@ -55,11 +55,11 @@ the tenant).
 | Skill | Version | Use it when |
 | --- | --- | --- |
 | `cloudbackend-rest-api` | 2026.10.27.4 | Call the CloudBackend Singularity database over its REST API (api.cloudbackend.com/v1) — log in and get a session token, create and query containers, create/save/list objects and their streams, set ACLs, share, manage drives, groups and identities — with the exact XML request and response bodies for all 513 operations bundled. |
-| `cloudbackend-saas-launch` | 2026.11.5.4 | Guide a developer from an empty CloudBackend PaaS tenant to the first paying customer of a SaaS web app: tenant and identities, data model, XIOS/3 app, branded login screen, sign-up and CRM e-mail, teams and roles, price plans with PayPal checkout, deployment to a custom domain. Asks only what each step needs, keeps a launch-context file, and hands each step to the skill that owns it (singularity-database, xios3-app-basics, cloudbackend-rest-api). |
+| `cloudbackend-saas-launch` | 2026.11.5.5 | Guide a developer from an empty CloudBackend PaaS tenant to the first paying customer of a SaaS web app: tenant and identities, data model, XIOS/3 app, branded login screen, sign-up and CRM e-mail, teams and roles, price plans with PayPal checkout, deployment to a custom domain. Asks only what each step needs, keeps a launch-context file, and hands each step to the skill that owns it (singularity-database, xios3-app-basics, cloudbackend-rest-api). |
 | `cloudbackend-sdk` | 2026.10.10 | Use the native CloudBackend SDKs for C++, Java and Swift (the 'SDK Mobile, IoT & Cloud', package `cbe`) to log in to the Singularity database and work with Account, Container, Object, Item, Stream, Filter and QueryResult — including the asynchronous delegate pattern (LogInDelegate, QueryDelegate), createContainer/createObject with key/values, querying, sharing and terminate(). |
 | `singularity-database` | 2026.10.15 | Model data for CloudBackend's Singularity database, the object-oriented database behind CloudBackend PaaS. Covers its building blocks (tenant, identity, group, role, database, container, object, item, stream, key/value, datatype, ACL, sharing, publish/subscribe, webhook) and how to design with them: containers as folders or tables, datatypes as schemas, key/values as columns, ACL bits and inheritance, per-identity databases, tenant:// and home:// drives. |
-| `xios3-app-basics` | 2026.11.5.2 | Build web applications with XIOS/3 — the declarative XML application platform where a view (UI markup), a process (triggers → steps → operations) and data documents make an application, and the Data Virtualization Layer binds components straight to XML in the CloudBackend Singularity database (home://, tenant://). |
-| `xios3-app-design` | 2026.11.5.5 | Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a product: a design brief and mood board from one sentence about the app, a token theme (palette seeds, type and shape knobs) the runtime derives every hover and border from, Lucide icons recoloured from the theme, a layout kit (cards, list and detail, phone and desktop views), two small components, a login screen with sign in, sign up and forgot password in the CloudBackend PaaS sign-in's look, and the data logic behind the screens. |
+| `xios3-app-basics` | 2026.11.5.3 | Build web applications with XIOS/3 — the declarative XML application platform where a view (UI markup), a process (triggers → steps → operations) and data documents make an application, and the Data Virtualization Layer binds components straight to XML in the CloudBackend Singularity database (home://, tenant://). |
+| `xios3-app-design` | 2026.11.5.9 | Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a modern product: a brief and mood board from one sentence, a custom token theme covering every runtime component with a responsive stylesheet after Apple's design principles on a Tailwind-like scale (no component or dialog keeps its default look), Lucide icons, a layout kit (cards, list and detail, phone and desktop views), two small components, a login screen with sign in, sign up and forgot password that stays signed in across reloads, and the data logic behind the screens. |
 | `xios3-app-workflow` | 2026.11.5.8 | Run the build-and-deploy workflow for a XIOS/3 application on CloudBackend PaaS, from an idea to a verified deployment and a benchmark report: an opening round and a plan card of defaults, a solution spec, the design hand-off, the data model, a scaffolded package built with sub-agents, a tenant-grammar lint before every upload, a Development deployment verified by content, UI probes in the browser, hardening (security, the login gate, SEO and GEO, analytics, clean-up), documentation and a manual, the console hand-off for Staging, Production and a domain, and a benchmark block that says what was measured. Shares cloudbackend-launch.md with cloudbackend-saas-launch. |
 <!-- skills:end -->
 
