@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view xmlns:xlink="http://www.w3.org/1999/xlink" name="Gallery" mode="main" title="Gallery">
+  <style href="../ui/DesignKit/designkit.css"/>
+  <style href="../styles/app.css"/>
+
+  <toolbar name="top">
+    <group name="topLeft">
+      <buttonbox name="menu" text="Menu" icon="icon://menu?look=lucide&amp;color=primary"/>
+    </group>
+    <label name="brand" text="Gallery" class="dk-brand"/>
+    <group name="topRight" align="right">
+      <buttonbox name="share" text="Share" icon="icon://share-2?look=lucide&amp;color=primary"/>
+      <buttonbox name="newItem" text="New task" icon="icon://plus?look=lucide&amp;color=primary"/>
+    </group>
+  </toolbar>
+
+  <panel name="root" type="rows" width="100%" height="100%" scroll="true" padding="16" gap="16">
+
+    <panel name="typeCard" type="rows" class="xios-card" width="100%" height="auto" padding="16" gap="8">
+      <label text="Type" class="xios-type-label"/>
+      <label text="Display heading" class="xios-type-display"/>
+      <label text="Section heading" class="xios-type-heading"/>
+      <label text="Subheading" class="xios-type-subheading"/>
+      <label text="Body text reads at a comfortable size with generous line height, the way a product's copy should." class="xios-type-body"/>
+      <label text="Caption: updated 2 minutes ago" class="xios-type-caption"/>
+      <label name="plainLabel" text="A plain label with its default look" label="and a sub-label"/>
+      <label name="linkLabel" text="A link label" look="link"/>
+    </panel>
+
+    <panel name="buttonsCard" type="rows" class="xios-card" width="100%" height="auto" padding="16" gap="12">
+      <label text="Buttons" class="xios-type-label"/>
+      <panel name="buttonsRow" type="columns" width="100%" height="auto" gap="8">
+        <button name="btnPrimary" text="Save" icon="icon://check?look=lucide&amp;color=on-primary"/>
+        <button name="btnSecondary" text="Secondary" class="xios-color-secondary"/>
+        <button name="btnNeutral" text="Cancel" class="xios-color-neutral"/>
+        <button name="btnDanger" text="Delete" class="xios-color-danger" icon="icon://trash-2?look=lucide&amp;color=on-error"/>
+        <button name="btnDisabled" text="Disabled" enabled="false"/>
+      </panel>
+      <panel name="boxesRow" type="columns" width="100%" height="auto" gap="8">
+        <buttonbox name="boxBack" text="Back" icon="icon://arrow-left?look=lucide&amp;color=primary"/>
+        <buttonbox name="boxEdit" text="Edit" icon="icon://pencil?look=lucide&amp;color=primary"/>
+        <buttonbox name="boxDialog" text="Open a dialog" icon="icon://message-square?look=lucide&amp;color=primary"/>
+      </panel>
+    </panel>
+
+    <panel name="formCard" type="rows" class="xios-card" width="100%" height="auto" padding="16" gap="12">
+      <label text="Form fields" class="xios-type-label"/>
+      <input name="fTitle" width="100%" label="Title" placeholder="What needs doing?"/>
+      <input name="fPassword" width="100%" type="password" label="Password" placeholder="At least 16 characters"/>
+      <input name="fDisabled" width="100%" label="Disabled" default="Read only value" enabled="false"/>
+      <textarea name="fNotes" width="100%" height="90" label="Notes" placeholder="Add details"/>
+      <combobox name="fStatus" width="100%" editable="false" label="Status">
+        <plate name="statusPlate" height="160">
+          <item selected="true">Open</item>
+          <item>In progress</item>
+          <item>Done</item>
+        </plate>
+      </combobox>
+      <date name="fDue" value="today()" label="Due date" width="100%"/>
+      <slider name="fEffort" label="Effort" min="0" max="10" step="1" width="100%"/>
+    </panel>
+
+    <panel name="choiceCard" type="rows" class="xios-card" width="100%" height="auto" padding="16" gap="12">
+      <label text="Choices" class="xios-type-label"/>
+      <checkbox name="cbRemind" post-text="Remind me the day before" selected="true"/>
+      <checkbox name="cbShare" post-text="Share with my team"/>
+      <group name="priority">
+        <radio name="pLow" post-text="Low" value="low"/>
+        <radio name="pMid" post-text="Medium" value="medium" selected="true"/>
+        <radio name="pHigh" post-text="High" value="high"/>
+      </group>
+      <toggle name="tDone" checked="true" post-text="Show done tasks"/>
+      <toggle name="tCompact" post-text="Compact rows"/>
+    </panel>
+
+    <panel name="tabsCard" type="rows" class="xios-card" width="100%" height="220" padding="16" gap="12">
+      <label text="Tabs" class="xios-type-label"/>
+      <tabstrip name="tabs" width="100%" height="fill" position="top" tabs="true">
+        <panel name="tabAll" type="rows" title="All" selected="true" padding="12"><label text="All tasks" class="xios-type-body"/></panel>
+        <panel name="tabOpen" type="rows" title="Open" padding="12"><label text="Open tasks" class="xios-type-body"/></panel>
+        <panel name="tabDone" type="rows" title="Done" padding="12"><label text="Done tasks" class="xios-type-body"/></panel>
+      </tabstrip>
+    </panel>
+
+    <panel name="listCard" type="rows" class="xios-card" width="100%" height="auto" padding="16" gap="8">
+      <label text="List" class="xios-type-label"/>
+      <input name="search" width="100%" placeholder="Search tasks"/>
+      <iconlist name="items" layout="vertical" iconsize="20" itemheight="52" rename="false" scroll="false" width="100%" height="auto">
+        <item name="i1" text="Website relaunch" detail="2026-10-08" icon="icon://clipboard-check?look=lucide&amp;color=4338ca" selected="true"/>
+        <item name="i2" text="Spring campaign" detail="2026-10-06" icon="icon://clipboard-check?look=lucide&amp;color=4338ca"/>
+        <item name="i3" text="Brand guidelines" detail="2026-09-30" icon="icon://clipboard-check?look=lucide&amp;color=4338ca"/>
+      </iconlist>
+    </panel>
+
+    <panel name="gridCard" type="rows" class="xios-card" width="100%" height="220" padding="16" gap="8">
+      <label text="Grid" class="xios-type-label"/>
+      <grid name="grid" width="100%" height="fill" selection="row">
+        <bind value="../data/items.xml" select="/db:result"/>
+        <row match="db:object" height="40">
+          <column width="60" name="Task" match="@name" display="substring-before(@name, '.xml')"/>
+          <column width="40" name="Updated" match="@updated" display="substring(@updated, 1, 10)"/>
+        </row>
+      </grid>
+    </panel>
+
+    <panel name="moreCard" type="rows" class="xios-card" width="100%" height="260" padding="16" gap="8">
+      <label text="Accordion" class="xios-type-label"/>
+      <accordion name="acc" width="100%" height="fill">
+        <panel name="accA" type="rows" title="Details" selected="true" padding="12"><label text="The details of a task." class="xios-type-body"/></panel>
+        <panel name="accB" type="rows" title="Activity" padding="12"><label text="Who changed what." class="xios-type-body"/></panel>
+        <panel name="accC" type="rows" title="Settings" padding="12"><label text="Per-task settings." class="xios-type-body"/></panel>
+      </accordion>
+    </panel>
+
+  </panel>
+</view>

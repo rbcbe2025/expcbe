@@ -1,0 +1,8 @@
+/* app.css - rules of this application that go beyond the theme. Read the theme's variables, never write a colour:
+   a hex here is the one thing that stops following the palette. The kit's own rules are ui/DesignKit/designkit.css.
+   ASCII only. */
+.dk-brand{font-family:var(--xios-font-display,var(--xios-font-sans,system-ui,sans-serif));font-weight:var(--xios-weight-bold,700);font-size:var(--xios-text-lg,16px);letter-spacing:-.01em}
+/* The desktop view on a narrow screen (after sign-in the login application opens the first view declared, whatever the
+   screen): the visible card fills the width (the runtime lays the body out in fixed grid columns, so one column it is);
+   the process shows one card at a time, as on the phone view. Measured 2026-11-05 at 375 px. */
+@media (max-width:600px){.dk-main{grid-template-columns:minmax(0,1fr)!important}.dk-list,.dk-detail{width:auto!important;flex:1 1 auto!important;min-width:0!important}}

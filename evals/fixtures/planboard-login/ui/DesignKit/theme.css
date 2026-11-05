@@ -1,0 +1,412 @@
+/* theme.css - the design kit's modern theme for every runtime component.
+   The token theme in the manifest supplies the seeds (colours) and the knobs (type, space, shape); this file turns
+   them into a modern interface after Apple's principles (clarity, deference, depth: a system type stack, quiet
+   surfaces, one accent, soft layered shadows, translucent bars, generous touch targets) on a Tailwind-like scale
+   (a 4 px spacing grid, breakpoints at 640 and 1024 px). It names no colour: every value reads a --xios-* token,
+   and neutrals are mixed from the seeds with color-mix, so a rebrand or the dark direction follows on its own.
+
+   How it reaches the components: the runtime's token looks read per-component hooks (--xc-<component>-<part>);
+   the first block sets them. Components without a token look (panel, label, toggle, slider, accordion, date,
+   dialogs) get rules of their own further down. The theme loads this file into every view and dialog through the
+   style element under the theme's view component (designkit.py writes it). ASCII only, and never markup in a
+   comment: runtime 2026.6.0 drops a whole stylesheet as text when a comment holds a tag (measured 2026-10-10). */
+
+/* ---- 1. The kit's own derived values ---- */
+:root {
+  --dk-ink: var(--xios-color-on-surface, black);
+  --dk-ink-2: color-mix(in srgb, var(--dk-ink) 62%, var(--xios-color-surface, white));
+  --dk-ink-3: color-mix(in srgb, var(--dk-ink) 42%, var(--xios-color-surface, white));
+  --dk-fill: color-mix(in srgb, var(--dk-ink) 5%, var(--xios-color-surface, white));
+  --dk-fill-2: color-mix(in srgb, var(--dk-ink) 9%, var(--xios-color-surface, white));
+  --dk-hairline: color-mix(in srgb, var(--dk-ink) 11%, transparent);
+  --dk-hairline-strong: color-mix(in srgb, var(--dk-ink) 18%, transparent);
+  --dk-tint: color-mix(in srgb, var(--xios-color-primary) 12%, var(--xios-color-surface, white));
+  --dk-tint-2: color-mix(in srgb, var(--xios-color-primary) 20%, var(--xios-color-surface, white));
+  --dk-ring: 0 0 0 4px color-mix(in srgb, var(--xios-color-primary) 22%, transparent);
+  --dk-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05), 0 1px 1px rgb(0 0 0 / 0.03);
+  --dk-shadow-md: 0 1px 2px rgb(0 0 0 / 0.05), 0 6px 16px -6px rgb(0 0 0 / 0.12);
+  --dk-shadow-lg: 0 2px 6px rgb(0 0 0 / 0.06), 0 18px 40px -12px rgb(0 0 0 / 0.22);
+  --dk-glass: color-mix(in srgb, var(--xios-color-surface, white) 78%, transparent);
+  --dk-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dk-fast: 120ms;
+  --dk-slow: 220ms;
+  --dk-control: var(--xios-control-height, 40px);
+  --dk-touch: 44px;
+}
+
+/* ---- 2. The runtime's per-component hooks ---- */
+:root {
+  /* buttons: filled accent, semibold, the control height, the medium radius */
+  --xc-button-height: var(--dk-control);
+  --xc-button-radius: var(--xios-radius-md, 12px);
+  --xc-button-pad-x: 16px;
+  --xc-button-font-size: var(--xios-text-md, 15px);
+  --xc-button-font-weight: var(--xios-weight-bold, 600);
+  --xc-button-font-tracking: -0.01em;
+  --xc-button-focus: color-mix(in srgb, var(--xios-color-primary) 55%, transparent);
+  --xc-button-outline-focus: transparent;
+  --xc-button-disabled-bg: var(--dk-fill-2);
+  --xc-button-disabled-color: var(--dk-ink-3);
+  /* fields: a quiet fill, no border until hover, a soft ring on focus */
+  --xc-input-height: var(--dk-control);
+  --xc-input-radius: var(--xios-radius-md, 12px);
+  --xc-input-pad-x: 14px;
+  --xc-input-surface: var(--dk-fill);
+  --xc-input-outline: transparent;
+  --xc-input-outline-hover: var(--dk-hairline-strong);
+  --xc-input-outline-focus: var(--xios-color-primary);
+  --xc-input-focus: transparent;
+  --xc-input-font-size: var(--xios-text-md, 15px);
+  --xc-input-addon-bg: transparent;
+  --xc-textarea-radius: var(--xios-radius-md, 12px);
+  --xc-textarea-pad-x: 14px;
+  --xc-textarea-pad-y: 10px;
+  --xc-textarea-surface: var(--dk-fill);
+  --xc-textarea-outline: transparent;
+  --xc-textarea-outline-hover: var(--dk-hairline-strong);
+  --xc-textarea-focus: transparent;
+  --xc-textarea-font-size: var(--xios-text-md, 15px);
+  --xc-combobox-height: var(--dk-control);
+  --xc-combobox-radius: var(--xios-radius-md, 12px);
+  --xc-combobox-pad-x: 14px;
+  --xc-combobox-surface: var(--dk-fill);
+  --xc-combobox-outline: transparent;
+  --xc-combobox-outline-hover: var(--dk-hairline-strong);
+  --xc-combobox-focus: transparent;
+  --xc-combobox-arrow-bg: transparent;
+  --xc-combobox-arrow-bg-hover: transparent;
+  --xc-combobox-font-size: var(--xios-text-md, 15px);
+  /* dropdowns and menus: a floating sheet */
+  --xc-comboplate-surface: var(--xios-color-surface, white);
+  --xc-comboplate-radius: var(--xios-radius-md, 12px);
+  --xc-comboplate-item-radius: var(--xios-radius-sm, 8px);
+  --xc-comboplate-selected: var(--dk-tint);
+  --xc-comboplate-on-selected: var(--xios-color-primary);
+  --xc-comboplate-font-size: var(--xios-text-md, 15px);
+  --xc-menu-surface: var(--xios-color-surface, white);
+  --xc-menu-font-face: var(--xios-font-sans, system-ui, sans-serif);
+  --xc-menu-font-size: var(--xios-text-md, 15px);
+  --xc-menubar-surface: transparent;
+  --xc-menubar-font-face: var(--xios-font-sans, system-ui, sans-serif);
+  --xc-menubar-font-size: var(--xios-text-md, 15px);
+  /* choices */
+  --xc-checkbox-size: 20px;
+  --xc-checkbox-radius: 6px;
+  --xc-checkbox-border-width: 1.5px;
+  --xc-checkbox-outline: var(--dk-hairline-strong);
+  --xc-checkbox-label-size: var(--xios-text-md, 15px);
+  --xc-checkbox-gap: 10px;
+  --xc-radio-size: 20px;
+  --xc-radio-border-width: 1.5px;
+  --xc-radio-outline: var(--dk-hairline-strong);
+  --xc-radio-label-size: var(--xios-text-md, 15px);
+  --xc-radio-gap: 10px;
+  --xc-toggle-size: 26px;
+  --xc-toggle-bg: var(--xios-color-primary);
+  --xc-toggle-bg-hover: var(--xios-color-primary-hover, var(--xios-color-primary));
+  --xc-toggle-label-color: var(--dk-ink);
+  --xc-slider-color-active: var(--xios-color-primary);
+  --xc-slider-color-inactive: var(--dk-fill-2);
+  /* tabs, lists, tables */
+  --xc-tabstrip-font-size: var(--xios-text-sm, 13px);
+  --xc-tabstrip-font-weight: var(--xios-weight-bold, 600);
+  --xc-tabstrip-surface: transparent;
+  --xc-tabstrip-outline: transparent;
+  --xc-iconlist-font-size: var(--xios-text-md, 15px);
+  --xc-iconlist-font-weight: var(--xios-weight-medium, 500);
+  --xc-iconlist-selected: var(--dk-tint);
+  --xc-iconlist-on-selected: var(--xios-color-primary);
+  --xc-iconlist-hover: var(--dk-fill);
+  --xc-iconlist-surface: transparent;
+  --xc-grid-radius: var(--xios-radius-md, 12px);
+  --xc-grid-outline: var(--dk-hairline);
+  --xc-grid-header-bg: var(--dk-fill);
+  --xc-grid-header-color: var(--dk-ink-2);
+  --xc-grid-border: var(--dk-hairline);
+  --xc-grid-hover: var(--dk-fill);
+  --xc-grid-selected: var(--dk-tint);
+  --xc-grid-font-size: var(--xios-text-md, 15px);
+  --xc-grid-cell-pad-x: 14px;
+  --xc-list-row-pad-y: 12px;
+  --xc-list-row-pad-x: 16px;
+  --xc-list-font-size: var(--xios-text-md, 15px);
+  --xc-tree-selected: var(--dk-tint);
+  --xc-tree-on-selected: var(--xios-color-primary);
+  --xc-tree-hover: var(--dk-fill);
+  /* the toolbar: a translucent bar */
+  --xc-toolbar-surface: var(--dk-glass);
+  --xc-toolbar-outline: var(--dk-hairline);
+  --xc-toolbar-color: var(--dk-ink);
+  --xc-toolbar-hover: var(--dk-fill-2);
+  /* accordion, collapse, breadcrumbs, labels */
+  --xc-accordion-bg: transparent;
+  --xc-accordion-color: var(--dk-ink);
+  --xc-accordion-area-color: var(--dk-ink);
+  --xc-accordion-hover: var(--dk-fill);
+  --xc-accordion-selected: var(--dk-fill);
+  --xc-accordion-selected-color: var(--dk-ink);
+  --xc-accordion-edge: var(--dk-hairline);
+  --xc-collapse-bg: var(--dk-fill);
+  --xc-collapse-color: var(--dk-ink);
+  --xc-collapse-marker: var(--xios-color-primary);
+  --xc-breadcrumbs-hover: var(--xios-color-primary);
+  --xc-breadcrumbs-plate-bg: var(--xios-color-surface, white);
+  --xc-breadcrumbs-plate-radius: var(--xios-radius-md, 12px);
+  --xc-breadcrumbs-plate-shadow: var(--dk-shadow-lg);
+  --xc-label-color: var(--dk-ink);
+  --xc-label-font-size: var(--xios-text-md, 15px);
+  --xc-label-font-weight: var(--xios-weight-normal, 400);
+}
+
+/* ---- 3. Page ---- */
+html, body {
+  font-family: var(--xios-font-sans, -apple-system, BlinkMacSystemFont, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+html body.xios-view { background-color: var(--xios-color-background); color: var(--dk-ink); }
+::selection { background: var(--dk-tint-2); color: var(--dk-ink); }
+* { scrollbar-width: thin; scrollbar-color: var(--dk-hairline-strong) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--dk-hairline-strong); border: 3px solid transparent; border-radius: 999px; background-clip: padding-box; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ---- 4. Surfaces: panels are flat, cards float a little ---- */
+html body .xios-panel.xios-panel-fabric, html body .xios-panel.xios-panel-token { background: transparent; border: 0; box-shadow: none; }
+html body .xios-panel.xios-card {
+  background: var(--xios-color-surface, white);
+  border: 1px solid var(--dk-hairline);
+  border-radius: var(--xios-radius-lg, 16px);
+  box-shadow: var(--dk-shadow-md);
+}
+
+/* ---- 5. Type ---- */
+html body .xios-label { color: var(--dk-ink); font-size: var(--xios-text-md, 15px); line-height: var(--xios-leading-normal, 1.45); }
+html body .xios-label.xios-label-link, html body .xios-label-link { color: var(--xios-color-primary); text-decoration: none; cursor: pointer; }
+html body .xios-label-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+html body .xios-type-display { font-size: clamp(26px, 3.2vw, 34px); line-height: 1.12; letter-spacing: -0.022em; font-weight: var(--xios-weight-bold, 600); }
+html body .xios-type-heading { font-size: clamp(20px, 2.2vw, 24px); line-height: 1.2; letter-spacing: -0.018em; font-weight: var(--xios-weight-bold, 600); }
+html body .xios-type-subheading { font-size: var(--xios-text-lg, 17px); line-height: 1.3; letter-spacing: -0.01em; font-weight: var(--xios-weight-bold, 600); }
+html body .xios-type-body { font-size: var(--xios-text-md, 15px); line-height: var(--xios-leading-body, 1.55); color: var(--dk-ink); }
+html body .xios-type-caption { font-size: var(--xios-text-sm, 13px); line-height: 1.4; color: var(--dk-ink-2); }
+html body .xios-type-label { font-size: 12px; line-height: 1.3; letter-spacing: 0.06em; text-transform: uppercase; font-weight: var(--xios-weight-bold, 600); color: var(--dk-ink-2); }
+/* field labels: the runtime writes their colour inline */
+html body div.label { color: var(--dk-ink-2) !important; font-size: var(--xios-text-sm, 13px); font-weight: var(--xios-weight-medium, 500); margin-bottom: 6px; letter-spacing: -0.005em; }
+
+/* ---- 6. Toolbar: a translucent bar with quiet buttons ---- */
+html body .xios-toolbar-wrapper { position: relative; z-index: 20; }
+html body .xios-toolbar.xios-toolbar-token {
+  min-height: 56px; display: flex; align-items: center; gap: 8px;
+  padding: 0 max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left));
+  background: var(--dk-glass);
+  -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--dk-hairline);
+}
+html body .xios-toolbar.xios-toolbar-token .divider, html body .xios-toolbar.xios-toolbar-token.divider { border: 0; background: none; }
+html body .xios-toolbar.xios-toolbar-token .tbComp.divider { border-left: 0; border-right: 0; }
+/* the groups size to their buttons: the runtime fixes their height, and a 44 px touch target spilling out of a 30 px
+   group makes the bar taller than itself, which the runtime reads as overflow and folds every group into its menu */
+html body .xios-toolbar.xios-toolbar-token > div { border: 0 !important; height: auto !important; min-height: 0; align-self: center; }
+html body .xios-toolbar-overflowToggle { color: var(--xios-color-primary) !important; padding: 0 12px; }
+html body .xios-toolbar.xios-toolbar-token .dk-brand, html body .xios-toolbar.xios-toolbar-token .xios-label {
+  display: flex; align-items: center; height: 100%; font-size: var(--xios-text-lg, 17px); font-weight: var(--xios-weight-bold, 600); letter-spacing: -0.015em;
+}
+html body .box {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px; box-sizing: border-box;
+  border: 0 !important; border-radius: 999px; background: transparent; color: var(--xios-color-primary); cursor: pointer;
+  transition: background-color var(--dk-fast) var(--dk-ease), transform var(--dk-fast) var(--dk-ease);
+}
+html body .box:hover, html body .xios-toolbar-token .box:hover { background: var(--dk-tint) !important; border: 0 !important; }
+html body .box:active { transform: scale(0.97); }
+html body .box svg { width: 18px !important; height: 18px !important; flex: none; }
+/* the runtime sizes button-box text through an id rule (#!contentArea .box_text, 10px verdana) and writes its colour inline */
+html body .box .box_text, html body #\!contentArea .box .box_text, html body .xios-toolbar-token .box_text {
+  color: var(--xios-color-primary) !important; font-family: var(--xios-font-sans, system-ui, sans-serif); font-size: var(--xios-text-md, 15px);
+  font-weight: var(--xios-weight-medium, 500); letter-spacing: -0.01em; line-height: 1.2; height: auto; padding-top: 0;
+}
+html body .box:focus-visible { outline: none; box-shadow: var(--dk-ring); }
+
+/* ---- 7. Buttons ---- */
+html body .xios-button.xios-button-token {
+  min-height: var(--dk-control); padding: 0 18px; gap: 8px; display: inline-flex; align-items: center; justify-content: center;
+  border: 0; box-shadow: var(--dk-shadow-sm);
+  font-family: var(--xios-font-sans, system-ui, sans-serif); font-size: var(--xios-text-md, 15px); font-weight: var(--xios-weight-bold, 600); letter-spacing: -0.01em;
+  color: var(--xc-button-color, var(--xios-color-on-primary, white));
+  transition: background-color var(--dk-fast) var(--dk-ease), box-shadow var(--dk-fast) var(--dk-ease), transform var(--dk-fast) var(--dk-ease);
+}
+html body .xios-button.xios-button-token:active:enabled { transform: scale(0.98); }
+html body .xios-button.xios-button-token:focus-visible { outline: none; box-shadow: var(--dk-ring); }
+html body .xios-button.xios-button-token.xios-button_default { outline: none; }
+html body .xios-button.xios-button-token:disabled { background: var(--dk-fill-2); color: var(--dk-ink-3); box-shadow: none; cursor: default; }
+html body .xios-button.xios-button-token svg { width: 18px; height: 18px; flex: none; }
+/* neutral: a tinted grey button for Cancel and the like */
+html body .xios-color-neutral.xios-button-token { background: var(--dk-fill-2); color: var(--dk-ink); box-shadow: none; }
+html body .xios-color-neutral.xios-button-token:hover:enabled { background: color-mix(in srgb, var(--dk-ink) 13%, var(--xios-color-surface, white)); }
+
+/* ---- 8. Fields ---- */
+html body .xios-input, html body .xios-combobox {
+  min-height: var(--dk-control); box-sizing: border-box; background: var(--dk-fill); border: 1px solid transparent;
+  border-radius: var(--xios-radius-md, 12px); transition: border-color var(--dk-fast) var(--dk-ease), box-shadow var(--dk-fast) var(--dk-ease), background-color var(--dk-fast) var(--dk-ease);
+}
+html body .xios-input:hover, html body .xios-combobox:hover { border-color: var(--dk-hairline-strong); }
+html body .xios-input:focus-within, html body .xios-combobox:focus-within, html body .xios-textarea:focus {
+  outline: none; border-color: var(--xios-color-primary); background: var(--xios-color-surface, white); box-shadow: var(--dk-ring);
+}
+html body .xios-input input, html body .xios-combobox .input {
+  font-family: var(--xios-font-sans, system-ui, sans-serif); font-size: var(--xios-text-md, 15px); color: var(--dk-ink); background: transparent; border: 0; outline: none;
+}
+html body .xios-input input::placeholder, html body .xios-textarea::placeholder, html body .xios-combobox .input::placeholder { color: var(--dk-ink-3); }
+html body .xios-input input:disabled { color: var(--dk-ink-3); }
+html body .xios-input.xios-input-fabric { padding-left: 14px; padding-right: 10px; display: flex; align-items: center; }
+html body .xios-input .icon svg { color: var(--dk-ink-2); }
+html body .xios-textarea {
+  box-sizing: border-box; background: var(--dk-fill); border: 1px solid transparent; border-radius: var(--xios-radius-md, 12px); padding: 10px 14px;
+  font-family: var(--xios-font-sans, system-ui, sans-serif); font-size: var(--xios-text-md, 15px); line-height: 1.5; color: var(--dk-ink); resize: vertical;
+  transition: border-color var(--dk-fast) var(--dk-ease), box-shadow var(--dk-fast) var(--dk-ease);
+}
+html body .xios-textarea:hover { border-color: var(--dk-hairline-strong); }
+html body .xios-combobox .arw { background: transparent !important; color: var(--dk-ink-2) !important; border: 0; width: 32px; }
+html body .xios-combobox .arw svg { width: 14px; height: 14px; }
+/* the dropdown */
+html body .xios-comboplate, html body .xios-comboplate-token {
+  border: 1px solid var(--dk-hairline) !important; border-radius: var(--xios-radius-md, 12px); box-shadow: var(--dk-shadow-lg);
+  background: var(--xios-color-surface, white); padding: 4px; overflow: hidden;
+}
+html body .xios-comboplate-token div.cboxcont span, html body .xios-comboplate-token div.cboxcont div { padding: 9px 12px; border-radius: var(--xios-radius-sm, 8px); font-size: var(--xios-text-md, 15px); }
+
+/* ---- 9. Choices ---- */
+html body .xios-checkbox-native-input, html body .xios-radio-native-input { accent-color: var(--xios-color-primary); width: 20px; height: 20px; margin: 0; cursor: pointer; }
+html body .xios-checkbox-label, html body .radiolabel_native, html body .xios-toggle-label { font-size: var(--xios-text-md, 15px) !important; color: var(--dk-ink); }
+html body .xios-checkbox-native-row, html body .xios-radio-native-row { display: inline-flex; align-items: center; gap: 10px; min-height: 32px; cursor: pointer; }
+html body .xios-radio.inline-block { margin-right: 18px; }
+/* the switch, as on iOS: 46 by 28, the knob slides */
+html body .xios-toggle-switch { position: relative; display: inline-block; width: 46px; height: 28px; flex: none; vertical-align: middle; }
+/* the runtime sizes the track from an inline --xc-toggle-size, so the track takes the switch's size here */
+html body .xios-toggle-slider { position: absolute; inset: 0; width: 100% !important; height: 100% !important; padding: 0; border: 0; border-radius: 999px; background: var(--dk-fill-2); box-shadow: inset 0 0 0 1px var(--dk-hairline); transition: background-color var(--dk-slow) var(--dk-ease); cursor: pointer; }
+html body .xios-toggle-button { position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; border: 0; border-radius: 50%; background: white; box-shadow: 0 2px 4px rgb(0 0 0 / 0.18), 0 1px 1px rgb(0 0 0 / 0.08); transition: transform var(--dk-slow) var(--dk-ease); }
+html body .xios-toggle-checkbox:checked + .xios-toggle-slider { background: var(--xios-color-primary); box-shadow: none; }
+html body .xios-toggle-checkbox:checked + .xios-toggle-slider .xios-toggle-button { transform: translateX(18px); }
+html body .xios-toggle-checkbox:focus-visible + .xios-toggle-slider { box-shadow: var(--dk-ring); }
+html body .xios-toggle { display: inline-flex; align-items: center; gap: 10px; min-height: 32px; }
+/* the slider: a thin track and a round knob */
+/* the runtime paints the track inline from two variables it sets on the component itself */
+html body .xios-slider { --xc-slider-color-active: var(--xios-color-primary); --xc-slider-color-inactive: var(--dk-fill-2); }
+html body .xios-slider input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; accent-color: var(--xios-color-primary); }
+html body .xios-slider input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: white; border: 0; box-shadow: 0 1px 4px rgb(0 0 0 / 0.25), 0 0 0 0.5px rgb(0 0 0 / 0.08); cursor: pointer; }
+html body .xios-slider input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: white; border: 0; box-shadow: 0 1px 4px rgb(0 0 0 / 0.25); cursor: pointer; }
+html body .xios-slider input[type=range]::-moz-range-progress { height: 6px; border-radius: 999px; background: var(--xios-color-primary); }
+html body .xios-slider .text, html body .xios-slider .label { font-size: var(--xios-text-sm, 13px); color: var(--dk-ink-2); }
+
+/* ---- 10. Tabs, as a segmented control ---- */
+html body .xios-tabstrip.xios-tabstrip-token { border-collapse: separate; border-spacing: 0; }
+html body .xios-tabstrip-token thead th { padding: 0 0 12px 0; text-align: left; }
+html body .xios-tabstrip-token thead th .scr { display: inline-flex; gap: 2px; padding: 2px; border-radius: var(--xios-radius-md, 12px); background: var(--dk-fill-2); }
+html body .xios-tabstrip-token thead th .tabtitle {
+  display: inline-flex !important; align-items: center; height: 30px; padding: 0 14px !important; margin: 0; top: 0 !important; border: 0 !important; line-height: 30px;
+  border-radius: calc(var(--xios-radius-md, 12px) - 2px); background: transparent; color: var(--dk-ink-2);
+  font-size: var(--xios-text-sm, 13px); font-weight: var(--xios-weight-bold, 600); cursor: pointer; transition: background-color var(--dk-fast) var(--dk-ease), color var(--dk-fast) var(--dk-ease);
+}
+html body .xios-tabstrip-token thead th span:not(.active):hover { background: color-mix(in srgb, var(--xios-color-surface, white) 55%, transparent); color: var(--dk-ink); }
+html body .xios-tabstrip-token thead th .active { height: 30px; padding-top: 0; background: var(--xios-color-surface, white); color: var(--dk-ink); box-shadow: var(--dk-shadow-sm), 0 0 0 0.5px var(--dk-hairline); }
+html body .xios-tabstrip-token tbody, html body .xios-tabstrip-token tbody .tarea .tab { background: transparent; border: 0 !important; }
+
+/* ---- 11. Lists: rows like a grouped list ---- */
+html body .xios-iconlist .iconlist-container > div {
+  border-radius: var(--xios-radius-md, 12px); margin-bottom: 2px !important; padding-right: 10px; box-sizing: border-box;
+  transition: background-color var(--dk-fast) var(--dk-ease);
+}
+html body .xios-iconlist .listnorm:hover { background: var(--dk-fill); }
+html body .xios-iconlist .listselected, html body .xios-iconlist .listselected:hover { background: var(--dk-tint) !important; }
+html body .xios-iconlist .listselected .text, html body .xios-iconlist .listselected .textcontainer .text { color: var(--xios-color-primary) !important; background: transparent !important; }
+html body .xios-iconlist .text, html body .xios-iconlist .textcontainer .text { font-size: var(--xios-text-md, 15px) !important; font-weight: var(--xios-weight-medium, 500); color: var(--dk-ink); letter-spacing: -0.01em; background: transparent !important; }
+html body .xios-iconlist .detail, html body .xios-iconlist .textcontainer .detail, html body .xios-iconlist .detail2 { font-size: var(--xios-text-sm, 13px) !important; color: var(--dk-ink-2); }
+html body .xios-iconlist .iconlisttitle { background: transparent; border: 0; color: var(--dk-ink-2); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* ---- 12. Tables ---- */
+html body .xios-grid.xios-grid-token { border: 1px solid var(--dk-hairline); border-radius: var(--xios-radius-md, 12px); background: var(--xios-color-surface, white); }
+html body .xios-grid-token .xios-grid-header-cell, html body .xios-grid-token .xios-grid-th-cell, html body .xios-grid-token .table_head, html body .xios-grid-token thead td, html body .xios-grid-token thead th {
+  background: var(--dk-fill) !important; color: var(--dk-ink-2) !important; font-size: 12px; font-weight: var(--xios-weight-bold, 600); letter-spacing: 0.04em; text-transform: uppercase;
+  border: 0 !important; border-bottom: 1px solid var(--dk-hairline) !important; height: 36px; padding: 0 14px;
+}
+html body .xios-grid-token table tbody td { border: 0 !important; border-bottom: 1px solid var(--dk-hairline) !important; height: 44px; font-size: var(--xios-text-md, 15px); }
+html body .xios-grid-token table tbody tr:hover td { background: var(--dk-fill); }
+html body .xios-grid-token table tbody tr.selected td, html body .xios-grid-token table tbody td.selected { background: var(--dk-tint); color: var(--dk-ink); }
+
+/* ---- 13. Accordion and collapse ---- */
+html body .xios-accordion .accordion-panel { background: transparent !important; border: 0 !important; border-top: 1px solid var(--dk-hairline) !important; }
+html body .xios-accordion .accordion { display: flex; align-items: center; min-height: 44px; padding: 0 14px; background: transparent !important; color: var(--dk-ink); cursor: pointer; }
+html body .xios-accordion .accordion:hover { background: var(--dk-fill) !important; }
+html body .xios-accordion .accordion.selected { background: transparent !important; }
+html body .xios-accordion .accordion span.area { color: var(--dk-ink) !important; font-size: var(--xios-text-md, 15px); font-weight: var(--xios-weight-bold, 600); }
+html body .xios-accordion .accordion:not(.selected) span.area { font-weight: var(--xios-weight-medium, 500); color: var(--dk-ink-2) !important; }
+html body .xios-collapse details summary { border-radius: var(--xios-radius-md, 12px); padding: 10px 14px; background: var(--dk-fill); color: var(--dk-ink); }
+
+/* ---- 14. Menus ---- */
+html body .xios-menu-plate, html body .xios-toolbar-overflowplate {
+  background: var(--xios-color-surface, white) !important; border: 1px solid var(--dk-hairline) !important; border-radius: var(--xios-radius-md, 12px) !important;
+  box-shadow: var(--dk-shadow-lg) !important; padding: 4px; overflow: hidden;
+}
+html body .xios-menu-plate .menuitemtext { font-size: var(--xios-text-md, 15px); }
+
+/* ---- 15. Dialogs: a sheet, not a window ----
+   A confirm or alert opens in a frame of its own whose theme is the platform's; the plugin's boot page copies the app's
+   theme and this file into it. #!dialogBackground is the dialog's card, .alertDialog only its title bar. */
+html body.xios-view_widget, html.xios-view_widget { background: transparent !important; }
+html body #\!dialogBackground {
+  background: var(--xios-color-surface, white) !important; border: 1px solid var(--dk-hairline) !important; border-radius: 16px !important;
+  box-shadow: var(--dk-shadow-lg) !important; -webkit-backdrop-filter: none; backdrop-filter: none; opacity: 1 !important;
+}
+html body .alertDialog { background: transparent !important; border: 0 !important; box-shadow: none !important; color: var(--dk-ink) !important; }
+html body .alertDialog .titleBar { background: transparent !important; color: var(--dk-ink) !important; border: 0 !important; padding: 16px 18px 0; }
+html body .alertDialog #\!windowTitle, html body .alertDialog .titleBar span { font-size: var(--xios-text-lg, 17px) !important; font-weight: var(--xios-weight-bold, 600) !important; letter-spacing: -0.015em; color: var(--dk-ink) !important; text-shadow: none !important; }
+html body .alertDialog .titleBar svg, html body .alertDialog .titleBar .ct { display: none !important; }
+html body .alertDialog #\!windowTitle { margin-left: 0 !important; padding-left: 14px; }
+html body.xios-view_widget .xios-panel { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+html body.xios-view_widget, html body.xios-view_widget * { font-family: var(--xios-font-sans, -apple-system, system-ui, sans-serif) !important; }
+/* the message is written 400 px wide inline, whatever the dialog's width */
+html body.xios-view_widget .xios-label, html body.xios-view_widget .label {
+  color: var(--dk-ink-2) !important; font-size: var(--xios-text-md, 15px) !important; line-height: 1.45; text-shadow: none !important;
+  width: auto !important; min-width: 0 !important; max-width: 100%; overflow-wrap: anywhere; padding: 0 14px; letter-spacing: normal !important;
+}
+html body.xios-view_widget .xios-button {
+  min-height: var(--dk-control); padding: 0 18px; border: 0 !important; border-radius: var(--xios-radius-md, 12px) !important; box-shadow: none !important;
+  background: var(--dk-fill-2) !important; color: var(--dk-ink) !important; text-decoration: none !important; text-shadow: none !important;
+  font-family: var(--xios-font-sans, system-ui, sans-serif); font-size: var(--xios-text-md, 15px) !important; font-weight: var(--xios-weight-bold, 600) !important;
+}
+html body.xios-view_widget .xios-button.xios-button_default { background: var(--xios-color-primary) !important; color: var(--xios-color-on-primary, white) !important; outline: none !important; }
+html body.xios-view_widget .xios-button:focus-visible { box-shadow: var(--dk-ring) !important; outline: none !important; }
+html body.xios-view_widget .xios-input, html body.xios-view_widget .xios-input-fabric { background: var(--dk-fill) !important; border: 1px solid transparent !important; border-radius: var(--xios-radius-md, 12px) !important; }
+
+/* ---- 16. Layout helpers ---- */
+/* dk-wrap: a row of buttons that wraps. The runtime wraps each child in a div of the child's assigned width, so the
+   wrappers take their content's width here and share the row two by two on a phone. */
+.dk-wrap { display: flex !important; flex-wrap: wrap !important; gap: 8px; align-items: center; }
+.dk-wrap > * { flex: 0 0 auto; width: auto !important; min-width: 0; }
+
+/* ---- 17. Responsive ---- */
+/* touch: every target at least 44 px, fields at 16 px so the phone does not zoom in */
+@media (pointer: coarse) {
+  :root { --dk-control: var(--dk-touch); }
+  html body .box { min-height: var(--dk-touch); }
+  html body .xios-input input, html body .xios-textarea, html body .xios-combobox .input { font-size: 16px; }
+}
+/* phone: up to 640 px */
+@media (max-width: 640px) {
+  :root { --dk-control: var(--dk-touch); }
+  html body .xios-toolbar.xios-toolbar-token { min-height: 52px; }
+  html body .xios-toolbar.xios-toolbar-token .box .box_text { display: none; }
+  html body .xios-toolbar.xios-toolbar-token .box { width: var(--dk-touch); padding: 0; justify-content: center; }
+  html body .xios-panel.xios-card { border-radius: 14px; }
+  html body .xios-input input, html body .xios-textarea, html body .xios-combobox .input { font-size: 16px; }
+  html body .xios-type-display { font-size: 28px; }
+  .dk-wrap > * { flex: 1 1 calc(50% - 8px); }
+  .dk-wrap .xios-button { width: 100%; }
+}
+/* large screens: a little more air */
+@media (min-width: 1024px) {
+  html body .xios-panel.xios-card { box-shadow: var(--dk-shadow-md); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+}

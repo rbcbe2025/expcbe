@@ -42,6 +42,8 @@ const FIXTURES = {
   'xios3-app-workflow-2': [{fixture: 'broken-package', into: '.'}],
   ...Object.fromEntries([5, 6, 7, 8, 9].map(n => [`xios3-app-workflow-${n}`, [APP, PROJECT]])),
   ...Object.fromEntries([3, 11, 12].map(n => [`xios3-app-workflow-${n}`, [APP]])),
+  'xios3-app-design-7': [{fixture: 'dated-gallery', into: '.'}],
+  'xios3-app-design-8': [{fixture: 'planboard-login', into: '.'}],
 };
 const FIXTURE_DIR = path.join(ROOT, 'evals', 'fixtures');
 // Deterministic graders for the assertions about tool calls (evals/checks.json here; its "about" says why).

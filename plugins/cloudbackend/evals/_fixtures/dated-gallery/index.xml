@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xlink="http://www.w3.org/1999/xlink" name="gallery" icon="icon://layout-grid?look=lucide&amp;color=4338ca" instances="1">
+  <settings/>
+  <about version="1.0"><description>Task board</description></about>
+  <theme name="tasktrack" tokens="true" icon="lucide" dialogShadow="false">
+    <tokens>
+      <font-sans>-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif</font-sans>
+      <font-display>'Avenir Next', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif</font-display>
+      <font-mono>ui-monospace, 'SF Mono', Menlo, Consolas, monospace</font-mono>
+      <text-xs>11px</text-xs>
+      <text-sm>13px</text-sm>
+      <text-md>15px</text-md>
+      <text-lg>17px</text-lg>
+      <text-xl>22px</text-xl>
+      <weight-normal>400</weight-normal>
+      <weight-medium>500</weight-medium>
+      <weight-bold>600</weight-bold>
+      <leading-tight>1.2</leading-tight>
+      <leading-normal>1.45</leading-normal>
+      <leading-body>1.55</leading-body>
+      <tracking-label>0.06em</tracking-label>
+      <space-1>2px</space-1>
+      <space-2>4px</space-2>
+      <space-3>8px</space-3>
+      <space-4>12px</space-4>
+      <space-5>16px</space-5>
+      <space-6>24px</space-6>
+      <control-height>40px</control-height>
+      <control-pad-x>14px</control-pad-x>
+      <control-gap>8px</control-gap>
+      <radius-sm>8px</radius-sm>
+      <radius-md>12px</radius-md>
+      <radius-lg>16px</radius-lg>
+    </tokens>
+    <components>
+      <view look="token"/>
+      <button look="token"/>
+      <checkbox look="token"/>
+      <combobox look="token"/>
+      <grid look="token"/>
+      <iconlist look="token"/>
+      <input look="token"/>
+      <menu look="token"/>
+      <toolbar look="token"/>
+      <tree look="token"/>
+      <textarea look="token"/>
+      <tabstrip look="token"/>
+      <accordion look="token"/>
+      <label look="token"/>
+    </components>
+    <colors>
+      <color name="primary">#4338ca</color>
+      <color name="on-primary">#ffffff</color>
+      <color name="secondary">#c2410c</color>
+      <color name="on-secondary">#ffffff</color>
+      <color name="tertiary">#0e7490</color>
+      <color name="on-tertiary">#ffffff</color>
+      <color name="background">#f4f4fb</color>
+      <color name="surface">#ffffff</color>
+      <color name="on-surface">#1e1b4b</color>
+      <color name="error">#b91c1c</color>
+      <color name="on-error">#ffffff</color>
+      <color name="lightIcon">#ffffff</color>
+      <color name="darkIcon">#4338ca</color>
+      <color name="grey">#6b7280</color>
+    </colors>
+    <spinner><svg xmlns="http://www.w3.org/2000/svg" class="circular" viewBox="25 25 50 50" stroke="#6b7280"><style>@keyframes dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:89,200;stroke-dashoffset:-35}100%{stroke-dasharray:89,200;stroke-dashoffset:-124}}@keyframes rotate{100%{transform:rotate(360deg)}}.circular{animation:rotate 2s linear infinite;transform-origin:center center}.path{stroke-dasharray:1,200;stroke-dashoffset:0;animation:dash 1.5s ease-in-out infinite;stroke-linecap:round}</style><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></spinner>
+  </theme>
+
+  <view name="Gallery" xlink:actuate="onLoad" xlink:href="views/gallery.xml"/>
+  <process xlink:actuate="onLoad" xlink:href="processes/gallery.xml"/>
+</application>

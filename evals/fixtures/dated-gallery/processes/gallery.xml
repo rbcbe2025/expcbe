@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process xmlns:xlink="http://www.w3.org/1999/xlink" name="galleryProcess">
+  <trigger view="Gallery" component="boxDialog" event="Select" step="dialog"/>
+  <trigger view="Gallery" component="btnDanger" event="Select" step="confirmDelete"/>
+  <step id="dialog">
+    <operation name="confirm">
+      <type value="input"/>
+      <title>New task</title>
+      <message>What is the task called?</message>
+      <modal>false</modal>
+      <ok step="done" text="Add"/>
+      <cancel step="done" text="Cancel"/>
+    </operation>
+  </step>
+  <step id="confirmDelete">
+    <operation name="confirm">
+      <type value="confirm"/>
+      <title>Delete this task?</title>
+      <message>Website relaunch will be deleted. This cannot be undone.</message>
+      <ok step="done" text="Delete"/>
+      <cancel step="done" text="Cancel"/>
+    </operation>
+  </step>
+  <step id="done"/>
+</process>

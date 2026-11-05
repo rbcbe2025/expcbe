@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Planboard on a phone (up to 600px): the same components with the same names, stacked. The list
+     fills the screen; picking a project shows the detail with a Back button; the navigation is a menu the
+     top bar's button opens. The process is the same file as for the desktop view. -->
+<view xmlns:xlink="http://www.w3.org/1999/xlink" name="App" mode="main" title="Planboard" screen="phone">
+  <style href="../ui/DesignKit/designkit.css"/>
+  <style href="../styles/app.css"/>
+
+  <toolbar name="top">
+    <group name="topLeft">
+      <buttonbox name="menu" text="Menu" icon="icon://menu?look=lucide&amp;color=primary"/>
+    </group>
+    <label name="brand" text="Planboard" class="dk-brand"/>
+    <group name="topRight" align="right">
+      <buttonbox name="newItem" text="New" icon="icon://plus?look=lucide&amp;color=primary"/>
+      <buttonbox name="signOut" text="Sign out" hide="true" icon="icon://log-out?look=lucide&amp;color=primary"/>
+    </group>
+  </toolbar>
+
+  <panel name="root" type="rows" width="100%" height="100%">
+    <panel name="body" type="rows" width="100%" height="fill" padding="8" gap="8">
+
+      <panel name="nav" type="rows" class="xios-card" width="100%" height="auto" padding="8" gap="4" hide="true">
+        <iconlist name="navList" layout="vertical" iconsize="20" itemheight="40" rename="false" deselect="false" scroll="false" width="100%" height="auto">
+          <item name="items" text="Projects" icon="icon://clipboard-check?look=lucide&amp;color=4338ca" selected="true"/>
+          <item name="people" text="People" icon="icon://users?look=lucide&amp;color=4338ca"/>
+          <item name="settings" text="Settings" icon="icon://settings?look=lucide&amp;color=4338ca"/>
+        </iconlist>
+      </panel>
+
+      <panel name="listCard" type="rows" class="xios-card" width="100%" height="fill" padding="12" gap="8">
+        <label name="listTitle" text="Projects" class="xios-type-label"/>
+        <input name="search" width="100%" placeholder="Search projects"/>
+        <iconlist name="items" layout="vertical" iconsize="20" itemheight="52" rename="false" scroll="true" width="100%" height="fill">
+          <placeholder>
+            <label class="xios-type-caption" text="No projects yet. Choose New project to add the first one."/>
+          </placeholder>
+          <rule match="db:object">
+            <item text="{substring-before(@name, '.xml')}" detail="{substring(@updated, 'startPos:0', 'endPos:10')}"
+                  icon="icon://clipboard-check?look=lucide&amp;color=4338ca"/>
+          </rule>
+        </iconlist>
+      </panel>
+
+      <panel name="detailCard" type="rows" class="xios-card" width="100%" height="fill" padding="12" gap="12" scroll="true" hide="true">
+        <buttonbox name="back" text="Back to projects" icon="icon://arrow-left?look=lucide&amp;color=primary"/>
+        <panel name="detailEmpty" type="rows" width="100%" height="auto" align="center" valign="center" hide="true">
+          <label class="xios-type-caption" text="Pick a project to see it here."/>
+        </panel>
+        <panel name="detailBody" type="rows" width="100%" height="auto" gap="12">
+          <render name="detail" href="../xsl/detail.xsl" width="100%" height="auto"/>
+          <label text="Edit" class="xios-type-label"/>
+          <input name="titleInput" width="100%" placeholder="Title"/>
+          <input name="stateInput" width="100%" placeholder="Status"/>
+          <textarea name="notesInput" width="100%" height="100" placeholder="Notes"/>
+          <panel name="actions" type="columns" class="dk-wrap" width="100%" gap="8">
+            <button name="save" text="Save" default="true" icon="icon://check?look=lucide&amp;color=on-primary"/>
+            <button name="remove" text="Delete" class="xios-color-danger" icon="icon://trash-2?look=lucide&amp;color=on-error"/>
+          </panel>
+        </panel>
+      </panel>
+
+    </panel>
+    <statusline name="status"/>
+    <screen name="screen"/>
+  </panel>
+</view>
