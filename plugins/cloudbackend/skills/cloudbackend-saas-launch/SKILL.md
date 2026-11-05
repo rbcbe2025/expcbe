@@ -120,7 +120,8 @@ signs the user in on a page on their own computer: the form sends the password f
 CloudBackend, and only the session is kept, never shown to you; give the user that page, never ask for the
 password. When code must call the REST API, the user logs in in their own terminal and exposes the token to
 the program through an environment variable; the code reads it from there. If the user pastes a secret into the conversation, tell them to
-change it and do not use it.
+change it and do not use it. Never quote any part of it, not even a prefix to say which one to revoke: "the key
+you pasted" is enough, and a prefix is part of the secret.
 
 The same line covers identities: you never create an account or an identity on a hosted service and never
 sign in as one, so every check that reads "sign in as a test user" or "create a test identity" is the
@@ -252,10 +253,10 @@ finish with the same "check it worked" discipline.
 
 ## Version and updates
 
-This is version 2026.11.5.3 of the cloudbackend-saas-launch skill, built from the CloudBackend documentation.
+This is version 2026.11.5.4 of the cloudbackend-saas-launch skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `cloudbackend-saas-launch` is newer than 2026.11.5.3, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `cloudbackend-saas-launch` is newer than 2026.11.5.4, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.5.3&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.5.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch - it records the skill's name and version and nothing else. Never send it without that agreement.

@@ -43,6 +43,26 @@ skills or the evals changed; on a machine whose Claude Code is older, release wi
 
 ## Runs
 
+**2026-11-05, the workflow fixes.** The second run's skill gaps, fixed in xios3-app-workflow 2026.11.5.5 to
+2026.11.5.8 and the tenant server, then the 12 workflow cases rerun on big (with and without, three runs each, about
+$15 a run): **0.72 → 0.80 with the plugin, delta +0.51 → +0.59.**
+
+| Fix | Point | Before | After |
+| --- | --- | --- | --- |
+| W8 names the A record 83.140.241.4 | workflow 4, assertion 3 | 0/3 | 3/3 |
+| The tenant server's `verify_deployment` returns `login_gate` (the pipeline record's loginConfig and the served manifest's stamp, as the deploy connector does) and `slug_bound_to`; measured on a live deployment: `manifest-only` | workflow 7, assertion 4 | 0/3 | 3/3 |
+| Every phase ends by writing its evidence line into the context file, created when missing | workflow 3, assertion 4 | 0/3 | 3/3 |
+| Lighthouse scores carry route, preset, profile and date | workflow 10, assertion 5 | 0/3 | 1/3 to 2/3 |
+| Every channel row carries a cost line, an estimate when the model is not chosen | workflow 8, assertion 6 | 0/3 | 3/3 |
+| Without a browser tool, W5 hands the probes over at once | workflow 6 | 0.50 | 0.89 |
+| Never quote any part of a pasted secret, not even a prefix (also in cloudbackend-saas-launch) | workflow 8, assertion 1 | quoted in 2/3 | 0/3 |
+
+The cases past the first deploy (workflow 5 to 9) now also get the project's documents (`tasktrack-project`: the
+context file at W4, the spec, the probe list). Still missed in most runs: workflow 7 (private visibility is not
+authentication; a role-less test identity), workflow 9 (going on to `verify_deployment` after answering), workflow 4
+(the customer's address is never the console's), and workflow 3's "a 200 proves nothing", which the runs show by
+checking content but do not always say.
+
 **2026-11-05, the second run: the harness above.** Plugin 2026.1105.4, 38 cases, with and without the plugin, three runs
 each (228 runs), `claude-sonnet-5-5`, judge `claude-haiku-5-5`, 25 turns. **With the plugin 0.86, without 0.16, mean
 delta +0.70**; $48.63, 55 minutes.

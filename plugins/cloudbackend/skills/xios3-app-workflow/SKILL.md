@@ -170,7 +170,8 @@ screens, every component by name, the kinds of record with fields and scope, rol
 channels (integrations, AI calls), analytics, the SEO and GEO stance, the security and legal baseline,
 the documentation plan, the UI probe list, and the pricing line. Every channel row carries its cost line:
 provider, model or plan, the spend limit, who may call it, and what one call costs at the expected size
-(`references/ai-and-integrations-via-proxy.md`). A channel added after W1, an AI call above all, is a spec
+(`references/ai-and-integrations-via-proxy.md`); when the model is not chosen yet, write an estimate from the
+provider's published price for the default model, marked *estimate*, rather than leaving the cell empty. A channel added after W1, an AI call above all, is a spec
 change: add its row with the cost line to `docs/spec.md` before wiring it. The spec is short: a page the user reads
 before saying yes. One question, skipped when the plan card settled it: "v1 is these N features; the rest
 is v2 — yes?"
@@ -306,7 +307,8 @@ file. When the sign-in page is in a tab you can see, as in the desktop app's bui
 user: do not read, screenshot or click in it until `tenant_status` says they are signed in. Identities and sign-ins are the user's, in a private window. A browser action that
 changes the tenant gets its own yes at the time. The full rule, with the reasons, is in
 `cloudbackend-saas-launch` "Credentials: never"; it applies here unchanged. If the user pastes a secret,
-tell them to change it, and do not use it.
+tell them to change it, and do not use it. Never quote any part of it, not even a prefix to say which one to
+revoke: "the key you pasted" is enough.
 
 ## Clients and tools
 
@@ -426,10 +428,10 @@ Generated from the published manual at build time:
 
 ## Version and updates
 
-This is version 2026.11.5.7 of the xios3-app-workflow skill, built from the CloudBackend documentation.
+This is version 2026.11.5.8 of the xios3-app-workflow skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.5.7, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.5.8, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.5.7&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.5.8&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
