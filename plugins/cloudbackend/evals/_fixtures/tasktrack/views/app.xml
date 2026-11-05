@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- tasktrack, tablet and desktop: a top bar, a navigation rail, the list and the detail side by side.
+     Every component is named; the process addresses them by name, and the phone view uses the same names.
+     No colour is written here: the panels are cards (class="xios-card"), labels use the type classes,
+     and the kit's CSS reads the theme's variables. -->
+<view xmlns:xlink="http://www.w3.org/1999/xlink" name="App" mode="main" title="tasktrack" screen="(min-width: 601px)">
+  <style href="../ui/DesignKit/designkit.css"/>
+  <style href="../styles/app.css"/>
+
+  <toolbar name="top">
+    <group name="topLeft">
+      <buttonbox name="menu" text="Menu" hide="true" icon="icon://menu?look=lucide&amp;color=primary"/>
+    </group>
+    <label name="brand" text="tasktrack" class="dk-brand"/>
+    <group name="topRight" align="right">
+      <buttonbox name="newItem" text="New task" icon="icon://plus?look=lucide&amp;color=primary"/>
+    </group>
+  </toolbar>
+
+  <panel name="root" type="rows" width="100%" height="100%">
+    <panel name="body" type="columns" class="dk-body" width="100%" height="fill" padding="12" gap="12">
+
+      <panel name="nav" type="rows" class="xios-card" width="200" height="100%" padding="12" gap="8">
+        <label text="tasktrack" class="xios-type-label"/>
+        <iconlist name="navList" layout="vertical" iconsize="20" itemheight="40" rename="false" deselect="false" scroll="false" width="100%" height="fill">
+          <item name="items" text="Tasks" icon="icon://clipboard-check?look=lucide&amp;color=4338ca" selected="true"/>
+          <item name="people" text="People" icon="icon://users?look=lucide&amp;color=4338ca"/>
+          <item name="settings" text="Settings" icon="icon://settings?look=lucide&amp;color=4338ca"/>
+        </iconlist>
+      </panel>
+
+      <panel name="listCard" type="rows" class="xios-card dk-list" width="340" height="100%" padding="12" gap="8">
+        <label name="listTitle" text="Tasks" class="xios-type-label"/>
+        <input name="search" width="100%" placeholder="Search tasks"/>
+        <iconlist name="items" layout="vertical" iconsize="20" itemheight="52" rename="false" scroll="true" width="100%" height="fill">
+          <placeholder>
+            <label class="xios-type-caption" text="No tasks yet. Choose New task to add the first one."/>
+          </placeholder>
+          <rule match="db:object">
+            <item text="{substring-before(@name, '.xml')}" detail="{substring(@updated, 'startPos:0', 'endPos:10')}"
+                  icon="icon://clipboard-check?look=lucide&amp;color=4338ca"
+                  textstyle="font-size: var(--xios-text-md, 13px); font-weight: var(--xios-weight-bold, 600);"
+                  detailstyle="font-size: var(--xios-text-sm, 11px);"/>
+          </rule>
+        </iconlist>
+      </panel>
+
+      <panel name="detailCard" type="rows" class="xios-card dk-detail" width="fill" height="100%" padding="16" gap="12" scroll="true">
+        <buttonbox name="back" text="Back" hide="true" icon="icon://arrow-left?look=lucide&amp;color=primary"/>
+        <panel name="detailEmpty" type="rows" width="100%" height="100%" align="center" valign="center">
+          <label class="xios-type-caption" text="Pick a task to see it here."/>
+        </panel>
+        <panel name="detailBody" type="rows" width="100%" height="auto" gap="12" hide="true">
+          <render name="detail" href="../xsl/detail.xsl" width="100%" height="auto"/>
+          <label text="Edit" class="xios-type-label"/>
+          <panel name="editRow" type="columns" width="100%" gap="8">
+            <input name="titleInput" width="fill" placeholder="Title"/>
+            <input name="stateInput" width="160" placeholder="Status"/>
+          </panel>
+          <textarea name="notesInput" width="100%" height="120" placeholder="Notes"/>
+          <panel name="actions" type="columns" width="100%" gap="8">
+            <button name="save" text="Save" default="true" icon="icon://check?look=lucide&amp;color=on-primary"/>
+            <button name="remove" text="Delete" class="xios-color-danger" icon="icon://trash-2?look=lucide&amp;color=on-error"/>
+          </panel>
+        </panel>
+      </panel>
+
+    </panel>
+    <statusline name="status"/>
+    <screen name="screen"/>
+  </panel>
+</view>

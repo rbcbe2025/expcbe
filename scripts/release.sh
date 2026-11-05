@@ -15,7 +15,9 @@
 # the hand-off. Evals (e) run with pinned models only when plugins/cloudbackend/SKILLS.json or evals/ changed since the
 # last tag; --skip-evals skips them regardless. Environment: CBE_DOCS_HUB (the hub checkout; default ../estate-docs),
 # RELEASE_EXTRA_REPOS (paths whose trees stage 0 also requires clean), RELEASE_EVAL_MODEL / RELEASE_JUDGE_MODEL
-# (stage e; defaults below).
+# (stage e; defaults below). Stage e runs scripts/run-evals.sh: with and without the plugin, one run per case, the
+# tenant and deploy stand-ins, the real docs and build servers; it needs Claude Code 2.1.269+ (on big), so elsewhere
+# pass --skip-evals and run it on big.
 set -euo pipefail
 here=$(cd "$(dirname "$0")/.." && pwd)
 hub=$(cd "${CBE_DOCS_HUB:-$here/../estate-docs}" 2>/dev/null && pwd || echo "${CBE_DOCS_HUB:-$here/../estate-docs}")
@@ -85,7 +87,7 @@ if [ "$evals" = 0 ]; then note "evals skipped (--skip-evals)"
 elif ! ls "$plugin"/evals/*/prompt.md >/dev/null 2>&1; then note "no eval cases under evals/: skipped"
 elif [ -n "$last" ] && git -C "$here" diff --quiet "$last" -- plugins/cloudbackend/SKILLS.json plugins/cloudbackend/evals 2>/dev/null; then note "SKILLS.json and evals/ unchanged since $last: evals skipped"; evals=0
 else
-  run "mkdir -p '$plugin/evals/results' && claude plugin eval '$plugin' --model '${RELEASE_EVAL_MODEL:-claude-sonnet-5-5}' --judge-model '${RELEASE_JUDGE_MODEL:-claude-sonnet-5-5}' --no-publish --threshold 0.8 --max-cost-usd 15 --json '$plugin/evals/results/$v.json'"
+  run "EVAL_MODEL='${RELEASE_EVAL_MODEL:-claude-sonnet-5-5}' EVAL_JUDGE_MODEL='${RELEASE_JUDGE_MODEL:-claude-haiku-5-5}' '$here/scripts/run-evals.sh' '$v' --runs 1 -j 4 --max-cost-usd 60"
 fi
 
 stage f "pack, commit, tag, publish"

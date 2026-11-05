@@ -1,0 +1,241 @@
+{
+  "tools": [
+    {
+      "name": "tenant_signin",
+      "title": "Sign in to a CloudBackend account",
+      "description": "Starts the sign-in to a CloudBackend PaaS account: a page on this computer (127.0.0.1, valid 15 minutes) where the user types their e-mail or username and password, and the e-mailed code when the account uses one. The browser sends them straight to CloudBackend; this server keeps only the session it returns, in a file only the user can read, and never returns it. The result carries the page's address for the user and whether the system browser was asked to open it. In the Claude desktop app, pass open_browser false and open the address in the built-in browser. No password passes through the conversation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "description": "The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/."
+          },
+          "open_browser": {
+            "type": "boolean",
+            "default": true,
+            "description": "Ask the system to open the page in the default browser. False when the client opens the address itself, as the Claude desktop app does in its built-in browser."
+          }
+        },
+        "required": [
+          "tenant"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "tenant_status",
+      "title": "CloudBackend sign-in status",
+      "description": "Whether an account is signed in on this computer, as which identity and role, whether CloudBackend still accepts the session, and whether the account has the sign-in realm the deploy connector needs. `wait_seconds` (up to 120) waits for a sign-in page that is still open. The session itself is never returned.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "description": "The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/. Optional when only one account is signed in."
+          },
+          "wait_seconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 120,
+            "default": 0,
+            "description": "Seconds to wait for an open sign-in page to finish."
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "tenant_signout",
+      "title": "Sign out of a CloudBackend account",
+      "description": "Ends the stored session at CloudBackend and deletes it from this computer.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "description": "The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/. Optional when only one account is signed in."
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_projects",
+      "title": "List projects and deployments",
+      "description": "The project folders under home://Applications/ and tenant://Applications/ of the signed-in account, and the identity's webshares: each one's name, the project it serves, its stage and, for a home project, its address.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "description": "The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/. Optional when only one account is signed in."
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "upload_project",
+      "title": "Upload a package folder",
+      "description": "Copies a local XIOS/3 package folder (the one holding index.xml) to home://Applications/<project_name>/ on the signed-in account, folders included, four files at a time. lint_project (profile build) runs first and nothing is uploaded while it reports an error; `lint: false` skips it. Files with the same path are replaced; files on the tenant that are not in the folder are listed and left in place. Dot-files and node_modules are not uploaded.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "The local package folder, absolute or relative to the working directory; app/ in the workflow layout."
+          },
+          "project_name": {
+            "type": "string",
+            "description": "The project folder under home://Applications/, e.g. \"tasks\"."
+          },
+          "tenant": {
+            "type": "string",
+            "description": "The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/. Optional when only one account is signed in."
+          },
+          "lint": {
+            "type": "boolean",
+            "default": true,
+            "description": "Run lint_project (profile build) first and refuse on an error."
+          }
+        },
+        "required": [
+          "path",
+          "project_name"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "deploy",
+      "title": "Deploy a project to Development",
+      "description": "Publishes home://Applications/<project_name> as a private Development deployment at https://<tenant>-<identity>-<deployment_name>.cloudbackend.cloud: writes the boot page index.html (unless keep_index_html and one exists) and .types.xml into the project, creates the webshare or reuses the one that already serves this project, and writes the console's pipeline record when there is none. Refuses an address that serves another project. Promotion beyond Development is a console step.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project_name": {
+            "type": "string",
+            "description": "The project folder under home://Applications/, e.g. \"tasks\"."
+          },
+          "deployment_name": {
+            "type": "string",
+            "description": "The address part of the deployment, lowercase letters and digits, not beginning with xios. Defaults to project_name."
+          },
+          "tenant": {
+            "type": "string",
+            "description": "The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/. Optional when only one account is signed in."
+          },
+          "keep_index_html": {
+            "type": "boolean",
+            "default": false,
+            "description": "Keep an index.html the project already has instead of writing the boot page."
+          }
+        },
+        "required": [
+          "project_name"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "verify_deployment",
+      "title": "Verify a deployment by its served files",
+      "description": "Fetches a deployment's files anonymously and compares their bytes with the local package folder (`path`) or, without it, with the stored copy on the tenant: index.xml first, then up to `sample` files, or exactly `paths`. An unknown path on a webshare answers 200 with the boot page, so each mismatch says whether the boot page was served instead. Also reports whether the boot page loads the runtime, which webshare serves the project, whether llms.txt is served, and whether the manifest declares a login.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "project_name": {
+            "type": "string",
+            "description": "The project folder under home://Applications/, e.g. \"tasks\"."
+          },
+          "deployment_name": {
+            "type": "string",
+            "description": "The address part of the deployment, lowercase letters and digits, not beginning with xios. Defaults to project_name."
+          },
+          "tenant": {
+            "type": "string",
+            "description": "The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/. Optional when only one account is signed in."
+          },
+          "path": {
+            "type": "string",
+            "description": "The local package folder to compare with; without it, the stored copy on the tenant."
+          },
+          "sample": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "default": 20,
+            "description": "How many files to compare, index.xml first."
+          },
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Exactly these package paths instead of a sample."
+          }
+        },
+        "required": [
+          "project_name"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "enable_deploy_connector",
+      "title": "Create the account's sign-in realm",
+      "description": "Asks CloudBackend to create the account's sign-in realm (POST /keycloak), which the deploy connector (cloudbackend-deploy) signs in through. Only the owner or an administrator may; the realm stays part of the account. Answers at once when the realm already exists.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "description": "The account name, lowercase letters and digits, as in https://<tenant>.db.cloudbackend.com/. Optional when only one account is signed in."
+          }
+        }
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      }
+    }
+  ]
+}

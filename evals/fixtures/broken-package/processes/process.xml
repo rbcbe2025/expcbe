@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process name="tasks" version="1">
+  <trigger view="view" component="save" event="click" step="save"/>
+  <step id="save">
+    <operation name="call" step="save"/>
+  </step>
+</process>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application name="tasktrack" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <about version="1.0" title="tasktrack" description="A task tracker for one person."/>
+  <settings>
+    <home>home://tasktrack</home>
+    <path>home://Applications/tasktrack</path>
+  </settings>
+  <view xlink:href="views/view.xml"/>
+  <process xlink:href="processes/process.xml"/>
+  <style xlink:href="layout/app.css"/>
+</application>
