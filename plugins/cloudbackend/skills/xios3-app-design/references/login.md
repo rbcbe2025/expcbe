@@ -76,11 +76,19 @@ on every page. The `<theme>` does not reach the login screen: the login applicat
   a responsive card, is the login application's and has been reported to XIOS/3.
 - Without a published `Tenant` container, the login's lookup of the tenant's licence text answers 404 in the browser
   console. The screen works.
+- Every load logs one `TypeError ... reading 'style'` from `Utils_applyIEEmulation` in the browser console, with or
+  without the plugin's boot page script (3 of 3 loads each way). It is the runtime's, reported to XIOS/3; the screen
+  works. Do not chase it as an app error.
 
-Not measured, because measuring needs a signed-in user:
+- **What opens after sign-in**, measured with a signed-in user at 467 px: the app's first declared view (the desktop
+  one, as the kit declares it) and its process. The login application does not look at a view's `screen=` query, so a
+  phone never gets the phone view after sign-in. The kit's desktop view therefore adapts on a narrow screen: the process
+  shows one card at a time (the list, then the detail with Back, the menu button instead of the rail), and
+  `styles/app.css` lets the visible card fill the width (the runtime lays the body out in fixed grid columns). Measured
+  with the desktop view at 375 px: the list filled the screen, a picked task opened full width with Back, and Back
+  returned to the list.
 
-- **What opens after sign-in.** The login application's code opens the app's first declared view and its first process
-  that is not `onLoad`. It does not look at a view's `screen=` query, so the kit declares the desktop view first, and a
-  phone shows the desktop layout after sign-in until that is measured and handled.
+Not measured yet:
+
 - **Sign-up and reset on a tenant without the CRM.** The flows send e-mail through the tenant's CRM. Keep both links,
   and set up the CRM before Production (cloudbackend-saas-launch, step 4).

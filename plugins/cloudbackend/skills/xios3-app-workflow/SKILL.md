@@ -217,8 +217,9 @@ Gate: lint 0 errors, upload validated, deploy returned a URL. Evidence: `W4 buil
 4. Lighthouse, mobile, one route at a time, a fresh profile: from a shell with Chrome installed, or run by
    the user and pasted in (marked *user-run*), or "not run".
 No question, except "paste the Lighthouse numbers" when nothing here can run it.
-Gate: `index_xml_match` true; every probe passed with its assertion; 0 console errors on the probed routes;
-Lighthouse recorded or "not run". Evidence: `W5 verify — verify_deployment match=true N/N, gate=<verdict>; probes N/N (390 px pass); console 0 errors; Lighthouse <scores or not run> <UTC>`.
+Gate: `index_xml_match` true; every probe passed with its assertion; 0 console errors from the app on the
+probed routes (the runtime's own boot messages in `references/verification-checklist.md` are named, not counted);
+Lighthouse recorded or "not run". Evidence: `W5 verify — verify_deployment match=true N/N, gate=<verdict>; probes N/N (390 px pass); console 0 app errors (runtime: <named lines or none>); Lighthouse <scores or not run> <UTC>`.
 
 ### W6 Harden
 
@@ -404,10 +405,10 @@ Generated from the published manual at build time:
 
 ## Version and updates
 
-This is version 2026.11.5.2 of the xios3-app-workflow skill, built from the CloudBackend documentation.
+This is version 2026.11.5.3 of the xios3-app-workflow skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.5.2, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.5.3, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.5.2&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.5.3&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.

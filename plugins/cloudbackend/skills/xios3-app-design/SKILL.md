@@ -110,8 +110,8 @@ button, sign-up and reset pages in the same design). `designkit.py app --login` 
 a navy grid page (`login-bg.svg`) and a text-mark logo (`logo.svg`), and wires the manifest: views and process
 `onRequest`, the login process first, the desktop view first. `designkit.py login app` checks it.
 `references/login.md` has the element, the settings the manual leaves out (`button`, `buttonColor`, `linkColor`,
-`createPrompt`), what was measured on a deployment, and the two things not measured yet: what opens after sign-in on a
-phone, and sign-up without the CRM.
+`createPrompt`), what was measured on a deployment (after sign-in the desktop view opens on every screen, so it adapts
+to a narrow one), and what is not measured yet: sign-up without the CRM.
 
 ## The two components
 
@@ -176,10 +176,10 @@ runs in the window that imports it, where `Component`, `sys` and `CloneObject` a
 
 ## Version and updates
 
-This is version 2026.11.5.3 of the xios3-app-design skill, built from the CloudBackend documentation.
+This is version 2026.11.5.5 of the xios3-app-design skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-design` is newer than 2026.11.5.3, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-design` is newer than 2026.11.5.5, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.11.5.3&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.11.5.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.

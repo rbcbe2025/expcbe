@@ -55,19 +55,27 @@
     </operation>
   </step>
 
-  <!-- the screen: the rail on tablet and desktop, a menu on phones -->
+  <!-- the screen: the rail on tablet and desktop, a menu on phones. On a phone one card shows at a time, the list
+       first and the detail with Back; the same steps work in either view file, so the desktop view adapts too when it is
+       the one on screen (after sign-in the login application opens the first view declared). -->
   <step id="applyScreen">
     <operation name="decision">
       <when test="'{$screen}' = 'phone'">
         <operation name="action" value="#App">
           <component name="menu" action="show"/>
           <component name="nav" action="hide"/>
+          <component name="back" action="show"/>
+          <component name="detailCard" action="hide"/>
+          <component name="listCard" action="show"/>
         </operation>
       </when>
       <otherwise>
         <operation name="action" value="#App">
           <component name="menu" action="hide"/>
           <component name="nav" action="show"/>
+          <component name="back" action="hide"/>
+          <component name="detailCard" action="show"/>
+          <component name="listCard" action="show"/>
         </operation>
       </otherwise>
     </operation>

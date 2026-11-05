@@ -73,6 +73,17 @@ When a probe fails, in this order, because each step is cheaper than the next an
 
 Fix the file, `lint_project`, upload, `verify_deployment`, and rerun the probe from a fresh context.
 
+**Messages the runtime logs on its own.** Two console lines come from the runtime a CloudBackend deployment
+boots, not from the app, and the W5 gate does not count them (measured 2026-11-05, reported to XIOS/3):
+
+- `TypeError: Cannot read properties of null (reading 'style')` from `Utils_applyIEEmulation` in `system.js`,
+  once per load of an app with a `<login>`, with any boot page.
+- Two 404s for `/v1/wsg3/<tenant>/:Tenant/` on the login screen, on a tenant without a published `Tenant`
+  container.
+
+Any other error is the app's until shown otherwise. Name the excluded lines in the evidence line, never
+drop them silently.
+
 ## 5. Lighthouse
 
 Mobile, one route at a time, a fresh profile with no extensions, simulated slow 4G, Lighthouse CLI where a

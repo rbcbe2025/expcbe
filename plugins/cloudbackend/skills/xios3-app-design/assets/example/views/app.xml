@@ -18,7 +18,7 @@
   </toolbar>
 
   <panel name="root" type="rows" width="100%" height="100%">
-    <panel name="body" type="columns" width="100%" height="fill" padding="12" gap="12">
+    <panel name="body" type="columns" class="dk-body" width="100%" height="fill" padding="12" gap="12">
 
       <panel name="nav" type="rows" class="xios-card" width="200" height="100%" padding="12" gap="8">
         <label text="{{APP_TITLE}}" class="xios-type-label"/>
@@ -29,7 +29,7 @@
         </iconlist>
       </panel>
 
-      <panel name="listCard" type="rows" class="xios-card" width="340" height="100%" padding="12" gap="8">
+      <panel name="listCard" type="rows" class="xios-card dk-list" width="340" height="100%" padding="12" gap="8">
         <label name="listTitle" text="{{ITEMS_TITLE}}" class="xios-type-label"/>
         <input name="search" width="100%" placeholder="Search {{ITEMS}}"/>
         <iconlist name="items" layout="vertical" iconsize="20" itemheight="52" rename="false" scroll="true" width="100%" height="fill">
@@ -45,8 +45,8 @@
         </iconlist>
       </panel>
 
-      <panel name="detailCard" type="rows" class="xios-card" width="fill" height="100%" padding="16" gap="12" scroll="true">
-        <buttonbox name="back" text="Back" hide="true"/>
+      <panel name="detailCard" type="rows" class="xios-card dk-detail" width="fill" height="100%" padding="16" gap="12" scroll="true">
+        <buttonbox name="back" text="Back" hide="true" icon="icon://arrow-left?look=lucide&amp;color=primary"/>
         <panel name="detailEmpty" type="rows" width="100%" height="100%" align="center" valign="center">
           <label class="xios-type-caption" text="Pick {{A_ITEM}} to see it here."/>
         </panel>
