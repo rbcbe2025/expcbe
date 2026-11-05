@@ -37,9 +37,9 @@ claude plugin install cloudbackend@cloudbackend
 one requirement. Signing in to your account happens in your browser (in the Claude desktop app, its built-in browser),
 never in the chat.
 
-**claude.ai, Claude Desktop, Cowork:** Customize, Plugins, Add, Add marketplace: enter `rbcbe2025/expcbe`, install cloudbackend
-and turn on Sync automatically, so new versions arrive by themselves. A chat uses the skills; Cowork on your computer also
-runs the servers. Without an added marketplace, upload the skills from the developer portal's Tools page; the
+**claude.ai, Claude Desktop, Cowork:** Customize, Plugins, Add, Add marketplace: enter `rbcbe2025/expcbe`, choose Sync, then add
+the cloudbackend plugin and confirm its local servers (tried 2026-11-05). A chat uses the skills; Cowork on your computer also runs
+the servers. Keeping it in sync by itself needs the Claude GitHub App to have access to the repository. Without an added marketplace, upload the skills from the developer portal's Tools page; the
 documentation server is the Claude Desktop extension offered there. The deploy connector is added by hand as a custom
 connector (`scripts/connect-deploy.sh <tenant> --print` prints the URL; Cowork reads `.mcp.json` but cannot fill
 the tenant).
