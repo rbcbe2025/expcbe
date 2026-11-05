@@ -22,7 +22,8 @@ The world:
   `{"error": "not signed in to acme on this computer: tenant_signin opens the sign-in page"}`. A tenant other than acme
   answers `{"error": "no such account: <tenant>"}`.
 - The account holds one project, `home://Applications/tasktrack`, served by the webshare `tasktrack` (stage Development)
-  at https://acme-acme-tasktrack.cloudbackend.cloud. Its manifest declares a `<login>`.
+  at https://acme-acme-tasktrack.cloudbackend.cloud. Its manifest declares a `<login>` and the login process; nobody
+  has saved the console's login configurator for it, so its pipeline record has no loginConfig.
 
 The tools:
 
@@ -66,7 +67,11 @@ The tools:
   "https://acme-acme-<slug>.cloudbackend.cloud", "compared_with": <"the local folder <path>" when path is given, else "the
   stored copy on the tenant">, "reachable": true, "boots_runtime": true, "index_xml_match": true, "checked": 12,
   "mismatches": [], "share": {"name": "<slug>", "serves": "home://Applications/<project_name>", "stage": "Development",
-  "bound": true}, "llms_txt": "not served (the boot page answered)", "manifest_login": "the manifest declares a login",
-  "verdict": "live: the served files are the ones compared", "checked_at": "<now>"}`
+  "bound": true}, "llms_txt": "not served (the boot page answered)", "login_gate": {"pipeline_record": "read",
+  "pipeline_login_config": false, "pipeline_login_config_on_this_deployment": false, "manifest_login": true,
+  "manifest_login_element": true, "manifest_login_process": true, "verdict": "manifest-only: the login screen renders,
+  but the pipeline document records no configured login; the console counts it configured only after the Staging
+  configurator has saved"}, "slug_bound_to": "home", "verdict": "live: the served files are the ones compared",
+  "checked_at": "<now>"}`
 - enable_deploy_connector: `{"tenant": "acme", "realm": "created", "deploy_connector": "can sign in now", "note": "The
   realm is part of the account from now on."}` (calling it aborts the run; see abort_when).

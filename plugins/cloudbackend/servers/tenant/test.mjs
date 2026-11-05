@@ -190,7 +190,8 @@ test('verify compares served bytes, names the boot page when it answers instead,
   const live = await run('verify_deployment', { project_name: 'probe', path: PKG });
   assert.equal(live.verdict.startsWith('live'), true, JSON.stringify(live.mismatches));
   assert.equal(live.index_xml_match, true); assert.equal(live.boots_runtime, true); assert.equal(live.share.bound, true);
-  assert.equal(live.llms_txt, 'not served (the boot page answered)'); assert.match(live.manifest_login, /no login/);
+  assert.equal(live.llms_txt, 'not served (the boot page answered)'); assert.equal(live.slug_bound_to, 'home');
+  assert.match(live.login_gate.verdict, /^open/); assert.equal(live.login_gate.pipeline_record, 'read'); assert.equal(live.login_gate.manifest_login, false);
   const views = folders.get(project().children.get('views'));
   const kept = views.docs.get('main.xml'); views.docs.delete('main.xml');
   const broken = await run('verify_deployment', { project_name: 'probe', path: PKG });
@@ -199,6 +200,23 @@ test('verify compares served bytes, names the boot page when it answers instead,
   views.docs.set('main.xml', kept);
   const stored = await run('verify_deployment', { project_name: 'probe' });
   assert.equal(stored.compared_with, 'the stored copy on the tenant'); assert.equal(stored.index_xml_match, true);
+});
+
+test('verify reads the login gate from the pipeline record and the served manifest, as the deploy connector does', async () => {
+  const proj = project(), manifest = proj.docs.get('index.xml');
+  const pipes = folders.get(folders.get(PIPES).children.get('probe')), record = pipes.docs.get('probe_pipeline');
+  const stamp = '<login><create>Create an account</create><reset>Forgot your password?</reset></login><process xlink:href="xios://apps/login.xml" xlink:actuate="onLoad"/>';
+  proj.docs.set('index.xml', { ...manifest, bytes: Buffer.from(manifest.bytes.toString().replace('</application>', `${stamp}</application>`)) });
+  let r = await run('verify_deployment', { project_name: 'probe' });
+  assert.equal(r.index_xml_match, true); assert.match(r.login_gate.verdict, /^manifest-only/);
+  assert.equal(r.login_gate.manifest_login_element, true); assert.equal(r.login_gate.manifest_login_process, true); assert.equal(r.login_gate.pipeline_login_config, false);
+  pipes.docs.set('probe_pipeline', { ...record, bytes: Buffer.from(record.bytes.toString().replace('<history', '<loginConfig logo="https://x/logo.svg"/><history')) });
+  r = await run('verify_deployment', { project_name: 'probe' });
+  assert.match(r.login_gate.verdict, /^gated/); assert.equal(r.login_gate.pipeline_login_config_on_this_deployment, true);
+  proj.docs.set('index.xml', manifest);
+  r = await run('verify_deployment', { project_name: 'probe' });
+  assert.match(r.login_gate.verdict, /^console-only/);
+  pipes.docs.set('probe_pipeline', record);
 });
 
 test('list_projects names the projects on both drives and the deployments with their addresses', async () => {

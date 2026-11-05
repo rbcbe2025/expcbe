@@ -171,7 +171,7 @@
     {
       "name": "verify_deployment",
       "title": "Verify a deployment by its served files",
-      "description": "Fetches a deployment's files anonymously and compares their bytes with the local package folder (`path`) or, without it, with the stored copy on the tenant: index.xml first, then up to `sample` files, or exactly `paths`. An unknown path on a webshare answers 200 with the boot page, so each mismatch says whether the boot page was served instead. Also reports whether the boot page loads the runtime, which webshare serves the project, whether llms.txt is served, and whether the manifest declares a login.",
+      "description": "Fetches a deployment's files anonymously and compares their bytes with the local package folder (`path`) or, without it, with the stored copy on the tenant: index.xml first, then up to `sample` files, or exactly `paths`. An unknown path on a webshare answers 200 with the boot page, so each mismatch says whether the boot page was served instead. Also reports whether the boot page loads the runtime, which webshare serves the project and from which drive (slug_bound_to), whether llms.txt is served, and the login gate as two documents (login_gate): the pipeline record's login configuration and the served manifest's <login> with the login application's process, with a verdict of gated, manifest-only, console-only or open.",
       "inputSchema": {
         "type": "object",
         "properties": {

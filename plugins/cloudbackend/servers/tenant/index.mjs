@@ -341,11 +341,16 @@ function bootPage(s) {
 
 /** The console's pipeline record for the deployment, tenant://Settings/Pipelines/<project>/<slug>_pipeline (the folder the
  *  console reads, measured 2026-10-25). A record that already holds markup is the console's and is left as it is. */
-async function writePipeline(s, { projectName, slug, url }) {
+const pipelineKey = (projectName) => String(projectName).toLowerCase().replace(/[^a-z0-9]/g, '');
+async function pipelinesFolder(s) {
   const settings = s.tenantFolderId ? await lookupFolder(s, s.tenantFolderId, 'Settings') : '';
-  const pipes = settings ? await lookupFolder(s, settings, 'Pipelines') : '';
+  return settings ? await lookupFolder(s, settings, 'Pipelines') : '';
+}
+
+async function writePipeline(s, { projectName, slug, url }) {
+  const pipes = await pipelinesFolder(s);
   if (!pipes) return 'not written: tenant://Settings/Pipelines was not found. The address works; the console\'s Deployments view will not list it.';
-  const key = String(projectName).toLowerCase().replace(/[^a-z0-9]/g, ''), docName = `${slug}_pipeline`, where = `tenant://Settings/Pipelines/${key}/${docName}`;
+  const key = pipelineKey(projectName), docName = `${slug}_pipeline`, where = `tenant://Settings/Pipelines/${key}/${docName}`;
   const folder = await lookupFolder(s, pipes, key);
   if (folder) {
     const entry = (await listDocuments(s, folder)).items.find((d) => d.name === docName);
@@ -364,6 +369,34 @@ async function writePipeline(s, { projectName, slug, url }) {
   const xml = back ? await need(await call(s, 'GET', back.href), `reading ${where} back`) : '';
   if (!/<development>\s*<deploy\b/.test(xml)) throw new ToolError(`${where} did not read back with the deployment in it`);
   return `wrote ${where} and read it back.`;
+}
+
+/** The deployment's pipeline record as text, '' when there is none: verify reads the login configuration from it. */
+async function readPipeline(s, projectName, slug) {
+  const pipes = await pipelinesFolder(s);
+  const folder = pipes ? await lookupFolder(s, pipes, pipelineKey(projectName)) : '';
+  const entry = folder ? (await listDocuments(s, folder)).items.find((d) => d.name === `${slug}_pipeline`) : null;
+  return entry ? need(await call(s, 'GET', entry.href), 'reading the pipeline record') : '';
+}
+
+/** The login gate as the deploy connector reads it (cbemcp tools/verify.py): two documents, not a look. The pipeline
+ *  record's loginConfig (the console writes it when the Staging configurator saves) and the served manifest's
+ *  <login> element with the login application's process. */
+function loginGate(pipelineXml, manifestXml, slug, record) {
+  const configTag = /<(?:[\w-]+:)?loginconfig\b/i;
+  const mine = (pipelineXml.match(/<deploy\b[\s\S]*?<\/deploy>/g) || []).find((d) => d.includes(`internal-version="${slug}"`));
+  const configured = configTag.test(pipelineXml);
+  const element = /<login[\s>/]/.test(manifestXml);
+  const process = /<process\b[^>]*xlink:href\s*=\s*["']xios:\/\/apps\/login\.xml["']/.test(manifestXml);
+  const stamped = element && process;
+  return {
+    pipeline_record: record, pipeline_login_config: configured, pipeline_login_config_on_this_deployment: !!mine && configTag.test(mine),
+    manifest_login: stamped, manifest_login_element: element, manifest_login_process: process,
+    verdict: stamped && configured ? 'gated: the manifest carries the login stamp and the pipeline records a configured login screen'
+      : stamped ? 'manifest-only: the login screen renders, but the pipeline document records no configured login; the console counts it configured only after the Staging configurator has saved'
+      : configured ? 'console-only: the pipeline records a configured login screen, but the served manifest carries no <login> and login process'
+      : 'open: no login stamp in the served manifest and no configured login in the pipeline document (a private webshare is not authentication)',
+  };
 }
 
 async function deploy({ project_name, deployment_name, tenant, keep_index_html = false }) {
@@ -444,18 +477,23 @@ async function verifyDeployment({ project_name, deployment_name, tenant, path, s
   const order = ['index.xml', ...[...expected.keys()].filter((k) => k !== 'index.xml' && !WRITTEN_BY_DEPLOY.has(k)).sort()];
   const chosen = (Array.isArray(paths) && paths.length ? paths : order).slice(0, Math.max(1, Math.min(Number(sample) || 20, 200)));
   const mismatches = [];
-  let manifestText = '';
+  let servedManifest = null;
   for (const rel of chosen) {
     if (!expected.has(rel)) { mismatches.push({ path: rel, problem: `not in ${source}` }); continue; }
     const want = await expected.get(rel)();
-    if (rel === 'index.xml') manifestText = want.toString('utf8');
     const got = await served(rel), gotHash = got.bytes ? sha256(got.bytes) : '';
+    if (rel === 'index.xml') servedManifest = got;
     if (gotHash !== sha256(want)) {
       mismatches.push({ path: rel, status: got.status, expected_sha256: sha256(want), served_sha256: gotHash || null,
         served_is_fallback_page: !!gotHash && gotHash === fallbackHash });
     }
   }
   const share = (await listShares(s)).find((x) => x.name === slug);
+  if (!servedManifest) servedManifest = await served('index.xml');
+  const manifestXml = servedManifest.bytes && sha256(servedManifest.bytes) !== fallbackHash ? servedManifest.bytes.toString('utf8') : '';
+  let pipelineXml = '', record;
+  try { pipelineXml = await readPipeline(s, project_name, slug); record = pipelineXml ? 'read' : 'none: the console\'s Deployments view does not list this deployment'; }
+  catch (e) { record = `not readable (${e.message})`; }
   const llms = await served('llms.txt');
   const llmsHash = llms.bytes ? sha256(llms.bytes) : '';
   const indexXmlMatch = chosen.includes('index.xml') && !mismatches.some((m) => m.path === 'index.xml');
@@ -466,7 +504,8 @@ async function verifyDeployment({ project_name, deployment_name, tenant, path, s
     index_xml_match: indexXmlMatch, checked: chosen.length, mismatches,
     share: share ? { name: share.name, serves: share.serves, stage: share.stage, bound: share.serves === href } : null,
     llms_txt: llms.status === 200 && llmsHash ? (llmsHash === fallbackHash ? 'not served (the boot page answered)' : 'served') : 'not served',
-    manifest_login: /<login\b/.test(manifestText) ? 'the manifest declares a login' : 'no login in the manifest: a private webshare is not authentication',
+    login_gate: loginGate(pipelineXml, manifestXml, slug, record),
+    slug_bound_to: share && share.serves ? share.serves.split('://')[0] : null,
     verdict: live ? 'live: the served files are the ones compared' : 'not live as expected: see mismatches, reachable, boots_runtime and share',
     checked_at: new Date().toISOString(),
   };
@@ -756,7 +795,7 @@ export const TOOLS = {
   },
   verify_deployment: {
     title: 'Verify a deployment by its served files',
-    description: 'Fetches a deployment\'s files anonymously and compares their bytes with the local package folder (`path`) or, without it, with the stored copy on the tenant: index.xml first, then up to `sample` files, or exactly `paths`. An unknown path on a webshare answers 200 with the boot page, so each mismatch says whether the boot page was served instead. Also reports whether the boot page loads the runtime, which webshare serves the project, whether llms.txt is served, and whether the manifest declares a login.',
+    description: 'Fetches a deployment\'s files anonymously and compares their bytes with the local package folder (`path`) or, without it, with the stored copy on the tenant: index.xml first, then up to `sample` files, or exactly `paths`. An unknown path on a webshare answers 200 with the boot page, so each mismatch says whether the boot page was served instead. Also reports whether the boot page loads the runtime, which webshare serves the project and from which drive (slug_bound_to), whether llms.txt is served, and the login gate as two documents (login_gate): the pipeline record\'s login configuration and the served manifest\'s <login> with the login application\'s process, with a verdict of gated, manifest-only, console-only or open.',
     inputSchema: { type: 'object', properties: { project_name: PROJECT_ARG, deployment_name: DEPLOYMENT_ARG, tenant: TENANT_ARG, path: { type: 'string', description: 'The local package folder to compare with; without it, the stored copy on the tenant.' }, sample: { type: 'integer', minimum: 1, maximum: 200, default: 20, description: 'How many files to compare, index.xml first.' }, paths: { type: 'array', items: { type: 'string' }, description: 'Exactly these package paths instead of a sample.' } }, required: ['project_name'] },
     annotations: ro,
     run: verifyDeployment,

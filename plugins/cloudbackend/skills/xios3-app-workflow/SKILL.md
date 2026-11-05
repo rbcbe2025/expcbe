@@ -41,7 +41,10 @@ newest.
 
 One file for the build and the launch: `cloudbackend-launch.md` at the root of the user's project, or in
 the conversation when there is no file system. Read the whole file first in every session; create it after
-the opening round. `cloudbackend-saas-launch` owns the header bullets and `## Progress`; this skill owns
+the opening round. A session that starts past W0 (the user asks for a deploy, a check or a promotion) and
+finds no file creates it before its first evidence line, from what the prompt and the tools show (the account
+from `tenant_status`, the app folder, the deployment name), marks the earlier phases *not recorded*, and says
+so in one line. `cloudbackend-saas-launch` owns the header bullets and `## Progress`; this skill owns
 `## App`, `## Build` and `## Benchmark`; both append to `## Decisions`, every line stamped with the time and
 its zone, UTC by preference. Never keep a second file: two journals drift, and the launch skill reads this
 one to decide which step is next.
@@ -85,8 +88,9 @@ one to decide which step is next.
 - 2026-11-04 09:50 UTC datatype key named due_on because date is reserved (singularity-database, measured-on-a-tenant)
 ```
 
-Evidence lines have one shape: `W<n> <name> — <tool or check> <result> · <who confirmed> <UTC>`. A phase is
-ticked only when its check passed **and** its line is in the file; until then say it is unverified. A
+Evidence lines have one shape: `W<n> <name> — <tool or check> <result> · <who confirmed> <UTC>`. Write the
+line into `## Build` the moment its check passes, and quote it in the reply; with no file system, the reply
+carries it. A phase is ticked only when its check passed **and** its line is in the file; until then say it is unverified. A
 phase that cannot run on this client or this tenant is ticked *deferred* with the reason, never as done.
 
 ## Asking the user: one round, then defaults
@@ -159,7 +163,10 @@ Gate: the plan card was sent; silence is a go. Evidence: `W0 open — plan card 
 Write `docs/spec.md` from the template in `references/project-layout.md`: v1 features against v2, the
 screens, every component by name, the kinds of record with fields and scope, roles and the ACL plan,
 channels (integrations, AI calls), analytics, the SEO and GEO stance, the security and legal baseline,
-the documentation plan, the UI probe list, and the pricing line. The spec is short: a page the user reads
+the documentation plan, the UI probe list, and the pricing line. Every channel row carries its cost line:
+provider, model or plan, the spend limit, who may call it, and what one call costs at the expected size
+(`references/ai-and-integrations-via-proxy.md`). A channel added after W1, an AI call above all, is a spec
+change: add its row with the cost line to `docs/spec.md` before wiring it. The spec is short: a page the user reads
 before saying yes. One question, skipped when the plan card settled it: "v1 is these N features; the rest
 is v2 — yes?"
 Gate: `docs/spec.md` exists and the user said yes. Evidence: `W1 spec — docs/spec.md: N features, N screens, N kinds · user yes <UTC>`.
@@ -201,8 +208,9 @@ Gate: lint 0 errors, upload validated, deploy returned a URL. Evidence: `W4 buil
 ### W5 Verify
 
 1. `verify_deployment` on W0's route: the served files compared by checksum with the stored ones (deploy
-   connector) or with the local `app/` folder (tenant server, `path`), the login gate as the pipeline record
-   and the manifest state it, `llms.txt` served or the fallback page. On the console route, fetch the
+   connector) or with the local `app/` folder (tenant server, `path`), `login_gate` (on both routes: the
+   pipeline record's login configuration and the served manifest's login stamp, with a verdict of `gated`,
+   `manifest-only`, `console-only` or `open`), `llms.txt` served or the fallback page. On the console route, fetch the
    address and compare `index.xml` yourself when a shell is there; otherwise the user's browser check.
    "Live" is claimed from `index_xml_match` being true, never from a 200: a webshare answers 200 with the
    boot page for every unknown path.
@@ -215,7 +223,8 @@ Gate: lint 0 errors, upload validated, deploy returned a URL. Evidence: `W4 buil
 3. Write-back checks: every document the app writes is read back (`read_project_file`, or the CLI's `cat`)
    before a write is believed.
 4. Lighthouse, mobile, one route at a time, a fresh profile: from a shell with Chrome installed, or run by
-   the user and pasted in (marked *user-run*), or "not run".
+   the user and pasted in (marked *user-run*), or "not run". Record the route, the preset, the profile and
+   the date with the scores; a score without them cannot be compared with the next one.
 No question, except "paste the Lighthouse numbers" when nothing here can run it.
 Gate: `index_xml_match` true; every probe passed with its assertion; 0 console errors from the app on the
 probed routes (the runtime's own boot messages in `references/verification-checklist.md` are named, not counted);
@@ -254,7 +263,8 @@ Gate: the three documents exist and the manual's screens equal the probe list. E
 Promotion, the login configurator and a domain are **console** today: hand them over with the exact click
 path from `references/deployment-pipeline.md` (Make Public → Promote to Shared → Mark Verified → Promote
 to Staging → Configure Login Page with the logo as `https://` + the Staging host + `/logo.svg` and the EULA
-box → Mark Verified → Promote to Production → Connect Domain with the `A` record the launch path names).
+box → Mark Verified → Promote to Production → Connect Domain: the domain's `A` record points at
+`83.140.241.4`, and Connect Domain then requests a Let's Encrypt certificate).
 After **each** promotion run `verify_deployment` on the new host: the content, and the gate, because a
 promotion that drops the login configuration serves the app open. Write the customer's address card: the
 Production address or the domain, never the console's. The console is the user's: they open
@@ -357,6 +367,9 @@ Each with the rule or tool that catches it:
   allowed set) — G01, G03, G04.
 - A view file named `view.xml` — G02. The tenant's view dialect flattens `<select>`, `<option>` and `<a>`;
   raw HTML belongs in listview XSL — G05. A process with `<script href>` and no `<step id="start">` — G06.
+- An AI call or an integration wired without its cost: the channel's row in `docs/spec.md` with provider,
+  model, spend limit, who may call it and the cost of one call comes first — W1,
+  `references/ai-and-integrations-via-proxy.md`.
 - An external call with `fetch` instead of a proxy channel and `callService` — G11; a key in the package —
   G12; a public share has no `home://` drive, so an unguarded create there shows a modal error — G13.
 - "It is live": every path answers 200 with the boot page, so only `index_xml_match` proves it; a
@@ -405,10 +418,10 @@ Generated from the published manual at build time:
 
 ## Version and updates
 
-This is version 2026.11.5.4 of the xios3-app-workflow skill, built from the CloudBackend documentation.
+This is version 2026.11.5.5 of the xios3-app-workflow skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.5.4, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.5.5, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.5.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.5.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
