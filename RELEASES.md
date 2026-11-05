@@ -22,3 +22,4 @@ the same night (big's GitHub login has no push access); the repository went publ
 | 2026.1105.1 | 2026-11-05 | 2026-11-05 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped |
 | 2026.1105.2 | 2026-11-05 | 2026-11-05 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped |
 | 2026.1105.3 | 2026-11-05 | 2026-11-05 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped |
+| 2026.1105.4 | 2026-11-05 | 2026-11-05 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped |
