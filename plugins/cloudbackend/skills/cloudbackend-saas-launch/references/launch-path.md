@@ -2,7 +2,7 @@
 
 The hand-written end-to-end guide from the CloudBackend documentation hub: the order of work for a first paid web application on CloudBackend PaaS, with a check for each step and the items the product has not settled yet. Its links point at the published manual.
 
-1 topics from the published CloudBackend documentation, generated on 2026-11-04. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+1 topics from the published CloudBackend documentation, generated on 2026-11-05. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -77,38 +77,52 @@ A XIOS/3 application is a manifest, one or more views and one or more processes.
 
 ### 3. Add the login screen
 
-XIOS/3 ships a login application. You configure it with one `<login>` element or with the Login Configurator ([Login Application](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/login-application)).
+XIOS/3 ships a login application with the shape of the CloudBackend PaaS sign-in: the logo above a white card, the fields, one full-width button, and its own sign-up and password-reset pages in the same design. You configure it with one `<login>` element or with the Login Configurator ([Login Application](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/login-application)).
+
+**Every login screen offers all three ways in: sign in, sign up and forgot password.** The sign-up and forgot-password links show only when `create` and `reset` are set, so always set both.
 
 In the manifest:
 
 1. Declare `xmlns:xlink="http://www.w3.org/1999/xlink"` on `<application>`.
-2. Set `xlink:actuate="onRequest"` on your own process and view.
+2. Set `xlink:actuate="onRequest"` on your own process and views, and declare the desktop view first: after sign-in the login application opens the first view declared (read in its code).
 3. Add `<process xlink:actuate="onLoad" xlink:href="xios://apps/login.xml"/>` before your main process.
-4. Add a `<login>` element: `background` (an image, a colour, or two colours separated by a comma for a bottom-up gradient; `dark="true|false"` tells the screen which text colour to use), `logo`, `title`, `description`, `copyright`, `create` and `reset` (each shows its link, with the element's text as the label) and `client`.
+4. Add a `<login>` element. The manual documents `background` (an image, a colour, or two colours separated by a comma for a bottom-up gradient; `dark="true|false"` tells the screen which text colour to use), `logo`, `title`, `description`, `copyright`, `create` and `reset` (each shows its link, with the element's text as the label) and `client`. The login application also reads `button` (the sign-in button's text), `buttonColor`, `linkColor` and `createPrompt` (the line before the sign-up link).
 
 ```xml
 <login>
-  <background dark="true">#070b14,#1e4d7a</background>
+  <background dark="true">login-bg.svg</background>
   <logo>logo.svg</logo>
-  <title>Planboard</title>
-  <description>Sign in to your agency's board.</description>
-  <copyright>© 2026 Planboard AB. All rights reserved.</copyright>
+  <title>Log in</title>
+  <description>Welcome back. Log in to Planboard.</description>
+  <button>Log in</button>
+  <buttonColor>#4338ca</buttonColor>
+  <linkColor>#4338ca</linkColor>
+  <reset>Forgot your password?</reset>
+  <createPrompt>Don't have an account?</createPrompt>
   <create>Create an account</create>
-  <reset>Forgot password?</reset>
-  <client>Web</client>
+  <copyright>Copyright © 2026 Planboard AB</copyright>
 </login>
 ```
 
-Without editing the manifest, open **Configure Login Page…** on a Staging card in the Deployments section. The configuration is kept per client and written into the Production copy when the card is promoted ([Managing Deployments](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/managing-deployments)). Tick **Show EULA on user creation** there.
+The xios3-app-design skill writes this element from the app's design, with a dark grid page like the CloudBackend PaaS sign-in (`login-bg.svg`) and a text-mark logo (`designkit.py app --login`), and checks it (`designkit.py login`).
+
+Without editing the manifest, open **Configure Login Page…** on a Staging card in the Deployments section. The configuration is kept per client and written into the Production copy when the card is promoted ([Managing Deployments](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/managing-deployments)). Tick **Show EULA on user creation** there, and fill in both the create and the reset texts.
 
 Measured 2026-10-07:
 
 - The manifest's `<login>` renders a working screen on every deployment, but the console counts a login screen as **Configured** only after the Staging card's configurator has saved. Do both: the manifest for development, the configurator at step 7.
-- The `logo` value is resolved against the login application's own folder, not your deployment: a bare name (`logo.svg`) looks for a file of that name there, `/logo.svg` and `../logo.svg` come out empty, a `data:` URL breaks the configurator's form, and the configurator's own folder pick writes a path (`external/logo.svg`) that resolves to nothing. **Only a full `https://` URL works.** Every host before Staging is replaced on promotion (step 7), so the durable values are the Staging card's host, which Production keeps, or your own domain. Use a placeholder during development and set the final value in the configurator at step 7.
-- Add `create` and `reset` only when the pre-flight found the CRM; on a tenant without it they open flows that cannot finish.
+- In the configurator, only a full `https://` URL to the logo works: its own folder pick writes a path (`external/logo.svg`) that resolves to nothing, and a `data:` URL breaks its form. Every host before Staging is replaced on promotion (step 7), so the durable values are the Staging card's host, which Production keeps, or your own domain.
+
+Measured 2026-11-05 on a Development deployment:
+
+- In the manifest, a `logo` and a `background` that name a file next to `index.xml` render: the login application now resolves them against the app. (On 2026-10-07 a bare name was looked up in the login application's own folder.)
+- **Create an account** opens the sign-up page (names, e-mail, username, a password of at least 16 characters, repeated), and **Forgot your password?** opens the reset page; `button`, `buttonColor`, `linkColor` and `createPrompt` take effect.
+- The card is 470 px wide, so on a phone narrower than that it runs off the screen. That is the login application's to fix; it has been reported.
+- Without a published `Tenant` container, the login's lookup of the tenant's licence text answers 404 in the browser console; the screen works.
+- On a tenant without the CRM, the sign-up and reset flows may not finish (seen on 2026-10-07 with the earlier login application, not measured again). Keep both links, set up the CRM before Production (step 4), and until then create customer accounts yourself (4b).
 - Collect the brand assets now: the logo file (SVG, uploaded next to `index.xml`), the title, the description and the copyright holder.
 
-**Check it worked:** the configurator's Preview shows your logo and colours, and the deployment's properties panel says a login screen is configured.
+**Check it worked:** the deployment's login shows the three ways in (Log in, Forgot your password?, Create an account) and each opens its page; the configurator's Preview shows your logo and colours, and the deployment's properties panel says a login screen is configured.
 
 ### 4. Let users sign up
 

@@ -1,6 +1,6 @@
 ---
 name: xios3-app-design
-description: "Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a product: a design brief and mood board from one sentence about the app, a token theme (palette seeds, type and shape knobs) the runtime derives every hover and border from, Lucide icons recoloured from the theme, a layout kit (cards, list and detail, phone and desktop views, a navigation rail or menu), two small components (a status line, a screen watcher), and the data logic that goes with the screens (a list bound to a container, the detail to the selected object, the process writing). Use it whenever someone wants a XIOS/3 or CloudBackend app to look good, asks for a theme, colours, fonts, icons, a brand, a mood board, a responsive or mobile layout, custom components, empty states or status messages, or a first version of the UI; whenever cloudbackend-saas-launch reaches step 2 (the application) or step 3 (the login screen's brand); and for any XIOS/3 view that still names colours in its markup."
+description: "Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a product: a design brief and mood board from one sentence about the app, a token theme (palette seeds, type and shape knobs) the runtime derives every hover and border from, Lucide icons recoloured from the theme, a layout kit (cards, list and detail, phone and desktop views), two small components, a login screen with sign in, sign up and forgot password in the CloudBackend PaaS sign-in's look, and the data logic behind the screens. Use it whenever someone wants a XIOS/3 or CloudBackend app to look good, asks for a theme, colours, fonts, icons, a brand, a mood board, a responsive or mobile layout, custom components, empty states or status messages, or a first version of the UI; whenever cloudbackend-saas-launch reaches step 2 (the application) or step 3 (the login screen's brand); and for any XIOS/3 view that still names colours in its markup."
 ---
 
 # XIOS/3 application design
@@ -101,6 +101,18 @@ Panel facts: a view renders only its first top-level panel (the toolbar may sit 
 `type="columns"`; sizes in px, %, `auto` or `fill`; `padding` and `gap` are numbers; a `placeholder` child of
 an `iconlist` is the empty state and shows only while the list has no rows.
 
+## The login screen
+
+Every app with a login offers all three ways in: sign in, sign up and forgot password. It uses the runtime's own login
+application, which has the CloudBackend PaaS sign-in's shape (the logo above a white card, the fields, one full-width
+button, sign-up and reset pages in the same design). `designkit.py app --login` writes the `<login>` element with
+`create`, `createPrompt` and `reset` always set, "Log in" and a welcome line, the primary colour on the button and links,
+a navy grid page (`login-bg.svg`) and a text-mark logo (`logo.svg`), and wires the manifest: views and process
+`onRequest`, the login process first, the desktop view first. `designkit.py login app` checks it.
+`references/login.md` has the element, the settings the manual leaves out (`button`, `buttonColor`, `linkColor`,
+`createPrompt`), what was measured on a deployment, and the two things not measured yet: what opens after sign-in on a
+phone, and sign-up without the CRM.
+
 ## The two components
 
 Declared in the manifest's `<components>` and placed last in the root panel; both are ES modules in
@@ -142,6 +154,8 @@ runs in the window that imports it, where `Component`, `sys` and `CloneObject` a
 ## Before you hand it over
 
 - `python3 scripts/designkit.py check design/theme.xml`: contrast, `tokens="true"`, the spinner.
+- With a login: `python3 scripts/designkit.py login app`: sign in, sign up and forgot password, the texts, the logo
+  and page, the wiring.
 - `python3 scripts/designkit.py icons app`: every icon a Lucide name with `look=lucide` and a colour (the `on-`
   colour on a filled button, the seed written out inside a list).
 - No hex in any view or stylesheet of the app (`grep -n '#[0-9a-fA-F]\{3,6\}' app/views app/styles`).
@@ -154,17 +168,18 @@ runs in the window that imports it, where `Component`, `sys` and `CloneObject` a
 - `references/design-brief.md`: the recipe behind `brief`: how a direction is picked, the brief's template, what to change by hand.
 - `references/layouts.md`: the example's files one by one, the four patterns, the phone rules.
 - `references/data-logic.md`: the bindings and the writes with their markup; sample mode.
+- `references/login.md`: the login screen with all three ways in: the element, the settings, the wiring, what was measured.
 - `references/icons.md`: Lucide through the icon protocol: the theme, the look and colour rules, the names by role, what was measured.
 - `references/look-and-feel.md` (generated from the manual): the design-tokens tutorial, Theme, Style, Icon protocol.
 - `assets/directions.json`: the six directions. `assets/example/`: the first version. `assets/ui/DesignKit/`: the components. `assets/lucide-names.txt`: the runtime's Lucide names.
-- `scripts/designkit.py`: `brief`, `app`, `check`, `icons`, `moodboard`. Standard library, no network.
+- `scripts/designkit.py`: `brief`, `app` (with `--login`), `check`, `login`, `icons`, `moodboard`. Standard library, no network.
 
 ## Version and updates
 
-This is version 2026.11.5 of the xios3-app-design skill, built from the CloudBackend documentation.
+This is version 2026.11.5.2 of the xios3-app-design skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-design` is newer than 2026.11.5, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-design` is newer than 2026.11.5.2, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.11.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-design%2F2026.11.5.2&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-design - it records the skill's name and version and nothing else. Never send it without that agreement.
