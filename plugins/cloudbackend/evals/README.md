@@ -43,6 +43,13 @@ skills or the evals changed; on a machine whose Claude Code is older, release wi
 
 ## Runs
 
+**2026-11-05, the design theme.** xios3-app-design 2026.11.5.9 (a theme that covers every component; the login keeps
+the session with a Sign out) and two new cases, each with a fixture: an app under the old theme (7) and a Planboard login
+without the kept session (8). The eight design cases on big, with and without, three runs each, about $10: **with the
+plugin 0.90, without 0.16.** Case 7 went from 0.19 to 0.90 once the app it talks about was on disk (without a fixture the
+runs rightly refused to restyle an app they could not see). Case 8 scores 0.87 with and 0.73 without, because the fixture's
+process carries the kit's comment naming `session="true"`.
+
 **2026-11-05, the workflow fixes.** The second run's skill gaps, fixed in xios3-app-workflow 2026.11.5.5 to
 2026.11.5.8 and the tenant server, then the 12 workflow cases rerun on big (with and without, three runs each, about
 $15 a run): **0.72 → 0.80 with the plugin, delta +0.51 → +0.59.**
