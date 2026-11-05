@@ -16,7 +16,7 @@ runs (the manifest and every XML file reachable through `xlink:href`, against th
 | G01 | build | The manifest is `index.xml` with root `<application>`; `version` sits on `<about>`, never on `<process>` (the wizard refuses it: `'process' does not allow attribute 'version'`, measured 2026-10-07) | Move `version` to `<about version="…">` |
 | G02 | build | No view file is named `view.xml`, and view names are unique across the package | Name views after their screen (`List.xml`, `Detail.xml`) |
 | G03 | build | XPath in expressions uses only the functions the tenant's verifier accepts; `number()` was rejected on a tenant | Rewrite with the functions the reference documents (`string()`, `count()`, `concat()` …); the accepted list is published in `tenant-grammar.json` once measured again |
-| G04 | build | `call` names its target with `value=`, not `step=` | `<call value="…"/>` |
+| G04 | build | The `call` operation names its target with `value=`, not `step=` | `<operation name="call" value="…"/>` (a bare `<call axis step>` is valid only inside `navigate`) |
 | G05 | build | No `<select>`, `<option>` or `<a>` in a view: the tenant's view dialect flattens them silently. Raw HTML renders only through listview XSL | Use the reference's components (`combobox`, `button`, `link` …), or move the markup into a listview's XSL |
 | G06 | build | A `<process>` with `<script href>` has `<step id="start">` | Add the start step; without it a cold `call` into the module can return "not found" and the failure is swallowed (measured on the hosted runtime, 2026-09-26) |
 | G07 | build | Every `xlink:href` resolves to a file inside the package; no `..` | Fix the path or add the file |
