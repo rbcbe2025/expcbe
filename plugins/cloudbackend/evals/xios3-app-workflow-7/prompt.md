@@ -1,7 +1,7 @@
 ---
 name: xios3-app-workflow-7
 tags: [xios3-app-workflow]
-max_turns: 10
+max_turns: 25
 allowed_tools: [Read, Glob, Grep, Skill]
 ---
 

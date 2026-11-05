@@ -1,7 +1,7 @@
 ---
 name: cloudbackend-saas-launch-3
 tags: [cloudbackend-saas-launch]
-max_turns: 10
+max_turns: 25
 allowed_tools: [Read, Glob, Grep, Skill]
 ---
 

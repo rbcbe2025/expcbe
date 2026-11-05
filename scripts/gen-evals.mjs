@@ -37,7 +37,7 @@ for (const {name: skill} of provenance.skills) {
     expected.set(`${id}/prompt.md`, `---
 name: ${id}
 tags: ${yamlList([skill])}
-max_turns: 10
+max_turns: 25
 allowed_tools: ${yamlList(['Read', 'Glob', 'Grep', 'Skill'])}
 ---
 
