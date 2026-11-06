@@ -2,7 +2,7 @@
 
 The hand-written end-to-end guide from the CloudBackend documentation hub: the order of work for a first paid web application on CloudBackend PaaS, with a check for each step and the items the product has not settled yet. Its links point at the published manual.
 
-1 topics from the published CloudBackend documentation, generated on 2026-11-05. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+1 topics from the published CloudBackend documentation, generated on 2026-11-06. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -86,7 +86,7 @@ In the manifest:
 1. Declare `xmlns:xlink="http://www.w3.org/1999/xlink"` on `<application>`.
 2. Set `xlink:actuate="onRequest"` on your own process and views, and declare the desktop view first: after sign-in the login application opens the first view declared on every screen (measured 2026-11-05), so that view must also work on a phone. The xios3-app-design kit's desktop view does.
 3. Add `<process xlink:actuate="onLoad" xlink:href="xios://apps/login.xml"/>` before your main process.
-4. Add a `<login>` element. The manual documents `background` (an image, a colour, or two colours separated by a comma for a bottom-up gradient; `dark="true|false"` tells the screen which text colour to use), `logo`, `title`, `description`, `copyright`, `create` and `reset` (each shows its link, with the element's text as the label) and `client`. The login application also reads `button` (the sign-in button's text), `buttonColor`, `linkColor` and `createPrompt` (the line before the sign-up link), and the element's `session` attribute: with `session="true"` the runtime keeps the user signed in across reloads (the session stays in the browser for seven days of use), without it every reload signs the user out. An app with a kept session needs a Sign out, a step with `<operation name="system"><logout/></operation>`.
+4. Add a `<login>` element. The manual documents `background` (an image, a colour, or two colours separated by a comma for a bottom-up gradient; `dark="true|false"` tells the screen which text colour to use), `logo`, `title`, `description`, `copyright`, `create` and `reset` (each shows its link, with the element's text as the label) and `client`. The login application also reads `button` (the sign-in button's text), `buttonColor`, `linkColor` and `createPrompt` (the line before the sign-up link), and the element's `session` attribute: with `session="true"` the runtime keeps the user signed in across reloads (the session stays in the browser for seven days of use), without it every reload signs the user out. An app with a kept session needs a Sign out, a step with `<operation name="system"><logout silent="true"/></operation>` (without `silent` the runtime first asks "Log Off?" in a dialog of its own).
 
 ```xml
 <login session="true">

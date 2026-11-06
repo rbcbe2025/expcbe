@@ -151,7 +151,7 @@ model — the skill `singularity-database` explains them; the REST view of the s
   before your main process, and a `<login>` element for settings. Always set `create` and `reset`: they are the
   sign-up and forgot-password links, which show only when set, so every login offers sign in, sign up and forgot
   password. Write `<login session="true">`: without it every reload signs the user out (with it the runtime keeps the
-  session in the browser for seven days of use), and give the app a Sign out (`<operation name="system"><logout/></operation>`).
+  session in the browser for seven days of use), and give the app a Sign out (`<operation name="system"><logout silent="true"/></operation>`; without `silent` the runtime asks "Log Off?" first).
   The login application also reads `button`, `buttonColor`, `linkColor` and `createPrompt`, and after sign-in
   opens the first declared view, so declare the desktop view first. xios3-app-design `references/login.md` has the
   CloudBackend PaaS sign-in's look and what was measured; `references/deployment.md` has the steps.
@@ -306,10 +306,10 @@ Hand-written, measured on the hosted runtime (not from the manual; dated):
 
 ## Version and updates
 
-This is version 2026.11.5.3 of the xios3-app-basics skill, built from the CloudBackend documentation.
+This is version 2026.11.6 of the xios3-app-basics skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-basics` is newer than 2026.11.5.3, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-basics` is newer than 2026.11.6, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-basics%2F2026.11.5.3&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-basics - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-basics%2F2026.11.6&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-basics - it records the skill's name and version and nothing else. Never send it without that agreement.

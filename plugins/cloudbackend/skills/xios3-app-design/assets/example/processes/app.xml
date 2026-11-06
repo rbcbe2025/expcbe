@@ -20,10 +20,11 @@
   <trigger view="App" component="signOut" event="Select" step="signOut"/>
 
   <!-- sign out: ends the session at CloudBackend and in the browser; the login screen comes back. The button shows only
-       when the app has a login (the kit writes it with the login option), whose session="true" keeps the sign-in across reloads. -->
+       when the app has a login (the kit writes it with the login option), whose session="true" keeps the sign-in across reloads.
+       silent="true" skips the runtime's own "Log Off?" confirm, whose words do not match the button's. -->
   <step id="signOut">
     <operation name="system">
-      <logout/>
+      <logout silent="true"/>
     </operation>
   </step>
 

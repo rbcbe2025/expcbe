@@ -2,7 +2,7 @@
 
 Channels and mounting, datatypes, object properties, managing objects, containers, groups and datatypes from process markup, key/values, searching and the query language.
 
-22 topics from the published XIOS/3 documentation, generated on 2026-11-05. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+22 topics from the published XIOS/3 documentation, generated on 2026-11-06. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

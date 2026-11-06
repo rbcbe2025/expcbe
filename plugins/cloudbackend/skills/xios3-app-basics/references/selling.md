@@ -2,7 +2,7 @@
 
 Price plans as the CloudBackend documentation publishes them: configuring payment and plans in the console, publishing tenant://Settings/Products/Priceplans, mounting it from process markup, starting a PayPal checkout with the tenant operation, and the purchase records that confirm it. The same pages ship in the singularity-database skill.
 
-2 topics from the published CloudBackend documentation, generated on 2026-11-05. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+2 topics from the published CloudBackend documentation, generated on 2026-11-06. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

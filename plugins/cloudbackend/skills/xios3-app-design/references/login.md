@@ -62,8 +62,9 @@ keys. Without the attribute nothing is stored, so every reload signs the user ou
 2026.6.0, on 2026-11-05).
 
 Two consequences for the app. It needs a visible **Sign out**: the example carries a `signOut` button (hidden until the
-login option reveals it) whose step runs the runtime's logout (`<operation name="system"><logout/></operation>`), which
-ends the session and brings the sign-in page back. And a shared computer keeps the user signed in for up to a week of
+login option reveals it) whose step runs the runtime's logout (`<operation name="system"><logout silent="true"/></operation>`),
+which ends the session and brings the sign-in page back. Without `silent="true"` the runtime first asks "Log Off? Do you
+really want to log off?" in a dialog of its own, in words that do not match a Sign out button. And a shared computer keeps the user signed in for up to a week of
 use, which belongs in the app's help text when it matters.
 
 The login application also reads `support`, `eula`, `view` (a login view of your own), `username`, `password`, and titles,
@@ -109,10 +110,17 @@ on every page. The `<theme>` does not reach the login screen: the login applicat
   with the desktop view at 375 px: the list filled the screen, a picked task opened full width with Back, and Back
   returned to the list.
 
+- **The kept session**, measured 2026-11-06 on a Development deployment of the kit's app with `session="true"`, a
+  signed-in user and the desktop app's browser: the sign-in wrote `:session_<tenant>` and `:expire_<tenant>`, and the
+  expiry moved forward with each request; three reloads (at the browser pane's width, at 1280 px and at 375 px with phone
+  emulation) opened the app straight away with no sign-in page; Sign out (then still with the runtime's confirm) removed
+  both keys and brought the sign-in page back. Session state is per browser: a sign-in in one browser does not carry to
+  another.
+
 Not measured yet:
 
-- **The kept session across a reload on a deployment**, and Sign out clearing it: the attribute's effect is read in the
-  runtime's code; the first run with a signed-in user is still to come.
+- **Sign out with `silent="true"`**: the runtime's code calls the same logout without the dialog; the run with a
+  signed-in user is still to come.
 
 - **Sign-up and reset on a tenant without the CRM.** The flows send e-mail through the tenant's CRM. Keep both links,
   and set up the CRM before Production (cloudbackend-saas-launch, step 4).

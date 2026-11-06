@@ -120,6 +120,21 @@ After that, at most one question per phase, and only where a default would be wr
 The questions a phase may ask are listed with the phase. Everything else takes the plan card's default,
 said in one line so the user can correct it.
 
+## Short questions get the whole answer
+
+A user who asks mid-flow ("is it live?", "is it secure?") acts on the answer, so it carries the verdict, the
+reason in the words below, and the next action, also when the question is one line. Where the check is
+read-only and a route is open, run it rather than advise it.
+
+| The user asks | The answer says, every time |
+| --- | --- |
+| Is it live? (or: deploy it and tell me) | live or not from `index_xml_match` and the files compared; **a 200 proves nothing**, because every path on a webshare answers 200 with the boot page; the gate verdict; what was not checked |
+| Is it secure now? (the login page shows the logo) | the `login_gate` verdict from a fresh `verify_deployment`; **a themed login page is not access control, and private visibility is not authentication**; the real gate is the pipeline's login configuration plus the login stamp in the served manifest; the test is the user's: sign in as a **role-less test identity in a private window**, and open the app signed out; re-verify after every redeploy |
+| Promote it, connect my domain | console steps, no tool (W8's click path, the logo as a full `https://` address on the Staging host, the `A` record `83.140.241.4`); `verify_deployment` after each promotion; **customers get the Production address or the domain, never the console's** |
+| A 409 on a seed: delete `data/` and retry? | no: the seed was kept on purpose and may hold real records; then carry on yourself with `verify_deployment` (read-only) and report its verdict, rather than another upload |
+| The Lighthouse score is high but the app feels slow | the Performance score is flattered (the app renders in the runtime's frame, so LCP measures the boot page); **Speed Index** is the honest number; record the **route, preset, profile and date** with the scores; the fixes: an icon font replaced by SVG (G15), the boot script deferred with preloads, a minimum page height, a title on the frame; an SEO score of 63 is the host's robots rule for a path beginning with `xios` (G18) |
+| Lint findings, in any phase | per finding the rule id, the rule's message in its own words (the why, for example "the tenant's view dialect flattens `<select>`"), and its fix; nothing uploaded while an error stands |
+
 ## The phases
 
 Keep the order unless the user has a reason: the spec shapes the design, the data shapes the views, a
@@ -428,10 +443,10 @@ Generated from the published manual at build time:
 
 ## Version and updates
 
-This is version 2026.11.5.8 of the xios3-app-workflow skill, built from the CloudBackend documentation.
+This is version 2026.11.6 of the xios3-app-workflow skill, built from the CloudBackend documentation.
 
 Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.5.8, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
+Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `xios3-app-workflow` is newer than 2026.11.6, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
 
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.5.8&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.
+CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-workflow%2F2026.11.6&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-workflow - it records the skill's name and version and nothing else. Never send it without that agreement.

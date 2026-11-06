@@ -2,7 +2,7 @@
 
 The console's Deployments page (cards, stages, promotion, versions, domains) and the Webhooks pages (the inbound side of an integration), as the CloudBackend documentation publishes them.
 
-3 topics from the published CloudBackend documentation, generated on 2026-11-05. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+3 topics from the published CloudBackend documentation, generated on 2026-11-06. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

@@ -361,7 +361,8 @@ html body .alertDialog { background: transparent !important; border: 0 !importan
 html body .alertDialog .titleBar { background: transparent !important; color: var(--dk-ink) !important; border: 0 !important; padding: 16px 18px 0; }
 html body .alertDialog #\!windowTitle, html body .alertDialog .titleBar span { font-size: var(--xios-text-lg, 17px) !important; font-weight: var(--xios-weight-bold, 600) !important; letter-spacing: -0.015em; color: var(--dk-ink) !important; text-shadow: none !important; }
 html body .alertDialog .titleBar svg, html body .alertDialog .titleBar .ct { display: none !important; }
-html body .alertDialog #\!windowTitle { margin-left: 0 !important; padding-left: 14px; }
+/* the runtime shifts the title 9 px right for its icon; without the icon it lines up with the message */
+html body .alertDialog #\!windowTitle { margin-left: 0 !important; left: 0 !important; padding-left: 14px; }
 html body.xios-view_widget .xios-panel { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 html body.xios-view_widget, html body.xios-view_widget * { font-family: var(--xios-font-sans, -apple-system, system-ui, sans-serif) !important; }
 /* the message is written 400 px wide inline, whatever the dialog's width */
