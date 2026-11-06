@@ -43,6 +43,27 @@ skills or the evals changed; on a machine whose Claude Code is older, release wi
 
 ## Runs
 
+**2026-11-06, short questions get the whole answer.** The 2026-11-05 workflow run showed the facts were in the skill
+but missing from answers to one-line questions asked mid-flow. xios3-app-workflow 2026.11.6 adds a section mapping each
+such question to the points its answer carries (2026.11.6.2 and .3 add three rows after the reruns), and the
+xios3-grammar-reviewer agent keeps each lint rule's reason. The 12 workflow cases on big, with and without, three runs
+each, $17.43: **0.80 → 0.95 with the plugin, 0.16 without, delta +0.59 → +0.76.** Reruns of the cases still missing a
+point, after the extra rows ($8.24): case 5 0.89 → 1.00, case 6 0.83 → 1.00, case 8 0.78 → 0.89 (one run stopped
+before the spec's cost line). Taking each case's latest run, the suite stands at 0.98; that mixes runs, so the next
+full run is the number to quote.
+
+| Question | Case | 2026-11-05 | 2026-11-06 |
+| --- | --- | --- | --- |
+| Lint findings (the rule's reason in its own words: "flattened by the tenant") | 2 | 0.90 | 1.00 |
+| "Is it live?" (a 200 proves nothing) | 3 | 0.80 | 1.00 |
+| "Promote it, connect my domain" (customers get Production or the domain) | 4 | 0.81 | 1.00 |
+| "Write the benchmark report" (Source in the reply's copy too, the twin opt-in) | 5 | 1.00 | 1.00 (0.89 before its row) |
+| "Verify it", no browser (results recorded as user-run) | 6 | 0.89 | 1.00 |
+| "Is it secure now?" (private visibility is not authentication, a role-less identity in a private window) | 7 | 0.60 | 0.93 |
+| "Add AI, here is my key" (the JSON-escaped body) | 8 | 0.83 | 0.89 |
+| A 409 on a seed (carry on with verify_deployment) | 9 | 0.67 | 1.00 |
+| Lighthouse high, app slow (route, preset, profile, date) | 10 | 0.73 | 1.00 |
+
 **2026-11-05, the design theme.** xios3-app-design 2026.11.5.9 (a theme that covers every component; the login keeps
 the session with a Sign out) and two new cases, each with a fixture: an app under the old theme (7) and a Planboard login
 without the kept session (8). The eight design cases on big, with and without, three runs each, about $10: **with the
