@@ -29,11 +29,17 @@ const mean = xs => xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null;
 const sum = xs => xs.reduce((a, b) => a + (b || 0), 0);
 const f2 = x => x === null || x === undefined ? '  —  ' : x.toFixed(2);
 
+/** A judge the cost ceiling stopped never ran, but the CLI still scores it as a fail (2026-11-07: 4 of 32 Fable cases,
+ *  0.80 counted that way, 0.90 over the cases judged in full). Such a grader is left out of the score, and a run that
+ *  has one is unjudged: not recorded as run, so eval-plan selects its case again. */
+export const ceilingSkipped = g => /^skipped: cost ceiling/.test(g.explanation || '');
+export const unjudged = run => !!run.skippedPaidGraders || (run.graders || []).some(ceilingSkipped);
+
 /** A run's score over its scored graders, leaving out the with-only indicators: the same number the CLI reports under
  *  with-without, and comparable when a run had no without arm (under --ablation none a with-only grader would count).
  *  The `-lm` shadows run-evals.mjs --shadow-focus adds are left out too: they are measurements of the judge, not of the run. */
 export function runScore(run) {
-  const graders = (run.graders || []).filter(g => g.scored !== false && !g.withOnly && g.name !== 'uses-skill' && !g.name.endsWith('-lm'));
+  const graders = (run.graders || []).filter(g => g.scored !== false && !g.withOnly && g.name !== 'uses-skill' && !g.name.endsWith('-lm') && !ceilingSkipped(g));
   const weight = sum(graders.map(g => g.weight ?? 1));
   return weight ? sum(graders.map(g => (g.passed ? 1 : 0) * (g.weight ?? 1))) / weight : (run.score ?? 0);
 }
@@ -42,7 +48,7 @@ export function runScore(run) {
 export function summarize(result) {
   return result.cases.map(c => {
     const arm = runs => runs && runs.length ? {score: mean(runs.map(runScore)), cost: sum(runs.map(r => r.costUsd)) / runs.length,
-      turns: mean(runs.map(r => r.turns || 0)), runs: runs.length} : null;
+      turns: mean(runs.map(r => r.turns || 0)), runs: runs.length, unjudged: runs.filter(unjudged).length} : null;
     return {case: c.name, with: arm(c.arms.with), without: arm(c.arms.without)};
   });
 }
@@ -58,11 +64,12 @@ export function record(resultFile, stage) {
     if (!h) { console.error(`  ${s.case}: not in the staged plan; not recorded`); continue; }
     for (const [arm, a] of [['with', s.with], ['without', s.without]]) {
       if (!a) continue;
+      if (a.unjudged) { console.error(`  ${s.case} (${arm}): ${a.unjudged} run(s) not judged in full (cost ceiling); not recorded`); continue; }
       index.rows.push({label, date, model, judge: result.suite.judgeModel, cli: result.claudeVersion, case: s.case, skill: h.skill, arm,
         runs: a.runs, score: +a.score.toFixed(4), costUsd: +a.cost.toFixed(4), turns: +a.turns.toFixed(1),
         skill_hash: h.skill_hash, plugin_hash: h.plugin_hash, case_hash: h.case_hash});
     }
-    if (s.without) baseline.cases[s.case] = {case_hash: h.case_hash, score: +s.without.score.toFixed(4), runs: s.without.runs,
+    if (s.without && !s.without.unjudged) baseline.cases[s.case] = {case_hash: h.case_hash, score: +s.without.score.toFixed(4), runs: s.without.runs,
       costUsd: +s.without.cost.toFixed(4), cli: result.claudeVersion, date, label};
   }
   writeJson(INDEX_FILE, index);
@@ -72,7 +79,7 @@ export function record(resultFile, stage) {
     const h = stage.hashes[c.name];
     if (!h) continue;
     const texts = Object.fromEntries((c.graders || []).map(g => [g.name, assertionText(g) || graderFileText(c.name, g.name)]));
-    for (const [arm, config] of [['with', 'with_skill'], ['without', 'without_skill']]) for (const run of c.arms[arm] || []) {
+    for (const [arm, config] of [['with', 'with_skill'], ['without', 'without_skill']]) for (const run of (c.arms[arm] || []).filter(r => !unjudged(r))) {
       const expectations = (run.graders || []).filter(g => /^assertion-\d+[a-z]?$/.test(g.name) && texts[g.name]).map(g => [texts[g.name], !!g.passed]);
       if (expectations.length) gradings.runs.push({skill: h.skill, iteration, label, case: c.name, eval_id: +c.name.split('-').pop(), config, date, expectations});
     }
@@ -96,10 +103,12 @@ export function print(results) {
   console.log('case                              with  without     delta  $/run  turns');
   for (const r of rows) {
     const d = r.with && r.withoutScore !== null ? r.with.score - r.withoutScore : null;
-    console.log(`${r.case.padEnd(32)} ${f2(r.with && r.with.score)}  ${f2(r.withoutScore)} ${r.source.padEnd(6)} ${d === null ? '  —  ' : (d >= 0 ? '+' : '') + d.toFixed(2)}  ${r.with ? r.with.cost.toFixed(3) : '  —  '}  ${r.with ? r.with.turns.toFixed(1) : '—'}`);
+    console.log(`${r.case.padEnd(32)} ${f2(r.with && r.with.score)}${r.with && r.with.unjudged ? '*' : ' '}  ${f2(r.withoutScore)} ${r.source.padEnd(6)} ${d === null ? '  —  ' : (d >= 0 ? '+' : '') + d.toFixed(2)}  ${r.with ? r.with.cost.toFixed(3) : '  —  '}  ${r.with ? r.with.turns.toFixed(1) : '—'}`);
   }
   const w = rows.filter(r => r.with), wo = rows.filter(r => r.withoutScore !== null && r.with);
   const cost = sum(results.map(r => r.costUsd));
+  const partial = rows.filter(r => r.with && r.with.unjudged).length;
+  if (partial) console.log(`\n* ${partial} case(s) not judged in full (the cost ceiling skipped paid judges): scored over the graders that ran, not recorded`);
   console.log(`\n${rows.length} case(s): with ${f2(mean(w.map(r => r.with.score)))}, without ${f2(mean(wo.map(r => r.withoutScore)))}, ` +
     `delta ${wo.length ? '+' + (mean(wo.map(r => r.with.score)) - mean(wo.map(r => r.withoutScore))).toFixed(2) : '—'}; spent $${cost.toFixed(2)}`);
 }
