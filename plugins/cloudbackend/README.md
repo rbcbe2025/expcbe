@@ -1,77 +1,69 @@
 # CloudBackend plugin for Claude
 
-One install for building on CloudBackend PaaS with XIOS/3: the published skills (the Singularity database, the REST API, the native SDKs, XIOS/3 applications and their design, the SaaS launch path, the build-and-deploy workflow), five workflow agents, and four servers. Documentation lookups and the build tools run inside the plugin, on your computer, with no sign-in (the documentation server reads the developer portal). Deployment goes through the plugin's tenant server, which signs you in on a page in your browser (in the Claude desktop app, its built-in browser), or through CloudBackend's live server at your own tenant once the account has its sign-in realm. The skills carry the method; a plugin update brings a newer set.
+One install for building on CloudBackend PaaS with XIOS/3: five skills (the launch path from an idea to paying customers, with its build phases; XIOS/3 markup and design; the Singularity database; the REST API; the native SDKs), three build agents that run on the model you use, and the documentation, build and tenant servers on your computer. Nothing is hosted, and nothing is asked at install.
 
 <!-- install:start -->
 ## Install
 
-Version 2026.1105.7 · the plugin `cloudbackend@cloudbackend`
+Version 2026.1105.7 · the plugin `cloudbackend@cloudbackend` · 5 skills, 3 agents, 3 servers on your computer
 
-**Claude Code, from GitHub** (the public repository; no GitHub account needed, only git on your computer):
+**Claude Code** (a terminal, the Code tab of the Claude desktop app, the IDE extensions), once:
 
 ```bash
 claude plugin marketplace add rbcbe2025/expcbe
 claude plugin install cloudbackend@cloudbackend
 ```
 
-Your account name (lowercase letters and digits, as in `https://<account>.db.cloudbackend.com/`) fills the deploy
-connector, `cloudbackend-deploy` at `https://mcp.cloudbackend.com/mcp/<tenant>`. Run from a terminal the install does not ask for it: add
-`--config cbe_tenant=<account>` to the install command, or set it later with
-`/plugin configure cloudbackend@cloudbackend`. The deploy connector signs in through the account's own sign-in
-realm, which the owner creates once; until it exists, `cloudbackend-tenant` signs you in on a page on your computer and
-deploys over the REST API. `main` is what an install follows; work happens on `dev`.
+Then start a new session. Updates: switch auto-update on once (`/plugin` → Marketplaces → cloudbackend), or run
+`claude plugin marketplace update cloudbackend` and `claude plugin update cloudbackend@cloudbackend`. The repository is public: no GitHub account, only git on your computer.
 
-**Claude Code, without GitHub access:** the same marketplace, served by the developer portal:
+**claude.ai, Claude Desktop, Cowork:** Customize → Plugins → Add → Add marketplace, enter `rbcbe2025/expcbe`, choose Sync, then
+add the cloudbackend plugin. A chat uses the skills; Cowork on your computer also runs the servers. Keeping it in sync by
+itself needs the Claude GitHub App to have access to the repository.
 
-```bash
-claude plugin marketplace add https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/marketplace.json
-claude plugin install cloudbackend@cloudbackend
-```
+**Cursor, VS Code, Codex CLI, Gemini CLI:** download [the plugin as one zip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1105.7.zip), unzip it, and use its `clients/`
+folder (each file names the unzipped folder as `<plugin-dir>`).
 
-**One session, nothing installed:** `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1105.7.zip`
+**Deploying:** the tenant server signs you in on a page on your computer (in the Claude desktop app, its built-in
+browser): the password goes from your browser to CloudBackend, never through the chat. An account whose owner created
+its sign-in realm can also add CloudBackend's deploy connector, `https://mcp.cloudbackend.com/mcp/<tenant>`: `scripts/connect-deploy.sh <account>`.
 
-**Updates:** `claude plugin marketplace update cloudbackend`, then `claude plugin update cloudbackend@cloudbackend` (a marketplace you added yourself does not update by itself;
-`/plugin` → Marketplaces can switch auto-update on).
+**Requirements:** the three servers run with `node` (Node 18 or later; if `node --version` fails in a terminal, install
+Node first). Nothing else is installed.
 
-**Nothing else to install.** The three local servers are Node and run from the plugin's own files; Claude Code is the
-one requirement. Signing in to your account happens in your browser (in the Claude desktop app, its built-in browser),
-never in the chat.
+<details><summary>Other ways in</summary>
 
-**claude.ai, Claude Desktop, Cowork:** Customize, Plugins, Add, Add marketplace: enter `rbcbe2025/expcbe`, choose Sync, then add
-the cloudbackend plugin and confirm its local servers (tried 2026-11-05). A chat uses the skills; Cowork on your computer also runs
-the servers. Keeping it in sync by itself needs the Claude GitHub App to have access to the repository. Without an added marketplace, upload the skills from the developer portal's Tools page; the
-documentation server is the Claude Desktop extension offered there. The deploy connector is added by hand as a custom
-connector (`scripts/connect-deploy.sh <tenant> --print` prints the URL; Cowork reads `.mcp.json` but cannot fill
-the tenant).
+- The same marketplace from the developer portal, without GitHub: `claude plugin marketplace add https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/marketplace.json`, then `claude plugin install cloudbackend@cloudbackend`.
+- One session, nothing installed: `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1105.7.zip`.
+- A single skill: the developer portal's Tools page has each skill's file; do not add one by hand next to the plugin, or
+  both copies load.
 
-**Cursor, VS Code, Codex CLI, Gemini CLI:** unzip the plugin and use `clients/` (each file names `<plugin-dir>`).
+</details>
 <!-- install:end -->
 
 ## What is inside
 
 <!-- skills:start -->
-7 skills, built from the documentation on 2026-11-05 (`SKILLS.json` has the hashes):
+5 skills, built from the documentation on 2026-11-07 (`SKILLS.json` has the hashes):
 
 | Skill | Version | Use it when |
 | --- | --- | --- |
-| `cloudbackend-rest-api` | 2026.10.27.4 | Call the CloudBackend Singularity database over its REST API (api.cloudbackend.com/v1) — log in and get a session token, create and query containers, create/save/list objects and their streams, set ACLs, share, manage drives, groups and identities — with the exact XML request and response bodies for all 513 operations bundled. |
-| `cloudbackend-saas-launch` | 2026.11.5.5 | Guide a developer from an empty CloudBackend PaaS tenant to the first paying customer of a SaaS web app: tenant and identities, data model, XIOS/3 app, branded login screen, sign-up and CRM e-mail, teams and roles, price plans with PayPal checkout, deployment to a custom domain. Asks only what each step needs, keeps a launch-context file, and hands each step to the skill that owns it (singularity-database, xios3-app-basics, cloudbackend-rest-api). |
-| `cloudbackend-sdk` | 2026.10.10 | Use the native CloudBackend SDKs for C++, Java and Swift (the 'SDK Mobile, IoT & Cloud', package `cbe`) to log in to the Singularity database and work with Account, Container, Object, Item, Stream, Filter and QueryResult — including the asynchronous delegate pattern (LogInDelegate, QueryDelegate), createContainer/createObject with key/values, querying, sharing and terminate(). |
-| `singularity-database` | 2026.10.15 | Model data for CloudBackend's Singularity database, the object-oriented database behind CloudBackend PaaS. Covers its building blocks (tenant, identity, group, role, database, container, object, item, stream, key/value, datatype, ACL, sharing, publish/subscribe, webhook) and how to design with them: containers as folders or tables, datatypes as schemas, key/values as columns, ACL bits and inheritance, per-identity databases, tenant:// and home:// drives. |
-| `xios3-app-basics` | 2026.11.5.3 | Build web applications with XIOS/3 — the declarative XML application platform where a view (UI markup), a process (triggers → steps → operations) and data documents make an application, and the Data Virtualization Layer binds components straight to XML in the CloudBackend Singularity database (home://, tenant://). |
-| `xios3-app-design` | 2026.11.5.9 | Design a XIOS/3 application for CloudBackend PaaS so it looks and works like a modern product: a brief and mood board from one sentence, a custom token theme covering every runtime component with a responsive stylesheet after Apple's design principles on a Tailwind-like scale (no component or dialog keeps its default look), Lucide icons, a layout kit (cards, list and detail, phone and desktop views), two small components, a login screen with sign in, sign up and forgot password that stays signed in across reloads, and the data logic behind the screens. |
-| `xios3-app-workflow` | 2026.11.5.8 | Run the build-and-deploy workflow for a XIOS/3 application on CloudBackend PaaS, from an idea to a verified deployment and a benchmark report: an opening round and a plan card of defaults, a solution spec, the design hand-off, the data model, a scaffolded package built with sub-agents, a tenant-grammar lint before every upload, a Development deployment verified by content, UI probes in the browser, hardening (security, the login gate, SEO and GEO, analytics, clean-up), documentation and a manual, the console hand-off for Staging, Production and a domain, and a benchmark block that says what was measured. Shares cloudbackend-launch.md with cloudbackend-saas-launch. |
+| `cloudbackend-rest-api` | 2026.11.7 | Call the CloudBackend REST API (api.cloudbackend.com/v1) from any language: log in for a session token, create and query containers, create and save objects and streams, set ACLs, share, manage groups and identities, with the exact XML bodies of all 513 operations. |
+| `cloudbackend-saas-launch` | 2026.11.7.5 | Take a web app on CloudBackend PaaS from an idea or an empty tenant to a verified deployment and paying customers: plan, spec, design, data model, a XIOS/3 build linted before every upload, a deployment verified by content, hardening, login and sign-up, teams, price plans, promotion to a domain, and a benchmark. |
+| `cloudbackend-sdk` | 2026.11.7 | Use the native CloudBackend SDKs for C++, Java and Swift (package cbe): log in with a LogInDelegate, wait for callbacks, work with Account, Container, Object, Item, Stream, Filter and QueryResult, create containers and objects with key/values, query, share and terminate(). |
+| `singularity-database` | 2026.11.7 | Model data and run a product on CloudBackend's Singularity database: tenants, identities, groups, roles, containers, objects, streams, key/values, datatypes, ACLs and sharing, plus Owner and Administrator duties, sign-up and CRM e-mail, price plans and subscriptions. |
+| `xios3-app-basics` | 2026.11.7.3 | Write and design XIOS/3 applications: the manifest, views, processes and data bindings (home://, tenant://), events and operations, packaging, and the design kit: a token theme covering every component, Lucide icons, phone and desktop layouts, a login with sign in, sign up and a kept session, and the runtime's measured pitfalls. |
 <!-- skills:end -->
 
-`.mcp.json` declares the four servers:
+`.mcp.json` declares the three servers; CloudBackend's deploy connector is added by hand:
 
 <!-- servers:start -->
 | Server | Runs | Gives |
 | --- | --- | --- |
-| `cloudbackend-docs` | inside the plugin (Node 22; `servers/docs/`) | documentation lookups, read-only: topics, REST operation cards with XML bodies, SDK method cards, the nine XIOS/3 reference lookups (components, operations, functions, methods, events, actions, concepts, lists, icons); reads the developer portal, needs no sign-in |
-| `cloudbackend-build` | inside the plugin (Node 22; `servers/build/`, authored in the plugin repository, tested by `servers/build/test.mjs`) | build tools for a XIOS/3 package, no tenant needed: lint_project (the tenant grammar G01-G20 before an upload; schema validation happens at upload) and benchmark_project (the measured block of a benchmark report) |
-| `cloudbackend-tenant` | inside the plugin (Node 22; `servers/tenant/`, authored in the plugin repository, tested by `servers/tenant/test.mjs`) | your CloudBackend account, signed in on a page on your computer (the password goes from your browser to CloudBackend, never through the chat): upload_project (a local package folder, linted first), deploy (a Development deployment: private in the console, yet anyone with its address can open it unless the app has a login), verify_deployment (served bytes, not a 200), list_projects, and enable_deploy_connector (the owner creates the account's sign-in realm the deploy connector needs) |
-| `cloudbackend-deploy` | CloudBackend's live server, `https://mcp.cloudbackend.com/mcp/<tenant>` | CloudBackend's live per-tenant deploy server: list_projects, upload_project, deploy, verify_deployment and the rest. It signs in through the account's own sign-in realm, which the owner creates once (enable_deploy_connector on cloudbackend-tenant); until then cloudbackend-tenant is the route |
+| `cloudbackend-docs` | inside the plugin (Node 18 or later; `servers/docs/`) | documentation lookups, read-only: topics, REST operation cards with XML bodies (or the API by tag), SDK method cards, and the XIOS/3 reference by kind and name (components, operations, functions, methods, events, actions, concepts, icons) with a list of names per kind; reads the developer portal, needs no sign-in |
+| `cloudbackend-build` | inside the plugin (Node 18 or later; `servers/build/`, authored in the plugin repository, tested by `servers/build/test.mjs`) | build tools for a XIOS/3 package, no tenant needed: lint_project (the tenant grammar G01-G20 before an upload; schema validation happens at upload) and benchmark_project (the measured block of a benchmark report) |
+| `cloudbackend-tenant` | inside the plugin (Node 18 or later; `servers/tenant/`, authored in the plugin repository, tested by `servers/tenant/test.mjs`) | your CloudBackend account, signed in on a page on your computer (the password goes from your browser to CloudBackend, never through the chat): upload_project (a local package folder, linted first), deploy (a Development deployment: private in the console, yet anyone with its address can open it unless the app has a login), verify_deployment (served bytes, not a 200), list_projects, and enable_deploy_connector (the owner creates the account's sign-in realm the deploy connector needs) |
+| `cloudbackend-deploy` | CloudBackend's server, `https://mcp.cloudbackend.com/mcp/<tenant>`, added by hand | optional, added by hand: CloudBackend's per-tenant deploy server (list_projects, upload_project, deploy, verify_deployment and the rest), for an account whose owner created its sign-in realm (enable_deploy_connector on cloudbackend-tenant); not in the plugin's .mcp.json, because without the realm it can only fail to connect |
 <!-- servers:end -->
 
 `servers/docs/` is a copy of the documentation hub's Claude Desktop extension server, made by the repository's `scripts/sync-servers.mjs` (it carries a `VENDORED_FROM` note and a `MANIFEST.sha256`) and never edited here. `servers/build/index.mjs` is written in the plugin repository: a port of the deploy server's build tools that reads the tenant grammar from `skills/xios3-app-workflow/references/tenant-grammar.json`, so the rules the skill documents and the rules the tool applies are one file; `servers/build/test.mjs` tests it. Both servers are plain Node files: nothing is installed on your computer.

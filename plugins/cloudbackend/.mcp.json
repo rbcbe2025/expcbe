@@ -20,10 +20,6 @@
       "env": {
         "CBE_SESSION_DIR": "${CLAUDE_PLUGIN_DATA}/sessions"
       }
-    },
-    "cloudbackend-deploy": {
-      "type": "http",
-      "url": "https://mcp.cloudbackend.com/mcp/${user_config.cbe_tenant}"
     }
   }
 }

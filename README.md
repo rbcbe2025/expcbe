@@ -11,7 +11,7 @@ Node 22 built-ins, `bash`, `git`, and the `claude` CLI for validation and evals.
 .claude-plugin/marketplace.json     the marketplace "cloudbackend": one plugin, relative source ./plugins/cloudbackend
                                     (the git form, what GitHub serves; entry fields GENERATED from plugin.json)
 plugins/cloudbackend/               the plugin
-  .claude-plugin/plugin.json        name, version YYYY.MDD.N (pinned), description, userConfig.cbe_tenant (the deploy tenant)
+  .claude-plugin/plugin.json        name, version YYYY.MDD.N (pinned), description (nothing asked at install)
   .mcp.json                         GENERATED: cloudbackend-docs (node servers/docs/index.mjs), cloudbackend-build (node
                                     servers/build/index.mjs), cloudbackend-deploy (CloudBackend's live server, per tenant
                                     from userConfig)

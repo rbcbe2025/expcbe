@@ -8,7 +8,7 @@
 // Refuses a plugin without its two servers.
 import {existsSync, readFileSync, statSync} from 'node:fs';
 import path from 'node:path';
-import {PLUGIN_DIR, PLUGIN_NAME, DIST, SERVERS, currentVersion, listFiles, zipBuffer, sha256, writeText, readJson, writeJson, zipName, fail} from './lib.mjs';
+import {ROOT, PLUGIN_DIR, PLUGIN_NAME, DIST, SERVERS, currentVersion, listFiles, zipBuffer, sha256, writeText, readJson, writeJson, zipName, fail} from './lib.mjs';
 
 const version = currentVersion();
 if (existsSync(path.join(PLUGIN_DIR, 'bin'))) fail('plugins/cloudbackend/bin/ exists: a top-level bin/ blocks the claude.ai sync');
@@ -17,7 +17,14 @@ if (files.some(f => f.startsWith('evals/'))) fail('plugins/cloudbackend/evals/ e
 for (const must of ['.claude-plugin/plugin.json', '.mcp.json', SERVERS.find(s => s.key === 'docs').entry, SERVERS.find(s => s.key === 'build').entry]) {
   if (!files.includes(must)) fail(`${must} is missing from the plugin: nothing to pack (the documentation server comes from scripts/sync-servers.mjs)`);
 }
-const zip = zipBuffer(files.map(name => ({name, data: readFileSync(path.join(PLUGIN_DIR, name)), mode: statSync(path.join(PLUGIN_DIR, name)).mode})));
+// The client configs (generated at the repository root by gen-clients.mjs) ride in the zip as clients/: the zip is how
+// Cursor, VS Code, Codex and Gemini users get the servers, and the configs name the unzipped folder.
+const CLIENTS = path.join(ROOT, 'clients');
+const clientFiles = existsSync(CLIENTS) ? listFiles(CLIENTS) : [];
+const zip = zipBuffer([
+  ...files.map(name => ({name, data: readFileSync(path.join(PLUGIN_DIR, name)), mode: statSync(path.join(PLUGIN_DIR, name)).mode})),
+  ...clientFiles.map(rel => ({name: `clients/${rel}`, data: readFileSync(path.join(CLIENTS, rel)), mode: statSync(path.join(CLIENTS, rel)).mode})),
+]);
 const digest = sha256(zip);
 writeText(path.join(DIST, zipName(version)), zip);
 
@@ -29,4 +36,4 @@ if (existsSync(marketplaceFile)) {
   writeJson(marketplaceFile, m);
 }
 const counts = {skills: files.filter(f => f.startsWith('skills/')).length, servers: files.filter(f => f.startsWith('servers/')).length, agents: files.filter(f => f.startsWith('agents/') && f.endsWith('.md')).length};
-console.log(`dist/${zipName(version)}: ${files.length} files (${Object.entries(counts).map(([k, v]) => `${k} ${v}`).join(', ')}), ${zip.length.toLocaleString('en')} bytes, sha256 ${digest}`);
+console.log(`dist/${zipName(version)}: ${files.length + clientFiles.length} files (clients ${clientFiles.length}, ${Object.entries(counts).map(([k, v]) => `${k} ${v}`).join(', ')}), ${zip.length.toLocaleString('en')} bytes, sha256 ${digest}`);

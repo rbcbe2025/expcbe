@@ -36,7 +36,7 @@ for the wrong reason:
    held about 250 ms before it moves.
 3. **One assertion after each action.** An end-state check at the end of a sequence hides the step that
    failed, and a probe that only checks presence passes on the wrong kind of app. After every action,
-   read the page (`read_page`, `find`) for the expected state, then the console for errors and the
+   read the page with the browser tool for the expected state, then the console for errors and the
    network tab for the CloudBackend calls the action made.
 
 The phone pass: at 390 px nothing scrolls sideways, the list-then-detail navigation works, Back returns,

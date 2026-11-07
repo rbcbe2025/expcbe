@@ -1,7 +1,7 @@
 {
   "name": "cloudbackend",
   "version": "2026.1105.7",
-  "description": "Build on CloudBackend PaaS with XIOS/3: the published skills (Singularity database, REST API, native SDKs, XIOS/3 applications and design, the SaaS launch path and the build-and-deploy workflow), five workflow agents, the documentation, build and tenant servers running inside the plugin (the tenant server signs you in in your browser and deploys), and the per-tenant deploy connector.",
+  "description": "Build on CloudBackend PaaS with XIOS/3: five skills (the launch path from an idea to paying customers with its build phases, XIOS/3 markup and design, the Singularity database, the REST API, the native SDKs), three build agents, and the documentation, build and tenant servers running on your computer (the tenant server signs you in in your browser and deploys).",
   "author": {
     "name": "CloudBackend",
     "url": "https://cloudbackend.com"
@@ -16,13 +16,5 @@
     "rest-api",
     "sdk",
     "saas"
-  ],
-  "userConfig": {
-    "cbe_tenant": {
-      "type": "string",
-      "title": "CloudBackend tenant",
-      "description": "lowercase letters and digits; the name in your console address",
-      "required": true
-    }
-  }
+  ]
 }

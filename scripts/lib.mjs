@@ -35,10 +35,10 @@ export const CBEMCP_BUILD = path.resolve(process.env.CBEMCP_BUILD || path.join(R
 export const GOLDEN_SRC = path.join(CBEMCP_BUILD, 'tests', 'golden');
 
 // CloudBackend's live deploy server. It is CloudBackend's, per tenant, and this is the ONLY thing it is used for:
-// the deploy connector's URL form. The documentation and build servers run inside the plugin.
+// the deploy connector's URL form. Since 2026-11-07 it is not in the plugin's .mcp.json (it signs in only for an account
+// with its own sign-in realm); a user adds it by hand (scripts/connect-deploy.sh). The other servers run inside the plugin.
 export const HOST = 'https://mcp.cloudbackend.com';
 export const DEPLOY_URL_FORM = `${HOST}/mcp/<tenant>`;
-export const TENANT_CONFIG_KEY = 'cbe_tenant';
 export const TENANT_PATTERN = '[a-z0-9]+';
 
 // The public GitHub repository that mirrors this one and serves as the marketplace: plugin.json's
@@ -63,8 +63,8 @@ export const SERVERS = [
   {key: 'tenant', name: 'cloudbackend-tenant', kind: 'local', runtime: 'node', tools: 8,
    entry: 'servers/tenant/index.mjs', test: 'servers/tenant/test.mjs', env: {CBE_SESSION_DIR: '${CLAUDE_PLUGIN_DATA}/sessions'},
    what: 'your CloudBackend account, signed in on a page on your computer (the password goes from your browser to CloudBackend, never through the chat): upload_project (a local package folder, linted first), deploy (a Development deployment: private in the console, yet anyone with its address can open it unless the app has a login), verify_deployment (served bytes, not a 200), list_projects, and enable_deploy_connector (the owner creates the account\'s sign-in realm the deploy connector needs)'},
-  {key: 'deploy', name: 'cloudbackend-deploy', kind: 'remote', url_form: DEPLOY_URL_FORM,
-   what: 'CloudBackend\'s live per-tenant deploy server: list_projects, upload_project, deploy, verify_deployment and the rest. It signs in through the account\'s own sign-in realm, which the owner creates once (enable_deploy_connector on cloudbackend-tenant); until then cloudbackend-tenant is the route'},
+  {key: 'deploy', name: 'cloudbackend-deploy', kind: 'remote', optional: true, url_form: DEPLOY_URL_FORM,
+   what: 'optional, added by hand: CloudBackend\'s per-tenant deploy server (list_projects, upload_project, deploy, verify_deployment and the rest), for an account whose owner created its sign-in realm (enable_deploy_connector on cloudbackend-tenant); not in the plugin\'s .mcp.json, because without the realm it can only fail to connect'},
 ];
 export const serverByKey = key => SERVERS.find(s => s.key === key);
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // gen-clients.mjs [--check] — everything derived from the plugin's version, its skills and the servers table in lib.mjs,
 // written in one go so no copy can drift:
-//   · plugins/cloudbackend/.mcp.json: the three servers (docs and build run inside the plugin with node, deploy is
-//     CloudBackend's per-tenant server, its tenant from plugin.json's userConfig)
+//   · plugins/cloudbackend/.mcp.json: the three local servers (docs, build and tenant run inside the plugin with node);
+//     CloudBackend's per-tenant deploy connector is not in it (added by hand once an account has its sign-in realm)
 //   · the marketplace entry's description, homepage, licence and keywords, copied from plugin.json
 //   · clients/cursor/mcp.json, clients/vscode/{mcp.json,ADD-MCP.md}, clients/codex/config.toml, clients/gemini/settings.json,
 //     clients/README.md: the two local servers in each client's shape, with <plugin-dir> standing for the unzipped plugin
@@ -13,9 +13,9 @@
 // The plugin's base URL is the portal's address (the hub's public/portal.json) + /plugin; the GitHub form is
 // plugin.json's `repository` or lib.mjs's placeholder until Robin names the repository.
 // --check writes nothing and exits 1 if a tracked output (everything but dist/) would change.
-import {existsSync, readFileSync} from 'node:fs';
+import {existsSync, readFileSync, readdirSync} from 'node:fs';
 import path from 'node:path';
-import {ROOT, PLUGIN_DIR, PLUGIN_NAME, MARKETPLACE_NAME, HUB, DIST, HOST, SERVERS, DEPLOY_URL_FORM, TENANT_CONFIG_KEY, TENANT_PATTERN,
+import {ROOT, PLUGIN_DIR, PLUGIN_NAME, MARKETPLACE_NAME, HUB, DIST, HOST, SERVERS, DEPLOY_URL_FORM, TENANT_PATTERN,
         GITHUB_BRANCH_TESTERS, GITHUB_BRANCH_WORK, MANIFEST, MARKETPLACE, marketplaceUrl, indexUrl, zipUrl, zipName, githubRepo,
         readJson, writeText, isoDate, fail} from './lib.mjs';
 
@@ -23,7 +23,8 @@ const check = process.argv.includes('--check');
 const manifest = readJson(MANIFEST);
 const marketplace = readJson(MARKETPLACE);
 const version = manifest.version;
-if (!manifest.userConfig || !manifest.userConfig[TENANT_CONFIG_KEY]) fail(`plugin.json has no userConfig.${TENANT_CONFIG_KEY}: the deploy connector's tenant comes from it`);
+if (manifest.userConfig) fail('plugin.json has a userConfig: the plugin asks nothing at install since 2026-11-07 (the deploy connector is added by hand)');
+const AGENTS = existsSync(path.join(PLUGIN_DIR, 'agents')) ? readdirSync(path.join(PLUGIN_DIR, 'agents')).filter(f => f.endsWith('.md')).length : 0;
 const provenanceFile = path.join(PLUGIN_DIR, 'SKILLS.json');
 const provenance = existsSync(provenanceFile) ? readJson(provenanceFile) : {generated: null, skills: []};
 const descriptions = new Map();                            // skill name → its frontmatter description
@@ -45,7 +46,6 @@ outputs.set(path.join(PLUGIN_DIR, '.mcp.json'), json({mcpServers: {
   [docs.name]: {command: 'node', args: [`\${CLAUDE_PLUGIN_ROOT}/${docs.entry}`]},
   [build.name]: {command: 'node', args: [`\${CLAUDE_PLUGIN_ROOT}/${build.entry}`]},
   [tenant.name]: {command: 'node', args: [`\${CLAUDE_PLUGIN_ROOT}/${tenant.entry}`], env: tenant.env},
-  [deploy.name]: {type: 'http', url: `${HOST}/mcp/\${user_config.${TENANT_CONFIG_KEY}}`},
 }}));
 
 // ---- the marketplace entry follows plugin.json ---------------------------------------------------------------------
@@ -74,7 +74,7 @@ outputs.set('clients/vscode/ADD-MCP.md', `# VS Code: add the servers
 ${stamp}
 
 Unzip the plugin, then one command per server with \`${P}\` replaced by the unzipped folder (user settings; Copilot
-agent mode lists the tools). Each server needs Node 22 and nothing else:
+agent mode lists the tools). Each server needs Node 18 or later and nothing else:
 
 \`\`\`bash
 code --add-mcp '${JSON.stringify({name: docs.name, ...local.docs})}'
@@ -106,7 +106,7 @@ ${stamp}
 
 The documentation, build and tenant servers run on your computer, from the unzipped plugin (\`${ZIP}\` from the
 marketplace, or a checkout of this repository: \`plugins/cloudbackend/\`). Every file here names that folder as \`${P}\`;
-replace it. Each needs Node 22 and nothing else; the documentation server reads the developer portal and needs no
+replace it. Each needs Node 18 or later and nothing else; the documentation server reads the developer portal and needs no
 sign-in, the build server works on the files in the request, and the tenant server signs you in to your account on a
 page it opens on your computer.
 
@@ -136,44 +136,39 @@ const update = [`claude plugin marketplace update ${MARKETPLACE_NAME}`, `claude 
 const installBlock = `<!-- install:start -->
 ## Install
 
-Version ${version} · the plugin \`${PLUGIN_NAME}@${MARKETPLACE_NAME}\`
+Version ${version} · the plugin \`${PLUGIN_NAME}@${MARKETPLACE_NAME}\` · ${provenance.skills.length} skills, ${AGENTS} agents, 3 servers on your computer
 
-**Claude Code, from GitHub** (the public repository; no GitHub account needed, only git on your computer):
+**Claude Code** (a terminal, the Code tab of the Claude desktop app, the IDE extensions), once:
 
 \`\`\`bash
 ${installGithub.join('\n')}
 \`\`\`
 
-Your account name (lowercase letters and digits, as in \`https://<account>.db.cloudbackend.com/\`) fills the deploy
-connector, \`${deploy.name}\` at \`${DEPLOY_URL_FORM}\`. Run from a terminal the install does not ask for it: add
-\`--config ${TENANT_CONFIG_KEY}=<account>\` to the install command, or set it later with
-\`/plugin configure ${PLUGIN_NAME}@${MARKETPLACE_NAME}\`. The deploy connector signs in through the account's own sign-in
-realm, which the owner creates once; until it exists, \`${tenant.name}\` signs you in on a page on your computer and
-deploys over the REST API. \`${GITHUB_BRANCH_TESTERS}\` is what an install follows; work happens on \`${GITHUB_BRANCH_WORK}\`.
+Then start a new session. Updates: switch auto-update on once (\`/plugin\` → Marketplaces → ${MARKETPLACE_NAME}), or run
+\`${update[0]}\` and \`${update[1]}\`. The repository is public: no GitHub account, only git on your computer.
 
-**Claude Code, without GitHub access:** the same marketplace, served by the developer portal:
+**claude.ai, Claude Desktop, Cowork:** Customize → Plugins → Add → Add marketplace, enter \`${github}\`, choose Sync, then
+add the cloudbackend plugin. A chat uses the skills; Cowork on your computer also runs the servers. Keeping it in sync by
+itself needs the Claude GitHub App to have access to the repository.
 
-\`\`\`bash
-${installUrl.join('\n')}
-\`\`\`
+**Cursor, VS Code, Codex CLI, Gemini CLI:** download [the plugin as one zip](${ZIP_URL}), unzip it, and use its \`clients/\`
+folder (each file names the unzipped folder as \`${P}\`).
 
-**One session, nothing installed:** \`${installSession}\`
+**Deploying:** the tenant server signs you in on a page on your computer (in the Claude desktop app, its built-in
+browser): the password goes from your browser to CloudBackend, never through the chat. An account whose owner created
+its sign-in realm can also add CloudBackend's deploy connector, \`${DEPLOY_URL_FORM}\`: \`scripts/connect-deploy.sh <account>\`.
 
-**Updates:** \`${update[0]}\`, then \`${update[1]}\` (a marketplace you added yourself does not update by itself;
-\`/plugin\` → Marketplaces can switch auto-update on).
+**Requirements:** the three servers run with \`node\` (Node 18 or later; if \`node --version\` fails in a terminal, install
+Node first). Nothing else is installed.
 
-**Nothing else to install.** The three local servers are Node and run from the plugin's own files; Claude Code is the
-one requirement. Signing in to your account happens in your browser (in the Claude desktop app, its built-in browser),
-never in the chat.
+<details><summary>Other ways in</summary>
 
-**claude.ai, Claude Desktop, Cowork:** Customize, Plugins, Add, Add marketplace: enter \`${github}\`, choose Sync, then add
-the cloudbackend plugin and confirm its local servers (tried 2026-11-05). A chat uses the skills; Cowork on your computer also runs
-the servers. Keeping it in sync by itself needs the Claude GitHub App to have access to the repository. Without an added marketplace, upload the skills from the developer portal's Tools page; the
-documentation server is the Claude Desktop extension offered there. The deploy connector is added by hand as a custom
-connector (\`scripts/connect-deploy.sh <tenant> --print\` prints the URL; Cowork reads \`.mcp.json\` but cannot fill
-the tenant).
+- The same marketplace from the developer portal, without GitHub: \`${installUrl[0]}\`, then \`${installUrl[1]}\`.
+- One session, nothing installed: \`${installSession}\`.
+- A single skill: the developer portal's Tools page has each skill's file; do not add one by hand next to the plugin, or
+  both copies load.
 
-**Cursor, VS Code, Codex CLI, Gemini CLI:** unzip the plugin and use \`clients/\` (each file names \`${P}\`).
+</details>
 <!-- install:end -->`;
 const skillsBlock = `<!-- skills:start -->
 ${provenance.skills.length} skills, built from the documentation on ${provenance.generated ?? 'n/a'} (\`SKILLS.json\` has the hashes):
@@ -185,10 +180,10 @@ ${provenance.skills.map(s => `| \`${s.name}\` | ${s.version} | ${(descriptions.g
 const serversBlock = `<!-- servers:start -->
 | Server | Runs | Gives |
 | --- | --- | --- |
-| \`${docs.name}\` | inside the plugin (Node 22; \`servers/docs/\`) | ${docs.what} |
-| \`${build.name}\` | inside the plugin (Node 22; \`servers/build/\`, authored in the plugin repository, tested by \`${build.test}\`) | ${build.what} |
-| \`${tenant.name}\` | inside the plugin (Node 22; \`servers/tenant/\`, authored in the plugin repository, tested by \`${tenant.test}\`) | ${tenant.what} |
-| \`${deploy.name}\` | CloudBackend's live server, \`${DEPLOY_URL_FORM}\` | ${deploy.what} |
+| \`${docs.name}\` | inside the plugin (Node 18 or later; \`servers/docs/\`) | ${docs.what} |
+| \`${build.name}\` | inside the plugin (Node 18 or later; \`servers/build/\`, authored in the plugin repository, tested by \`${build.test}\`) | ${build.what} |
+| \`${tenant.name}\` | inside the plugin (Node 18 or later; \`servers/tenant/\`, authored in the plugin repository, tested by \`${tenant.test}\`) | ${tenant.what} |
+| \`${deploy.name}\` | CloudBackend's server, \`${DEPLOY_URL_FORM}\`, added by hand | ${deploy.what} |
 <!-- servers:end -->`;
 const readmeFile = path.join(PLUGIN_DIR, 'README.md');
 let readme = readFileSync(readmeFile, 'utf8');
@@ -205,16 +200,18 @@ const serversOut = {
   docs: {name: docs.name, kind: docs.kind, runtime: docs.runtime, tools: docs.tools, what: docs.what},
   build: {name: build.name, kind: build.kind, runtime: build.runtime, tools: build.tools, what: build.what},
   tenant: {name: tenant.name, kind: tenant.kind, runtime: tenant.runtime, tools: tenant.tools, what: tenant.what},
-  deploy: {name: deploy.name, kind: deploy.kind, url_form: deploy.url_form, what: deploy.what},
+  deploy: {name: deploy.name, kind: deploy.kind, optional: true, url_form: deploy.url_form, what: deploy.what},
 };
 const installOut = {
   claude_code_github: installGithub,
   claude_code_url: installUrl,
   claude_code_session: installSession,
   claude_code_update: update,
-  claude_code_tenant: `--config ${TENANT_CONFIG_KEY}=<account> on the install command, or /plugin configure ${PLUGIN_NAME}@${MARKETPLACE_NAME}`,
-  claude_ai: 'Customize, Plugins, Add, Add marketplace: enter ' + github + ', choose Sync, then add the cloudbackend plugin (a chat uses the skills; Cowork on your computer also runs the servers; syncing by itself needs the Claude GitHub App to have access to the repository). Without an added marketplace, upload the skills from the Tools page; the documentation server is the Claude Desktop extension there.',
-  requirements: 'Claude Code; the three local servers are Node (bundled with Claude Code) and run from the plugin\'s files.',
+  claude_code_deploy_connector: `once the account has its sign-in realm: claude mcp add --transport http ${deploy.name} ${DEPLOY_URL_FORM}`,
+  claude_ai: 'Customize, Plugins, Add, Add marketplace: enter ' + github + ', choose Sync, then add the cloudbackend plugin (a chat uses the skills; Cowork on your computer also runs the servers; syncing by itself needs the Claude GitHub App to have access to the repository).',
+  skill_upload: 'Customize, Skills, Add, Upload a skill: only where an added marketplace is not allowed, and never next to the plugin (both copies would load).',
+  other_agents: `the plugin zip (${ZIP_URL}): its clients/ folder has the servers for Cursor, VS Code, Codex CLI and Gemini CLI; skills/ is the open Agent Skills layout`,
+  requirements: 'the three servers run with node (Node 18 or later); nothing else is installed',
 };
 outputs.set(path.join(HUB, 'public', 'plugin.json'), json({
   _comment: [stamp, 'What the portal\'s Tools page and the launch page show about the plugin: one source for the version, the install commands and the servers.'],
@@ -230,7 +227,8 @@ outputs.set(path.join(HUB, 'public', 'plugin.json'), json({
   install: installOut,
   servers: serversOut,
   connectors: {deploy_url_form: DEPLOY_URL_FORM},
-  tenant_config: {key: TENANT_CONFIG_KEY, pattern: TENANT_PATTERN},
+  tenant_pattern: TENANT_PATTERN,
+  agents: AGENTS,
   skills_generated: provenance.generated,
   skills: skillsOut,
 }));
