@@ -105,7 +105,10 @@ run "mkdir -p '$hub/public/public/plugin' && cd '$here' && cp $files '$hub/publi
 note "the hub's public/public/plugin/ holds $v beside every older zip (never removed: an installed archive source keeps resolving)"
 handoff "commit public/public/plugin/ and public/plugin.json in the hub (its own workflow); stage h deploys the portal"
 if git -C "$here" remote get-url mirror >/dev/null 2>&1; then
-  if [ "$branch" = main ] || [ "$dry" = 1 ]; then run "git -C '$here' push mirror main --tags"
+  if [ "$dry" = 1 ]; then run "git -C '$here' push mirror main --tags"
+  elif [ "$branch" = main ]; then
+    # big's GitHub login cannot reach the mirror (403, 2026-11-07); pro's credential manager can
+    if ! git -C "$here" push mirror main --tags; then handoff "the push was refused here: from pro, git -C <this repo> push mirror main --tags"; fi
   else handoff "on branch $branch: merge into main first, then git push mirror main --tags (testers follow main)"; fi
 else handoff "no mirror remote yet: git remote add mirror <the GitHub repository>, then git push mirror main --tags"; fi
 note "after the push: claude plugin marketplace update cloudbackend && claude plugin update cloudbackend@cloudbackend on a tester's machine shows $v"
