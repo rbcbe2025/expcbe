@@ -26,3 +26,4 @@ the same night (big's GitHub login has no push access); the repository went publ
 | 2026.1105.5 | 2026-11-05 | 2026-11-05 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped |
 | 2026.1105.6 | 2026-11-05 | 2026-11-05 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped |
 | 2026.1105.7 | 2026-11-05 | 2026-11-05 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped |
+| 2026.1107.0 | 2026-11-07 | 2026-11-07 | docs: estate-docs commit e69ae816481c · build: in the plugin | evals: evals/results/2026.1107.0-* (Opus 0.93 with, 0.20 without; Fable 0.90 on the 28 cases judged in full) |
