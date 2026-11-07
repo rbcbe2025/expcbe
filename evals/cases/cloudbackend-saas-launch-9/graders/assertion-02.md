@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Says a 200 status proves nothing because every path answers the boot page

@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Says to set the final value in the Staging card's configurator, with the Staging host or the custom domain

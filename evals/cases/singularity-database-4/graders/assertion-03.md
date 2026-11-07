@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: groups operation with create type=role and addRole

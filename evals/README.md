@@ -61,13 +61,32 @@ of each trace judge that reads the final message, to find the graders that can j
 
 ## Runs
 
-**2026-11-07, the harness slimmed.** The cases moved out of the plugin (an install no longer carries 387 eval files);
-runs select by hash, reuse a stored without-plugin baseline, and default to Opus 5.5 (Fable 5.1 at release). 55
-assertions are graded for free (regex or file), 3 judges look at a cheaper or truer target, 6 always-passing assertions
-are dropped, 13 saturated cases run with the plugin only. A one-case probe on Opus 5.5 (saas-launch-2, $0.55 for both
-arms) cost about what Sonnet 5.5 did ($0.44 with the plugin against $0.40), and showed the new graders load: the regex
-and file graders scored, the file-focused judge failed the branches point with and without the plugin (the run does not
-write them: a skill gap, not a blind judge).
+**2026-11-07, the harness slimmed and the skills merged** ($87.50 in all). The cases moved out of the plugin; runs
+select by hash and reuse a stored without-plugin baseline; Opus 5.5 by default, Fable 5.1 at release; 52 assertions are
+graded free (regex or file), 6 always-passing ones dropped, 13 saturated cases run with the plugin only.
+
+| Run | Cases | With | Without | Cost |
+| --- | --- | --- | --- | --- |
+| Opus 5.5 baseline, before the merge (40 cases as they were) | 39 | 0.94 | 0.22 | $27.20 |
+| Fable 5.1, with the plugin only, before the merge | 20 of 40 (the $20 cap) | 0.87 | — | $28.21 |
+| Opus 5.5 gate, after the merge (37 cases) | 37 | 0.93 | 0.22 | $21.45 |
+| Opus 5.5 rerun of the ten weakest, two runs each, after restoring cut text | 10 | 0.89 | 0.12 | $10.10 |
+
+Per skill, before the merge against after (each case's latest run; single runs, so noise of about 0.1 per case):
+cloudbackend-saas-launch with the workflow's cases 0.97 → 0.96; xios3-app-basics with the design cases 0.89 → 0.98;
+singularity-database 0.92 → 0.92; cloudbackend-rest-api 1.00 → 1.00; cloudbackend-sdk 0.95 → 1.00. The gate's first
+pass had saas-launch at 0.89: the merge had cut the working method (the next step and why, read a write back), the
+pre-flight's question about the editor extension, saying up front that test identities are the user's, and the
+handover of a JavaScript value through a named component. Restored, those cases came back (saas-6 0.50 → 1.00, saas-8
+0.86 → 1.00, saas-14 0.75 → 0.94). Still short: saas-1 0.83 (the order of the steps, once in two runs), saas-2 0.80
+(the plan card: one run sent none), saas-4 0.80, singularity-3 0.67 ("publishes the price plan container" has never
+passed). The plan card's wording was firmed up after the rerun: not measured yet.
+
+Fable 5.1 cost $0.65 to $3.62 a run (Opus about $0.57, Sonnet about $0.33), and its longest case ran past the
+300-second limit: `run-evals.mjs --timeout-seconds` raises it in the temporary copy, and the release passes 900.
+The judge shadows (`--shadow-focus`) showed 82 judges giving the same verdict on the final message as on the trace over
+at least two runs; they now read the final message (`focus-backtest.mjs --write`), a fraction of the trace a judge
+reads. The next run is the first with them.
 
 **2026-11-06, short questions get the whole answer.** The 2026-11-05 workflow run showed the facts were in the skill
 but missing from answers to one-line questions asked mid-flow. xios3-app-workflow 2026.11.6 adds a section mapping each

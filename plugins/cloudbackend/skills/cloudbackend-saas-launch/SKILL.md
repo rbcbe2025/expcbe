@@ -26,7 +26,7 @@ section and the current step's, not the whole file.
 | 3 Login screen | xios3-app-basics | `references/login.md`; `references/deployment-pipeline.md` for the logo rule |
 | 4 Sign-up and e-mail | singularity-database | `crm.md`; no CRM: launch-path step 4b |
 | 5 Teams and roles | singularity-database | `users-and-roles.md` |
-| 6 Price plans | singularity-database | `price-plans.md` (console and checkout markup); none: launch-path step 6b |
+| 6 Price plans, PayPal checkout | singularity-database | `price-plans.md` (console, `purchase` markup); none: step 6b |
 | 7 Deploy | this skill, W8 | xios3-app-basics `references/deployment-pipeline.md` |
 | 8 After launch | this skill | `references/returning-tasks.md` |
 | Integrations, scripts | cloudbackend-rest-api | code outside XIOS/3 |
@@ -47,15 +47,9 @@ that starts mid-way (mark earlier phases *not recorded*). Never a second file.
 
 ```markdown
 # CloudBackend launch context
-- tenant: acme   - identities: acmeadmin, acmedev   - deployment name: tasktrack
-- app: tasktrack (home://Applications/tasktrack/index.xml): one person, their tasks, due dates, a done list
-- customers are: individuals | organisations   - branches: sign-up CRM|manual; payment price plans|invoice
-- files reach the tenant via: tenant server | deploy connector | console   - client: Claude Code; browser: yes
-## App        (v1/v2, the record and its fields, screens, look, login, channels, seo/geo, runtime, benchmark)
-## Progress   - [x] Tenant  - [ ] 1 Data  - [ ] 2 Application  - [ ] 3 Login  - [deferred: CRM] 4 Sign-up ...
-## Build      - [x] W4 build — lint build 0E/2W (G10); upload 14 files ok; deploy dev <url> 2026-11-04 10:12 UTC
-## Benchmark
-## Decisions  - 2026-11-04 09:50 UTC key named due_on: date is reserved (measured-on-a-tenant)
+- tenant: acme · identities: acmeadmin, acmedev · deployment name: tasktrack · client: Claude Code, browser yes
+- app, what it does, customers are · branches: sign-up CRM|manual, payment plans|invoice · files reach the tenant via:
+## App (v1/v2, record, screens, look, login, channels, seo/geo)   ## Progress   ## Build   ## Benchmark   ## Decisions
 ```
 
 Evidence lines: `W<n> <name> — <tool or check> <result> · <who confirmed> <UTC>`, written into `## Build` when
@@ -65,12 +59,13 @@ one this client or tenant cannot run is ticked *deferred* with the reason, never
 ## Asking: one round, then defaults
 
 **The opening round**: at most three questions, each with a suggested answer, none the prompt already answered:
-the tenant's name (or "none yet"); the app in one sentence, for whom; and the pre-flight plus what is connected
-here (CRM and Price plans in the console menu; the tenant server, the docs and build servers, a browser tool,
-sub-agents). Say what each absence costs in one line; do not stop for it.
+the tenant's name (or "none yet"); the app in one sentence, for whom; and the pre-flight: CRM and Price plans in the
+console menu, the VS Code / Cursor extension (without it every file goes up through the console's Upload Files
+dialog, which replaces by name: plan fewer files and versioned module names), what is connected here. Say what each
+absence costs in one line; do not stop for it.
 
-**The plan card goes in the same reply**, a line per decision with its reason, ending "reply to change any of
-these; otherwise I go on":
+**The plan card goes in the same reply, never after the answers** (waiting costs the user a round trip): a line per
+decision with its reason, ending "reply to change any of these; otherwise I go on":
 
 - the kind of app and its customers (individuals on `home://`, or organisations in groups)
 - the one kind of record v1 keeps, three fields, and the screens (list, detail, New)
@@ -78,8 +73,8 @@ these; otherwise I go on":
 - login: sign in, sign up and forgot password, a kept session; sign-up and payment: the pre-flight's branch
 - channels: none, unless the idea needs an integration or an AI call (then which, through a proxy)
 - SEO/GEO and analytics: public surface or behind login; `llms.txt`; analytics none or an endpoint
-- identities `<tenant>admin` and `<tenant>dev`; deployment name in lowercase letters and digits (not beginning
-  with `xios`); runtime pinned; Development first
+- identities `<tenant>admin` and `<tenant>dev`; the deployment name (the app's, in lowercase letters and digits, not
+  beginning with `xios`); runtime pinned; Development first
 - benchmark: measured on this app plus the reference baseline; the React twin off
 - prices, the domain and a logo file: decided at their own steps
 
@@ -99,9 +94,9 @@ action, even for a one-line question. Where the check is read-only and a route i
 | A 409 on a seed: delete `data/`? | no: the seed was kept on purpose and may hold real records; carry on with `verify_deployment` and report it |
 | Lighthouse high, app feels slow | the score is flattered (LCP measures the boot page); **Speed Index** is the honest number; record **route, preset, profile and date**; fixes: icon font to SVG (G15), the boot script deferred with preloads, a minimum page height, a frame title; SEO 63 is the host's robots rule for an `xios` prefix (G18) |
 | Verify it, no browser here | `verify_deployment` now; the probes handed over in the same reply (URLs, expected state, a fresh private window); the user's pass/fail recorded as **user-run**; W5 stays open |
-| Add AI, here is my key | the key is exposed: revoke it, a new one with a spend limit, never quoting any part of it; no call from view JavaScript (G11, G12): a console proxy pinned to domain, path and headers, behind an ACL (its calls bill the tenant), and a `callService` step; free text **JSON-escaped** in the body; a cost line in `docs/spec.md` |
+| Add AI, here is my key | the key is exposed: revoke it, a new one with a spend limit, never quoting any part of it; no call from view JavaScript (G11, G12): a console proxy pinned to domain, path and headers, behind an ACL (every admitted identity's calls bill the tenant, with no subscription check), and a `callService` step; free text **JSON-escaped** in the body; write the cost line into `docs/spec.md` |
 | Write the benchmark report | a Source on every row, in the file **and the reply's copy**; tokens and cost "not available on this client" where the client shows none; the portal rebuilt from React cited as reference; the React twin **opt-in, not built**; no multiplier; "no build step" a property, not a speed claim |
-| Lint findings | per finding: the rule id, the rule's reason in its own words (G05: the tenant flattens `<select>`), the fix; nothing uploaded while an error stands |
+| Lint findings | per finding: the rule id, the rule's reason in its own words (G05: the tenant flattens `<select>`), the fix; the ship rules too (G10 hex colours), due before Production; nothing uploaded while an error stands |
 
 ## Build phases: step 2 and the Development half of step 7
 
@@ -142,27 +137,28 @@ browser action that changes the tenant gets its own yes at the time (an upload t
 Public, each promotion, an ACL or proxy edit), and **Deploy Anyway** a fresh one. `enable_deploy_connector`
 changes the account: ask the owner first. Reading needs no yes.
 
-## Clients and tools
+## Working method
 
-| Client | The path here |
-| --- | --- |
-| Claude Code (terminal, desktop app, IDE) | every step; the plugin's servers on the user's computer; sub-agents; a browser tool (the desktop app's built-in one opens the sign-in page) |
-| Cowork | every step; the plugin's servers; sub-agents become the inline order above |
-| Claude Desktop chat, claude.ai | the skills; files go up through the console's Projects section with the user's help; probes are the user's checklist; the context file lives in the conversation |
-| Other agents | the skills as files, the servers by the plugin's client configs |
+1. Read `cloudbackend-launch.md`, say in one line which step is next and why. After the tenant, the first step is the
+   pre-flight; its answers go into the file as `branches:` and `files reach the tenant via:`.
+2. Open the owner skill for that step and do the work there; give console actions as exact paths, owner-only ones marked.
+3. End with the step's check; tick it only when the user confirmed it (a deferred step says why). Steps that need a test
+   identity are the user's, in a private window: say so when the step starts, so they plan for it.
+4. Keep evidence: for anything the app writes, the stored document read back (`read_project_file` or the CLI's `cat`),
+   never the screen.
 
-An account whose owner created its sign-in realm may add CloudBackend's deploy connector
-(`https://mcp.cloudbackend.com/mcp/<tenant>`); the same steps then run through it. Read before you write; say what
-a write will change (an upload replaces by path); verify by content, never by status; cite the public link.
+Clients: Claude Code and Cowork run every step with the plugin's servers (sub-agents in Claude Code; the desktop app's
+built-in browser opens the sign-in page); in Claude Desktop chat and claude.ai files go up through the console's
+Projects section with the user's help and probes are the user's checklist. An account whose owner created its sign-in
+realm may add CloudBackend's deploy connector (`references/deploy-connector.md`).
 
 ## Mistakes this path exists to prevent
 
 - A console role for customers so they "can log in": end users sign in through the app's login and have no role.
 - ACLs granted to individual users instead of roles or groups; object names built from user text.
 - Secrets in a deployed container: everything in it is publicly readable.
-- An address given out before Production, or the console's ever: Development, Shared and Staging hosts die on
-  the next promotion.
-- Writing to the database from JavaScript: a loaded document changed there is a copy; the process writes.
+- Writing from JavaScript: a loaded document changed there is a copy; hand the value to a process step through a
+  named component, let the process write, and read the stored document back.
 - Steps 4 and 6 planned on the manual alone: an early-access console may have no CRM and no Price plans.
 
 ## Bundled references
@@ -177,8 +173,8 @@ a write will change (an upload replaces by path); verify by content, never by st
 
 ## Version
 
-cloudbackend-saas-launch 2026.11.7.5, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
+cloudbackend-saas-launch 2026.11.7.7, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
 
-A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-saas-launch` than 2026.11.7.5, tell the user once, in one sentence, without interrupting the task.
+A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-saas-launch` than 2026.11.7.7, tell the user once, in one sentence, without interrupting the task.
 
-Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.7.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch the first time the skill is used in a session.
+Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.7.7&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch the first time the skill is used in a session.

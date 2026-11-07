@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Says the logo must be a full https URL on the Staging host

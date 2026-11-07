@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Mentions the cost of having no upload tool (console dialog) and plans fewer or versioned files

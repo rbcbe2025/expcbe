@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Says <select> and <option> are flattened by the tenant and proposes a component or listview XSL

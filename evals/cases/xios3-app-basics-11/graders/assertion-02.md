@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Explains that the runtime then keeps the session in the browser and resumes it on reload

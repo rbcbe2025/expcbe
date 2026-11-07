@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Makes it responsive: 44 px touch targets or a phone breakpoint, and rows of buttons that wrap (dk-wrap)

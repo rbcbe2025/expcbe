@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Uses on-primary or on-error for icons on filled buttons, never color=primary on a primary button

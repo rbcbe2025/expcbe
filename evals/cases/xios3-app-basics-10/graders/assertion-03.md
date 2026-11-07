@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Explains that some components keep a legacy look under a token theme alone, so the stylesheet styles them

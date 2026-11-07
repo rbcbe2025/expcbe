@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Points to db.cloudbackend.com and explains the sign-up form fields

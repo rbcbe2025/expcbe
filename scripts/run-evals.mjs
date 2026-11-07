@@ -8,6 +8,8 @@
 //   --shadow-focus             beside each judge grader over the trace, a with-only twin judging the final message only
 //                              (`assertion-NN-lm`), in the temporary copy: what focus-backtest.mjs compares to find the
 //                              graders that can judge the cheaper target without changing a verdict
+//   --timeout-seconds N        each case's time limit in the temporary copy (the cases default to 300 s; a Fable 5.1 run
+//                              of a long case needed more on 2026-11-07); the cases in the repository are unchanged
 // Two passes at most: the cases that need a fresh without-plugin baseline run with and without the plugin; the rest run
 // with it only, and their delta is read against the stored baseline. Each pass copies the plugin and its cases into a
 // temporary folder (the cases live in evals/cases/, outside the plugin, so an install never carries them) and runs
@@ -49,6 +51,7 @@ for (let i = 0; i < args.length; i++) {
   else if (a === '--keep-stage') opt.keep = true;
   else if (a === '--dry-run') opt.dry = true;
   else if (a === '--shadow-focus') opt.shadow = true;
+  else if (a === '--timeout-seconds') opt.timeout = Number(args[++i]);
   else fail(`unknown option: ${a}`);
 }
 
@@ -81,6 +84,10 @@ for (const [pass, ablation, cases] of passes) {
   for (const c of cases) cpSync(path.join(CASES_DIR, c), path.join(evals, c), {recursive: true});
   if (existsSync(path.join(CASES_DIR, '_fixtures'))) cpSync(path.join(CASES_DIR, '_fixtures'), path.join(evals, '_fixtures'), {recursive: true});
   cpSync(MOCKS_DIR, path.join(evals, 'mocks'), {recursive: true});
+  if (opt.timeout) for (const c of cases) {
+    const file = path.join(evals, c, 'prompt.md'), text = readFileSync(file, 'utf8');
+    writeFileSync(file, /^timeout_seconds:/m.test(text) ? text.replace(/^timeout_seconds:.*$/m, `timeout_seconds: ${opt.timeout}`) : text.replace(/^---\n/, `---\ntimeout_seconds: ${opt.timeout}\n`));
+  }
   if (opt.shadow) for (const c of cases) {
     const dir = path.join(evals, c, 'graders');
     for (const f of existsSync(dir) ? readdirSync(dir) : []) {

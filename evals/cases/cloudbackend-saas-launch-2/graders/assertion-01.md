@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Names the pre-flight as the next step: look for CRM and Price plans in the console

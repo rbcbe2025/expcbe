@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Says the Performance score is flattered because the app renders inside a frame and LCP measures the boot page

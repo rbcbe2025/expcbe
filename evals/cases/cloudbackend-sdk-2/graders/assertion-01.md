@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: CloudBackend.login(username, password:, tenant:, delegate:) form

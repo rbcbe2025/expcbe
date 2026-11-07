@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Lists concrete fixes such as removing an icon font and deferring the boot script with preloads

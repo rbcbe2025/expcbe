@@ -9,8 +9,8 @@
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {readJson, writeJson, fail} from './lib.mjs';
-import {existsSync} from 'node:fs';
-import {INDEX_FILE, RESULTS_DIR, readIndex, readBaseline, baselineFile} from './eval-plan.mjs';
+import {existsSync, readFileSync} from 'node:fs';
+import {CASES_DIR, INDEX_FILE, RESULTS_DIR, readIndex, readBaseline, baselineFile} from './eval-plan.mjs';
 
 // Per-assertion verdicts, one entry per case, arm and run, for the hub's insights report (its signal 3 reads this file
 // in place of the skill-creator workspaces it read before 2026-11-07): {runs: [{skill, iteration, label, case, eval_id,
@@ -18,6 +18,12 @@ import {INDEX_FILE, RESULTS_DIR, readIndex, readBaseline, baselineFile} from './
 // results, so the newest entry for a skill is its latest run.
 export const GRADINGS_FILE = path.join(RESULTS_DIR, 'gradings.json');
 const assertionText = g => ((g.graderMarkdown || '').match(/The run shows this: ([^\n]+)/) || [])[1];
+// A regex grader's body is its pattern; its assertion sits in a comment in the frontmatter, which the result does
+// not carry: read it from the case's grader file.
+function graderFileText(caseName, graderName) {
+  const file = path.join(CASES_DIR, caseName, 'graders', `${graderName}.md`);
+  return existsSync(file) ? ((readFileSync(file, 'utf8').match(/^# The run shows this: ([^\n]+)/m) || [])[1]) : undefined;
+}
 
 const mean = xs => xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null;
 const sum = xs => xs.reduce((a, b) => a + (b || 0), 0);
@@ -65,7 +71,7 @@ export function record(resultFile, stage) {
   for (const c of result.cases) {
     const h = stage.hashes[c.name];
     if (!h) continue;
-    const texts = Object.fromEntries((c.graders || []).map(g => [g.name, assertionText(g)]));
+    const texts = Object.fromEntries((c.graders || []).map(g => [g.name, assertionText(g) || graderFileText(c.name, g.name)]));
     for (const [arm, config] of [['with', 'with_skill'], ['without', 'without_skill']]) for (const run of c.arms[arm] || []) {
       const expectations = (run.graders || []).filter(g => /^assertion-\d+[a-z]?$/.test(g.name) && texts[g.name]).map(g => [texts[g.name], !!g.passed]);
       if (expectations.length) gradings.runs.push({skill: h.skill, iteration, label, case: c.name, eval_id: +c.name.split('-').pop(), config, date, expectations});

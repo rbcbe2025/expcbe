@@ -8,8 +8,8 @@
 # Stages (plan 2026-11-04, Phase 2 parts C and E):
 #   0  clean trees and tool versions          a  build the skills in the hub          b  sync the skills and the docs server
 #   c  bump the version if plugins/ changed   d  .mcp.json, clients, README blocks, evals, marketplace, hub plugin.json
-#   e  guard, build tests, validate, evals    f  pack, commit, tag, publish             g  the servers answer
-#   h  portal                                 i  record (RELEASES.md, the hub's _reports/plugin/<date>.json)
+#   e  guard, context budget, server tests (when servers/ changed), validate, the servers answer, evals
+#   f  pack, commit, tag, publish             h  portal                                 i  record (RELEASES.md, _reports/plugin/)
 # Publishing (f) copies dist/{marketplace.json,index.json,<zip>} into the hub's public/public/plugin/ (older zips stay,
 # an installed archive source keeps resolving) and pushes main and the tags to `mirror`; without that remote it prints
 # the hand-off. Evals (e): scripts/run-evals.sh runs the cases eval-plan.mjs selects (a case whose skill, case files
@@ -63,9 +63,7 @@ fi
 
 stage b "sync the skills and the documentation server into the plugin"
 run "node '$here/scripts/sync-skills.mjs'"
-run "node '$here/scripts/sync-skills.mjs' --check"
 run "node '$here/scripts/sync-servers.mjs'"
-run "node '$here/scripts/sync-servers.mjs' --check"
 [ "$dry" = 1 ] && note "a documentation server not staged in the hub yet stops the release here (exit 1)"
 
 stage c "the version"
@@ -77,15 +75,21 @@ stage d ".mcp.json, clients, README blocks, evals, the portal's marketplace, the
 run "node '$here/scripts/gen-clients.mjs'"
 run "node '$here/scripts/gen-evals.mjs'"
 
-stage e "guard, the local servers' tests, validate, evals"
+stage e "guard, the context budget, the servers' tests, validate, the servers answer, evals"
 run "node '$here/scripts/guard.mjs'"
-run "node --test '$plugin/servers/build/test.mjs' '$plugin/servers/tenant/test.mjs'"
+run "node '$here/scripts/context-budget.mjs'"
+last=$(git -C "$here" tag --list 'v*' | sort -V | tail -1)
+if [ -n "$last" ] && git -C "$here" diff --quiet "$last" -- plugins/cloudbackend/servers 2>/dev/null; then note "servers/ unchanged since $last: their tests skipped"
+else run "node --test '$plugin/servers/build/test.mjs' '$plugin/servers/tenant/test.mjs'"; fi
 run "claude plugin validate '$plugin' --strict"
 run "claude plugin validate '$here' --strict"
+# before anything is packed or pushed: a server that does not answer stops the release here, not after it is public
+if [ "$dry" = 1 ]; then run "node '$here/scripts/check-servers.mjs' --deep"
+elif ! node "$here/scripts/check-servers.mjs" --deep; then handoff "a server did not answer as promised; fix before packing"; exit 1; fi
 if [ "$evals" = 0 ]; then note "evals skipped (--skip-evals)"
 else
   run "'$here/scripts/run-evals.sh' '$v' --max-cost-usd ${RELEASE_EVAL_BUDGET:-40}"
-  run "'$here/scripts/run-evals.sh' '$v-fable' --model claude-fable-5-1 --with-only --max-cost-usd ${RELEASE_SECOND_MODEL_BUDGET:-25}"
+  run "'$here/scripts/run-evals.sh' '$v-fable' --model claude-fable-5-1 --with-only --timeout-seconds 900 --max-cost-usd ${RELEASE_SECOND_MODEL_BUDGET:-40}"
   note "each pass prints its cases' scores against the stored baseline; a skill lower than its last release is a stop: read evals/results/$v-*.html"
 fi
 
@@ -105,10 +109,6 @@ if git -C "$here" remote get-url mirror >/dev/null 2>&1; then
   else handoff "on branch $branch: merge into main first, then git push mirror main --tags (testers follow main)"; fi
 else handoff "no mirror remote yet: git remote add mirror <the GitHub repository>, then git push mirror main --tags"; fi
 note "after the push: claude plugin marketplace update cloudbackend && claude plugin update cloudbackend@cloudbackend on a tester's machine shows $v"
-
-stage g "the servers answer"
-if [ "$dry" = 1 ]; then run "node '$here/scripts/check-servers.mjs' --deep"
-elif ! node "$here/scripts/check-servers.mjs" --deep; then handoff "a server did not answer as promised; fix before the portal deploy"; exit 1; fi
 
 stage h "portal"
 if [ "$portal" = 0 ]; then note "skipped (--no-portal)"

@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Sets title, description and button text in the CloudBackend PaaS sign-in's voice (Log in, a welcome line)

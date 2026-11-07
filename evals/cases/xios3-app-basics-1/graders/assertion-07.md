@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Says where to store it: tenant://Applications (or home://) so it appears in Projects

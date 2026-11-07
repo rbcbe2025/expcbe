@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Names the pipeline login configuration and the manifest stamp as the real gate

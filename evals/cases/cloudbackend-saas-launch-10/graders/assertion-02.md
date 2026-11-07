@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Gives the click path including Mark Verified, Promote to Staging, Configure Login Page and Promote to Production

@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Mentions the proxy ACL and that calls are billed to the tenant with no subscription check available

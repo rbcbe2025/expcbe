@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: The plan card names a deployment name of lowercase letters and digits and says Development first

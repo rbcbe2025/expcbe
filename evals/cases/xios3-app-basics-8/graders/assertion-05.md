@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Writes the primary colour out (4338ca) for the icons inside the iconlist

@@ -29,13 +29,13 @@
       "label": "baseline-opus-2026-11-07-both"
     },
     "cloudbackend-saas-launch-4": {
-      "case_hash": "4c8e146a9b5f33fe",
-      "score": 0.1667,
+      "case_hash": "e48703be403d3867",
+      "score": 0.2,
       "runs": 1,
-      "costUsd": 0.1591,
+      "costUsd": 0.1627,
       "cli": "2.1.316",
       "date": "2026-11-07",
-      "label": "baseline-opus-2026-11-07-both"
+      "label": "gate-opus-2026-11-07-both"
     },
     "cloudbackend-saas-launch-5": {
       "case_hash": "7cfe2e3e39f015fb",
@@ -47,13 +47,13 @@
       "label": "baseline-opus-2026-11-07-both"
     },
     "cloudbackend-saas-launch-8": {
-      "case_hash": "bb424f68cd8d12bd",
-      "score": 0.5,
+      "case_hash": "db9d05739b8d81ba",
+      "score": 0,
       "runs": 1,
-      "costUsd": 0.2274,
+      "costUsd": 0.2177,
       "cli": "2.1.316",
       "date": "2026-11-07",
-      "label": "baseline-opus-2026-11-07-both"
+      "label": "gate-opus-2026-11-07-both"
     },
     "singularity-database-1": {
       "case_hash": "5154bf64f571c19a",
@@ -243,6 +243,132 @@
       "cli": "2.1.316",
       "date": "2026-11-07",
       "label": "baseline-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-10": {
+      "case_hash": "3377273c0b043959",
+      "score": 0.1429,
+      "runs": 1,
+      "costUsd": 0.1573,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-11": {
+      "case_hash": "8efa7974f665a079",
+      "score": 0.1667,
+      "runs": 1,
+      "costUsd": 0.1817,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-12": {
+      "case_hash": "8f44638e0ce94f41",
+      "score": 0.8333,
+      "runs": 1,
+      "costUsd": 0.2905,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-13": {
+      "case_hash": "a7906ead62e8e699",
+      "score": 0.2,
+      "runs": 1,
+      "costUsd": 0.3549,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-14": {
+      "case_hash": "1660d03bc6bfe76c",
+      "score": 0.25,
+      "runs": 1,
+      "costUsd": 0.4078,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-15": {
+      "case_hash": "5f795fb27ae49cbd",
+      "score": 0.3333,
+      "runs": 1,
+      "costUsd": 0.1789,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-16": {
+      "case_hash": "a50f8a4ce2e510bb",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1259,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-17": {
+      "case_hash": "3c478df108b5807e",
+      "score": 0.125,
+      "runs": 1,
+      "costUsd": 0.1636,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-9": {
+      "case_hash": "af29db0b78837e1a",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1713,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "xios3-app-basics-10": {
+      "case_hash": "78726291f4d123e7",
+      "score": 0.2857,
+      "runs": 1,
+      "costUsd": 0.531,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "xios3-app-basics-11": {
+      "case_hash": "023c1ef146c861a2",
+      "score": 0.8,
+      "runs": 1,
+      "costUsd": 0.2733,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "xios3-app-basics-4": {
+      "case_hash": "2fb7a4cd142d8945",
+      "score": 0.4,
+      "runs": 1,
+      "costUsd": 0.2534,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "xios3-app-basics-7": {
+      "case_hash": "9ba79d299cbd7ae0",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1689,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
+    },
+    "xios3-app-basics-9": {
+      "case_hash": "944cb4f16b289e41",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1782,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "gate-opus-2026-11-07-both"
     }
   },
   "updated": "2026-11-07"

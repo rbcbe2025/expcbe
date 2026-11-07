@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Uses Lucide names (plus, trash-2, users, settings) and no IconExperience names such as add, delete or folders2

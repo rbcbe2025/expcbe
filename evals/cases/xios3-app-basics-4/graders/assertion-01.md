@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: trace
+focus: last_message
 ---
 
 The run shows this: Names one of the six directions (ledger, studio, clinic, field, night or paper) and gives a reason
