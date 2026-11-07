@@ -23,7 +23,7 @@
 // the line of every start tag kept for the findings. Nothing is written anywhere and nothing needs a tenant.
 // MCP over stdio, newline-delimited JSON-RPC; results are capped at 60,000 characters. ASCII only.
 
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline';
 import { dirname, isAbsolute, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -34,7 +34,11 @@ export { ToolError };
 const VERSION = '2026.11.7';
 const SERVER_NAME = 'cloudbackend-build';
 const HERE = dirname(fileURLToPath(import.meta.url));
-export const GRAMMAR_PATH = join(HERE, '..', '..', 'skills', 'xios3-app-workflow', 'references', 'tenant-grammar.json');
+// Where the skills sync puts the grammar: in cloudbackend-saas-launch since the 2026-11-07 skill merge, in
+// xios3-app-workflow before it. The first that exists (the new one when neither does, so an error names it). Drop the
+// old entry once every synced plugin has the merged skills.
+const GRAMMAR_CANDIDATES = ['cloudbackend-saas-launch', 'xios3-app-workflow'].map((skill) => join(HERE, '..', '..', 'skills', skill, 'references', 'tenant-grammar.json'));
+export const GRAMMAR_PATH = GRAMMAR_CANDIDATES.find((p) => existsSync(p)) || GRAMMAR_CANDIDATES[0];
 
 export const MANIFEST = 'index.xml';
 const XML_EXTENSIONS = ['.xml', '.xsl', '.xslt', '.xsd', '.svg'];
