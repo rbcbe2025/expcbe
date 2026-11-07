@@ -2,10 +2,9 @@
 # and scripts/pack.mjs, then copied into the hub's public/public/plugin/. On disk, not in history.
 dist/
 
-# Eval runs (claude plugin eval --json) are records of a run, not source. Reference transcripts (evals/baselines/)
-# are source and stay tracked.
+# Eval runs (claude plugin eval --json, and the index and gradings eval-report.mjs keeps) are records of a run, not
+# source. The stored without-plugin baselines and reference transcripts (evals/baselines/) are source and stay tracked.
 evals/results/
-plugins/cloudbackend/evals/results/
 
 # Nothing is installed here (zero dependencies), so this is a guard against a stray npm install.
 node_modules/

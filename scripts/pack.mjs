@@ -12,7 +12,8 @@ import {PLUGIN_DIR, PLUGIN_NAME, DIST, SERVERS, currentVersion, listFiles, zipBu
 
 const version = currentVersion();
 if (existsSync(path.join(PLUGIN_DIR, 'bin'))) fail('plugins/cloudbackend/bin/ exists: a top-level bin/ blocks the claude.ai sync');
-const files = listFiles(PLUGIN_DIR, {skip: rel => rel === 'evals/results' || rel === 'node_modules'});
+const files = listFiles(PLUGIN_DIR, {skip: rel => rel === 'node_modules' || rel === '.data'});
+if (files.some(f => f.startsWith('evals/'))) fail('plugins/cloudbackend/evals/ exists: the eval cases live in evals/cases/ at the repository root, so an install never carries them');
 for (const must of ['.claude-plugin/plugin.json', '.mcp.json', SERVERS.find(s => s.key === 'docs').entry, SERVERS.find(s => s.key === 'build').entry]) {
   if (!files.includes(must)) fail(`${must} is missing from the plugin: nothing to pack (the documentation server comes from scripts/sync-servers.mjs)`);
 }
@@ -27,5 +28,5 @@ if (existsSync(marketplaceFile)) {
   m.plugins = m.plugins.map(p => p.name === PLUGIN_NAME && p.source && p.source.source === 'archive' ? {...p, source: {...p.source, sha256: digest}} : p);
   writeJson(marketplaceFile, m);
 }
-const counts = {skills: files.filter(f => f.startsWith('skills/')).length, servers: files.filter(f => f.startsWith('servers/')).length, agents: files.filter(f => f.startsWith('agents/') && f.endsWith('.md')).length, evals: files.filter(f => f.startsWith('evals/') && f.endsWith('prompt.md')).length};
+const counts = {skills: files.filter(f => f.startsWith('skills/')).length, servers: files.filter(f => f.startsWith('servers/')).length, agents: files.filter(f => f.startsWith('agents/') && f.endsWith('.md')).length};
 console.log(`dist/${zipName(version)}: ${files.length} files (${Object.entries(counts).map(([k, v]) => `${k} ${v}`).join(', ')}), ${zip.length.toLocaleString('en')} bytes, sha256 ${digest}`);

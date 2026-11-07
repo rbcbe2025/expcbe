@@ -31,8 +31,8 @@ const skip = rel => rel === '.git' || rel === 'node_modules' || rel === 'evals/r
 const skillsPrefix = plugin('skills') + '/';
 const serversPrefix = plugin('servers') + '/';
 const docsServerPrefix = plugin('servers/docs') + '/';
-const evalsPrefix = plugin('evals') + '/';
-const vendored = rel => rel.startsWith(skillsPrefix) || rel.startsWith(serversPrefix) || rel.startsWith('_archive/') || (rel.startsWith(evalsPrefix) && rel !== plugin('evals/README.md'));   // the eval cases carry the skills' own evals verbatim; _archive/ holds superseded copies
+const evalsPrefix = 'evals/cases/';
+const vendored = rel => rel.startsWith(skillsPrefix) || rel.startsWith(serversPrefix) || rel.startsWith('_archive/') || rel.startsWith(evalsPrefix);   // the eval cases (evals/cases/, outside the plugin) carry the skills' own evals verbatim; _archive/ holds superseded copies
 const portalAllowed = rel => rel.startsWith(skillsPrefix) || rel.startsWith(docsServerPrefix) || rel.startsWith('dist/')
   || rel === plugin('README.md') || rel === 'README.md' || rel === 'RELEASES.md';
 const hostEscape = HOST.replace(/^https?:\/\//, '').replace(/\./g, '\\.');

@@ -12,12 +12,12 @@
 #   h  portal                                 i  record (RELEASES.md, the hub's _reports/plugin/<date>.json)
 # Publishing (f) copies dist/{marketplace.json,index.json,<zip>} into the hub's public/public/plugin/ (older zips stay,
 # an installed archive source keeps resolving) and pushes main and the tags to `mirror`; without that remote it prints
-# the hand-off. Evals (e) run with pinned models only when plugins/cloudbackend/SKILLS.json or evals/ changed since the
-# last tag; --skip-evals skips them regardless. Environment: CBE_DOCS_HUB (the hub checkout; default ../estate-docs),
-# RELEASE_EXTRA_REPOS (paths whose trees stage 0 also requires clean), RELEASE_EVAL_MODEL / RELEASE_JUDGE_MODEL
-# (stage e; defaults below). Stage e runs scripts/run-evals.sh: with and without the plugin, one run per case, the
-# tenant and deploy stand-ins, the real docs and build servers; it needs Claude Code 2.1.269+ (on big), so elsewhere
-# pass --skip-evals and run it on big.
+# the hand-off. Evals (e): scripts/run-evals.sh runs the cases eval-plan.mjs selects (a case whose skill, case files
+# or the plugin's servers and agents changed since its last run on that model; saturated cases only when their skill
+# changed), with Opus 5.5 and the stored without-plugin baseline, then the same selection with Fable 5.1, with the
+# plugin only; --skip-evals skips both. It needs Claude Code 2.1.269+ (on big), so elsewhere pass --skip-evals and run it
+# on big. Environment: CBE_DOCS_HUB (the hub checkout; default ../estate-docs), RELEASE_EXTRA_REPOS (paths whose trees
+# stage 0 also requires clean), RELEASE_EVAL_BUDGET / RELEASE_SECOND_MODEL_BUDGET (each pass's cost ceiling in USD).
 set -euo pipefail
 here=$(cd "$(dirname "$0")/.." && pwd)
 hub=$(cd "${CBE_DOCS_HUB:-$here/../estate-docs}" 2>/dev/null && pwd || echo "${CBE_DOCS_HUB:-$here/../estate-docs}")
@@ -82,12 +82,11 @@ run "node '$here/scripts/guard.mjs'"
 run "node --test '$plugin/servers/build/test.mjs' '$plugin/servers/tenant/test.mjs'"
 run "claude plugin validate '$plugin' --strict"
 run "claude plugin validate '$here' --strict"
-last=$(git -C "$here" tag --list 'v*' | sort -V | tail -1)
 if [ "$evals" = 0 ]; then note "evals skipped (--skip-evals)"
-elif ! ls "$plugin"/evals/*/prompt.md >/dev/null 2>&1; then note "no eval cases under evals/: skipped"
-elif [ -n "$last" ] && git -C "$here" diff --quiet "$last" -- plugins/cloudbackend/SKILLS.json plugins/cloudbackend/evals 2>/dev/null; then note "SKILLS.json and evals/ unchanged since $last: evals skipped"; evals=0
 else
-  run "EVAL_MODEL='${RELEASE_EVAL_MODEL:-claude-sonnet-5-5}' EVAL_JUDGE_MODEL='${RELEASE_JUDGE_MODEL:-claude-haiku-5-5}' '$here/scripts/run-evals.sh' '$v' --runs 1 -j 4 --max-cost-usd 60"
+  run "'$here/scripts/run-evals.sh' '$v' --max-cost-usd ${RELEASE_EVAL_BUDGET:-40}"
+  run "'$here/scripts/run-evals.sh' '$v-fable' --model claude-fable-5-1 --with-only --max-cost-usd ${RELEASE_SECOND_MODEL_BUDGET:-25}"
+  note "each pass prints its cases' scores against the stored baseline; a skill lower than its last release is a stop: read evals/results/$v-*.html"
 fi
 
 stage f "pack, commit, tag, publish"
@@ -118,7 +117,7 @@ else run "cd '$hub/public' && npm run build:xios && scripts/deploy-big.sh portal
 stage i "record"
 skills_gen=$(jsonf "$plugin/SKILLS.json" 'o.generated')
 docs_src=$(vendored docs); build_src="in the plugin"
-row="| $v | $today | $skills_gen | docs: ${docs_src:-?} · build: $build_src | $( [ "$evals" = 0 ] && echo 'evals skipped' || echo 'evals: see evals/results' ) |"
+row="| $v | $today | $skills_gen | docs: ${docs_src:-?} · build: $build_src | $( [ "$evals" = 0 ] && echo 'evals skipped' || echo "evals: evals/results/$v-*" ) |"
 note "RELEASES.md row: $row"
 run "printf '%s\n' '$row' >> '$here/RELEASES.md' && git -C '$here' add RELEASES.md && git -C '$here' commit -m 'release $v: record'"
 run "mkdir -p '$hub/_reports/plugin' && node -e \"require('fs').writeFileSync('$hub/_reports/plugin/$today.json', JSON.stringify({version:'$v',date:'$today',skills_generated:'$skills_gen',servers:{docs:'${docs_src:-?}',build:'$build_src'},evals:$evals,portal:$portal},null,2)+'\\n')\""

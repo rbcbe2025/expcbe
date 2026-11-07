@@ -6,7 +6,7 @@ own git root under the CloudBackend group. `README.md` here explains the layout 
 
 ## Rules
 
-- **Never edit `plugins/cloudbackend/skills/`, `SKILLS.json`, `servers/docs/` or `evals/<case>/` by hand.** They are
+- **Never edit `plugins/cloudbackend/skills/`, `SKILLS.json`, `servers/docs/` or `evals/cases/` by hand.** They are
   generated: the skills by `node scripts/sync-skills.mjs` from the documentation hub's built skills
   (`public/public/skills/index.json` and the `.skill` zips next to it, checked out at `../estate-docs` or `CBE_DOCS_HUB`);
   the documentation server by `node scripts/sync-servers.mjs` from the hub's staged
@@ -38,7 +38,11 @@ own git root under the CloudBackend group. `README.md` here explains the layout 
   happens on `dev` and merges to `main` per release. No other remote, ever. **Never rename the plugin** (`cloudbackend`,
   `cloudbackend@cloudbackend`): a published plugin's name is its identity for every install.
 - **Archive, never delete.** Superseded files move to `_archive/<date>-<what>/` with an `ARCHIVED.md`. Generated
-  trees (`skills/`, `servers/docs/`, `evals/<case>/`, `clients/`, `dist/`) are regenerated, not archived.
+  trees (`skills/`, `servers/docs/`, `evals/cases/`, `clients/`, `dist/`) are regenerated, not archived.
+- **The eval cases live outside the plugin** (`evals/cases/`), so an install never carries them; `run-evals.mjs`
+  copies the plugin and the cases it runs into a temporary folder. How an assertion is graded beyond the judge is
+  `evals/graders.json` (by text) and `evals/checks.json` (tool calls); a pattern enters `graders.json` only through
+  `regex-backtest.mjs --write` (proved on recorded runs) or by hand with its reason.
 - **`.mcp.json`, the marketplace entry, `clients/`, the README's install, skills and servers blocks, `dist/`, and the
   hub's `public/plugin.json` are generated** by `node scripts/gen-clients.mjs`; the plugin's base URL is the portal's
   address + `/plugin`, the GitHub form is `plugin.json`'s `repository` (`rbcbe2025/expcbe`), else the `mirror` remote, else `lib.mjs`'s placeholder. Edit the generator.

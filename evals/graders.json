@@ -1,0 +1,665 @@
+{
+  "about": "How gen-evals.mjs grades an assertion other than with the judge over the trace, keyed by the assertion's text in the skills' evals.json (so a case can be renumbered or moved without losing it). checks.json (tool calls) is read first. Then: `drop` (the assertion is not graded; each with its reason), `regex` (a free regex grader: `source: backtest` entries come from scripts/regex-backtest.mjs --write, which proved them against every recorded run; `source: hand` entries are written here, each with its reason), `file_exists` (a free check that the run created the file), `focus` (the judge looks at this target instead of the trace: the trace shows the judge only the first and last 12 messages, so a file written in the middle of a run is invisible to it, and a point the final reply carries is cheaper to judge there).",
+  "drop": {
+    "Does not re-ask what the prompt already gave (the tenant, the idea)": "passed in every recorded run with and without the plugin; 'Asks at most one round of three or fewer questions' carries the behaviour",
+    "Does not suggest a data: URL or the configurator's folder pick as the fix": "passed in every recorded run with and without the plugin",
+    "Does not ask about prices, a domain, an e-mail provider or a logo at this point": "passed in every recorded run with and without the plugin; the question limit carries the behaviour",
+    "Names what the docs leave open": "passed in every recorded run with and without the plugin: the model says it on its own",
+    "No invented layout attribute dock=": "passed in every recorded run with and without the plugin",
+    "Does not suggest writing from JavaScript": "passed in every recorded run with and without the plugin; the cases that ask about persistence carry the behaviour"
+  },
+  "regex": {
+    "Logs in with POST /login using HTTP Basic credentials": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:/login\\b))(?=[\\s\\S]*?(?:basic|b64encode|base64))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-rest-api-1",
+        "n": 1
+      }
+    },
+    "Extracts the session token and sends 'Authorization: WRAP access_token=' on later calls": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:WRAP access_token=))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-rest-api-1",
+        "n": 3
+      }
+    },
+    "Does not use the requests library": {
+      "source": "hand",
+      "why": "passed in every recorded run with and without the plugin; the code is in a written file, so the final message is no target, and the skill text never says 'import requests', so the trace is a safe one",
+      "pattern": "import requests|from requests import",
+      "flags": "",
+      "target": "trace",
+      "match": "not_contains"
+    },
+    "Uses POST /query (or /querycontainer) with a <queryContainer> body": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:/v1/query))(?=[\\s\\S]*?(?:<queryContainer>))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-rest-api-2",
+        "n": 1
+      }
+    },
+    "Required prefix + wildcard for the title: +report*": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:\\+report\\*))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-rest-api-2",
+        "n": 2
+      }
+    },
+    "Exclusion for draft with the - prefix": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:-draft))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-rest-api-2",
+        "n": 3
+      }
+    },
+    "Sorts by updated via <order>updated</order>": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:<order>\\s*updated\\s*</order>))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-rest-api-2",
+        "n": 4
+      }
+    },
+    "Count via the '| count' pipeline operator": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:\\|\\s*count))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-rest-api-2",
+        "n": 5
+      }
+    },
+    "Sends Authorization: WRAP access_token=$TOKEN": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:WRAP access_token=\\$TOKEN))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-rest-api-2",
+        "n": 6
+      }
+    },
+    "Gives the fix: add the Authorization: WRAP access_token header (default header / interceptor)": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:WRAP access_token))(?=[\\s\\S]*?(?:interceptor|default header|defaultHeaders|middleware|headers))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-rest-api-3",
+        "n": 2
+      }
+    },
+    "Does not attribute the failure primarily to wrong credentials, CORS or token expiry": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?![\\s\\S]*?(?:(?:(most likely|the problem is|the cause is)[^.]{0,60}(wrong (password|credentials)|CORS|expired))))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 6,
+        "case": "cloudbackend-rest-api-3",
+        "n": 3
+      }
+    },
+    "Customers get no console role": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:(?:no role)|(?:without (a|any) role)|(?:no console role)|(?:not (be )?(assigned|given) (a|any) role)))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-saas-launch-1",
+        "n": 5
+      }
+    },
+    "Proposes the plan card with its defaults (organisations, <tenant>admin and <tenant>dev, the deployment name) for the user to correct": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:organi[sz]ations?))(?=[\\s\\S]*?(?:\\bacmeadmin\\b))(?=[\\s\\S]*?(?:\\bacmedev\\b))(?=[\\s\\S]*?(?:deployment name))(?=[\\s\\S]*?(?:(?:reply to change)|(?:otherwise I (go|carry|move) on)))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-saas-launch-2",
+        "n": 2
+      }
+    },
+    "Does not re-ask what the prompt already gave (the tenant, the idea)": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?![\\s\\S]*?(?:(?:\\b(is|does|has) (the )?tenant\\b[^\\n]{0,30}\\b(exist|created|provisioned|set up))|(?:\\bwhat is (the |your )?(tenant|app)('s)? name)|(?:\\bwhat (does|will|should) (the app|planboard|it) do\\b)))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 6,
+        "case": "cloudbackend-saas-launch-2",
+        "n": 4
+      }
+    },
+    "Developer identity": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:developer))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-saas-launch-3",
+        "n": 2
+      }
+    },
+    "Identity sign-in address": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:(?:acme\\.db\\.cloudbackend\\.com)|(?:\\{tenant\\}\\.db\\.cloudbackend\\.com)))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-saas-launch-3",
+        "n": 4
+      }
+    },
+    "Waits for the callback (condition variable / waitForRsp) before using the result": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:condition_variable|waitForRsp|wait\\())",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-sdk-1",
+        "n": 2
+      }
+    },
+    "createObject with key/values temp=21 and unit=C": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:createObject))(?=[\\s\\S]*?(?:temp))(?=[\\s\\S]*?(?:unit))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-sdk-1",
+        "n": 4
+      }
+    },
+    "Calls terminate() at the end": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:terminate\\(\\)))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-sdk-1",
+        "n": 6
+      }
+    },
+    "Points to the GitHub release (SDK_iOS_Swift) for download": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:SDK_iOS_Swift))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-sdk-2",
+        "n": 3
+      }
+    },
+    "Points to the Xcode docs at cloudbackend.com/docs/swift": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:cloudbackend\\.com/docs/swift))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-sdk-2",
+        "n": 4
+      }
+    },
+    "Mentions terminate() to end the session": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:terminate))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "cloudbackend-sdk-2",
+        "n": 5
+      }
+    },
+    "Uses roles or groups for dispatchers (not per-user ACL entries)": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:\\brole\\b|\\bgroup\\b))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 5,
+        "case": "singularity-database-1",
+        "n": 2
+      }
+    },
+    "Uses a datatype/schema on the jobs container so key/values are columns": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:datatype))(?=[\\s\\S]*?(?:key/?value))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "singularity-database-1",
+        "n": 4
+      }
+    },
+    "Explains ACL bits read 1 / write 2 / delete 4 / changeACL 8 and inheritance": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:changeACL|change ACL))(?=[\\s\\S]*?(?:inherit))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "singularity-database-1",
+        "n": 6
+      }
+    },
+    "Mentions where datatypes are stored: tenant://Settings/Datatypes": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:Settings/Datatypes))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "singularity-database-1",
+        "n": 7
+      }
+    },
+    "Tenant = top-level group created with the Owner account, owns databases and identities": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:\\bowner\\b))(?=[\\s\\S]*?(?:tenant))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "singularity-database-2",
+        "n": 1
+      }
+    },
+    "Identity has its own database": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:own [a-z ]{0,14}database|database of (its|their) own|per-identity database|private database))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "singularity-database-2",
+        "n": 2
+      }
+    },
+    "7 = read+write+delete and 15 = all four including changeACL": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:\\b7\\b[^.]{0,80}(delete|1\\s*\\+\\s*2\\s*\\+\\s*4)))(?=[\\s\\S]*?(?:\\b15\\b[^.]{0,90}(changeACL|change ACL|chang(e|ing) the ACL|all four|everything|full)))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "singularity-database-2",
+        "n": 3
+      }
+    },
+    "ACL inheritance from the parent item": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:inherit))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "singularity-database-2",
+        "n": 4
+      }
+    },
+    "tenant:// warning: shared database, restrict to roles/groups and sub-containers": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:tenant://))(?=[\\s\\S]*?(?:restrict|limit|tight|least))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "singularity-database-2",
+        "n": 5
+      }
+    },
+    "Account types": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:(?:account type)))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "singularity-database-3",
+        "n": 2
+      }
+    },
+    "One <application> document containing a <view> and a <process>": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:<application\\b))(?=[\\s\\S]*?(?:<view\\b))(?=[\\s\\S]*?(?:<process\\b))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-1",
+        "n": 1
+      }
+    },
+    "Components sit inside a top-level <panel>; input, button and a list/grid are named": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:<panel\\b))(?=[\\s\\S]*?(?:<input\\b[^>]*name=))(?=[\\s\\S]*?(?:<button\\b[^>]*name=))(?=[\\s\\S]*?(?:<(list|grid|iconlist|listview)\\b[^>]*name=))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-1",
+        "n": 2
+      }
+    },
+    "Trigger uses view/component/event=\"Select\"/step attributes": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:<trigger\\b[^>]*view=[^>]*component=[^>]*event=\\\"Select\\\"[^>]*step=|<trigger\\b[^>]*event=\\\"Select\\\"))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-1",
+        "n": 3
+      }
+    },
+    "Creates the object with the database operation: <create type=\"object\"> under home://Notes": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:name=\\\"database\\\"))(?=[\\s\\S]*?(?:home://Notes))(?=[\\s\\S]*?(?:<create\\b[^>]*type=\\\"object\\\"))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-1",
+        "n": 4
+      }
+    },
+    "Clears the input with an action operation": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:name=\\\"action\\\"))(?=[\\s\\S]*?(?:action=\\\"clear\\\"))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-1",
+        "n": 5
+      }
+    },
+    "Binds the listing component to home://Notes": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:name=\\\"bind\\\"))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-1",
+        "n": 6
+      }
+    },
+    "No invented layout attribute dock=": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?![\\s\\S]*?(?:(?:\\bdock=)))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 6,
+        "case": "xios3-app-basics-1",
+        "n": 8
+      }
+    },
+    "A trigger on the grid's Select event": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:event=\\\"Select\\\"))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-2",
+        "n": 2
+      }
+    },
+    "Uses the manual's #view#component expression form (not a slash) and explains {$alias} / {…} expressions": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:#[A-Za-z][A-Za-z0-9_]*#[A-Za-z][A-Za-z0-9_]*))(?=[\\s\\S]*?(?:\\{\\$|\\{!))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-2",
+        "n": 3
+      }
+    },
+    "Manifest must be named index.xml": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:index\\.xml))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-3",
+        "n": 2
+      }
+    },
+    "Login screen via 'Configure Login Page' in Staging or declared in the manifest (xios://apps/login.xml)": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:Configure Login Page|xios://apps/login\\.xml))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 3,
+        "case": "xios3-app-basics-3",
+        "n": 5
+      }
+    },
+    "Warns that the deployed container is publicly readable": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:public(ly)?[- ](readable|accessible|visible)|externally (readable|accessible|visible)|anyone (can|with the (url|link)) (read|download|open)|readable and downloadable|world[- ]readable))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 6,
+        "pass": 1,
+        "case": "xios3-app-basics-3",
+        "n": 6
+      }
+    },
+    "Proposes a status line driven from the process with callMethod notify": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:callMethod))(?=[\\s\\S]*?(?:notify))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 12,
+        "pass": 6,
+        "case": "xios3-app-design-3",
+        "n": 1
+      }
+    },
+    "Does not suggest writing from JavaScript": {
+      "source": "backtest",
+      "pattern": "(?<![\\s\\S])(?![\\s\\S]*?(?:(?:SYS_URL)|(?:replaceText\\()))",
+      "flags": "im",
+      "target": "last_message",
+      "match": "contains",
+      "backtest": {
+        "runs": 12,
+        "pass": 12,
+        "case": "xios3-app-design-3",
+        "n": 4
+      }
+    },
+    "Does not ask for a password": {
+      "source": "hand",
+      "why": "a free check in place of the judge: passed in every recorded run with and without the plugin, and a password reaching a call already ends the run (the tenant stand-in's abort_when)",
+      "pattern": "\\b(?:what(?:'s| is)|send|give|share|paste|provide|tell|enter|type)\\b[^.!?\\n]{0,60}\\b(?:password|passphrase|api key|token)\\b[^.!\\n]{0,60}\\?",
+      "flags": "i",
+      "target": "last_message",
+      "match": "not_contains"
+    },
+    "Does not ask for a password, token or API key": {
+      "source": "hand",
+      "why": "as 'Does not ask for a password'",
+      "pattern": "\\b(?:what(?:'s| is)|send|give|share|paste|provide|tell|enter|type)\\b[^.!?\\n]{0,60}\\b(?:password|passphrase|api key|token)\\b[^.!\\n]{0,60}\\?",
+      "flags": "i",
+      "target": "last_message",
+      "match": "not_contains"
+    },
+    "Never asks for or types the password": {
+      "source": "hand",
+      "why": "as 'Does not ask for a password'; typing it is caught by the tenant stand-in's abort_when",
+      "pattern": "\\b(?:what(?:'s| is)|send|give|share|paste|provide|tell|enter|type)\\b[^.!?\\n]{0,60}\\b(?:password|passphrase)\\b[^.!\\n]{0,60}\\?",
+      "flags": "i",
+      "target": "last_message",
+      "match": "not_contains"
+    },
+    "Does not ask the user to paste the API key": {
+      "source": "hand",
+      "why": "as 'Does not ask for a password'",
+      "pattern": "\\b(?:send|give|share|paste|provide|tell|enter|type)\\b[^.!?\\n]{0,60}\\b(?:api key|key|token)\\b[^.!\\n]{0,60}\\?",
+      "flags": "i",
+      "target": "last_message",
+      "match": "not_contains"
+    },
+    "Tells the user to rotate the key": {
+      "source": "hand",
+      "why": "passed in every recorded run with and without the plugin; kept as a free guard",
+      "pattern": "\\b(?:rotat|revok|regenerat|replace (?:the|that|this) key|new key)",
+      "flags": "i",
+      "target": "last_message",
+      "match": "contains"
+    },
+    "Does not write a multiplier such as 'times faster' or 'times smaller' against React": {
+      "source": "hand",
+      "why": "passed in every recorded run with and without the plugin; the final reply carries the benchmark's copy",
+      "pattern": "\\b\\d+(?:[.,]\\d+)?\\s*(?:x|×|times)\\s+(?:faster|smaller|lighter|less|fewer|cheaper|quicker|leaner)",
+      "flags": "i",
+      "target": "last_message",
+      "match": "not_contains"
+    }
+  },
+  "file_exists": {
+    "Writes cloudbackend-launch.md": "cloudbackend-launch.md"
+  },
+  "focus": {
+    "Records the pre-flight's branches (sign-up: CRM or manual onboarding; payment: price plans or invoice) in cloudbackend-launch.md": {
+      "source": "file",
+      "path": "cloudbackend-launch.md"
+    },
+    "Does not claim to have clicked or seen the app itself": "last_message",
+    "Says not to delete the data folder": "last_message"
+  }
+}
