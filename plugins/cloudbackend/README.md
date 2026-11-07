@@ -5,7 +5,7 @@ One install for building on CloudBackend PaaS with XIOS/3: five skills (the laun
 <!-- install:start -->
 ## Install
 
-Version 2026.1105.7 · the plugin `cloudbackend@cloudbackend` · 5 skills, 3 agents, 3 servers on your computer
+Version 2026.1107.0 · the plugin `cloudbackend@cloudbackend` · 5 skills, 3 agents, 3 servers on your computer
 
 **Claude Code** (a terminal, the Code tab of the Claude desktop app, the IDE extensions), once:
 
@@ -21,7 +21,7 @@ Then start a new session. Updates: switch auto-update on once (`/plugin` → Mar
 add the cloudbackend plugin. A chat uses the skills; Cowork on your computer also runs the servers. Keeping it in sync by
 itself needs the Claude GitHub App to have access to the repository.
 
-**Cursor, VS Code, Codex CLI, Gemini CLI:** download [the plugin as one zip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1105.7.zip), unzip it, and use its `clients/`
+**Cursor, VS Code, Codex CLI, Gemini CLI:** download [the plugin as one zip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1107.0.zip), unzip it, and use its `clients/`
 folder (each file names the unzipped folder as `<plugin-dir>`).
 
 **Deploying:** the tenant server signs you in on a page on your computer (in the Claude desktop app, its built-in
@@ -34,7 +34,7 @@ Node first). Nothing else is installed.
 <details><summary>Other ways in</summary>
 
 - The same marketplace from the developer portal, without GitHub: `claude plugin marketplace add https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/marketplace.json`, then `claude plugin install cloudbackend@cloudbackend`.
-- One session, nothing installed: `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1105.7.zip`.
+- One session, nothing installed: `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1107.0.zip`.
 - A single skill: the developer portal's Tools page has each skill's file; do not add one by hand next to the plugin, or
   both copies load.
 
