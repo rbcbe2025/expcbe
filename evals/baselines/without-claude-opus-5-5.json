@@ -47,13 +47,13 @@
       "label": "2026.1107.0-both"
     },
     "cloudbackend-saas-launch-8": {
-      "case_hash": "8399c97d1e819a5d",
-      "score": 0,
+      "case_hash": "4e83383e1f140846",
+      "score": 0.1429,
       "runs": 1,
-      "costUsd": 0.1615,
+      "costUsd": 0.1861,
       "cli": "2.1.316",
       "date": "2026-11-07",
-      "label": "2026.1107.0-both"
+      "label": "grader-fix-2026-11-07-both"
     },
     "singularity-database-1": {
       "case_hash": "fd4e52220d7852dc",
@@ -92,13 +92,13 @@
       "label": "2026.1107.0-both"
     },
     "xios3-app-basics-3": {
-      "case_hash": "0f0b949162c9b80c",
+      "case_hash": "cf028965195a8bf7",
       "score": 0,
       "runs": 1,
-      "costUsd": 0.1615,
+      "costUsd": 0.1335,
       "cli": "2.1.316",
       "date": "2026-11-07",
-      "label": "baseline-opus-2026-11-07-both"
+      "label": "grader-fix-2026-11-07-both"
     },
     "xios3-app-design-1": {
       "case_hash": "86086257b68d86d0",
@@ -281,13 +281,13 @@
       "label": "2026.1107.0-both"
     },
     "cloudbackend-saas-launch-14": {
-      "case_hash": "5c3249d24b77e6c8",
+      "case_hash": "dd5cb4e946d9bde9",
       "score": 0.25,
       "runs": 1,
-      "costUsd": 0.3885,
+      "costUsd": 0.2832,
       "cli": "2.1.316",
       "date": "2026-11-07",
-      "label": "2026.1107.0-both"
+      "label": "grader-fix-2026-11-07-both"
     },
     "cloudbackend-saas-launch-15": {
       "case_hash": "d275db2384723b20",
