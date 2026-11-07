@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view name="Notes" mode="main" title="Notes">
+  <panel name="root" type="rows">
+    <button name="save" text="Save"/>
+  </panel>
+</view>

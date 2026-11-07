@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process xmlns:xlink="http://www.w3.org/1999/xlink" name="notesProcess" version="1">
+  <script href="notes.v1.js"/>
+  <trigger view="Notes" event="Loaded" step="init"/>
+  <trigger view="Notes" component="svae" event="Select" step="saveNote"/>
+  <trigger view="Main" event="Loaded" step="init"/>
+  <step id="init">
+    <operation name="database" value="home://Notes"><create type="container" name="Items"/></operation>
+    <operation name="channel" value=""><name>llm</name><proxy>myProxy</proxy><protocol>PROXY</protocol></operation>
+    <alias name="itemsUrl" value="home://Notes/Items" model="value"/>
+    <operation name="bind" value="{$itemsUrl}">
+      <component view="Notes" name="itmes" select="/db:result"/>
+    </operation>
+  </step>
+  <step id="saveNote">
+    <alias name="stamp" value="{formatDate('now')} {#Notes#serach}" model="value"/>
+    <operation name="call" step="init"/>
+  </step>
+</process>

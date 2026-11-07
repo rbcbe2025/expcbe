@@ -1,0 +1,5 @@
+VENDORED_FROM: cbemcp-build's golden lint fixture (tests/golden/ in the deploy server's codebase, the Python
+reference implementation of lint_project): a package with a trap for most rules, the findings the reference gives it per case,
+and the rule table of its tenant-grammar.json. Read by test.mjs next to this folder.
+Source: mcp-cloudbackend commit 5c2cb0eed70d. Synced 2026-11-07 by scripts/sync-servers.mjs; never edited here.
+Cases: build, ship, two rules.

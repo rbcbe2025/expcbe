@@ -28,6 +28,12 @@ export const PORTAL_FILE = path.join(HUB, 'public', 'portal.json');
 export const DOCS_SERVER_SRC = path.join(HUB, 'public', 'dist', 'mcpb', 'cloudbackend-docs', 'server');
 export const HUB_PLUGIN_DIR = path.join(HUB, 'public', 'public', 'plugin');
 
+// The deploy server's codebase next to this repo (or CBEMCP_BUILD, the cbemcp-build folder itself). One thing is read
+// from it: cbemcp-build's golden lint fixture (tests/golden/), which sync-servers.mjs vendors into the build server so
+// its tests hold the Node port to the Python reference's findings and rule table.
+export const CBEMCP_BUILD = path.resolve(process.env.CBEMCP_BUILD || path.join(ROOT, '..', 'mcp-cloudbackend', 'cbemcp-build'));
+export const GOLDEN_SRC = path.join(CBEMCP_BUILD, 'tests', 'golden');
+
 // CloudBackend's live deploy server. It is CloudBackend's, per tenant, and this is the ONLY thing it is used for:
 // the deploy connector's URL form. The documentation and build servers run inside the plugin.
 export const HOST = 'https://mcp.cloudbackend.com';

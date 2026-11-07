@@ -1,9 +1,12 @@
 #!/usr/bin/env node
-// sync-servers.mjs [--check] — the only way the documentation server enters this plugin.
-//   docs   the hub's staged Claude Desktop extension server (public/dist/mcpb/cloudbackend-docs/server/: index.mjs with
-//          the portal address filled in, search-core.mjs, xios3-reference.mjs; built there by scripts/build-mcpb.mjs and
-//          guarded there) -> plugins/cloudbackend/servers/docs/
-// The build server (servers/build/) is authored in this repository and is not synced. The destination gets a
+// sync-servers.mjs [--check] — the only way the documentation server, and the build server's golden lint fixture,
+// enter this plugin.
+//   docs          the hub's staged Claude Desktop extension server (public/dist/mcpb/cloudbackend-docs/server/: index.mjs
+//                 with the portal address filled in, search-core.mjs, xios3-reference.mjs; built there by
+//                 scripts/build-mcpb.mjs and guarded there) -> plugins/cloudbackend/servers/docs/
+//   build/golden  cbemcp-build's golden lint fixture (lib.mjs GOLDEN_SRC: a package, and the findings and rule table the
+//                 Python reference gives it) -> plugins/cloudbackend/servers/build/golden/, read by servers/build/test.mjs
+// The build server itself (servers/build/) is authored in this repository and is not synced. Each destination gets a
 // VENDORED_FROM marker (what, which commit, when) and MANIFEST.sha256 (one line per file). Copies nothing from
 // node_modules, .venv or __pycache__, and refuses the whole sync when a copied text file carries what the hub's
 // publication guard forbids (a workspace path, a test-tenant host other than the portal's): the plugin is published.
@@ -13,7 +16,7 @@ import {execFileSync} from 'node:child_process';
 import {existsSync, readFileSync, rmSync, statSync} from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {PLUGIN_DIR, HUB, DOCS_SERVER_SRC, SERVERS, listFiles, sha256, writeText, isoDate, fail} from './lib.mjs';
+import {PLUGIN_DIR, HUB, DOCS_SERVER_SRC, GOLDEN_SRC, SERVERS, listFiles, sha256, writeText, isoDate, fail} from './lib.mjs';
 
 // The hub's publication guard decides what a copied file may not say: its internal path literals and patterns (a
 // home directory, a mounted volume, the workspace's project names) and the test-tenant hosts. The documentation
@@ -31,7 +34,7 @@ const gitInfo = dir => {
   try {
     const top = execFileSync('git', ['-C', dir, 'rev-parse', '--show-toplevel'], {encoding: 'utf8'}).trim();
     const sha = execFileSync('git', ['-C', dir, 'rev-parse', '--short=12', 'HEAD'], {encoding: 'utf8'}).trim();
-    const dirty = execFileSync('git', ['-C', dir, 'status', '--porcelain', '--', path.relative(top, dir) || '.'], {encoding: 'utf8'}).trim() ? ' (with uncommitted changes)' : '';
+    const dirty = execFileSync('git', ['-C', top, 'status', '--porcelain', '--', path.relative(top, dir) || '.'], {encoding: 'utf8'}).trim() ? ' (with uncommitted changes)' : '';
     return `${path.basename(top)} commit ${sha}${dirty}`;
   } catch { return 'no git information'; }
 };
@@ -56,7 +59,23 @@ function planDocs() {
   return {entries, marker, summary: `${files.length} files, ${tools.size} tools`};
 }
 
-const plans = {docs: planDocs};
+/** The build server's golden lint fixture, as cbemcp-build's tests write it: package/, expected.json, README.md. */
+function planGolden() {
+  const src = GOLDEN_SRC;
+  if (!existsSync(path.join(src, 'expected.json'))) return {problems: [`cbemcp-build's golden lint fixture is not at ${src}/expected.json (set CBEMCP_BUILD to the cbemcp-build folder)`]};
+  const files = listFiles(src, {skip: SKIP});
+  if (!files.some(rel => rel === 'package/index.xml')) return {problems: [`${src} has no package/index.xml: not the golden fixture`]};
+  const cases = JSON.parse(readFileSync(path.join(src, 'expected.json'), 'utf8')).cases.map(c => c.name);
+  const entries = files.map(rel => ({rel, data: readFileSync(path.join(src, rel)), mode: statSync(path.join(src, rel)).mode}));
+  const marker = ['VENDORED_FROM: cbemcp-build\'s golden lint fixture (tests/golden/ in the deploy server\'s codebase, the Python',
+    'reference implementation of lint_project): a package with a trap for most rules, the findings the reference gives it per case,',
+    'and the rule table of its tenant-grammar.json. Read by test.mjs next to this folder.',
+    `Source: ${gitInfo(src)}. Synced ${isoDate()} by scripts/sync-servers.mjs; never edited here.`,
+    `Cases: ${cases.join(', ')}.`, ''].join('\n');
+  return {entries, marker, summary: `${files.length} files, ${cases.length} cases`};
+}
+
+const plans = {docs: planDocs, 'build/golden': planGolden};
 let failed = 0, changed = 0;
 for (const key of Object.keys(plans)) {
   const dest = path.join(PLUGIN_DIR, 'servers', key);

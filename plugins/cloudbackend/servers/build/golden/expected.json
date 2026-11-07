@@ -1,0 +1,504 @@
+{
+  "about": "The golden lint fixture: package/ and the findings cbemcp-build's lint gives it per case (G00 and the fix texts left out), plus the rule table of its tenant-grammar.json. Written by tests/test_golden.py with CBEMCP_BUILD_UPDATE_GOLDEN=1; never edited by hand.",
+  "grammar": [
+    {
+      "id": "G00",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G01",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G02",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G03",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G04",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G05",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G06",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G07",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G08",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G09",
+      "profile": "ship",
+      "severity": "error"
+    },
+    {
+      "id": "G10",
+      "profile": "ship",
+      "severity": "error"
+    },
+    {
+      "id": "G11",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G12",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G13",
+      "profile": "build",
+      "severity": "warning"
+    },
+    {
+      "id": "G14",
+      "profile": "ship",
+      "severity": "error"
+    },
+    {
+      "id": "G15",
+      "profile": "ship",
+      "severity": "warning"
+    },
+    {
+      "id": "G16",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G17",
+      "profile": "build",
+      "severity": "info"
+    },
+    {
+      "id": "G18",
+      "profile": "ship",
+      "severity": "error"
+    },
+    {
+      "id": "G19",
+      "profile": "build",
+      "severity": "error"
+    },
+    {
+      "id": "G20",
+      "profile": "build",
+      "severity": "error"
+    }
+  ],
+  "cases": [
+    {
+      "name": "build",
+      "profile": "build",
+      "errors": [
+        {
+          "rule": "G01",
+          "file": "processes/notes.xml",
+          "line": 2,
+          "message": "<process> carries a version attribute"
+        },
+        {
+          "rule": "G02",
+          "file": "index.xml",
+          "line": 21,
+          "message": "view name 'Notes' is declared 2 times without a distinct screen= on each"
+        },
+        {
+          "rule": "G02",
+          "file": "views/view.xml",
+          "line": 1,
+          "message": "a view file named view.xml"
+        },
+        {
+          "rule": "G03",
+          "file": "processes/notes.xml",
+          "line": 16,
+          "message": "processes/notes.xml line 16: formatDate() is not an allowed function"
+        },
+        {
+          "rule": "G04",
+          "file": "processes/notes.xml",
+          "line": 17,
+          "message": "processes/notes.xml line 17: <operation name=\"call\"> uses step= instead of value="
+        },
+        {
+          "rule": "G05",
+          "file": "views/view.xml",
+          "line": 13,
+          "message": "views/view.xml line 13: <select> is not a XIOS/3 component"
+        },
+        {
+          "rule": "G05",
+          "file": "views/view.xml",
+          "line": 13,
+          "message": "views/view.xml line 13: <option> is not a XIOS/3 component"
+        },
+        {
+          "rule": "G06",
+          "file": "processes/notes.xml",
+          "line": 3,
+          "message": "processes/notes.xml line 3: the process loads a script but has no <step id=\"start\">"
+        },
+        {
+          "rule": "G07",
+          "file": "index.xml",
+          "line": 9,
+          "message": "index.xml line 9: href=\"ui/badge.js\" does not resolve to a file in the package"
+        },
+        {
+          "rule": "G07",
+          "file": "views/view.xml",
+          "line": 4,
+          "message": "views/view.xml line 4: href=\"../../outside.css\" escapes the package root"
+        },
+        {
+          "rule": "G08",
+          "file": "index.xml",
+          "line": 9,
+          "message": "index.xml line 9: component tag '9badge' is not an XML name"
+        },
+        {
+          "rule": "G11",
+          "file": "processes/notes.v1.js",
+          "line": 5,
+          "message": "processes/notes.v1.js line 5: XMLHttpRequest to cdn.example.org"
+        },
+        {
+          "rule": "G11",
+          "file": "processes/notes.v1.js",
+          "line": 6,
+          "message": "processes/notes.v1.js line 6: fetch() to api.example.com"
+        },
+        {
+          "rule": "G12",
+          "file": "processes/notes.v1.js",
+          "line": 3,
+          "message": "processes/notes.v1.js line 3: a string shaped like a credential assignment"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 5,
+          "message": "processes/notes.xml line 5: trigger names component 'svae', which view 'Notes' does not have"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 6,
+          "message": "processes/notes.xml line 6: trigger names view 'Main', which no view declares"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 12,
+          "message": "processes/notes.xml line 12: component 'itmes' is not in view 'Notes'"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 16,
+          "message": "processes/notes.xml line 16: #Notes#serach: component 'serach' is not in view 'Notes'"
+        },
+        {
+          "rule": "G20",
+          "file": "index.xml",
+          "line": 20,
+          "message": "index.xml line 20: the app's own <view> must have xlink:actuate=\"onRequest\""
+        },
+        {
+          "rule": "G20",
+          "file": "index.xml",
+          "line": 22,
+          "message": "index.xml line 22: the main process precedes the login process"
+        }
+      ],
+      "warnings": [
+        {
+          "rule": "G08",
+          "file": "index.xml",
+          "line": 8,
+          "message": "index.xml line 8: component tag 'status' shadows a native component of the same name"
+        },
+        {
+          "rule": "G13",
+          "file": "processes/notes.xml",
+          "line": 8,
+          "message": "processes/notes.xml line 8: a database write to home://Notes with no guard, in a package shared with the tenant"
+        }
+      ],
+      "info": [
+        {
+          "rule": "G17",
+          "file": "processes/notes.xml",
+          "line": 9,
+          "message": "processes/notes.xml line 9: <proxy> under a channel operation: expected, deploy with Deploy Anyway"
+        }
+      ]
+    },
+    {
+      "name": "ship",
+      "profile": "ship",
+      "errors": [
+        {
+          "rule": "G01",
+          "file": "processes/notes.xml",
+          "line": 2,
+          "message": "<process> carries a version attribute"
+        },
+        {
+          "rule": "G02",
+          "file": "index.xml",
+          "line": 21,
+          "message": "view name 'Notes' is declared 2 times without a distinct screen= on each"
+        },
+        {
+          "rule": "G02",
+          "file": "views/view.xml",
+          "line": 1,
+          "message": "a view file named view.xml"
+        },
+        {
+          "rule": "G03",
+          "file": "processes/notes.xml",
+          "line": 16,
+          "message": "processes/notes.xml line 16: formatDate() is not an allowed function"
+        },
+        {
+          "rule": "G04",
+          "file": "processes/notes.xml",
+          "line": 17,
+          "message": "processes/notes.xml line 17: <operation name=\"call\"> uses step= instead of value="
+        },
+        {
+          "rule": "G05",
+          "file": "views/view.xml",
+          "line": 13,
+          "message": "views/view.xml line 13: <select> is not a XIOS/3 component"
+        },
+        {
+          "rule": "G05",
+          "file": "views/view.xml",
+          "line": 13,
+          "message": "views/view.xml line 13: <option> is not a XIOS/3 component"
+        },
+        {
+          "rule": "G06",
+          "file": "processes/notes.xml",
+          "line": 3,
+          "message": "processes/notes.xml line 3: the process loads a script but has no <step id=\"start\">"
+        },
+        {
+          "rule": "G07",
+          "file": "index.xml",
+          "line": 9,
+          "message": "index.xml line 9: href=\"ui/badge.js\" does not resolve to a file in the package"
+        },
+        {
+          "rule": "G07",
+          "file": "views/view.xml",
+          "line": 4,
+          "message": "views/view.xml line 4: href=\"../../outside.css\" escapes the package root"
+        },
+        {
+          "rule": "G08",
+          "file": "index.xml",
+          "line": 9,
+          "message": "index.xml line 9: component tag '9badge' is not an XML name"
+        },
+        {
+          "rule": "G09",
+          "file": "views/view.xml",
+          "line": 12,
+          "message": "views/view.xml line 12: non-ASCII character"
+        },
+        {
+          "rule": "G10",
+          "file": "styles/app.css",
+          "line": 2,
+          "message": "styles/app.css: a hex colour outside the token theme"
+        },
+        {
+          "rule": "G10",
+          "file": "views/view.xml",
+          "line": 14,
+          "message": "views/view.xml: a hex colour outside the token theme"
+        },
+        {
+          "rule": "G11",
+          "file": "processes/notes.v1.js",
+          "line": 5,
+          "message": "processes/notes.v1.js line 5: XMLHttpRequest to cdn.example.org"
+        },
+        {
+          "rule": "G11",
+          "file": "processes/notes.v1.js",
+          "line": 6,
+          "message": "processes/notes.v1.js line 6: fetch() to api.example.com"
+        },
+        {
+          "rule": "G12",
+          "file": "processes/notes.v1.js",
+          "line": 3,
+          "message": "processes/notes.v1.js line 3: a string shaped like a credential assignment"
+        },
+        {
+          "rule": "G14",
+          "file": "xsl/detail.xsl",
+          "line": 4,
+          "message": "xsl/detail.xsl line 4: xsl:apply-templates over a node set"
+        },
+        {
+          "rule": "G14",
+          "file": "xsl/detail.xsl",
+          "line": 5,
+          "message": "xsl/detail.xsl line 5: a <br/>, which renders as two line breaks"
+        },
+        {
+          "rule": "G18",
+          "file": "index.xml",
+          "line": 1,
+          "message": "the application name 'Golden' is not [a-z0-9]+, so it cannot be the deployment name as it is"
+        },
+        {
+          "rule": "G18",
+          "file": "xiosassets/readme.txt",
+          "line": 0,
+          "message": "the folder 'xiosassets' begins with xios, which the host's robots.txt disallows"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 5,
+          "message": "processes/notes.xml line 5: trigger names component 'svae', which view 'Notes' does not have"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 6,
+          "message": "processes/notes.xml line 6: trigger names view 'Main', which no view declares"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 12,
+          "message": "processes/notes.xml line 12: component 'itmes' is not in view 'Notes'"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 16,
+          "message": "processes/notes.xml line 16: #Notes#serach: component 'serach' is not in view 'Notes'"
+        },
+        {
+          "rule": "G20",
+          "file": "index.xml",
+          "line": 20,
+          "message": "index.xml line 20: the app's own <view> must have xlink:actuate=\"onRequest\""
+        },
+        {
+          "rule": "G20",
+          "file": "index.xml",
+          "line": 22,
+          "message": "index.xml line 22: the main process precedes the login process"
+        }
+      ],
+      "warnings": [
+        {
+          "rule": "G08",
+          "file": "index.xml",
+          "line": 8,
+          "message": "index.xml line 8: component tag 'status' shadows a native component of the same name"
+        },
+        {
+          "rule": "G13",
+          "file": "processes/notes.xml",
+          "line": 8,
+          "message": "processes/notes.xml line 8: a database write to home://Notes with no guard, in a package shared with the tenant"
+        },
+        {
+          "rule": "G14",
+          "file": "xsl/detail.xsl",
+          "line": 9,
+          "message": "xsl/detail.xsl line 9: xsl:apply-templates"
+        }
+      ],
+      "info": [
+        {
+          "rule": "G17",
+          "file": "processes/notes.xml",
+          "line": 9,
+          "message": "processes/notes.xml line 9: <proxy> under a channel operation: expected, deploy with Deploy Anyway"
+        }
+      ]
+    },
+    {
+      "name": "two rules",
+      "profile": "build",
+      "rules": [
+        "G05",
+        "G19"
+      ],
+      "errors": [
+        {
+          "rule": "G05",
+          "file": "views/view.xml",
+          "line": 13,
+          "message": "views/view.xml line 13: <select> is not a XIOS/3 component"
+        },
+        {
+          "rule": "G05",
+          "file": "views/view.xml",
+          "line": 13,
+          "message": "views/view.xml line 13: <option> is not a XIOS/3 component"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 5,
+          "message": "processes/notes.xml line 5: trigger names component 'svae', which view 'Notes' does not have"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 6,
+          "message": "processes/notes.xml line 6: trigger names view 'Main', which no view declares"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 12,
+          "message": "processes/notes.xml line 12: component 'itmes' is not in view 'Notes'"
+        },
+        {
+          "rule": "G19",
+          "file": "processes/notes.xml",
+          "line": 16,
+          "message": "processes/notes.xml line 16: #Notes#serach: component 'serach' is not in view 'Notes'"
+        }
+      ],
+      "warnings": [],
+      "info": []
+    }
+  ]
+}

@@ -15,13 +15,16 @@
 
 import { createHash, randomBytes } from 'node:crypto';
 import { spawn } from 'node:child_process';
-import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { chmodSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { homedir } from 'node:os';
-import { dirname, join, posix, resolve } from 'node:path';
+import { dirname, join, posix } from 'node:path';
 import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
 import { lint } from '../build/index.mjs';
+import { ToolError, extOf, packageAt, textFiles } from '../shared/package-folder.mjs';
+
+export { ToolError };
 
 const VERSION = '2026.11.4';
 const SERVER_NAME = 'cloudbackend-tenant';
@@ -35,19 +38,14 @@ export const SESSION_DIR = setting('CBE_SESSION_DIR') || join(homedir(), '.cloud
 const SIGNIN_TTL_MS = 15 * 60 * 1000;
 const TENANT = /^[a-z0-9]+$/;
 const SLUG = /^[a-z0-9]+$/;
-const MAX_FILES = 1000;
-const TEXT_EXT = new Set(['.xml', '.xsl', '.xslt', '.xsd', '.svg', '.css', '.js', '.mjs', '.json', '.html', '.htm', '.txt', '.md', '.csv']);
-const SKIP = new Set(['node_modules', 'Thumbs.db']);
 const WRITTEN_BY_DEPLOY = new Set(['index.html', '.types.xml']);
 
-export class ToolError extends Error {}
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const sha256 = (buf) => createHash('sha256').update(buf).digest('hex');
 const escXml = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 const unescXml = (v) => String(v).replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 const escRe = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const attrOf = (tag, name) => { const m = String(tag).match(new RegExp(`\\s${name}=(['"])(.*?)\\1`)); return m ? unescXml(m[2]) : undefined; };
-const extOf = (name) => (String(name).match(/\.[a-z0-9]+$/i) || [''])[0].toLowerCase();
 const MIME = {
   '.html': 'text/html', '.htm': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css',
   '.json': 'application/json', '.txt': 'text/plain', '.md': 'text/plain', '.csv': 'text/csv', '.xml': 'text/xml', '.xsl': 'text/xml',
@@ -239,31 +237,8 @@ async function sessionAlive(s) {
   } catch { return 0; }
 }
 
-// ---- the local package ------------------------------------------------------------------------------------------------
+// ---- the local package (read by ../shared/package-folder.mjs) ------------------------------------------------------
 
-function walk(root) {
-  const out = [];
-  const visit = (dir, rel) => {
-    for (const name of readdirSync(dir).sort()) {
-      if (name.startsWith('.') || SKIP.has(name)) continue;
-      const abs = join(dir, name), r = rel ? `${rel}/${name}` : name, st = statSync(abs);
-      if (st.isDirectory()) visit(abs, r);
-      else if (st.isFile()) out.push({ rel: r, abs, size: st.size });
-      if (out.length > MAX_FILES) throw new ToolError(`more than ${MAX_FILES} files under ${root}: path should be the package folder (app/ in the workflow layout).`);
-    }
-  };
-  visit(root, '');
-  return out;
-}
-function packageAt(path) {
-  if (!path) throw new ToolError('path is the local package folder, the one holding index.xml (app/ in the workflow layout).');
-  const root = resolve(String(path));
-  if (!existsSync(join(root, 'index.xml'))) throw new ToolError(`${root} holds no index.xml: path should be the package folder (app/ in the workflow layout).`);
-  const files = walk(root);
-  const odd = files.filter((f) => !/^[\x20-\x7e]+$/.test(f.rel)).map((f) => f.rel);
-  if (odd.length) throw new ToolError(`file names must be ASCII; rename: ${odd.slice(0, 10).join(', ')}`);
-  return { root, files };
-}
 async function pool(items, n, fn) {
   let i = 0;
   await Promise.all(Array.from({ length: Math.min(n, items.length) }, async () => { while (i < items.length) await fn(items[i++]); }));
@@ -290,8 +265,7 @@ async function uploadProject({ path, project_name, tenant, lint: runLint = true 
   const { root, files } = packageAt(path);
   let linted = 'skipped (lint: false)';
   if (runLint) {
-    const texts = files.filter((f) => TEXT_EXT.has(extOf(f.rel))).map((f) => ({ path: f.rel, content: readFileSync(f.abs, 'utf8') }));
-    const res = lint(texts, 'build');
+    const res = lint(textFiles(files), 'build');
     if (!res.ok) {
       const lines = res.errors.slice(0, 30).map((e) => `${e.rule} ${e.file}${e.line ? `:${e.line}` : ''} ${e.message}${e.fix ? ` (fix: ${e.fix})` : ''}`);
       throw new ToolError(`Nothing was uploaded: lint_project (profile build) found ${res.errors.length} error(s) in ${root}.\n${lines.join('\n')}`);

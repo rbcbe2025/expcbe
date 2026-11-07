@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 // cloudbackend-build - the CloudBackend PaaS build tools for a XIOS/3 package, as two MCP tools over stdio:
-//   lint_project       the tenant grammar (rules G01-G20) applied to files held in the request, before an upload
+//   lint_project       the tenant grammar (rules G01-G20) applied to a package, before an upload
 //   benchmark_project  the measured block of a benchmark report (files, lines, bytes, views, processes, ...)
+// The package is a local folder (`dir`, read by ../shared/package-folder.mjs as the tenant server reads it for an
+// upload) or the files themselves in the request (`files`, for clients without a file system).
 //
 // This is a port of the Python reference implementation, the cbemcp-build package in the deploy server's codebase
 // (its lint.py and benchmark.py; that package stays the server-side implementation behind the deploy connector).
-// The rules are data: the server reads the plugin's own copy of the workflow skill's reference,
-// skills/xios3-app-workflow/references/tenant-grammar.json (resolved relative to this file), so the rule table has
+// golden/ is that package's golden lint fixture, vendored by scripts/sync-servers.mjs: test.mjs holds this port to
+// the reference's findings and to its rule table (ids, profiles, severities).
+// The rules are data: the server reads the plugin's own copy of the workflow skill's reference, GRAMMAR_PATH below
+// (resolved relative to this file, and named nowhere else), so the rule table has
 // ONE source inside the plugin. It accepts both shapes of that file: the one with {placeholder} messages and the
 // allowed_xpath_functions / limits sections, and the shorter one whose messages are plain sentences (then the
 // finding texts come from the templates below, which mirror the reference, and the function list and limits are
@@ -21,10 +25,13 @@
 
 import { readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline';
-import { dirname, join } from 'node:path';
+import { dirname, isAbsolute, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ToolError, isText, packageAt, textFiles } from '../shared/package-folder.mjs';
 
-const VERSION = '2026.11.4';
+export { ToolError };
+
+const VERSION = '2026.11.7';
 const SERVER_NAME = 'cloudbackend-build';
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const GRAMMAR_PATH = join(HERE, '..', '..', 'skills', 'xios3-app-workflow', 'references', 'tenant-grammar.json');
@@ -46,8 +53,6 @@ const XSL_NS = 'http://www.w3.org/1999/XSL/Transform';
 const XML_NS = 'http://www.w3.org/XML/1998/namespace';
 const XLINK_HREF = `{${XLINK_NS}}href`;
 const XLINK_ACTUATE = `{${XLINK_NS}}actuate`;
-
-export class ToolError extends Error {}
 
 // ---- the grammar ---------------------------------------------------------------------------------------------------
 
@@ -804,57 +809,78 @@ function capText(text, max) {
   if (nl > cut.length - 200) cut = cut.slice(0, nl);
   return `${cut.trimEnd()}${note}`;
 }
+/** The package a tool call names: the text files of the folder `dir` (with the binary files it did not read), or
+ *  `files` as given. Exactly one of the two. */
+export function packageInput({ dir, files } = {}) {
+  const hasFiles = Array.isArray(files) ? files.length > 0 : files !== undefined && files !== null;
+  if (dir && hasFiles) throw new ToolError('Pass dir or files, not both.');
+  if (!dir) {
+    if (!hasFiles) throw new ToolError('Missing the package: dir (a local package folder) or files ({path, content} each).');
+    return { files };
+  }
+  if (typeof dir !== 'string' || !isAbsolute(dir)) throw new ToolError('dir is the absolute path of a local package folder, the one holding index.xml.');
+  const { root, files: found } = packageAt(dir, 'dir');
+  const notRead = found.filter((f) => !isText(f.rel)).map((f) => f.rel);
+  return { files: textFiles(found), from: { dir: root, ...(notRead.length ? { binary_not_read: notRead } : {}) } };
+}
+
 const ANNOTATIONS = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
-const FILES_SCHEMA = {
-  type: 'array',
-  description: 'The package: every file as {path, content}, paths relative to the package root (index.xml, views/mainView.xml).',
-  items: { type: 'object', properties: { path: { type: 'string', description: "File name relative to the package root, eg. 'index.xml' or 'views/mainView.xml'." }, content: { type: 'string', description: 'The complete text content of the file.' } }, required: ['path', 'content'] },
+const PACKAGE_PROPERTIES = {
+  dir: { type: 'string', description: 'Absolute path of a local package folder (the one holding index.xml); its text files are read.' },
+  files: {
+    type: 'array', description: 'The package as {path, content}, paths relative to its root. Instead of dir, where there is no file system.',
+    items: { type: 'object', properties: { path: { type: 'string' }, content: { type: 'string' } }, required: ['path', 'content'] },
+  },
 };
 export const TOOLS = {
   lint_project: {
     title: 'Lint a project against the tenant grammar',
-    description: 'The tenant grammar checked on a XIOS/3 package held in the request: twenty rules the schemas cannot express (G01-G20), each finding with the file, the line, a message and the fix, plus G00 for XML that is not well-formed (the schema validation itself happens at upload, on the deploy connector). `profile` is `build` (what must hold before an upload) or `ship` (build plus what the served files must satisfy on a webshare); `rules` narrows the run to the ids listed. The result says whether the package is free of errors, lists errors, warnings and information separately, and carries the package\'s size by file type and the grammar\'s version. Nothing is written anywhere.',
+    description: 'The tenant grammar on a XIOS/3 package, given as a folder (dir) or as files: G01-G20, the rules the schemas cannot express, plus G00 for XML that is not well-formed (schema validation happens at upload). Each finding has the rule, file, line, message and fix. Returns ok, errors, warnings and info, the size by file type, and the grammar version. Read-only.',
     inputSchema: {
       type: 'object',
       properties: {
-        files: FILES_SCHEMA,
-        profile: { type: 'string', enum: PROFILES, default: 'build', description: 'build: before an upload; ship: build plus the webshare rules (ASCII, the token theme, render XSL, the URL prefix).' },
-        rules: { type: 'array', items: { type: 'string' }, description: 'Rule ids to run instead of the profile, e.g. ["G05", "G19"].' },
+        ...PACKAGE_PROPERTIES,
+        profile: { type: 'string', enum: PROFILES, default: 'build', description: 'build: before an upload; ship: build plus the webshare rules.' },
+        rules: { type: 'array', items: { type: 'string' }, description: 'Rule ids to run instead of the profile.' },
       },
-      required: ['files'],
     },
-    run: ({ files, profile = 'build', rules = null }) => lint(files, profile, rules),
+    run: ({ dir, files, profile = 'build', rules = null }) => {
+      const input = packageInput({ dir, files });
+      return { ...input.from, ...lint(input.files, profile, rules) };
+    },
   },
   benchmark_project: {
     title: 'Benchmark a project',
-    description: 'The measured block of a benchmark report for a XIOS/3 package: files, lines, bytes by type, views, processes, steps, operations, triggers, named and custom components, and the build step (none). Values the client measured itself (tokens, cost, active minutes, Lighthouse, timings) are passed in `client_fields` and labelled client-supplied; a field nobody had is labelled not-available. The result carries the same block as markdown and as JSON, with a Source per row. The reference comparison table is not part of this tool.',
+    description: 'The measured block of a benchmark report for a XIOS/3 package, given as a folder (dir) or as files: files, lines, bytes by type, views, processes, steps, operations, triggers, components, build step. Figures the client measured itself are labelled client-supplied, missing ones not-available. Returns the block as markdown and as JSON, a Source on every row. Read-only.',
     inputSchema: {
       type: 'object',
       properties: {
-        files: FILES_SCHEMA,
+        ...PACKAGE_PROPERTIES,
         client_fields: {
           type: 'object',
           description: 'What the client measured itself; every field optional.',
           properties: {
-            client: { type: 'string', description: "The client the application was built with, eg. 'Claude Code' or 'claude.ai'." },
-            tokens_in: { type: 'integer', description: "Input tokens the build consumed, from the client's own cost report." },
-            tokens_out: { type: 'integer', description: 'Output tokens the build consumed.' },
-            cost_usd: { type: 'number', description: "Cost of the build in USD, from the client's own cost report." },
-            active_minutes: { type: 'number', description: 'Active minutes from the first prompt to the first Development URL, from timestamps.' },
-            lighthouse: { type: 'object', description: 'A Lighthouse result as measured: scores plus route, preset, profile and date.' },
-            timings: { type: 'object', description: 'Load timings as measured, eg. cold and warm medians of three.' },
+            client: { type: 'string', description: 'The client used, e.g. Claude Code.' },
+            tokens_in: { type: 'integer' },
+            tokens_out: { type: 'integer' },
+            cost_usd: { type: 'number' },
+            active_minutes: { type: 'number', description: 'From the first prompt to the first Development URL.' },
+            lighthouse: { type: 'object', description: 'Scores with route, preset, profile and date.' },
+            timings: { type: 'object', description: 'E.g. cold and warm medians of three.' },
           },
         },
       },
-      required: ['files'],
     },
-    run: ({ files, client_fields = null }) => benchmark(files, client_fields),
+    run: ({ dir, files, client_fields = null }) => {
+      const input = packageInput({ dir, files });
+      return { ...input.from, ...benchmark(input.files, client_fields) };
+    },
   },
 };
 
 // ---- MCP over stdio ----------------------------------------------------------------------------------------------
 
-const INSTRUCTIONS = 'Read-only build tools for a XIOS/3 package before it reaches a tenant: lint_project checks the tenant grammar on the files in the request (profile build before an upload, ship before a promotion), benchmark_project measures a package. No tenant, no credentials, nothing written. Schema validation happens at upload, on the deploy connector.';
+const INSTRUCTIONS = 'Read-only build tools for a XIOS/3 package before it reaches a tenant, given as a local folder or as files: lint_project checks the tenant grammar (profile build before an upload, ship before a promotion), benchmark_project measures the package. No tenant, no credentials, nothing written.';
 const send = (msg) => process.stdout.write(JSON.stringify({ jsonrpc: '2.0', ...msg }) + '\n');
 async function handle(req) {
   const { id, method, params = {} } = req;

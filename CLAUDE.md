@@ -15,10 +15,18 @@ own git root under the CloudBackend group. `README.md` here explains the layout 
   that says when the copy drifted.
 - **`servers/build/` is authored here.** `index.mjs` is the zero-dependency Node port of the deploy server's Python
   build tools (`lint_project`, `benchmark_project`; the Python package stays the server-side implementation behind
-  the deploy connector). It reads the rule table from the plugin's own `skills/xios3-app-workflow/references/tenant-grammar.json`
-  at run time, so the grammar has one source inside the plugin; a rule change is made in the hub's skill and synced.
-  `node --test plugins/cloudbackend/servers/build/test.mjs` must stay green (the seeded traps, every rule, the stdio
-  session); `release.sh` runs it. ASCII only, no dependencies, nothing installed on the user's machine beyond Claude Code.
+  the deploy connector). It reads the rule table from the plugin's own copy of the workflow skill's
+  `references/tenant-grammar.json` at run time (`GRAMMAR_PATH` in `index.mjs`, the one place that names the skill
+  folder), so the grammar has one source inside the plugin; a rule change is made in the hub's skill and synced. Both
+  tools take the package as a local folder (`dir`) or as `files`; the folder reader is `servers/shared/package-folder.mjs`,
+  which the tenant server's upload uses too. `node --test plugins/cloudbackend/servers/build/test.mjs` must stay green
+  (the seeded traps, every rule, `dir`, the golden fixture, the stdio session); `release.sh` runs it. ASCII only, no
+  dependencies, nothing installed on the user's machine beyond Claude Code.
+- **The two lint implementations are held to one record.** `servers/build/golden/` is cbemcp-build's golden fixture
+  (a package, the findings the Python reference gives it, its grammar's rule table), synced by `sync-servers.mjs`; the
+  build server's tests must give the same findings and the plugin's grammar copy the same ids, profiles and severities.
+  When they disagree, settle it upstream: in cbemcp-build (regenerate the fixture there, then resync) or in the hub's
+  skill, never by editing the copy here.
 - **What this repo reads outside itself, and nothing else:** the hub's built outputs (`public/public/skills/`,
   `public/portal.json` for the portal's address, the staged documentation server, `<corpus>/toc.json`), the hub's
   guard module `public/scripts/extension/guard.mjs` with `_tools/publication-guard.json` and `_vocabulary/terms.json`,

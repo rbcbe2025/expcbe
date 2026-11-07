@@ -1,17 +1,27 @@
 // Tests for the build server: node --test servers/build/test.mjs (zero dependencies, no network).
 // The seeded project carries the traps the workflow exists to catch before an upload: a view file named view.xml,
 // a <select> in a view, a call operation with step=, version on <process>, and a hex colour in a stylesheet. The
-// expectations mirror the Python reference implementation's tests, rule by rule; the last group drives the server
+// expectations mirror the Python reference implementation's tests, rule by rule. golden/ is that implementation's
+// golden fixture (vendored by scripts/sync-servers.mjs): its findings and rule table must come out the same here.
+// The package-folder group reads the eval fixture tasktrack from this repository; the last group drives the server
 // over stdio as Claude Code does.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { GRAMMAR_PATH, Package, ToolError, TOOLS, XmlSyntaxError, benchmark, checkRelativePath, lint, loadGrammar, measure, parseXml } from './index.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
+const PLUGIN = join(HERE, '..', '..');
+const REPO = join(PLUGIN, '..', '..');
+const GOLDEN = join(HERE, 'golden');
+const TASKTRACK = join(REPO, 'evals', 'fixtures', 'tasktrack');
+// cbemcp-build, when its checkout sits next to this repository (or CBEMCP_BUILD names it): its own grammar file.
+const CBEMCP_BUILD = process.env.CBEMCP_BUILD || join(REPO, '..', 'mcp-cloudbackend', 'cbemcp-build');
+const UPSTREAM_GRAMMAR = join(CBEMCP_BUILD, 'cbemcp_build', 'tenant-grammar.json');
 
 const MANIFEST = `<?xml version="1.0" encoding="UTF-8"?>
 <application xmlns:xlink="http://www.w3.org/1999/xlink" name="notes" icon="icon://note" instances="1">
@@ -79,7 +89,9 @@ const withManifest = (manifest) => [f('index.xml', manifest), f('views/notes.xml
 // ---- the grammar file --------------------------------------------------------------------------------------------
 
 test('the grammar is read from the plugin\'s own skill reference and has the twenty-one rules', () => {
-  assert.ok(GRAMMAR_PATH.includes(join('skills', 'xios3-app-workflow', 'references', 'tenant-grammar.json')));
+  const rel = relative(PLUGIN, GRAMMAR_PATH).split(/[\\/]/);
+  assert.deepEqual([rel[0], ...rel.slice(2)], ['skills', 'references', 'tenant-grammar.json'], GRAMMAR_PATH);
+  assert.ok(existsSync(GRAMMAR_PATH), `${GRAMMAR_PATH} is missing: the skill moved? GRAMMAR_PATH in index.mjs is the one place it is named`);
   const data = JSON.parse(readFileSync(GRAMMAR_PATH, 'utf8'));
   assert.deepEqual(data.rules.map((r) => r.id), Array.from({ length: 21 }, (_, n) => `G${String(n).padStart(2, '0')}`));
   const g = loadGrammar();
@@ -337,11 +349,106 @@ test('benchmark counts the package and labels every row with its source', () => 
   assert.throws(() => benchmark([], null), ToolError);
 });
 
+// ---- the package as a folder (dir) -------------------------------------------------------------------------------------
+
+/** A folder's files as {path, content}, read here without the server's folder reader: sorted per folder, depth first. */
+function readTree(root, rel = '') {
+  return readdirSync(join(root, rel)).sort().flatMap((name) => {
+    if (name.startsWith('.')) return [];
+    const child = rel ? `${rel}/${name}` : name;
+    return statSync(join(root, child)).isDirectory() ? readTree(root, child) : [f(child, readFileSync(join(root, child), 'utf8'))];
+  });
+}
+const lintTool = (args) => TOOLS.lint_project.run(args);
+const withoutDir = ({ dir, binary_not_read, ...rest }) => rest;
+
+test('lint_project by dir on the eval fixture tasktrack gives exactly what it gives by files', () => {
+  assert.ok(existsSync(join(TASKTRACK, 'index.xml')), `the eval fixture is not at ${TASKTRACK}: it moved? TASKTRACK above names it`);
+  for (const profile of ['build', 'ship']) {
+    const byDir = lintTool({ dir: TASKTRACK, profile });
+    assert.equal(byDir.dir, TASKTRACK);
+    assert.equal(byDir.binary_not_read, undefined);
+    assert.deepEqual(withoutDir(byDir), lintTool({ files: readTree(TASKTRACK), profile }), profile);
+  }
+});
+
+test('benchmark_project by dir measures what it measures by files', () => {
+  const byDir = TOOLS.benchmark_project.run({ dir: TASKTRACK, client_fields: { client: 'test' } });
+  assert.deepEqual(withoutDir(byDir), TOOLS.benchmark_project.run({ files: readTree(TASKTRACK), client_fields: { client: 'test' } }));
+  assert.ok(byDir.measured.views >= 1 && byDir.measured.files >= 10);
+});
+
+test('dir: binary files are listed, not read; a relative path, a file, a missing path, a folder without index.xml and both inputs are refused', () => {
+  const root = mkdtempSync(join(tmpdir(), 'cbe-build-dir-'));
+  try {
+    const put = (rel, content) => { mkdirSync(dirname(join(root, rel)), { recursive: true }); writeFileSync(join(root, rel), content); };
+    put('index.xml', MANIFEST); put('views/notes.xml', VIEW); put('processes/notes.xml', PROCESS);
+    put('images/logo.png', Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x00, 0x01]));
+    put('.cache/x.xml', '<x'); put('node_modules/m/index.js', 'fetch("https://example.com/")');
+    const r = lintTool({ dir: root });
+    assert.deepEqual([r.errors, r.binary_not_read, r.stats.files], [[], ['images/logo.png'], 3]);
+    const refused = (args, re) => assert.throws(() => lintTool(args), (e) => e instanceof ToolError && re.test(e.message), JSON.stringify(args));
+    refused({ dir: 'app' }, /absolute path/);
+    refused({ dir: join(root, 'index.xml') }, /is not a folder: dir should be/);
+    refused({ dir: join(root, 'nothere') }, /is not a folder/);
+    refused({ dir: join(root, 'views') }, /holds no index\.xml: dir should be/);
+    refused({ dir: root, files: good() }, /not both/);
+    refused({}, /dir \(a local package folder\) or files/);
+    assert.throws(() => TOOLS.benchmark_project.run({ files: [] }), ToolError);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+// ---- the golden fixture: the reference implementation's findings and rule table ----------------------------------------
+// G00 is left out (there the XSD validation, here well-formedness only), and so are the fix texts (each engine reads its
+// own grammar file). golden/README.md has the rest.
+
+const golden = JSON.parse(readFileSync(join(GOLDEN, 'expected.json'), 'utf8'));
+const BUCKETS = ['errors', 'warnings', 'info'];
+const ruleTable = (rules) => rules.map((r) => ({ id: r.id, profile: r.profile, severity: r.severity }));
+const tableOf = (file) => ruleTable(JSON.parse(readFileSync(file, 'utf8')).rules);
+/** Where two rule tables disagree, one line per rule. */
+function tableDiff(a, b, aName, bName) {
+  const A = new Map(a.map((r) => [r.id, r])), B = new Map(b.map((r) => [r.id, r])), out = [];
+  for (const id of [...new Set([...A.keys(), ...B.keys()])].sort()) {
+    if (!A.has(id) || !B.has(id)) { out.push(`${id}: only in ${A.has(id) ? aName : bName}`); continue; }
+    for (const k of ['profile', 'severity']) if (A.get(id)[k] !== B.get(id)[k]) out.push(`${id}: ${k} ${A.get(id)[k]} in ${aName}, ${B.get(id)[k]} in ${bName}`);
+  }
+  return out;
+}
+const goldenFindings = (result) => Object.fromEntries(BUCKETS.map((b) => [b, result[b].filter((x) => x.rule !== 'G00').map(({ rule, file, line, message }) => ({ rule, file, line, message }))]));
+
+test('golden: the plugin\'s grammar has the reference\'s rule table (ids, profiles, severities)', () => {
+  const plugin = tableOf(GRAMMAR_PATH);
+  assert.deepEqual(tableDiff(golden.grammar, plugin, 'cbemcp-build', 'the plugin\'s copy'), []);
+  assert.deepEqual(plugin.map((r) => r.id), golden.grammar.map((r) => r.id));
+});
+
+test('golden: each case gives the reference\'s findings, by files and by dir', () => {
+  const pkg = join(GOLDEN, 'package'), files = readTree(pkg);
+  assert.deepEqual(golden.cases.map((c) => c.name), ['build', 'ship', 'two rules']);
+  for (const c of golden.cases) {
+    const want = Object.fromEntries(BUCKETS.map((b) => [b, c[b]]));
+    assert.deepEqual(goldenFindings(lint(files, c.profile, c.rules || null)), want, `${c.name} by files`);
+    assert.deepEqual(goldenFindings(lintTool({ dir: pkg, profile: c.profile, rules: c.rules })), want, `${c.name} by dir`);
+  }
+});
+
+test('golden: cbemcp-build\'s own grammar file agrees with the plugin\'s', { skip: !existsSync(UPSTREAM_GRAMMAR) && 'no cbemcp-build checkout next to this repository (CBEMCP_BUILD)' }, () => {
+  assert.deepEqual(tableDiff(tableOf(UPSTREAM_GRAMMAR), tableOf(GRAMMAR_PATH), 'cbemcp-build', 'the plugin\'s copy'), []);
+});
+
 // ---- the server over stdio ---------------------------------------------------------------------------------------------
 
-test('the tool table: two tools, titled and annotated', () => {
+test('the tool table: two tools, titled, the package as dir or files, descriptions short', () => {
   assert.deepEqual(Object.keys(TOOLS), ['lint_project', 'benchmark_project']);
-  for (const t of Object.values(TOOLS)) { assert.ok(t.title); assert.ok(t.description.length > 80); assert.equal(t.inputSchema.required[0], 'files'); }
+  for (const t of Object.values(TOOLS)) {
+    assert.ok(t.title);
+    assert.ok(t.description.length > 80 && t.description.length <= 400, `${t.title}: ${t.description.length} chars`);
+    assert.ok(t.inputSchema.properties.dir && t.inputSchema.properties.files);
+    assert.equal(t.inputSchema.required, undefined);            // either one: checked when the tool runs
+    const size = JSON.stringify({ title: t.title, description: t.description, inputSchema: t.inputSchema }).length;
+    assert.ok(size <= 1500, `${t.title}: the definition is ${size} chars`);   // 1,594 and 2,006 before dir (2026-11-07)
+  }
 });
 
 test('over stdio: initialize, tools/list, lint_project and benchmark_project', async () => {
@@ -384,6 +491,9 @@ test('over stdio: initialize, tools/list, lint_project and benchmark_project', a
     assert.equal(unknown.error.code, -32602);
     const ping = await ask(7, 'ping', {});
     assert.deepEqual(ping.result, {});
+    const byDir = JSON.parse((await ask(8, 'tools/call', { name: 'lint_project', arguments: { dir: join(GOLDEN, 'package'), profile: 'ship' } })).result.content[0].text);
+    assert.equal(byDir.dir, join(GOLDEN, 'package'));
+    assert.deepEqual(goldenFindings(byDir), Object.fromEntries(BUCKETS.map((b) => [b, golden.cases.find((c) => c.name === 'ship')[b]])));
   } finally {
     child.stdin.end(); child.kill();
   }

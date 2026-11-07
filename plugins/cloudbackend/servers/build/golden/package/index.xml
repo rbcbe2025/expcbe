@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The golden lint fixture: one package that sets off most rules of the tenant grammar (README.md beside it). -->
+<application xmlns:xlink="http://www.w3.org/1999/xlink" name="Golden" icon="icon://note" instances="1">
+  <settings><path>tenant://</path></settings>
+  <about version="1.0"><description>Golden notes</description></about>
+  <login><title>Golden</title></login>
+  <components>
+    <component name="Status" tag="status" class="CA_Status" href="ui/status.js"/>
+    <component name="Badge" tag="9badge" class="CA_Badge" href="ui/badge.js"/>
+  </components>
+  <theme name="golden" tokens="true">
+    <tokens>
+      <font-sans>system-ui, sans-serif</font-sans>
+      <text-md>14px</text-md>
+    </tokens>
+    <colors>
+      <color name="primary">#1e3a8a</color>
+    </colors>
+  </theme>
+  <view name="Notes" xlink:actuate="onLoad" xlink:href="views/view.xml"/>
+  <view name="Notes" xlink:actuate="onRequest" xlink:href="views/phone.xml"/>
+  <process xlink:actuate="onRequest" xlink:href="processes/notes.xml"/>
+  <process xlink:actuate="onLoad" xlink:href="xios://apps/login.xml"/>
+</application>
