@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: last_message
+focus: trace
 ---
 
 The run shows this: Does not upload or deploy while lint errors remain

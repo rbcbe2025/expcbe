@@ -564,17 +564,12 @@
       }
     },
     "Warns that the deployed container is publicly readable": {
-      "source": "backtest",
-      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:public(ly)?[- ](readable|accessible|visible)|externally (readable|accessible|visible)|anyone (can|with the (url|link)) (read|download|open)|readable and downloadable|world[- ]readable))",
+      "source": "hand",
+      "why": "the backtest pattern missed 'can be read by anyone' (2026.1107.0, basics-3); the same alternatives plus '<verb> by anyone'",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:public(ly)?[- ](readable|accessible|visible)|externally (readable|accessible|visible)|anyone (can|with the (url|link)) (read|download|open)|readable and downloadable|world[- ]readable|(read|readable|downloadable|opened|seen) by anyone))",
       "flags": "im",
       "target": "last_message",
-      "match": "contains",
-      "backtest": {
-        "runs": 6,
-        "pass": 1,
-        "case": "xios3-app-basics-3",
-        "n": 6
-      }
+      "match": "contains"
     },
     "Proposes a status line driven from the process with callMethod notify": {
       "source": "backtest",
@@ -692,7 +687,7 @@
     "Says <select> and <option> are flattened by the tenant and proposes a component or listview XSL": "last_message",
     "Says call uses value= not step=": "last_message",
     "Says version belongs on <about>, not on <process>": "last_message",
-    "Does not upload or deploy while lint errors remain": "last_message",
+    "Does not upload or deploy while lint errors remain": "trace",
     "Mentions the hex colour as a ship-profile rule (G10)": "last_message",
     "Says a 200 status proves nothing because every path answers the boot page": "last_message",
     "Claims live only from index_xml_match (a content checksum)": "last_message",
@@ -742,6 +737,10 @@
       "path": "cloudbackend-launch.md"
     },
     "Does not claim to have clicked or seen the app itself": "last_message",
-    "Says not to delete the data folder": "last_message"
+    "Says not to delete the data folder": "last_message",
+    "Adds a cost line to the spec": {
+      "source": "file",
+      "path": "docs/spec.md"
+    }
   }
 }

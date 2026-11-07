@@ -1,6 +1,8 @@
 ---
 type: llm
-focus: trace
+focus:
+  source: file
+  path: 'docs/spec.md'
 ---
 
 The run shows this: Adds a cost line to the spec

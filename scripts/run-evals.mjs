@@ -10,6 +10,8 @@
 //                              graders that can judge the cheaper target without changing a verdict
 //   --timeout-seconds N        each case's time limit in the temporary copy (the cases default to 300 s; a Fable 5.1 run
 //                              of a long case needed more on 2026-11-07); the cases in the repository are unchanged
+//   --max-turns N              each case's turn limit in the temporary copy (the cases default to 25)
+//                              Both default per model (MODEL_LIMITS): Fable 5.1 gets 900 s and 40 turns
 // Two passes at most: the cases that need a fresh without-plugin baseline run with and without the plugin; the rest run
 // with it only, and their delta is read against the stored baseline. Each pass copies the plugin and its cases into a
 // temporary folder (the cases live in evals/cases/, outside the plugin, so an install never carries them) and runs
@@ -32,6 +34,10 @@ import {PLUGIN_DIR, PLUGIN_NAME, readJson, writeJson, fail} from './lib.mjs';
 import {CASES_DIR, MOCKS_DIR, RESULTS_DIR, DEFAULT_MODEL, DEFAULT_JUDGE, plan} from './eval-plan.mjs';
 import {record, print} from './eval-report.mjs';
 
+// A model that takes more turns and time than Opus 5.5 on the same case gets more of both unless the caller sets them:
+// on 2026-11-07 Fable 5.1 passed 300 s on long cases and hit 25 turns on saas-7 (569 s, $8.85, unjudged).
+const MODEL_LIMITS = {'claude-fable-5-1': {timeout: 900, maxTurns: 40}};
+
 const args = process.argv.slice(2);
 const label = args.shift();
 if (!label || label.startsWith('-')) fail('usage: run-evals.mjs <label> [options] (see the header)');
@@ -52,12 +58,15 @@ for (let i = 0; i < args.length; i++) {
   else if (a === '--dry-run') opt.dry = true;
   else if (a === '--shadow-focus') opt.shadow = true;
   else if (a === '--timeout-seconds') opt.timeout = Number(args[++i]);
+  else if (a === '--max-turns') opt.maxTurns = Number(args[++i]);
   else fail(`unknown option: ${a}`);
 }
+opt.timeout ??= MODEL_LIMITS[opt.model]?.timeout;
+opt.maxTurns ??= MODEL_LIMITS[opt.model]?.maxTurns;
 
 const p = plan(opt);
 if (opt.withOnly) { p.with = [...p.both, ...p.with]; p.both = []; }
-console.log(`${label}: model ${opt.model}, judge ${opt.judge}; ${p.both.length} case(s) with and without the plugin, ${p.with.length} with it only, ${p.skip.length} skipped`);
+console.log(`${label}: model ${opt.model}, judge ${opt.judge}${opt.timeout || opt.maxTurns ? ` (limits: ${opt.timeout || 300} s, ${opt.maxTurns || 25} turns)` : ''}; ${p.both.length} case(s) with and without the plugin, ${p.with.length} with it only, ${p.skip.length} skipped`);
 if (!p.both.length && !p.with.length) { console.log('nothing to run'); process.exit(0); }
 mkdirSync(RESULTS_DIR, {recursive: true});
 
@@ -84,9 +93,9 @@ for (const [pass, ablation, cases] of passes) {
   for (const c of cases) cpSync(path.join(CASES_DIR, c), path.join(evals, c), {recursive: true});
   if (existsSync(path.join(CASES_DIR, '_fixtures'))) cpSync(path.join(CASES_DIR, '_fixtures'), path.join(evals, '_fixtures'), {recursive: true});
   cpSync(MOCKS_DIR, path.join(evals, 'mocks'), {recursive: true});
-  if (opt.timeout) for (const c of cases) {
-    const file = path.join(evals, c, 'prompt.md'), text = readFileSync(file, 'utf8');
-    writeFileSync(file, /^timeout_seconds:/m.test(text) ? text.replace(/^timeout_seconds:.*$/m, `timeout_seconds: ${opt.timeout}`) : text.replace(/^---\n/, `---\ntimeout_seconds: ${opt.timeout}\n`));
+  for (const [key, value] of [['timeout_seconds', opt.timeout], ['max_turns', opt.maxTurns]]) if (value) for (const c of cases) {
+    const file = path.join(evals, c, 'prompt.md'), text = readFileSync(file, 'utf8'), line = new RegExp(`^${key}:.*$`, 'm');
+    writeFileSync(file, line.test(text) ? text.replace(line, `${key}: ${value}`) : text.replace(/^---\n/, `---\n${key}: ${value}\n`));
   }
   if (opt.shadow) for (const c of cases) {
     const dir = path.join(evals, c, 'graders');
