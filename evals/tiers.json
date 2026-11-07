@@ -1,12 +1,17 @@
 {
-  "about": "Saturated cases: with the plugin they averaged 0.93 or more over every recorded run (2026-11-05/06, 4 to 16 runs each), and without it 0.40 or less. They prove the skill once; after that they run with the plugin only, when their own skill's text changes (eval-plan.mjs), and in the monthly --all run. A server or agent change does not trigger them: they test the skill's text. A case leaves this list when a change makes it informative again.",
+  "about": "Saturated cases: with the plugin they averaged 0.93 or more over every recorded run (2026-11-05/06, 4 to 16 runs each), and without it 0.40 or less. They prove the skill once; after that they run with the plugin only, when their own skill's text changes (eval-plan.mjs), and in the monthly --all run. A server or agent change does not trigger them: they test the skill's text. A case leaves this list when a change makes it informative again. Case ids follow the 2026-11-07 merge (saas-launch absorbed the workflow, basics the design kit; the map is in the hub's _skills/_archive/2026-11-07-merged-skills/case-map.json).",
   "saturated": [
-    "cloudbackend-rest-api-1", "cloudbackend-rest-api-2", "cloudbackend-rest-api-3",
-    "cloudbackend-saas-launch-6", "cloudbackend-saas-launch-7",
-    "cloudbackend-sdk-1", "cloudbackend-sdk-2",
+    "cloudbackend-rest-api-1",
+    "cloudbackend-rest-api-2",
+    "cloudbackend-rest-api-3",
+    "cloudbackend-saas-launch-6",
+    "cloudbackend-sdk-1",
+    "cloudbackend-sdk-2",
     "singularity-database-2",
     "xios3-app-basics-1",
-    "xios3-app-design-2", "xios3-app-design-3", "xios3-app-design-5",
-    "xios3-app-workflow-1"
+    "xios3-app-basics-5",
+    "xios3-app-basics-6",
+    "xios3-app-basics-8",
+    "cloudbackend-saas-launch-7"
   ]
 }

@@ -2,7 +2,7 @@
 
 The class-by-class SDK documentation (C++, Java, Swift share one object model), plus installation, references and security pages.
 
-107 topics from the published CloudBackend documentation, generated on 2026-10-10. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+107 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

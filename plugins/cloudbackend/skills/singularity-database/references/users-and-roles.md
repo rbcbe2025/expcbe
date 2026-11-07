@@ -2,7 +2,7 @@
 
 Creating identities and roles, setting role ACLs, assigning roles, and managing groups (create, configure, invite, group ACLs, delete) in the CloudBackend PaaS console, with the CLI command and the XIOS/3 process markup for each.
 
-12 topics from the published CloudBackend documentation, generated on 2026-10-15. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+12 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

@@ -26,12 +26,13 @@ bookmark a host.
 
 - The manifest's `<login>` element renders a working screen on every deployment, but the console counts
   the login screen as configured only after the Staging configurator has saved. Do both.
-- **Logo:** the value is resolved against the login application's own folder, not the deployment. Measured
-  results for each form:
+- **Logo:** in the Staging configurator the value is resolved against the login application's own folder, not
+  the deployment (measured 2026-10-07; a `logo` in the manifest's `<login>` naming a file next to `index.xml`
+  renders since 2026-11-05, `login.md`). Measured results for each form in the configurator:
 
   | Value | Result |
   | --- | --- |
-  | `logo.svg` | looked up in the login application's folder → 404, no logo |
+  | `logo.svg` | looked up in the login application's folder → 404, no logo (in the configurator) |
   | `/logo.svg`, `../logo.svg` | empty `src`, no logo |
   | `data:image/svg+xml;…` | breaks the configurator's form |
   | the configurator's folder pick | copies the file to `external/` and writes `external/logo.svg` → unresolvable, no logo |
@@ -40,8 +41,9 @@ bookmark a host.
   Working value: `https://{the Staging card's host}/logo.svg`, typed into the configurator before promoting
   to Production, or your own domain once connected. Upload the SVG next to `index.xml` so it is served
   from the deployment.
-- `create` and `reset` show their links whatever the tenant has; on a tenant without the CRM they lead
-  into flows that cannot finish, so add them only when the CRM exists.
+- `create` and `reset` show their links only when set: set both, always (`login.md`, "The three rules"). On a
+  tenant without the CRM their flows send no e-mail yet, so set up the CRM before Production (launch path, step 4)
+  rather than leaving the links out.
 - The EULA checkbox read as unchecked after Save on 2026-10-07; check the Production login screen rather
   than the form.
 

@@ -1,10 +1,11 @@
 ---
-type: regex
-target: last_message
-match: not_contains
-flags: i
-pattern: '\b(?:what(?:''s| is)|send|give|share|paste|provide|tell|enter|type)\b[^.!?\n]{0,60}\b(?:password|passphrase|api key|token)\b[^.!\n]{0,60}\?'
-# The run shows this: Does not ask for a password
-# a free check in place of the judge: passed in every recorded run with and without the plugin, and a password reaching a call already ends the run (the tenant stand-in's abort_when)
+type: llm
+focus: trace
 ---
-\b(?:what(?:'s| is)|send|give|share|paste|provide|tell|enter|type)\b[^.!?\n]{0,60}\b(?:password|passphrase|api key|token)\b[^.!\n]{0,60}\?
+
+The run shows this: Says version belongs on <about>, not on <process>
+
+PASS if the run's messages, tool calls or written files show it. FAIL if it is missing, contradicted, or only claimed
+without the matching content or call. Judge this one point only.
+
+What a full answer looks like, for context: Runs lint_project (profile build) before any upload; names the four findings with their fixes: view.xml must be renamed (G02), <select>/<option> are flattened by the tenant and must become a component or listview XSL (G05), call uses value= (G04), version belongs on <about> (G01); notes the hex colour as a ship-profile finding (G10); uploads only after the errors are fixed; does not deploy with errors; a <proxy> under channel, if present, is reported as expected.

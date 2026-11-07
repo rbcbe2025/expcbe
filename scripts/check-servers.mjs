@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // check-servers.mjs [--deep] — do the plugin's servers answer, with the tools the plugin promises?
 //   · cloudbackend-docs: `node plugins/cloudbackend/servers/docs/index.mjs` over stdio (initialize, tools/list); the
-//     tool count against lib.mjs's table, every tool titled and annotated. --deep also calls xios3_component("grid"),
+//     tool count against lib.mjs's table, every tool titled and annotated. --deep also calls xios3_lookup(component, "grid"),
 //     which reads the developer portal, so the answer proves the portal address baked into the server.
 //   · cloudbackend-build: `node plugins/cloudbackend/servers/build/index.mjs` over stdio, the tool count against the
 //     table; --deep also runs lint_project on a seeded trap package and expects the grammar's findings.
@@ -78,14 +78,14 @@ if (!existsSync(docsEntry)) { hard++; console.log(`✗ ${docs.name}: ${docs.entr
 else {
   try {
     const calls = [['tools/list', {}]];
-    if (deep) calls.push(['tools/call', {name: 'xios3_component', arguments: {names: 'grid'}}]);
+    if (deep) calls.push(['tools/call', {name: 'xios3_lookup', arguments: {kind: 'component', names: 'grid'}}]);
     const [info, list, call] = await stdio('node', [docsEntry], {}, calls);
     const r = tooling(docs.name, info, list.tools || [], docs.tools);
     console.log(r.lines.join('\n')); if (!r.ok) hard++;
     if (deep) {
       const text = (call.content || []).map(c => c.text || '').join('\n');
-      if (call.isError || text.length < 200) { hard++; console.log(`✗ ${docs.name}: xios3_component("grid") answered ${call.isError ? 'an error' : `${text.length} chars`}: ${text.slice(0, 200)}`); }
-      else console.log(`✓ ${docs.name}: xios3_component("grid") answered ${text.length} chars from the portal (${text.split('\n')[0].slice(0, 80)})`);
+      if (call.isError || text.length < 200) { hard++; console.log(`✗ ${docs.name}: xios3_lookup(component, "grid") answered ${call.isError ? 'an error' : `${text.length} chars`}: ${text.slice(0, 200)}`); }
+      else console.log(`✓ ${docs.name}: xios3_lookup(component, "grid") answered ${text.length} chars from the portal (${text.split('\n')[0].slice(0, 80)})`);
     }
   } catch (e) { hard++; console.log(`✗ ${docs.name}: ${e.message}`); }
 }

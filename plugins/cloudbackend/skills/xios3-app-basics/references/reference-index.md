@@ -2,7 +2,7 @@
 
 Every component, process operation, event, function, action and method, one line each. Open the linked page for attributes, children and examples.
 
-Every entry links to its reference page on the XIOS/3 developer portal (https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud). Generated 2026-11-06.
+Every entry links to its reference page on the XIOS/3 developer portal (https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud). Generated 2026-11-07.
 
 ## Components (55)
 

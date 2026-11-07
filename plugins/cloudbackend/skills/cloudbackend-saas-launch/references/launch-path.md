@@ -1,8 +1,8 @@
 # From tenant to first customer — the launch path
 
-The hand-written end-to-end guide from the CloudBackend documentation hub: the order of work for a first paid web application on CloudBackend PaaS, with a check for each step and the items the product has not settled yet. Its links point at the published manual.
+The hand-written end-to-end guide from the CloudBackend documentation hub: the order of work for a first paid web application on CloudBackend PaaS, with a check for each step and the items the product has not settled yet. Its links point at the published manual. Read the Pre-flight section and the current step's section, not the whole file.
 
-1 topics from the published CloudBackend documentation, generated on 2026-11-06. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+1 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -64,7 +64,7 @@ Decide, for every piece of data, whether it is a container, an object, a stream 
 
 A XIOS/3 application is a manifest, one or more views and one or more processes. Small applications inline everything in one document ([Inline Package](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-packaging/inline-package)); larger ones use an [Advanced Package](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-packaging/advanced-package). Build it with the [Application Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-development/development-tools/application-wizard), [CodePad](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-development/development-tools/xmlpad) or [Visual Studio Code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-development/development-tools/using-visual-studio-code).
 
-- **The look is decided before the markup, and the first version is generated.** The `xios3-app-design` skill turns the one-sentence idea into a design brief, a mood board and a *token theme*: the runtime's own mechanism (a `theme` element with `tokens="true"`, seed colours and type/shape knobs it derives every hover, border and selection from), so no view names a colour. Its generator then writes the first version: a list with search and an empty state, a detail with the fields to edit, New / Save / Delete, a status line and a phone layout, with the data logic in the process. Show the mood board, ask once ("this direction, or another?"), generate, upload, and iterate on the running app. A first version with sensible defaults in an hour beats the right answers to twenty questions.
+- **The look is decided before the markup, and the first version is generated.** The `xios3-app-basics` skill's design kit turns the one-sentence idea into a design brief, a mood board and a *token theme*: the runtime's own mechanism (a `theme` element with `tokens="true"`, seed colours and type/shape knobs it derives every hover, border and selection from), so no view names a colour. Its generator then writes the first version: a list with search and an empty state, a detail with the fields to edit, New / Save / Delete, a status line and a phone layout, with the data logic in the process. Show the mood board, ask once ("this direction, or another?"), generate, upload, and iterate on the running app. A first version with sensible defaults in an hour beats the right answers to twenty questions.
 - Every application lives in its own container, for example `home://Applications/planboard/`, and the manifest must be named `index.xml` to be deployable.
 - Name every component: triggers and expressions find components by name.
 - `bind` a grid or icon list to a container. Changes in the database appear in the component, and edits in the component go back to the database. There is no fetch or sync code to write.
@@ -84,7 +84,7 @@ XIOS/3 ships a login application with the shape of the CloudBackend PaaS sign-in
 In the manifest:
 
 1. Declare `xmlns:xlink="http://www.w3.org/1999/xlink"` on `<application>`.
-2. Set `xlink:actuate="onRequest"` on your own process and views, and declare the desktop view first: after sign-in the login application opens the first view declared on every screen (measured 2026-11-05), so that view must also work on a phone. The xios3-app-design kit's desktop view does.
+2. Set `xlink:actuate="onRequest"` on your own process and views, and declare the desktop view first: after sign-in the login application opens the first view declared on every screen (measured 2026-11-05), so that view must also work on a phone. The xios3-app-basics kit's desktop view does.
 3. Add `<process xlink:actuate="onLoad" xlink:href="xios://apps/login.xml"/>` before your main process.
 4. Add a `<login>` element. The manual documents `background` (an image, a colour, or two colours separated by a comma for a bottom-up gradient; `dark="true|false"` tells the screen which text colour to use), `logo`, `title`, `description`, `copyright`, `create` and `reset` (each shows its link, with the element's text as the label) and `client`. The login application also reads `button` (the sign-in button's text), `buttonColor`, `linkColor` and `createPrompt` (the line before the sign-up link), and the element's `session` attribute: with `session="true"` the runtime keeps the user signed in across reloads (the session stays in the browser for seven days of use), without it every reload signs the user out. An app with a kept session needs a Sign out, a step with `<operation name="system"><logout silent="true"/></operation>` (without `silent` the runtime first asks "Log Off?" in a dialog of its own).
 
@@ -104,7 +104,7 @@ In the manifest:
 </login>
 ```
 
-The xios3-app-design skill writes this element from the app's design, with a dark grid page like the CloudBackend PaaS sign-in (`login-bg.svg`) and a text-mark logo (`designkit.py app --login`), and checks it (`designkit.py login`).
+The xios3-app-basics skill's design kit writes this element from the app's design, with a dark grid page like the CloudBackend PaaS sign-in (`login-bg.svg`) and a text-mark logo (`designkit.py app --login`), and checks it (`designkit.py login`).
 
 Without editing the manifest, open **Configure Login Page…** on a Staging card in the Deployments section. The configuration is kept per client and written into the Production copy when the card is promoted ([Managing Deployments](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/managing-deployments)). Tick **Show EULA on user creation** there, and fill in both the create and the reset texts.
 

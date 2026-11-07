@@ -1,13 +1,13 @@
 {
   "about": "Deterministic graders for the assertions that are about tool calls. gen-evals.mjs writes these instead of the llm grader for the numbered assertion (1-based, the order in the skill's evals.json): the judge sees the run's trace with its middle elided when the run is long, so a call made mid-run is invisible to it, while tool_used and tool_order read every call. A list splits the assertion's weight of 1 evenly. 'server:tool' names a tool of the plugin's server cloudbackend-<server>. min 0 / max 0 is 'never calls', scored in both arms. {\"skip\": \"<reason>\"} leaves the assertion out of the suite: it needs something an eval run cannot have, and the reason is printed by gen-evals and kept in the README.",
-  "xios3-app-workflow-3": {
+  "cloudbackend-saas-launch-9": {
     "1": {
       "type": "tool_order",
       "before": "tenant:deploy",
       "after": "tenant:verify_deployment"
     }
   },
-  "xios3-app-workflow-11": {
+  "cloudbackend-saas-launch-17": {
     "3": {
       "type": "tool_used",
       "tool": "tenant:tenant_signin"
@@ -20,31 +20,11 @@
     "5": {
       "type": "tool_used",
       "tool": "tenant:verify_deployment"
-    }
-  },
-  "xios3-app-workflow-12": {
-    "1": {
-      "skip": "the eval run has no built-in browser tool, and without one the skill rightly lets tenant_signin open the system browser (open_browser true); this point needs the Claude desktop app"
     },
-    "4": {
+    "8": {
       "type": "tool_used",
       "tool": "tenant:tenant_status",
       "input_match": "\"wait_seconds\"\\s*:\\s*[1-9]"
-    },
-    "6": [
-      {
-        "type": "tool_order",
-        "before": "tenant:upload_project",
-        "after": "tenant:deploy"
-      },
-      {
-        "type": "tool_order",
-        "before": "tenant:deploy",
-        "after": "tenant:verify_deployment"
-      }
-    ],
-    "2": {
-      "skip": "the eval run has no built-in browser tool, and without one the skill rightly lets tenant_signin open the system browser (open_browser true); this point needs the Claude desktop app"
     }
   }
 }

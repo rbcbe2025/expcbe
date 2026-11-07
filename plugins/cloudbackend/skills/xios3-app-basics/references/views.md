@@ -2,7 +2,7 @@
 
 Views, panel layouts, components, attributes, events, actions, methods, rules and look and feel.
 
-23 topics from the published XIOS/3 documentation, generated on 2026-11-06. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+23 topics from the published XIOS/3 documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

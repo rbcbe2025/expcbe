@@ -2,7 +2,7 @@
 
 The built-in CRM sends the e-mails a deployed application's users get: verification and welcome mails, reminders, account deletion. Setting it up (Owner only, relay host), mails, rules, templates, settings and deploying them.
 
-6 topics from the published CloudBackend documentation, generated on 2026-10-15. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+6 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

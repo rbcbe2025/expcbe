@@ -2,7 +2,7 @@
 
 Defining datatypes (schemas): the XML format, key/value extraction and indexing, and how a datatype attached to a container turns it into a table.
 
-17 topics from the published CloudBackend documentation, generated on 2026-10-15. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+17 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

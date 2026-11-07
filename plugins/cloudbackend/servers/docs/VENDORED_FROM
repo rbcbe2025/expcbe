@@ -1,4 +1,4 @@
 VENDORED_FROM: the documentation hub's staged Claude Desktop extension server (public/dist/mcpb/cloudbackend-docs/server/),
 built there by scripts/build-mcpb.mjs with the developer portal's address filled in and checked with its publication guard.
-Source: estate-docs commit 7e8271c3be1a. Synced 2026-11-04 by scripts/sync-servers.mjs; never edited here.
-Tools: cloudbackend_docs, cloudbackend_rest, cloudbackend_rest_list, cloudbackend_sdk, xios3_action, xios3_component, xios3_concepts, xios3_event, xios3_function, xios3_icons, xios3_list, xios3_method, xios3_operation.
+Source: estate-docs commit e69ae816481c. Synced 2026-11-07 by scripts/sync-servers.mjs; never edited here.
+Tools: cloudbackend_docs, cloudbackend_rest, cloudbackend_sdk, xios3_list, xios3_lookup.

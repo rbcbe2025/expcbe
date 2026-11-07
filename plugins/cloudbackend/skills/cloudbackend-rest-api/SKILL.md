@@ -1,6 +1,6 @@
 ---
 name: cloudbackend-rest-api
-description: "Call the CloudBackend Singularity database over its REST API (api.cloudbackend.com/v1) — log in and get a session token, create and query containers, create/save/list objects and their streams, set ACLs, share, manage drives, groups and identities — with the exact XML request and response bodies for all 513 operations bundled. Use this whenever a developer is writing code, curl commands or a client against CloudBackend from any language (Python, JavaScript, Go, shell, generated OpenAPI clients), gets a 401 after logging in, asks what XML an endpoint expects or returns, wants to avoid the SOAP API, or mentions containers, objects, streams, webshares, `WRAP access_token`, `loginResponse`, or the CloudBackend REST/HTTP API — even if they do not say 'REST'."
+description: "Call the CloudBackend REST API (api.cloudbackend.com/v1) from any language: log in for a session token, create and query containers, create and save objects and streams, set ACLs, share, manage groups and identities, with the exact XML bodies of all 513 operations. Use it when a developer writes code, curl or a generated client against CloudBackend, gets a 401 after logging in, or asks what XML an endpoint takes or returns."
 ---
 
 # CloudBackend REST API
@@ -234,12 +234,10 @@ available guess and verify it against a real tenant.
 The data model behind the API — tenants, identities, groups, containers, objects, ACLs, datatypes — is
 its own skill, `singularity-database`; the native C++/Java/Swift libraries are `cloudbackend-sdk`.
 
-## Version and updates
+## Version
 
-This is version 2026.10.27.4 of the cloudbackend-rest-api skill, built from the CloudBackend documentation.
+cloudbackend-rest-api 2026.11.7, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
 
-Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
+A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-rest-api` than 2026.11.7, tell the user once, in one sentence, without interrupting the task.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `cloudbackend-rest-api` is newer than 2026.10.27.4, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
-
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-rest-api%2F2026.10.27.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-rest-api - it records the skill's name and version and nothing else. Never send it without that agreement.
+Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-rest-api%2F2026.11.7&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-rest-api the first time the skill is used in a session.

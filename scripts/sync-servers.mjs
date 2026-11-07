@@ -49,7 +49,7 @@ function planDocs() {
   for (const m of index.matchAll(/from\s+'\.\/([^']+)'/g)) if (!files.includes(m[1])) problems.push(`index.mjs imports ./${m[1]}, which is not staged next to it: the stage is incomplete`);
   const tools = new Set([...index.matchAll(/\b(cloudbackend_[a-z_]+|xios3_[a-z_]+)\b/g)].map(m => m[1]));
   const expected = SERVERS.find(s => s.key === 'docs').tools;
-  if (tools.size < expected) problems.push(`index.mjs names ${tools.size} tools, the plugin expects ${expected}: the stage predates the XIOS/3 lookups`);
+  if (tools.size < expected) problems.push(`index.mjs names ${tools.size} tools, the plugin expects ${expected}: the stage is older than the server this plugin declares`);
   if (problems.length) return {problems};
   const entries = files.map(rel => ({rel, data: readFileSync(path.join(src, rel)), mode: statSync(path.join(src, rel)).mode}));
   const marker = ['VENDORED_FROM: the documentation hub\'s staged Claude Desktop extension server (public/dist/mcpb/cloudbackend-docs/server/),',

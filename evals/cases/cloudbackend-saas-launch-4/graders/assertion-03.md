@@ -3,7 +3,7 @@ type: llm
 focus: trace
 ---
 
-The run shows this: Says customers get the Production address only, never the console address
+The run shows this: Says test identities are the user's to create and to sign in with, in a private window
 
 PASS if the run's messages, tool calls or written files show it. FAIL if it is missing, contradicted, or only claimed
 without the matching content or call. Judge this one point only.

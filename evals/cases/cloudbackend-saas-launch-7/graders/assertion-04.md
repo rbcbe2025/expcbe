@@ -1,10 +1,11 @@
 ---
-type: regex
-target: last_message
-match: not_contains
-flags: i
-pattern: '\b(?:send|give|share|paste|provide|tell|enter|type)\b[^.!?\n]{0,60}\b(?:api key|key|token)\b[^.!\n]{0,60}\?'
-# The run shows this: Does not ask the user to paste the API key
-# as 'Does not ask for a password'
+type: llm
+focus: trace
 ---
-\b(?:send|give|share|paste|provide|tell|enter|type)\b[^.!?\n]{0,60}\b(?:api key|key|token)\b[^.!\n]{0,60}\?
+
+The run shows this: The plan card names a deployment name of lowercase letters and digits and says Development first
+
+PASS if the run's messages, tool calls or written files show it. FAIL if it is missing, contradicted, or only claimed
+without the matching content or call. Judge this one point only.
+
+What a full answer looks like, for context: One reply: at most three questions (none re-asking the tenant or the idea), then an eight-line plan card of defaults ending with 'reply to change any of these; otherwise I go on'; creates cloudbackend-launch.md with ## App and ## Build; says W0 is open and that list_projects will prove the connector; never asks for a password or a token.

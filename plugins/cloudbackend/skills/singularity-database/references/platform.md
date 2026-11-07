@@ -2,7 +2,7 @@
 
 What an administrator sees and does in the CloudBackend PaaS console: identities, groups, datatypes, the database explorer, clients, deployments, statistics. Top-level pages only; the step-by-step pages for users and roles, price plans, the CRM, datatypes and operations are in their own reference files.
 
-17 topics from the published CloudBackend documentation, generated on 2026-10-15. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+17 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

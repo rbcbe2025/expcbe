@@ -54,9 +54,9 @@ export const GITHUB_BRANCH_WORK = 'dev';
 // plugin's own route to an account (sign-in on a page on the user's computer, REST with the session it returns), for
 // accounts whose sign-in realm the deploy connector needs does not exist yet.
 export const SERVERS = [
-  {key: 'docs', name: 'cloudbackend-docs', kind: 'local', runtime: 'node', tools: 13,
+  {key: 'docs', name: 'cloudbackend-docs', kind: 'local', runtime: 'node', tools: 5,
    entry: 'servers/docs/index.mjs',
-   what: 'documentation lookups, read-only: topics, REST operation cards with XML bodies, SDK method cards, the nine XIOS/3 reference lookups (components, operations, functions, methods, events, actions, concepts, lists, icons); reads the developer portal, needs no sign-in'},
+   what: 'documentation lookups, read-only: topics, REST operation cards with XML bodies (or the API by tag), SDK method cards, and the XIOS/3 reference by kind and name (components, operations, functions, methods, events, actions, concepts, icons) with a list of names per kind; reads the developer portal, needs no sign-in'},
   {key: 'build', name: 'cloudbackend-build', kind: 'local', runtime: 'node', tools: 2,
    entry: 'servers/build/index.mjs', test: 'servers/build/test.mjs',
    what: 'build tools for a XIOS/3 package, no tenant needed: lint_project (the tenant grammar G01-G20 before an upload; schema validation happens at upload) and benchmark_project (the measured block of a benchmark report)'},

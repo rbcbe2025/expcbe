@@ -2,7 +2,7 @@
 
 Selling subscriptions from a tenant: configuring the payment destination, account types, creating and editing price plans, publishing them to signed-out visitors, starting a checkout from an application, and where purchase confirmations land.
 
-2 topics from the published CloudBackend documentation, generated on 2026-10-15. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+2 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

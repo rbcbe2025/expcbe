@@ -259,9 +259,9 @@ export function buildXios3Reference(texts, { onMiss = () => {} } = {}) {
 
   const unavailable = (key) => `The XIOS/3 reference part "${key}" (${XIOS3_FILES[key]}) is not available here: it was not built, or not published by the portal this server reads.`;
 
-  // ---- xios3_concepts
+  // ---- concepts
   const conceptsToc = () => {
-    const lines = [`XIOS/3 concepts \u2014 ${conceptGroups.length} groups, ${conceptEntries.length} questions. xios3_concepts("<group>") returns one group in full; xios3_concepts("<words>") the questions that mention them.`, ''];
+    const lines = [`XIOS/3 concepts \u2014 ${conceptGroups.length} groups, ${conceptEntries.length} questions. xios3_lookup kind concept, names "<group>" returns one group in full; words return the questions that mention them.`, ''];
     for (const g of conceptGroups) {
       const qs = conceptEntries.filter(e => e.group === g.title);
       lines.push(`**${g.title}** \u00b7 ${qs.length}`);
@@ -291,7 +291,7 @@ export function buildXios3Reference(texts, { onMiss = () => {} } = {}) {
     }).filter(x => x.score > 0).sort((a, b) => b.score - a.score || a.e.line - b.e.line);
     if (!scored.length) {
       onMiss('xios3-concept', topic);
-      return `No XIOS/3 concept matched "${topic}". Groups: ${conceptGroups.map(g => g.title).join(', ')}. xios3_concepts() lists every question.`;
+      return `No XIOS/3 concept matched "${topic}". Groups: ${conceptGroups.map(g => g.title).join(', ')}. xios3_lookup kind concept with no names lists every question.`;
     }
     const top = scored.slice(0, 5);
     const out = [`${scored.length} concept ${scored.length === 1 ? 'entry matches' : 'entries match'} "${topic}"${scored.length > 5 ? ' (top 5)' : ''}.`, ''];
@@ -319,23 +319,23 @@ export function buildXios3Reference(texts, { onMiss = () => {} } = {}) {
     if (which === 'icons') return iconsText('');
     const ref = kinds[which];
     if (!ref.size) return unavailable(which.replace(/s$/, ''));
-    const tool = `xios3_${which.replace(/s$/, '')}`;
+    const tool = `xios3_lookup kind ${which.replace(/s$/, '')}, names`;
     if (ref.byGroup.size) {
-      const lines = [`${ref.size} XIOS/3 ${which} in ${ref.byGroup.size} groups. ${tool}("<name>") returns one entry; ${tool}("<group>") lists a group.`, ''];
+      const lines = [`${ref.size} XIOS/3 ${which} in ${ref.byGroup.size} groups. ${tool} "<name>" returns one entry; ${tool} "<group>" lists a group.`, ''];
       for (const list of ref.byGroup.values()) lines.push(`**${list[0].group}** \u00b7 ${list.length}`, list.map(s => s.title).join(', '), '');
       return lines.join('\n').trimEnd();
     }
-    return `${ref.size} XIOS/3 ${which}. ${tool}("<name>") returns one entry.\n\n${ref.sections.map(s => s.title).join(', ')}`;
+    return `${ref.size} XIOS/3 ${which}. ${tool} "<name>" returns one entry.\n\n${ref.sections.map(s => s.title).join(', ')}`;
   }
 
-  // ---- xios3_icons
+  // ---- icons
   const USAGE = 'An icon is used as icon://<name>, or icon://<name>?color=<hex> for a coloured one.';
   const ICON_SHOW = 150;
   function iconsText(query) {
     if (!iconNames.length) return unavailable('icons');
     const q = normalize(query);
     if (!q) {
-      const lines = [`${iconNames.length} XIOS/3 icons. ${USAGE}`, 'xios3_icons("<word>") finds the names containing it; xios3_icons("<category>") lists a category.', ''];
+      const lines = [`${iconNames.length} XIOS/3 icons. ${USAGE}`, 'xios3_lookup kind icon, names "<word>" finds the names containing it; a category name lists the category.', ''];
       for (const c of iconCategories) lines.push(`- ${c.name} \u00b7 ${c.icons.length}`);
       return lines.join('\n');
     }
@@ -353,7 +353,7 @@ export function buildXios3Reference(texts, { onMiss = () => {} } = {}) {
       .map(n => ({ n, r: rank(n) })).sort((a, b) => a.r - b.r || a.n.localeCompare(b.n)).map(x => x.n);
     if (!hits.length) {
       onMiss('xios3-icon', query);
-      return `No XIOS/3 icon name contains "${query}". Try a shorter word; xios3_icons() lists the categories.`;
+      return `No XIOS/3 icon name contains "${query}". Try a shorter word; xios3_lookup kind icon with no names lists the categories.`;
     }
     const shown = hits.slice(0, ICON_SHOW);
     return `${hits.length} of ${iconNames.length} icons match "${query}"${hits.length > ICON_SHOW ? ` (first ${ICON_SHOW})` : ''}. ${USAGE}\n\n${shown.join(', ')}`;

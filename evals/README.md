@@ -28,8 +28,9 @@ evals and never edited by hand; `mocks/` is hand-written; `results/` (ignored by
   (`--scaffold`). The fixtures are the repository's `evals/fixtures/` (its README says what each one is).
 - `mocks/cloudbackend-tenant/_server.md` on the two sign-in cases: the tenant stand-in starting signed out.
 
-Skipped, with the reason: xios3-app-workflow-12 assertions 1 and 2 (the eval run has no built-in browser tool, and
-without one the skill rightly lets `tenant_signin` open the system browser; these points need the Claude desktop app).
+Case ids follow the 2026-11-07 merge (cloudbackend-saas-launch absorbed the workflow's cases as 7 to 17, xios3-app-basics
+the design cases as 4 to 11); the hub's `_skills/_archive/2026-11-07-merged-skills/case-map.json` maps each old id to its
+new one. The two built-in-browser points of the old workflow case 12 left with it (they need the Claude desktop app).
 
 ## The servers in a run
 

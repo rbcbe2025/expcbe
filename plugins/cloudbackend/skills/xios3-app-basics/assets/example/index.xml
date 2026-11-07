@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- {{APP_TITLE}}: the first version. One kind of record ({{ITEMS}}) in one container, a list with search
+     and an empty state, a detail with the fields to edit, New / Save / Delete, a status line, and a
+     phone layout. The look is a token theme: seeds (colours) and knobs (type, spacing, shape) below;
+     the runtime derives hovers, borders and selection from them, so no view names a colour.
+
+     Advanced packaging: views/ (one per screen size), processes/, xsl/, styles/, ui/ (the design kit's
+     two components), data/ (sample records to try the app without a tenant).
+     Generated from the xios3-app-basics skill's design kit example by designkit.py app. -->
+<application xmlns:xlink="http://www.w3.org/1999/xlink" name="{{APP_NAME}}" icon="icon://clipboard-check?look=lucide&amp;color={{ICON_COLOR}}" instances="1">
+  <settings/>
+  <about version="1.0"><description>{{APP_TITLE}}</description></about>
+
+{{THEME}}
+
+  <components>
+    <component name="Screen" tag="screen" class="CA_Screen" href="ui/DesignKit/CA_Screen.js" container="false">
+      <skin href="ui/DesignKit/screen.xsl"/>
+    </component>
+    <component name="Status" tag="statusline" class="CA_Status" href="ui/DesignKit/CA_Status.js" container="false">
+      <skin href="ui/DesignKit/status.xsl"/>
+    </component>
+  </components>
+
+  <!-- Two layouts, one name: the runtime renders the first view whose screen= media query is true,
+       so the process addresses "App" whichever file is on screen. -->
+  <view name="App" screen="phone" xlink:actuate="onLoad" xlink:href="views/app-phone.xml"/>
+  <view name="App" screen="(min-width: 601px)" xlink:actuate="onLoad" xlink:href="views/app.xml"/>
+  <process xlink:actuate="onLoad" xlink:href="processes/app.xml"/>
+</application>

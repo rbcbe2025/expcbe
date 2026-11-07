@@ -9,6 +9,240 @@
       "cli": "2.1.316",
       "date": "2026-11-07",
       "label": "probe-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-1": {
+      "case_hash": "e11134c671f6218a",
+      "score": 0.1667,
+      "runs": 1,
+      "costUsd": 0.1669,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-3": {
+      "case_hash": "4ea592de849eb900",
+      "score": 0.5,
+      "runs": 1,
+      "costUsd": 0.1661,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-4": {
+      "case_hash": "4c8e146a9b5f33fe",
+      "score": 0.1667,
+      "runs": 1,
+      "costUsd": 0.1591,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-5": {
+      "case_hash": "7cfe2e3e39f015fb",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1372,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "cloudbackend-saas-launch-8": {
+      "case_hash": "bb424f68cd8d12bd",
+      "score": 0.5,
+      "runs": 1,
+      "costUsd": 0.2274,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "singularity-database-1": {
+      "case_hash": "5154bf64f571c19a",
+      "score": 0.5714,
+      "runs": 1,
+      "costUsd": 0.2141,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "singularity-database-3": {
+      "case_hash": "eea30ac2ce1ee283",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1621,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "singularity-database-4": {
+      "case_hash": "abf2a9bf05a8b49b",
+      "score": 0.2,
+      "runs": 1,
+      "costUsd": 0.1397,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-basics-2": {
+      "case_hash": "b0cdde69eb05ed47",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1186,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-basics-3": {
+      "case_hash": "0f0b949162c9b80c",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1615,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-design-1": {
+      "case_hash": "86086257b68d86d0",
+      "score": 0.2,
+      "runs": 1,
+      "costUsd": 0.2442,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-design-4": {
+      "case_hash": "265dac98bf533239",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1331,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-design-6": {
+      "case_hash": "de5cfe98ff51c320",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1478,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-design-7": {
+      "case_hash": "5b711d1e0c49a206",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.3796,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-design-8": {
+      "case_hash": "36e3623a2b6de941",
+      "score": 0.6,
+      "runs": 1,
+      "costUsd": 0.3292,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-10": {
+      "case_hash": "c994d1b8e3af45c1",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.1742,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-11": {
+      "case_hash": "ea240aae6fc3ad31",
+      "score": 0.1667,
+      "runs": 1,
+      "costUsd": 0.1441,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-12": {
+      "case_hash": "cf90630baf94ff55",
+      "score": 0.5,
+      "runs": 1,
+      "costUsd": 0.1303,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-2": {
+      "case_hash": "274050693c0fdf12",
+      "score": 0.1429,
+      "runs": 1,
+      "costUsd": 0.1602,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-3": {
+      "case_hash": "88c81b01cc22139b",
+      "score": 0,
+      "runs": 1,
+      "costUsd": 0.154,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-4": {
+      "case_hash": "250c8dbccad0abde",
+      "score": 0.1429,
+      "runs": 1,
+      "costUsd": 0.1489,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-5": {
+      "case_hash": "b26de0151c575fe3",
+      "score": 0.1667,
+      "runs": 1,
+      "costUsd": 0.1989,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-6": {
+      "case_hash": "021a7327ccc6be46",
+      "score": 0.8333,
+      "runs": 1,
+      "costUsd": 0.2401,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-7": {
+      "case_hash": "5cee6782fcae8b09",
+      "score": 0.2,
+      "runs": 1,
+      "costUsd": 0.2164,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-8": {
+      "case_hash": "d64c65e25b21346a",
+      "score": 0.3333,
+      "runs": 1,
+      "costUsd": 0.303,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
+    },
+    "xios3-app-workflow-9": {
+      "case_hash": "abc81a95e59fb459",
+      "score": 0.3333,
+      "runs": 1,
+      "costUsd": 0.1682,
+      "cli": "2.1.316",
+      "date": "2026-11-07",
+      "label": "baseline-opus-2026-11-07-both"
     }
   },
   "updated": "2026-11-07"

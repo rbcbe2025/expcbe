@@ -2,7 +2,7 @@
 
 Introduction, quick start, the structure of an application (manifest, view, process, data), development tools and packaging, from the published XIOS/3 manual.
 
-33 topics from the published XIOS/3 documentation, generated on 2026-11-06. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+33 topics from the published XIOS/3 documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

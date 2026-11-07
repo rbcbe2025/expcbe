@@ -19,7 +19,7 @@ import { rankTopics, searchWords } from './search-core.mjs';
 import { buildXios3Reference } from './xios3-reference.mjs';
 
 const PORTAL = (process.env.CBE_DOCS_PORTAL || 'https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud').replace(/\/$/, '');
-const VERSION = '2026.11.4';
+const VERSION = '2026.11.5';
 const PREFIX = { xios: 'xios3', cloudbackend: 'cloudbackend' };
 
 // ---- the published data, fetched once per session --------------------------------------------------------------
@@ -96,7 +96,7 @@ async function rest({ names }) {
     let hit = ops.filter((t) => restName(t.title) === q || t.path.split('/').pop().replace(/\.md$/, '') === q);
     if (!hit.length && q.startsWith('/')) hit = ops.filter((t) => restName(t.title.slice(t.title.indexOf(' ') + 1)) === q);
     if (!hit.length) hit = ops.filter((t) => t.keywords.some((k) => k.toLowerCase() === q.replace(/[^a-z0-9]/g, '')));
-    if (!hit.length) { out.push(`No REST operation "${raw}". Try "METHOD /path" (e.g. "PATCH /drive"), an operationId, or cloudbackend_rest_list().`); continue; }
+    if (!hit.length) { out.push(`No REST operation "${raw}". Try "METHOD /path" (e.g. "PATCH /drive"), an operationId, or cloudbackend_rest with a tag (no names) to list them.`); continue; }
     if (hit.length > 1 && q.startsWith('/')) { out.push(`${raw}: ${hit.map((t) => `${t.title} (${t.summary})`).join('; ')}`); continue; }
     for (const t of hit.slice(0, 3)) out.push(capText(`${await article(t)}\n\nOn the portal: ${link(t)}`, MAX_CARD_CHARS));
   }
@@ -106,7 +106,7 @@ async function rest({ names }) {
 async function restList({ tag }) {
   const ops = await restOps(), tags = new Map();
   for (const t of ops) tags.set(tagOf(t), [...(tags.get(tagOf(t)) || []), t]);
-  if (!tag) return [`${ops.length} REST operations in ${tags.size} tags. cloudbackend_rest_list("<tag>") lists one tag; cloudbackend_rest("<METHOD /path>") returns a card.`, '',
+  if (!tag) return [`${ops.length} REST operations in ${tags.size} tags. cloudbackend_rest with a tag lists one tag; with names ("<METHOD /path>") it returns cards.`, '',
     ...[...tags].sort().map(([k, v]) => `- ${k} (${v.length})`)].join('\n');
   const key = String(tag).toLowerCase().replace(/[^a-z0-9-]/g, '');
   const list = tags.get(key) || tags.get(key.replace(/s$/, '')) || tags.get(key + 's');
@@ -129,7 +129,7 @@ async function sdk({ names }) {
   return out.join('\n\n---\n\n') || 'Give one or more names, e.g. "createContainer" or "Container.createContainer, Object.save".';
 }
 
-// ---- the nine XIOS/3 reference tools ----------------------------------------------------------------------------
+// ---- the XIOS/3 reference: one lookup by kind and name, one list ----------------------------------------------------------------------------
 // The lookups are xios3-reference.mjs (the hub's module); this adds the portal page of an entry when the catalog
 // has a topic of that name under the kind's reference folder, and the caps.
 
@@ -152,48 +152,34 @@ const byName = (kind, fn) => async ({ names }) => {
   return out.join('\n\n---\n\n');
 };
 
+const LOOKUPS = {
+  component: byName('component', 'componentText'), operation: byName('operation', 'operationText'), function: byName('function', 'functionText'),
+  method: byName('method', 'methodText'), event: byName('event', 'eventText'), action: byName('action', 'actionText'),
+  concept: async ({ names }) => (await xios3()).conceptsText(names || ''), icon: async ({ names }) => (await xios3()).iconsText(names || ''),
+};
+async function lookup({ kind, names }) {
+  const run = LOOKUPS[String(kind || '').toLowerCase().trim().replace(/s$/, '')];
+  return run ? run({ names }) : `kind must be one of: ${Object.keys(LOOKUPS).join(', ')}.`;
+}
+
 const ANNOTATIONS = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
 const str = (description) => ({ type: 'string', description });
 const TOOLS = {
   cloudbackend_docs: { title: 'Search the CloudBackend documentation', run: docs,
     description: 'Topic search across the CloudBackend developer documentation - the Singularity database, the REST API, the C++/Java/Swift SDKs, the CLI, CloudBackend PaaS operations - and the XIOS/3 manual it links to. Returns the best-matching topics, each with its type, a one-line summary and a link to its page on the developer portal; a REST operation also names the cloudbackend_rest call that returns its card.',
     inputSchema: { type: 'object', properties: { query: str('Search words, e.g. "resize a drive", "create an object in a container", "share a container with a group", "login and session token"') }, required: ['query'] } },
-  cloudbackend_rest: { title: 'REST API operation card', run: rest,
-    description: 'The full card of a CloudBackend REST API operation: parameters, XML request and response bodies, status codes and a curl example. A name is "METHOD /path" ("PATCH /drive"), an operationId ("patchv1drive"), an XML operation name ("renameDrive") or a bare path ("/drive", which lists the methods on it); several names are comma-separated. A card is at most 24,000 characters and a call at most 60,000.',
-    inputSchema: { type: 'object', properties: { names: str('e.g. "PATCH /drive", "POST /login, GET /container", "patchv1drive", "/webshares/domain"') }, required: ['names'] } },
-  cloudbackend_rest_list: { title: 'REST API operations by tag', run: restList,
-    description: 'The CloudBackend REST API by tag: without a tag, every tag with its operation count; with a tag ("drive", "container", "sharing"), every operation under it as "METHOD /path: summary".',
-    inputSchema: { type: 'object', properties: { tag: str('A tag name, or empty for the tag overview') } } },
+  cloudbackend_rest: { title: 'REST API operation cards and tags', run: async ({ names, tag }) => (String(names || '').trim() ? rest({ names }) : restList({ tag })),
+    description: 'The CloudBackend REST API. With names: the full card of each operation (parameters, XML request and response bodies, status codes, a curl example); a name is "METHOD /path" ("PATCH /drive"), an operationId ("patchv1drive"), an XML operation name ("renameDrive") or a bare path ("/drive", which lists its methods); several names are comma-separated; a card is at most 24,000 characters and a call at most 60,000. Without names: with a tag ("drive", "container", "sharing"), every operation under it; with neither, every tag and its count.',
+    inputSchema: { type: 'object', properties: { names: str('e.g. "PATCH /drive", "POST /login, GET /container", "patchv1drive"'), tag: str('A tag, when listing instead of reading cards') } } },
   cloudbackend_sdk: { title: 'Native SDK entry', run: sdk,
     description: 'The card of a native CloudBackend SDK (C++/Java/Swift) method by name: "createContainer", "Container createContainer". An ambiguous name lists the candidates with their class; several names are comma-separated.',
     inputSchema: { type: 'object', properties: { names: str('e.g. "createContainer", "Container.createContainer, Object.save"') }, required: ['names'] } },
-  xios3_component: { title: 'XIOS/3 component reference', run: byName('component', 'componentText'),
-    description: 'The reference entry of a XIOS/3 UI component by name ("Grid", "ListView", "Menu Item"): what it is for, usage, component type, parent and child elements, attributes with types and defaults, events, methods and examples, with its page on the developer portal. Several names are comma-separated; an ambiguous name lists the candidates.',
-    inputSchema: { type: 'object', properties: { names: str('Component names, e.g. "Grid", "ListView, Panel", "menu item"') }, required: ['names'] } },
-  xios3_operation: { title: 'XIOS/3 operation reference', run: byName('operation', 'operationText'),
-    description: 'The reference entry of a XIOS/3 process operation by name ("bind", "callService", "navigate", "database"): what it does, its attributes, child elements, syntax and examples, related operations. Several names are comma-separated.',
-    inputSchema: { type: 'object', properties: { names: str('Operation names, e.g. "bind", "callService, channel", "foreach"') }, required: ['names'] } },
-  xios3_function: { title: 'XIOS/3 function reference', run: byName('function', 'functionText'),
-    description: 'The reference entry of a XIOS/3 expression function by name ("substring-after", "format-date", "xpath-escape"): syntax, examples and related topics. Several names are comma-separated.',
-    inputSchema: { type: 'object', properties: { names: str('Function names, e.g. "substring-after", "format-date, parsedate", "count"') }, required: ['names'] } },
-  xios3_method: { title: 'XIOS/3 method reference', run: byName('method', 'methodText'),
-    description: 'The reference entry of a XIOS/3 component method, called through the callMethod operation, by name ("getValue", "setCaption") or by group and name ("RichText getSelectedText"): what it does, the components it applies to, and the process code. A group name alone ("View", "Calendar and Clock", "WidgetPane") lists that group\'s methods. A method the runtime declares without a published entry answers with the classes that declare it.',
-    inputSchema: { type: 'object', properties: { names: str('Method names, e.g. "getValue", "setCaption, getSelected", "RichText getSelectedText", or a group such as "View"') }, required: ['names'] } },
-  xios3_event: { title: 'XIOS/3 event reference', run: byName('event', 'eventText'),
-    description: 'The reference entry of a XIOS/3 component event by name ("Select", "Change", "TriggerEvent"): when it fires and the components it applies to. Several names are comma-separated.',
-    inputSchema: { type: 'object', properties: { names: str('Event names, e.g. "Select", "Change, Blur", "TriggerEvent"') }, required: ['names'] } },
-  xios3_action: { title: 'XIOS/3 action reference', run: byName('action', 'actionText'),
-    description: 'The reference entry of a XIOS/3 action, performed through the action operation, by name ("enable", "hide", "select"), or of an action URL ("lastLogins", "searchUser"): what it does, the components it applies to, and the process code. Several names are comma-separated.',
-    inputSchema: { type: 'object', properties: { names: str('Action names, e.g. "enable", "hide, show", "searchUser"') }, required: ['names'] } },
-  xios3_concepts: { title: 'XIOS/3 concepts', run: async ({ topic }) => (await xios3()).conceptsText(topic || ''),
-    description: 'The XIOS/3 concept sheet - how data binding, aliases, expressions, process logic, views, rules, events, components, styling and the common component patterns work - as questions with answers and code. Without a topic, the groups and their questions; with a group name ("Expressions"), that group in full; with other words, the questions whose heading or answer mention them.',
-    inputSchema: { type: 'object', properties: { topic: str('A group ("Data Binding", "Expressions", "Process Logic") or words ("bind to a REST API", "transaction manager"); empty for the list of questions') } } },
+  xios3_lookup: { title: 'XIOS/3 reference entry', run: lookup,
+    description: 'The XIOS/3 reference by kind and name, with each entry\'s page on the developer portal. kind component ("Grid", "ListView"): what it is for, parents and children, attributes, events, methods, examples; operation ("bind", "callService"): attributes, children, syntax; function ("format-date"); method (called through callMethod: "getValue", or "RichText getSelectedText", or a group such as "View"); event ("Select"); action ("enable", or an action URL); concept (a group such as "Expressions", or words: the concept sheet\'s questions and answers); icon (a word or a category: icon names for icon://name). Several names are comma-separated; an ambiguous name lists the candidates.',
+    inputSchema: { type: 'object', properties: { kind: str('component, operation, function, method, event, action, concept or icon'), names: str('One or more names, comma-separated; for concept or icon, words (empty: the list of groups or categories)') }, required: ['kind'] } },
   xios3_list: { title: 'XIOS/3 reference names', run: async ({ kind }) => (await xios3()).listText(kind || ''),
     description: 'The names the XIOS/3 reference covers: without a kind, how many of each (components, operations, functions, methods, events, actions, concepts, icons); with a kind, every name of that kind, grouped where the reference groups them.',
     inputSchema: { type: 'object', properties: { kind: str('"components", "operations", "functions", "methods", "events", "actions", "concepts" or "icons"; empty for the counts') } } },
-  xios3_icons: { title: 'XIOS/3 icon names', run: async ({ query }) => (await xios3()).iconsText(query || ''),
-    description: 'The XIOS/3 icon set (used as icon://name or icon://name?color=hex): without a query, the categories and their sizes; with a category name, its icons; with a word, every icon name containing it.',
-    inputSchema: { type: 'object', properties: { query: str('A word in an icon name ("arrow", "user_add"), a category ("Business", "Development"), or empty for the categories') } } },
 };
 
 // ---- MCP over stdio ----------------------------------------------------------------------------------------------
@@ -205,7 +191,7 @@ async function handle(req) {
   try {
     if (method === 'initialize') return send({ id, result: { protocolVersion: params.protocolVersion || '2025-06-18', capabilities: { tools: {} },
       serverInfo: { name: 'cloudbackend-docs', version: VERSION },
-      instructions: `The CloudBackend and XIOS/3 developer documentation, read from the developer portal (${PORTAL}). Start with cloudbackend_docs; use cloudbackend_rest for an endpoint, cloudbackend_sdk for a native SDK method, and the xios3_* tools for a XIOS/3 component, operation, function, method, event, action, concept or icon by name. Link the reader to the portal page each answer names.` } });
+      instructions: `The CloudBackend and XIOS/3 developer documentation, read from the developer portal (${PORTAL}). Start with cloudbackend_docs; use cloudbackend_rest for an endpoint, cloudbackend_sdk for a native SDK method, xios3_lookup for a XIOS/3 component, operation, function, method, event, action, concept or icon by name, and xios3_list for the names of a kind. Link the reader to the portal page each answer names.` } });
     if (method === 'ping') return send({ id, result: {} });
     if (method === 'tools/list') return send({ id, result: { tools: Object.entries(TOOLS).map(([name, t]) => ({ name, title: t.title, description: t.description, inputSchema: t.inputSchema, annotations: ANNOTATIONS })) } });
     if (method === 'tools/call') {

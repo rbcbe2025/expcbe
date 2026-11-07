@@ -1,6 +1,6 @@
 ---
 name: cloudbackend-sdk
-description: "Use the native CloudBackend SDKs for C++, Java and Swift (the 'SDK Mobile, IoT & Cloud', package `cbe`) to log in to the Singularity database and work with Account, Container, Object, Item, Stream, Filter and QueryResult — including the asynchronous delegate pattern (LogInDelegate, QueryDelegate), createContainer/createObject with key/values, querying, sharing and terminate(). Use this whenever a developer writes or debugs C++, Java, Swift, iOS, Android, Linux, embedded or IoT code against CloudBackend, asks how to log in from an app, how to wait for an SDK callback, where the Doxygen/Javadoc/Xcode references or GitHub releases are, or mentions cbe::CloudBackend, com.cbe, LogInDelegate or the CloudBackend SDK — even without the word 'SDK'."
+description: "Use the native CloudBackend SDKs for C++, Java and Swift (package cbe): log in with a LogInDelegate, wait for callbacks, work with Account, Container, Object, Item, Stream, Filter and QueryResult, create containers and objects with key/values, query, share and terminate(). Use it when a developer writes or debugs C++, Java, Swift, iOS, Android, embedded or IoT code against CloudBackend, or asks where the SDK references and releases are."
 ---
 
 # CloudBackend native SDKs (C++ · Java · Swift)
@@ -115,12 +115,10 @@ datatype, key/values as columns, ACL bits). The same operations over HTTP are th
 - `references/sdk-classes.md` — every SDK class page: Core Object (CloudBackend), Account, Container, Object, Item, Stream, Key/Value, Filter, QueryResult, Group, Sharing (ACL, shares, publish/subscribe), Querying, Install, References, Security.
 - `references/tutorial-cpp.md`, `references/tutorial-java.md`, `references/tutorial-swift.md` — the three tutorials in full.
 
-## Version and updates
+## Version
 
-This is version 2026.10.10 of the cloudbackend-sdk skill, built from the CloudBackend documentation.
+cloudbackend-sdk 2026.11.7, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
 
-Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
+A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-sdk` than 2026.11.7, tell the user once, in one sentence, without interrupting the task.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `cloudbackend-sdk` is newer than 2026.10.10, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
-
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-sdk%2F2026.10.10&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-sdk - it records the skill's name and version and nothing else. Never send it without that agreement.
+Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-sdk%2F2026.11.7&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-sdk the first time the skill is used in a session.

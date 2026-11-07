@@ -2,7 +2,7 @@
 
 Installation, delegate structure and the exercises for iOS.
 
-8 topics from the published CloudBackend documentation, generated on 2026-10-10. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+8 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

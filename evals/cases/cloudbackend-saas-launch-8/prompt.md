@@ -5,4 +5,4 @@ max_turns: 25
 allowed_tools: [Read, Glob, Grep, Skill, Write, Edit, Bash]
 ---
 
-Use the cloudbackend-saas-launch skill. Take Planboard (a project board for small agencies, where each agency invites its staff and clients get read-only access to their own projects) from where it is now to its first paying customer on CloudBackend PaaS; my tenant is acme. Keep cloudbackend-launch.md up to date, decide the defaults yourself and tell me, ask only when a default would be wrong, and don't mark a step done until I have confirmed its check.
+Use the cloudbackend-saas-launch skill. Here is my package: views/view.xml contains a <select> with <option> children; processes/process.xml has <process version="1"> and a <call step="save"/>; layout/app.css sets color: #336699. Upload it to home and deploy it to Development as tasktrack.

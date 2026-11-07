@@ -28,7 +28,7 @@ const check = process.argv.includes('--check');
 const EVALS_DIR = path.join(ROOT, 'evals', 'cases');
 const MOCKS_DIR = path.join(ROOT, 'evals', 'mocks');
 const BASELINES = path.join(ROOT, 'evals', 'baselines');
-const BASELINE_CASES = ['xios3-app-workflow-2', 'cloudbackend-rest-api-1'];
+const BASELINE_CASES = ['cloudbackend-saas-launch-8', 'cloudbackend-rest-api-1'];
 const KEEP = new Set();
 // The tools every case may use. Read-only tools are the case's own grant; Write, Edit and Bash are granted by the
 // operator (`--allow-tools Write Edit Bash`, as release.sh passes it), because a case cannot widen them on its own. Both
@@ -37,16 +37,16 @@ const CASE_TOOLS = ['Read', 'Glob', 'Grep', 'Skill', 'Write', 'Edit', 'Bash'];
 // Stand-ins whose tool list is the real stdio server's: mocks/<server>/_tools.json ← servers/<dir>/index.mjs tools/list.
 const STDIO_MOCKS = [{server: 'cloudbackend-tenant', dir: 'tenant'}];
 // Files a case's prompt takes for granted, from evals/fixtures/<fixture>/ here, copied to <into> in the run's directory.
-// A case's list is copied in order. The cases past the first deploy get the app and the project's documents (the
-// context file with W4 done, the spec, the probe list); the cases at or before the first deploy (3: uploaded, not yet
-// deployed; 11 and 12: the app is ready) get the app alone, as their prompts say.
+// A case's list is copied in order. The cases past the first deploy (11 to 15) get the app and the project's documents
+// (the context file with W4 done, the spec, the probe list); the cases at or before the first deploy (9: uploaded, not
+// yet deployed; 17: the app is ready) get the app alone, as their prompts say.
 const APP = {fixture: 'tasktrack', into: 'app'}, PROJECT = {fixture: 'tasktrack-project', into: '.'};
 const FIXTURES = {
-  'xios3-app-workflow-2': [{fixture: 'broken-package', into: '.'}],
-  ...Object.fromEntries([5, 6, 7, 8, 9].map(n => [`xios3-app-workflow-${n}`, [APP, PROJECT]])),
-  ...Object.fromEntries([3, 11, 12].map(n => [`xios3-app-workflow-${n}`, [APP]])),
-  'xios3-app-design-7': [{fixture: 'dated-gallery', into: '.'}],
-  'xios3-app-design-8': [{fixture: 'planboard-login', into: '.'}],
+  'cloudbackend-saas-launch-8': [{fixture: 'broken-package', into: '.'}],
+  ...Object.fromEntries([11, 12, 13, 14, 15].map(n => [`cloudbackend-saas-launch-${n}`, [APP, PROJECT]])),
+  ...Object.fromEntries([9, 17].map(n => [`cloudbackend-saas-launch-${n}`, [APP]])),
+  'xios3-app-basics-10': [{fixture: 'dated-gallery', into: '.'}],
+  'xios3-app-basics-11': [{fixture: 'planboard-login', into: '.'}],
 };
 const FIXTURE_DIR = path.join(ROOT, 'evals', 'fixtures');
 // Deterministic graders for the assertions about tool calls (evals/checks.json here; its "about" says why).
@@ -81,7 +81,7 @@ function checkGrader(spec, weight, assertion) {
 }
 // The tenant stand-in starts signed in (the cases that deploy take an earlier sign-in for granted); these cases test the
 // sign-in itself, so their copy of the stand-in starts signed out.
-const SIGNED_OUT_CASES = ['xios3-app-workflow-11', 'xios3-app-workflow-12'];
+const SIGNED_OUT_CASES = ['cloudbackend-saas-launch-17'];
 const SIGNED_IN_START = /^- Session at the start: [^\n]*(?:\n  [^\n]*)*/m;
 const SIGNED_OUT_START = '- Session at the start: nobody is signed in on this computer. The user signs in on the page tenant_signin\n  returns, as tenant_status describes.';
 const provenance = readJson(path.join(PLUGIN_DIR, 'SKILLS.json'));

@@ -1,6 +1,6 @@
 ---
 name: singularity-database
-description: "Model data for CloudBackend's Singularity database, the object-oriented database behind CloudBackend PaaS. Covers its building blocks (tenant, identity, group, role, database, container, object, item, stream, key/value, datatype, ACL, sharing, publish/subscribe, webhook) and how to design with them: containers as folders or tables, datatypes as schemas, key/values as columns, ACL bits and inheritance, per-identity databases, tenant:// and home:// drives. Use it when someone designs a backend or data model on CloudBackend, asks how permissions or sharing work, weighs a container hierarchy against a flat table, mentions the Singularity database, containers, objects, streams, ACLs, tenants or identities, or is about to code against the REST API, an SDK or XIOS/3 without a clear data model. Also use it for running a product on the tenant: Owner, Administrator and end users, roles, group invitations, sign-up and CRM e-mail, price plans, subscriptions and account types, the PayPal checkout, the support desk."
+description: "Model data and run a product on CloudBackend's Singularity database: tenants, identities, groups, roles, containers, objects, streams, key/values, datatypes, ACLs and sharing, plus Owner and Administrator duties, sign-up and CRM e-mail, price plans and subscriptions. Use it when someone designs a backend or data model on CloudBackend, asks how permissions, sharing or price plans work, or names containers, objects, ACLs, tenants or identities."
 ---
 
 # The Singularity database — data model
@@ -134,12 +134,10 @@ The questions a SaaS builder asks after the data model, with the rule that is ea
 - `references/query-language.md` — the search grammar used by REST `POST /query`, the SDK `Filter` and XIOS/3.
 - `references/measured-on-a-tenant.md` — hand-written, dated: what an early-access console lacks, datatype upload and key indexing as they behaved, identities and sessions during testing, `home://` has no public address, the Proxy section's header prefixes and ACL.
 
-## Version and updates
+## Version
 
-This is version 2026.10.15 of the singularity-database skill, built from the CloudBackend documentation.
+singularity-database 2026.11.7, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
 
-Installed through the CloudBackend plugin (`claude plugin marketplace add rbcbe2025/expcbe`, then `claude plugin install cloudbackend@cloudbackend`)? Then the skill updates with the plugin: `claude plugin update cloudbackend@cloudbackend` in Claude Code; claude.ai, Claude Desktop and Cowork refresh an installed plugin at the start of a session.
+A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `singularity-database` than 2026.11.7, tell the user once, in one sentence, without interrupting the task.
 
-Once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json. When its `skills[].version` for `singularity-database` is newer than 2026.10.15, tell the user once, in one sentence, and give them the download (the `file` listed next to it). Do not interrupt the task for it.
-
-CloudBackend counts which skill versions are in use, anonymously. Ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and does not count toward any question limit. Keep the answer with the project (for example in `cloudbackend-launch.md`). Only if they agreed, fetch this address when the skill is first used in a session: https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fsingularity-database%2F2026.10.15&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fsingularity-database - it records the skill's name and version and nothing else. Never send it without that agreement.
+Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fsingularity-database%2F2026.11.7&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fsingularity-database the first time the skill is used in a session.

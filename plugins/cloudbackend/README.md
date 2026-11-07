@@ -76,7 +76,7 @@ the tenant).
 
 `servers/docs/` is a copy of the documentation hub's Claude Desktop extension server, made by the repository's `scripts/sync-servers.mjs` (it carries a `VENDORED_FROM` note and a `MANIFEST.sha256`) and never edited here. `servers/build/index.mjs` is written in the plugin repository: a port of the deploy server's build tools that reads the tenant grammar from `skills/xios3-app-workflow/references/tenant-grammar.json`, so the rules the skill documents and the rules the tool applies are one file; `servers/build/test.mjs` tests it. Both servers are plain Node files: nothing is installed on your computer.
 
-`agents/` holds the five XIOS/3 workflow agents the `xios3-app-workflow` skill delegates to on Claude Code (a view author, a process author, a grammar reviewer, a UI tester, a benchmark reporter; `agents/README.txt` lists them). Other clients run the same five as inline checklists. `evals/` holds the cases `claude plugin eval` grades, one per entry of each skill's own evals.
+`agents/` holds the three XIOS/3 build agents cloudbackend-saas-launch delegates to on Claude Code (a view author and a process author at the build phase, a UI tester at the verify phase); they run on the model you run (`model: inherit`), and on clients without sub-agents the skill does the same work in order.
 
 ## Deploying: the per-tenant connector
 
