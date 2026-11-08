@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "CloudBackend PaaS and XIOS/3 developer tooling for Claude: five skills, three build agents, and the documentation, build and tenant servers inside the plugin.",
-    "version": "2026.1107.0"
+    "version": "2026.1108.0"
   },
   "plugins": [
     {
       "name": "cloudbackend",
       "source": "./plugins/cloudbackend",
       "description": "Build on CloudBackend PaaS with XIOS/3: five skills (the launch path from an idea to paying customers with its build phases, XIOS/3 markup and design, the Singularity database, the REST API, the native SDKs), three build agents, and the documentation, build and tenant servers running on your computer (the tenant server signs you in in your browser and deploys).",
-      "version": "2026.1107.0",
+      "version": "2026.1108.0",
       "author": {
         "name": "CloudBackend",
         "url": "https://cloudbackend.com"

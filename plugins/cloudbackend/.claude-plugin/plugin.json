@@ -1,6 +1,6 @@
 {
   "name": "cloudbackend",
-  "version": "2026.1107.0",
+  "version": "2026.1108.0",
   "description": "Build on CloudBackend PaaS with XIOS/3: five skills (the launch path from an idea to paying customers with its build phases, XIOS/3 markup and design, the Singularity database, the REST API, the native SDKs), three build agents, and the documentation, build and tenant servers running on your computer (the tenant server signs you in in your browser and deploys).",
   "author": {
     "name": "CloudBackend",

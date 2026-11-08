@@ -5,7 +5,7 @@ One install for building on CloudBackend PaaS with XIOS/3: five skills (the laun
 <!-- install:start -->
 ## Install
 
-Version 2026.1107.0 · the plugin `cloudbackend@cloudbackend` · 5 skills, 3 agents, 3 servers on your computer
+Version 2026.1108.0 · the plugin `cloudbackend@cloudbackend` · 5 skills, 3 agents, 3 servers on your computer
 
 **Claude Code** (a terminal, the Code tab of the Claude desktop app, the IDE extensions), once:
 
@@ -21,7 +21,7 @@ Then start a new session. Updates: switch auto-update on once (`/plugin` → Mar
 add the cloudbackend plugin. A chat uses the skills; Cowork on your computer also runs the servers. Keeping it in sync by
 itself needs the Claude GitHub App to have access to the repository.
 
-**Cursor, VS Code, Codex CLI, Gemini CLI:** download [the plugin as one zip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1107.0.zip), unzip it, and use its `clients/`
+**Cursor, VS Code, Codex CLI, Gemini CLI:** download [the plugin as one zip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1108.0.zip), unzip it, and use its `clients/`
 folder (each file names the unzipped folder as `<plugin-dir>`).
 
 **Deploying:** the tenant server signs you in on a page on your computer (in the Claude desktop app, its built-in
@@ -34,7 +34,7 @@ Node first). Nothing else is installed.
 <details><summary>Other ways in</summary>
 
 - The same marketplace from the developer portal, without GitHub: `claude plugin marketplace add https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/marketplace.json`, then `claude plugin install cloudbackend@cloudbackend`.
-- One session, nothing installed: `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1107.0.zip`.
+- One session, nothing installed: `claude --plugin-url https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/cloudbackend-2026.1108.0.zip`.
 - A single skill: the developer portal's Tools page has each skill's file; do not add one by hand next to the plugin, or
   both copies load.
 
@@ -44,15 +44,15 @@ Node first). Nothing else is installed.
 ## What is inside
 
 <!-- skills:start -->
-5 skills, built from the documentation on 2026-11-07 (`SKILLS.json` has the hashes):
+5 skills, built from the documentation on 2026-11-08 (`SKILLS.json` has the hashes):
 
 | Skill | Version | Use it when |
 | --- | --- | --- |
 | `cloudbackend-rest-api` | 2026.11.7 | Call the CloudBackend REST API (api.cloudbackend.com/v1) from any language: log in for a session token, create and query containers, create and save objects and streams, set ACLs, share, manage groups and identities, with the exact XML bodies of all 513 operations. |
-| `cloudbackend-saas-launch` | 2026.11.7.7 | Take a web app on CloudBackend PaaS from an idea or an empty tenant to a verified deployment and paying customers: plan, spec, design, data model, a XIOS/3 build linted before every upload, a deployment verified by content, hardening, login and sign-up, teams, price plans, promotion to a domain, and a benchmark. |
+| `cloudbackend-saas-launch` | 2026.11.8.4 | Take a web app on CloudBackend PaaS from an idea or an empty tenant to a verified deployment and paying customers: plan, spec, design, data model, a XIOS/3 build linted before every upload, a deployment verified by content, hardening, login and sign-up, teams, price plans, promotion to a domain, and a benchmark. |
 | `cloudbackend-sdk` | 2026.11.7 | Use the native CloudBackend SDKs for C++, Java and Swift (package cbe): log in with a LogInDelegate, wait for callbacks, work with Account, Container, Object, Item, Stream, Filter and QueryResult, create containers and objects with key/values, query, share and terminate(). |
 | `singularity-database` | 2026.11.7.2 | Model data and run a product on CloudBackend's Singularity database: tenants, identities, groups, roles, containers, objects, streams, key/values, datatypes, ACLs and sharing, plus Owner and Administrator duties, sign-up and CRM e-mail, price plans, subscriptions and the PayPal checkout. |
-| `xios3-app-basics` | 2026.11.7.4 | Write and design XIOS/3 applications: the manifest, views, processes and data bindings (home://, tenant://), events and operations, packaging, and the design kit: a token theme covering every component, Lucide icons, phone and desktop layouts, a login with sign in, sign up and a kept session, and the runtime's measured pitfalls. |
+| `xios3-app-basics` | 2026.11.8.2 | Write and design XIOS/3 applications: the manifest, views, processes and data bindings (home://, tenant://), events and operations, packaging, and the design kit: a token theme covering every component, Lucide icons, phone and desktop layouts, a login with sign in, sign up and a kept session, and the runtime's measured pitfalls. |
 <!-- skills:end -->
 
 `.mcp.json` declares the three servers; CloudBackend's deploy connector is added by hand:
