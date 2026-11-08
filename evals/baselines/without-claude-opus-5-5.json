@@ -29,13 +29,13 @@
       "label": "2026.1107.0-both"
     },
     "cloudbackend-saas-launch-4": {
-      "case_hash": "23319d955030cb0d",
-      "score": 0.2,
+      "case_hash": "955b3a456bbb55b8",
+      "score": 0.1667,
       "runs": 1,
-      "costUsd": 0.1299,
+      "costUsd": 0.1435,
       "cli": "2.1.316",
-      "date": "2026-11-07",
-      "label": "2026.1107.0-both"
+      "date": "2026-11-08",
+      "label": "login-fix-2026-11-08-both"
     },
     "cloudbackend-saas-launch-5": {
       "case_hash": "1c8e8764573c77e1",
@@ -371,5 +371,5 @@
       "label": "2026.1107.0-both"
     }
   },
-  "updated": "2026-11-07"
+  "updated": "2026-11-08"
 }
