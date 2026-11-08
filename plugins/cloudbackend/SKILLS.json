@@ -10,9 +10,9 @@
     },
     {
       "name": "cloudbackend-saas-launch",
-      "version": "2026.11.8.3",
-      "content_hash": "a403c1ad702b9c10",
-      "sha256": "e038b131c1e36d6ce95231fe4c2cc62bcbdeb745e8100c424a3c1af8844617a4",
+      "version": "2026.11.8.4",
+      "content_hash": "603cba3e204b04e8",
+      "sha256": "e7327fe73ac67a260c897f42d7ede2c8279fd953c593246b15d697bc71b3ffee",
       "files": 16
     },
     {

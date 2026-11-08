@@ -43,7 +43,7 @@ Do this before step 1, signed in to the console. Each answer changes a later ste
 | --- | --- | --- |
 | The console's left menu | **CRM** and **Price plans** are missing (an early-access tenant, measured 2026-10-07: their addresses open the Home page, and Account says "Early access preview. No paid products exist yet") | Step 4 takes the *CRM absent* branch (manual onboarding) and step 6 the *Price plans absent* branch (invoice). Record both in the launch context as deferred, with that reason. The login keeps its `create` and `reset` links (step 3); until the CRM sends their mail, you create accounts by hand (4b). |
 | Your tools | The VS Code / Cursor extension is connected | Text files reach the tenant in one command. Otherwise every file goes up through the console's Upload Files dialog, so budget for it and keep the number of files small. |
-| The browser you use for the console | It is the only profile you have | Every test as a customer needs a **private window**: one session covers every CloudBackend host, and signing in as a test identity in a normal tab replaces the console's session (measured). |
+| The browser you use for the console | It is the only profile you have | Every test as a customer is yours: a test identity you create and sign in with, in a **private window**. One session covers every CloudBackend host, and signing in from a normal tab replaces the console's session (measured). |
 | Proxy, Datatypes, Identities | They are present | Everything in steps 1, 2 and 5 is available. |
 
 **Check it worked:** the launch context says which branches apply and how files will reach the tenant.
@@ -147,7 +147,7 @@ This changes how accounts are made, not the login screen: the app keeps all thre
 
 Record the step as **deferred: CRM** in the launch context; the check table accepts this substitute.
 
-**Check it worked:** a test identity created this way, in a private window, signs in at the deployment address, sees an empty application with its own data, and is refused at the console address.
+**Check it worked:** you create a test identity this way and sign in with it yourself, in a private window. At the deployment address it sees an empty application with its own data; at the console address it is refused.
 
 ### 5. Users, teams and roles
 
