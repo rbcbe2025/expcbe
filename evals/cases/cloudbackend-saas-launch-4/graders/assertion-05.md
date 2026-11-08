@@ -1,10 +1,11 @@
 ---
-type: regex
-target: last_message
-match: not_contains
-flags: i
-pattern: '\b(?:what(?:''s| is)|send|give|share|paste|provide|tell|enter|type)\b[^.!?\n]{0,60}\b(?:password|passphrase|api key|token)\b[^.!\n]{0,60}\?'
-# The run shows this: Does not ask for a password
-# a free check in place of the judge: passed in every recorded run with and without the plugin, and a password reaching a call already ends the run (the tenant stand-in's abort_when)
+type: llm
+focus: last_message
 ---
-\b(?:what(?:'s| is)|send|give|share|paste|provide|tell|enter|type)\b[^.!?\n]{0,60}\b(?:password|passphrase|api key|token)\b[^.!\n]{0,60}\?
+
+The run shows this: Mentions the cost of having no upload tool (console dialog) and plans fewer or versioned files
+
+PASS if the run's messages, tool calls or written files show it. FAIL if it is missing, contradicted, or only claimed
+without the matching content or call. Judge this one point only.
+
+What a full answer looks like, for context: Recognises the pre-flight: no CRM and no Price plans section means step 4 takes the manual-onboarding branch (Identities › Create with no role, send only the Production address, test in a private window, a runbook and a customer register) and step 6 the invoice branch; records both as deferred with the platform reason; warns that without a tool every file goes up through the console's Upload Files dialog and plans for fewer, versioned files; asks for nothing the step does not need; never asks for a password.

@@ -2,7 +2,7 @@
 
 Channels and mounting, datatypes, object properties, managing objects, containers, groups and datatypes from process markup, key/values and searching. The query language is in singularity-database references/query-language.md.
 
-21 topics from the published XIOS/3 documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+21 topics from the published XIOS/3 documentation, generated on 2026-11-08. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

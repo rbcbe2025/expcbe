@@ -1,9 +1,9 @@
 ---
 type: llm
-focus: last_message
+focus: trace
 ---
 
-The run shows this: Says test identities are the user's to create and to sign in with, in a private window
+The run shows this: Keeps the sign-up and forgot-password links on the login screen: without the CRM only how accounts are created changes
 
 PASS if the run's messages, tool calls or written files show it. FAIL if it is missing, contradicted, or only claimed
 without the matching content or call. Judge this one point only.

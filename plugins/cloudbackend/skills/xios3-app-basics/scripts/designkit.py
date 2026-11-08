@@ -518,7 +518,10 @@ def check_login(folder: Path) -> list:
     if login is None:
         return ["no <login> element: the app has no login screen (designkit.py app --login writes one)"]
     problems = []
-    need = {"create": "the sign-up link (Create an account)", "reset": "the forgot-password link", "createPrompt": "the line before the sign-up link",
+    keep = ("; every app keeps it, a team tool or a tenant without the CRM too: the CRM only decides whether its mail "
+            "goes out (references/login.md, rule 1)")
+    need = {"create": "the sign-up link (Create an account)" + keep, "reset": "the forgot-password link" + keep,
+            "createPrompt": "the line before the sign-up link",
             "title": "the card's title", "description": "the line under the title", "button": "the sign-in button's text", "logo": "the logo",
             "background": "the page behind the card", "copyright": "the copyright line"}
     for tag, what in need.items():

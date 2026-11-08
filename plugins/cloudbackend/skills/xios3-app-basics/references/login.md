@@ -8,7 +8,9 @@ and password-reset pages in the same design. This page says how to set it up, wh
 ## The three rules
 
 1. **Always all three.** The sign-up link shows only when `<create>` is set, and the forgot-password link only when
-   `<reset>` is set. Set both, every time, with `<createPrompt>` before the sign-up link.
+   `<reset>` is set. Set both, every time, with `<createPrompt>` before the sign-up link. No exception: a team tool
+   and a tenant without the CRM keep both; the CRM only decides whether their mail goes out (until then, accounts by
+   hand: launch path 4b). A signed-up stranger gets no role and only their own `home://`.
 2. **The CloudBackend PaaS sign-in's look.** A deep navy page with a faint grid behind the card (`login-bg.svg`), the
    app's logo above it, the title "Log in" and a welcome line, and the app's primary colour on the button and the links.
 3. **Wired so nothing opens before sign-in.** The app's views and process are `xlink:actuate="onRequest"`, the login

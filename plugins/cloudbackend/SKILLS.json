@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-07",
+  "generated": "2026-11-08",
   "skills": [
     {
       "name": "cloudbackend-rest-api",
@@ -10,9 +10,9 @@
     },
     {
       "name": "cloudbackend-saas-launch",
-      "version": "2026.11.7.7",
-      "content_hash": "b9ed59b3f5ece3e8",
-      "sha256": "03dd0ccc96328b45025d6326463021f066473f1dd8bda562841564b9ec13be67",
+      "version": "2026.11.8.3",
+      "content_hash": "a403c1ad702b9c10",
+      "sha256": "e038b131c1e36d6ce95231fe4c2cc62bcbdeb745e8100c424a3c1af8844617a4",
       "files": 16
     },
     {
@@ -31,9 +31,9 @@
     },
     {
       "name": "xios3-app-basics",
-      "version": "2026.11.7.4",
-      "content_hash": "9b9cfb28eb6744cc",
-      "sha256": "54d261d0c1857b0907a6026b62afef3507f4670a41472eb65a69f2d0f0beb489",
+      "version": "2026.11.8.2",
+      "content_hash": "a9a2f26068a3c74a",
+      "sha256": "e70c4d981937619550be413c4ca6c9dd9e68056df10958334c8a82d610599985",
       "files": 38
     }
   ]

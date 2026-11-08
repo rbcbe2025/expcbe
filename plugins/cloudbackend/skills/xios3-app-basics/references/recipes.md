@@ -2,7 +2,7 @@
 
 Short, complete snippets for common tasks, from the published Code Concepts section.
 
-32 topics from the published XIOS/3 documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+32 topics from the published XIOS/3 documentation, generated on 2026-11-08. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

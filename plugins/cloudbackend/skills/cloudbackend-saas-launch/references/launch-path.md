@@ -2,7 +2,7 @@
 
 The hand-written end-to-end guide from the CloudBackend documentation hub: the order of work for a first paid web application on CloudBackend PaaS, with a check for each step and the items the product has not settled yet. Its links point at the published manual. Read the Pre-flight section and the current step's section, not the whole file.
 
-1 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+1 topics from the published CloudBackend documentation, generated on 2026-11-08. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -41,7 +41,7 @@ Do this before step 1, signed in to the console. Each answer changes a later ste
 
 | Look at | If | Then |
 | --- | --- | --- |
-| The console's left menu | **CRM** and **Price plans** are missing (an early-access tenant, measured 2026-10-07: their addresses open the Home page, and Account says "Early access preview. No paid products exist yet") | Step 4 takes the *CRM absent* branch (manual onboarding) and step 6 the *Price plans absent* branch (invoice). Record both in the launch context as deferred, with that reason, and do not add `create` or `reset` links to the login screen yet. |
+| The console's left menu | **CRM** and **Price plans** are missing (an early-access tenant, measured 2026-10-07: their addresses open the Home page, and Account says "Early access preview. No paid products exist yet") | Step 4 takes the *CRM absent* branch (manual onboarding) and step 6 the *Price plans absent* branch (invoice). Record both in the launch context as deferred, with that reason. The login keeps its `create` and `reset` links (step 3); until the CRM sends their mail, you create accounts by hand (4b). |
 | Your tools | The VS Code / Cursor extension is connected | Text files reach the tenant in one command. Otherwise every file goes up through the console's Upload Files dialog, so budget for it and keep the number of files small. |
 | The browser you use for the console | It is the only profile you have | Every test as a customer needs a **private window**: one session covers every CloudBackend host, and signing in as a test identity in a normal tab replaces the console's session (measured). |
 | Proxy, Datatypes, Identities | They are present | Everything in steps 1, 2 and 5 is available. |
@@ -119,7 +119,7 @@ Measured 2026-11-05 on a Development deployment:
 - **Create an account** opens the sign-up page (names, e-mail, username, a password of at least 16 characters, repeated), and **Forgot your password?** opens the reset page; `button`, `buttonColor`, `linkColor` and `createPrompt` take effect.
 - The card is 470 px wide, so on a phone narrower than that it runs off the screen. The boot page that the CloudBackend plugin's tenant server and the deploy connector write fits it to the screen on all three pages (measured at 375 px); a deployment made with the console's Deploy Wizard keeps the overflow. The responsive card itself is the login application's to fix; it has been reported.
 - Without a published `Tenant` container, the login's lookup of the tenant's licence text answers 404 in the browser console; the screen works.
-- On a tenant without the CRM, the sign-up and reset flows may not finish (seen on 2026-10-07 with the earlier login application, not measured again). Keep both links, set up the CRM before Production (step 4), and until then create customer accounts yourself (4b).
+- On a tenant without the CRM, the sign-up and reset flows may not finish (seen on 2026-10-07 with the earlier login application, not measured again). Keep both links on every app, a team tool included, set up the CRM before Production (step 4), and until then create customer accounts yourself (4b).
 - Collect the brand assets now: the logo file (SVG, uploaded next to `index.xml`), the title, the description and the copyright holder.
 
 **Check it worked:** the deployment's login shows the three ways in (Log in, Forgot your password?, Create an account) and each opens its page; the configurator's Preview shows your logo and colours, and the deployment's properties panel says a login screen is configured.
@@ -138,11 +138,11 @@ People who sign up belong to your tenant and are your legal responsibility; the 
 
 #### 4b. When the tenant has no CRM: manual onboarding
 
-Until the CRM exists in your console, sign-up, verification mail and password recovery are not available, and the in-application `createUser` needs a captcha token the manual does not document. Onboard each customer by hand and write the steps down as a runbook in the project, so the second customer costs five minutes:
+This changes how accounts are made, not the login screen: the app keeps all three ways in (step 3). Until the CRM exists in your console, the sign-up and recovery flows may not finish, because their mail cannot go out, and the in-application `createUser` needs a captcha token the manual does not document. Onboard each customer by hand and write the steps down as a runbook in the project, so the second customer costs five minutes:
 
 1. **Identities › Create**: username (lowercase letters and digits are safe), the customer's e-mail, a first password. Assign **no role**.
 2. Send the customer the **Production address** from step 7 and nothing else. The console address must never reach a customer: a role-less identity that opens it is refused with "Unfortunately your role does not have permission to use this tool", and a customer who reads that assumes your product is broken.
-3. Ask them to change the password at first sign-in. Until the CRM exists, a forgotten password is reset by an Administrator in Identities.
+3. Ask them to change the password at first sign-in. If the Forgot your password? flow does not finish before the CRM exists, an Administrator resets the password in Identities.
 4. Keep a customer register in the project (identity, e-mail, plan, start date, invoice reference) and a log of every time you look at a customer's data with their consent. Add offboarding: remove the identity, which removes their `home://` data.
 
 Record the step as **deferred: CRM** in the launch context; the check table accepts this substitute.

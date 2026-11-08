@@ -1,11 +1,9 @@
 ---
 type: llm
-focus:
-  source: file
-  path: 'cloudbackend-launch.md'
+focus: trace
 ---
 
-The run shows this: Records the pre-flight's branches (sign-up: CRM or manual onboarding; payment: price plans or invoice) in cloudbackend-launch.md
+The run shows this: Records the pre-flight's branches (accounts: CRM sign-up or by hand; payment: price plans or invoice) in cloudbackend-launch.md
 
 PASS if the run's messages, tool calls or written files show it. FAIL if it is missing, contradicted, or only claimed
 without the matching content or call. Judge this one point only.

@@ -6,7 +6,7 @@ description: "Take a web app on CloudBackend PaaS from an idea or an empty tenan
 # CloudBackend launch: from an idea to the first paying customer
 
 This skill runs the order of work and keeps the evidence; the knowledge lives in the owner skills and the
-references named at each step. Do not restate an owner skill: open it.
+references named at each step: open them, never restate them.
 
 Five words carry every claim: **measured** (this app, this run, dated, the tool named), **reference** (another
 app, cited), **planned** (not built), **console** (a click path in the CloudBackend PaaS console; no API today)
@@ -48,7 +48,7 @@ that starts mid-way (mark earlier phases *not recorded*). Never a second file.
 ```markdown
 # CloudBackend launch context
 - tenant: acme · identities: acmeadmin, acmedev · deployment name: tasktrack · client: Claude Code, browser yes
-- app, what it does, customers are · branches: sign-up CRM|manual, payment plans|invoice · files reach the tenant via:
+- app, what it does, customers are · branches: accounts CRM|by hand, payment plans|invoice · files reach the tenant via:
 ## App (v1/v2, record, screens, look, login, channels, seo/geo)   ## Progress   ## Build   ## Benchmark   ## Decisions
 ```
 
@@ -70,7 +70,8 @@ decision with its reason, ending "reply to change any of these; otherwise I go o
 - the kind of app and its customers (individuals on `home://`, or organisations in groups)
 - the one kind of record v1 keeps, three fields, and the screens (list, detail, New)
 - the look: the direction the design kit picks from the idea (xios3-app-basics)
-- login: sign in, sign up and forgot password, a kept session; sign-up and payment: the pre-flight's branch
+- login: always sign in, sign up and forgot password, and a kept session (a team tool and a tenant with no CRM
+  keep all three); payment: the pre-flight's branch
 - channels: none, unless the idea needs an integration or an AI call (then which, through a proxy)
 - SEO/GEO and analytics: public surface or behind login; `llms.txt`; analytics none or an endpoint
 - identities `<tenant>admin` and `<tenant>dev`; the deployment name (the app's, in lowercase letters and digits, not
@@ -79,7 +80,7 @@ decision with its reason, ending "reply to change any of these; otherwise I go o
 - prices, the domain and a logo file: decided at their own steps
 
 Then at most one question per step, only where a default would be wrong or cannot be undone (the tenant name, a
-price, a domain, deleting data). v1 is small on purpose (one record, list + detail + New, a login, Development).
+price, a domain, deleting data). v1 is small on purpose.
 
 ## Short questions get the whole answer
 
@@ -163,7 +164,7 @@ realm may add CloudBackend's deploy connector (`references/deploy-connector.md`)
 
 ## Bundled references
 
-- `references/launch-path.md` (generated): every step of the path, its check, what is not settled.
+- `references/launch-path.md` (generated): the path, one section per step.
 - `references/build-phases.md`: W0–W9 in full, the sub-agents and the routes.
 - `references/deploy-rules.md`: what each tool does and returns, the REST rules; `deploy-connector.md`: a realm account's connector.
 - `references/tenant-grammar.md` (`.json`: the build server's table): lint rules G01–G20 and their fixes.
@@ -173,8 +174,8 @@ realm may add CloudBackend's deploy connector (`references/deploy-connector.md`)
 
 ## Version
 
-cloudbackend-saas-launch 2026.11.7.7, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
+cloudbackend-saas-launch 2026.11.8.3, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
 
-A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-saas-launch` than 2026.11.7.7, tell the user once, in one sentence, without interrupting the task.
+A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-saas-launch` than 2026.11.8.3, tell the user once, in one sentence, without interrupting the task.
 
-Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.7.7&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch the first time the skill is used in a session.
+Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.8.3&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch the first time the skill is used in a session.
