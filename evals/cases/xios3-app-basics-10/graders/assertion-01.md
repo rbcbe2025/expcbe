@@ -1,6 +1,8 @@
 ---
 type: llm
-focus: trace
+focus:
+  source: file
+  path: 'index.xml'
 ---
 
 The run shows this: Sets look="token" on every component in the theme, not only the ones the app uses

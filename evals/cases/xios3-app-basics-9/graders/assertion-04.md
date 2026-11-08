@@ -1,6 +1,8 @@
 ---
 type: llm
-focus: trace
+focus:
+  source: file
+  path: 'app/index.xml'
 ---
 
 The run shows this: Wires the login: views and app process onRequest, the login process declared first with onLoad

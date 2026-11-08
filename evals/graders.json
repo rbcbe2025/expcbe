@@ -523,7 +523,7 @@
         "n": 2
       }
     },
-    "Uses the manual's #view#component expression form (not a slash) and explains {$alias} / {…} expressions": {
+    "Uses the manual's #view#component expression form (not a slash) and explains {$alias} / {\u2026} expressions": {
       "source": "backtest",
       "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:#[A-Za-z][A-Za-z0-9_]*#[A-Za-z][A-Za-z0-9_]*))(?=[\\s\\S]*?(?:\\{\\$|\\{!))",
       "flags": "im",
@@ -623,7 +623,7 @@
     "Does not write a multiplier such as 'times faster' or 'times smaller' against React": {
       "source": "hand",
       "why": "passed in every recorded run with and without the plugin; the final reply carries the benchmark's copy",
-      "pattern": "\\b\\d+(?:[.,]\\d+)?\\s*(?:x|×|times)\\s+(?:faster|smaller|lighter|less|fewer|cheaper|quicker|leaner)",
+      "pattern": "\\b\\d+(?:[.,]\\d+)?\\s*(?:x|\u00d7|times)\\s+(?:faster|smaller|lighter|less|fewer|cheaper|quicker|leaner)",
       "flags": "i",
       "target": "last_message",
       "match": "not_contains"
@@ -640,7 +640,7 @@
     "Administrator identity": "last_message",
     "Owner kept for owner-only tasks": "last_message",
     "Says test identities are the user's to create and to sign in with, in a private window": "trace",
-    "Mentions the cost of having no upload tool (console dialog) and plans fewer or versioned files": "trace",
+    "Says how files reach the tenant: the plugin's tenant server when tenant_status answers, otherwise the console's Upload Files dialog with fewer or versioned files": "trace",
     "Says to set the final value in the Staging card's configurator, with the Staging host or the custom domain": "last_message",
     "Says the manifest login works but Login: Configured comes only from the configurator": "last_message",
     "Models technicians, customers and dispatchers as identities": "last_message",
@@ -724,6 +724,30 @@
     "Adds a cost line to the spec": {
       "source": "file",
       "path": "docs/spec.md"
+    },
+    "The <login> element sets both create and reset, so sign up and forgot password always show": {
+      "source": "file",
+      "path": "app/index.xml"
+    },
+    "Wires the login: views and app process onRequest, the login process declared first with onLoad": {
+      "source": "file",
+      "path": "app/index.xml"
+    },
+    "Declares the desktop view first or explains that the login opens the first declared view": {
+      "source": "file",
+      "path": "app/index.xml"
+    },
+    "Sets look=\"token\" on every component in the theme, not only the ones the app uses": {
+      "source": "file",
+      "path": "index.xml"
+    },
+    "Loads ui/DesignKit/theme.css (the kit's stylesheet) from the theme's view component": {
+      "source": "file",
+      "path": "index.xml"
+    },
+    "Names no colour in the app's stylesheet (styles/app.css): it reads the theme's tokens": {
+      "source": "file",
+      "path": "styles/app.css"
     }
   }
 }

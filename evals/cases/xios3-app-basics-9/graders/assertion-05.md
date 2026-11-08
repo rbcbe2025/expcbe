@@ -1,6 +1,8 @@
 ---
 type: llm
-focus: trace
+focus:
+  source: file
+  path: 'app/index.xml'
 ---
 
 The run shows this: Declares the desktop view first or explains that the login opens the first declared view

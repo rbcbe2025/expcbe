@@ -1,9 +1,11 @@
 ---
 type: llm
-focus: trace
+focus:
+  source: file
+  path: 'styles/app.css'
 ---
 
-The run shows this: Names no colour in the views or the stylesheet: everything reads the theme's tokens
+The run shows this: Names no colour in the app's stylesheet (styles/app.css): it reads the theme's tokens
 
 PASS if the run's messages, tool calls or written files show it. FAIL if it is missing, contradicted, or only claimed
 without the matching content or call. Judge this one point only.

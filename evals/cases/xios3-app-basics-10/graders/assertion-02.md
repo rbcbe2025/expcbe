@@ -1,6 +1,8 @@
 ---
 type: llm
-focus: trace
+focus:
+  source: file
+  path: 'index.xml'
 ---
 
 The run shows this: Loads ui/DesignKit/theme.css (the kit's stylesheet) from the theme's view component

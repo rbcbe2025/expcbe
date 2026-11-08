@@ -1,6 +1,8 @@
 ---
 type: llm
-focus: trace
+focus:
+  source: file
+  path: 'app/index.xml'
 ---
 
 The run shows this: The <login> element sets both create and reset, so sign up and forgot password always show
