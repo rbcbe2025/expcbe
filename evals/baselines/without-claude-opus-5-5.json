@@ -29,22 +29,22 @@
       "label": "2026.1107.0-both"
     },
     "cloudbackend-saas-launch-4": {
-      "case_hash": "b50244f4324013f0",
+      "case_hash": "3aa936669e639432",
       "score": 0.1667,
       "runs": 1,
-      "costUsd": 0.1324,
+      "costUsd": 0.1375,
       "cli": "2.1.316",
       "date": "2026-11-08",
-      "label": "rerun-2026-11-08-both"
+      "label": "regrade-2026-11-08-both"
     },
     "cloudbackend-saas-launch-5": {
-      "case_hash": "1c8e8764573c77e1",
+      "case_hash": "300f77a37c27c115",
       "score": 0,
       "runs": 1,
-      "costUsd": 0.1027,
+      "costUsd": 0.1077,
       "cli": "2.1.316",
-      "date": "2026-11-07",
-      "label": "2026.1107.0-both"
+      "date": "2026-11-08",
+      "label": "regrade-2026-11-08-both"
     },
     "cloudbackend-saas-launch-8": {
       "case_hash": "4e83383e1f140846",
@@ -326,13 +326,13 @@
       "label": "2026.1107.0-both"
     },
     "xios3-app-basics-10": {
-      "case_hash": "3803c9ec682c08fa",
+      "case_hash": "461fee3e6667aae4",
       "score": 0.1429,
       "runs": 1,
-      "costUsd": 0.4447,
+      "costUsd": 0.2854,
       "cli": "2.1.316",
-      "date": "2026-11-07",
-      "label": "2026.1107.0-both"
+      "date": "2026-11-08",
+      "label": "regrade-2026-11-08-both"
     },
     "xios3-app-basics-11": {
       "case_hash": "e259d6c89d8e8131",
@@ -362,13 +362,13 @@
       "label": "2026.1107.0-both"
     },
     "xios3-app-basics-9": {
-      "case_hash": "2eb7811f18e73003",
+      "case_hash": "93e068afb71f68b3",
       "score": 0,
       "runs": 1,
-      "costUsd": 0.1486,
+      "costUsd": 0.1238,
       "cli": "2.1.316",
-      "date": "2026-11-07",
-      "label": "2026.1107.0-both"
+      "date": "2026-11-08",
+      "label": "regrade-2026-11-08-both"
     }
   },
   "updated": "2026-11-08"
