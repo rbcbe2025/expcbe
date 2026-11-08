@@ -326,13 +326,13 @@
       "label": "2026.1107.0-both"
     },
     "xios3-app-basics-10": {
-      "case_hash": "461fee3e6667aae4",
-      "score": 0.1429,
+      "case_hash": "4bb2f40561d5a881",
+      "score": 0.2857,
       "runs": 1,
-      "costUsd": 0.2854,
+      "costUsd": 0.282,
       "cli": "2.1.316",
       "date": "2026-11-08",
-      "label": "regrade-2026-11-08-both"
+      "label": "regrade2-2026-11-08-both"
     },
     "xios3-app-basics-11": {
       "case_hash": "e259d6c89d8e8131",
