@@ -1,6 +1,6 @@
 ---
 type: llm
-focus: last_message
+focus: trace
 ---
 
 The run shows this: Says test identities are the user's to create and to sign in with, in a private window

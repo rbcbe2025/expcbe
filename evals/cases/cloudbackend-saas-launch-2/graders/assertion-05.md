@@ -1,6 +1,8 @@
 ---
 type: llm
-focus: trace
+focus:
+  source: file
+  path: 'cloudbackend-launch.md'
 ---
 
 The run shows this: Records the pre-flight's branches (accounts: CRM sign-up or by hand; payment: price plans or invoice) in cloudbackend-launch.md

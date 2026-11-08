@@ -91,6 +91,7 @@ const expected = new Map();                                  // rel path under e
 const notes = [];
 let cases = 0, skillGraders = 0, baselines = 0, assertionGraders = 0, deterministic = 0, free = 0, dropped = 0, refocused = 0;
 const skipped = [];
+const assertionTexts = new Set();                            // every assertion's text, as graders.json keys it
 for (const {name: skill} of provenance.skills) {
   const file = path.join(HUB, '_skills', skill, 'evals', 'evals.json');
   if (!existsSync(file)) { notes.push(`${skill}: no evals.json in the hub (${path.relative(HUB, file)}); no cases`); continue; }
@@ -116,6 +117,7 @@ ${e.prompt.trim()}
     for (const n of Object.keys(checks)) if (!e.assertions[Number(n) - 1]) fail(`evals/checks.json: ${id} has no assertion ${n}`);
     e.assertions.forEach((a, i) => {
       const nn = String(i + 1).padStart(2, '0'), check = checks[String(i + 1)];
+      assertionTexts.add(a.trim().replace(/\s+/g, ' '));
       if (check && check.skip) { skipped.push(`${id} assertion ${i + 1}: ${check.skip}`); return; }
       if (check) {
         const list = Array.isArray(check) ? check : [check];
@@ -204,6 +206,11 @@ The run satisfies the expected output at least as well as the reference transcri
 }
 for (const c of BASELINE_CASES) if (!expected.has(`${c}/prompt.md`)) fail(`baseline case ${c} does not exist in the skills' evals`);
 for (const c of [...Object.keys(FIXTURES), ...SIGNED_OUT_CASES, ...Object.keys(CHECKS).filter(k => k !== 'about'), ...SATURATED]) if (!expected.has(`${c}/prompt.md`)) fail(`case ${c} in FIXTURES, SIGNED_OUT_CASES, checks.json or tiers.json does not exist in the skills' evals`);
+// A graders.json key that matches no assertion is a grader lost without a word: an assertion reworded in the hub falls
+// back to the judge over the trace (2026-11-08: saas-2's branches assertion lost its {source: file} focus that way).
+const orphans = Object.entries({drop: DROP, regex: REGEX, file_exists: FILE_EXISTS, focus: FOCUS})
+  .flatMap(([table, keys]) => [...keys.keys()].filter(k => !assertionTexts.has(k)).map(k => `${table}: ${k}`));
+if (orphans.length) fail(`evals/graders.json has ${orphans.length} key(s) that match no assertion in the skills' evals.json (reworded or removed there: rekey or remove each):\n  ${orphans.join('\n  ')}`);
 
 // The stdio stand-ins' tool lists, from the real servers (no sign-in needed for tools/list).
 async function toolsList(entry) {

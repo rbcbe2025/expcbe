@@ -1,9 +1,8 @@
 {
-  "about": "How gen-evals.mjs grades an assertion other than with the judge over the trace, keyed by the assertion's text in the skills' evals.json (so a case can be renumbered or moved without losing it). checks.json (tool calls) is read first. Then: `drop` (the assertion is not graded; each with its reason), `regex` (a free regex grader: `source: backtest` entries come from scripts/regex-backtest.mjs --write, which proved them against every recorded run; `source: hand` entries are written here, each with its reason), `file_exists` (a free check that the run created the file), `focus` (the judge looks at this target instead of the trace: the trace shows the judge only the first and last 12 messages, so a file written in the middle of a run is invisible to it, and a point the final reply carries is cheaper to judge there).",
+  "about": "How gen-evals.mjs grades an assertion other than with the judge over the trace, keyed by the assertion's text in the skills' evals.json (so a case can be renumbered or moved without losing it). checks.json (tool calls) is read first. Then: `drop` (the assertion is not graded; each with its reason), `regex` (a free regex grader: `source: backtest` entries come from scripts/regex-backtest.mjs --write, which proved them against every recorded run; `source: hand` entries are written here, each with its reason), `file_exists` (a free check that the run created the file), `focus` (the judge looks at this target instead of the trace: the trace shows the judge only the first and last 12 messages, so a file written in the middle of a run is invisible to it,, and a point the final reply carries is cheaper to judge there; `trace` pins a judge to the whole run, for a point the answer makes before a closing line, and focus-backtest.mjs --write keeps it). gen-evals.mjs fails on a key that matches no assertion, so a reworded assertion cannot lose its grader silently.",
   "drop": {
     "Does not re-ask what the prompt already gave (the tenant, the idea)": "passed in every recorded run with and without the plugin; 'Asks at most one round of three or fewer questions' carries the behaviour",
     "Does not suggest a data: URL or the configurator's folder pick as the fix": "passed in every recorded run with and without the plugin",
-    "Does not ask about prices, a domain, an e-mail provider or a logo at this point": "passed in every recorded run with and without the plugin; the question limit carries the behaviour",
     "Names what the docs leave open": "passed in every recorded run with and without the plugin: the model says it on its own",
     "No invented layout attribute dock=": "passed in every recorded run with and without the plugin",
     "Does not suggest writing from JavaScript": "passed in every recorded run with and without the plugin; the cases that ask about persistence carry the behaviour"
@@ -613,22 +612,6 @@
       "target": "last_message",
       "match": "not_contains"
     },
-    "Never asks for or types the password": {
-      "source": "hand",
-      "why": "as 'Does not ask for a password'; typing it is caught by the tenant stand-in's abort_when",
-      "pattern": "\\b(?:what(?:'s| is)|send|give|share|paste|provide|tell|enter|type)\\b[^.!?\\n]{0,60}\\b(?:password|passphrase)\\b[^.!\\n]{0,60}\\?",
-      "flags": "i",
-      "target": "last_message",
-      "match": "not_contains"
-    },
-    "Does not ask the user to paste the API key": {
-      "source": "hand",
-      "why": "as 'Does not ask for a password'",
-      "pattern": "\\b(?:send|give|share|paste|provide|tell|enter|type)\\b[^.!?\\n]{0,60}\\b(?:api key|key|token)\\b[^.!\\n]{0,60}\\?",
-      "flags": "i",
-      "target": "last_message",
-      "match": "not_contains"
-    },
     "Tells the user to rotate the key": {
       "source": "hand",
       "why": "passed in every recorded run with and without the plugin; kept as a free guard",
@@ -656,8 +639,8 @@
     "Mentions the PayPal checkout": "last_message",
     "Administrator identity": "last_message",
     "Owner kept for owner-only tasks": "last_message",
-    "Says test identities are the user's to create and to sign in with, in a private window": "last_message",
-    "Mentions the cost of having no upload tool (console dialog) and plans fewer or versioned files": "last_message",
+    "Says test identities are the user's to create and to sign in with, in a private window": "trace",
+    "Mentions the cost of having no upload tool (console dialog) and plans fewer or versioned files": "trace",
     "Says to set the final value in the Staging card's configurator, with the Staging host or the custom domain": "last_message",
     "Says the manifest login works but Login: Configured comes only from the configurator": "last_message",
     "Models technicians, customers and dispatchers as identities": "last_message",
@@ -732,7 +715,7 @@
     "Sends the plan card in the same reply as the questions": "last_message",
     "The plan card names a deployment name of lowercase letters and digits and says Development first": "last_message",
     "Names the pre-flight as the next step: look for CRM and Price plans in the console": "last_message",
-    "Records the pre-flight's branches (sign-up: CRM or manual onboarding; payment: price plans or invoice) in cloudbackend-launch.md": {
+    "Records the pre-flight's branches (accounts: CRM sign-up or by hand; payment: price plans or invoice) in cloudbackend-launch.md": {
       "source": "file",
       "path": "cloudbackend-launch.md"
     },
