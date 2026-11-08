@@ -2,10 +2,10 @@
 type: llm
 focus:
   source: file
-  path: 'styles/app.css'
+  path: 'views/gallery.xml'
 ---
 
-The run shows this: Names no colour in the app's stylesheet (styles/app.css): it reads the theme's tokens
+The run shows this: Names no colour in the view (views/gallery.xml) apart from the icon colours of iconlist items, which the kit allows: components read the theme's tokens
 
 PASS if the run's messages, tool calls or written files show it. FAIL if it is missing, contradicted, or only claimed
 without the matching content or call. Judge this one point only.

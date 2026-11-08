@@ -745,9 +745,9 @@
       "source": "file",
       "path": "index.xml"
     },
-    "Names no colour in the app's stylesheet (styles/app.css): it reads the theme's tokens": {
+    "Names no colour in the view (views/gallery.xml) apart from the icon colours of iconlist items, which the kit allows: components read the theme's tokens": {
       "source": "file",
-      "path": "styles/app.css"
+      "path": "views/gallery.xml"
     }
   }
 }
