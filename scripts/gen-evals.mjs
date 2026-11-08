@@ -79,9 +79,11 @@ function checkGrader(spec, weight, assertion) {
   if (weight !== 1) head.push(`weight: ${weight}`);
   return `---\n${head.join('\n')}\n---\n\nThe run shows this: ${assertion.trim()}\n`;
 }
-// The tenant stand-in starts signed in (the cases that deploy take an earlier sign-in for granted); these cases test the
-// sign-in itself, so their copy of the stand-in starts signed out.
-const SIGNED_OUT_CASES = ['cloudbackend-saas-launch-17'];
+// The tenant stand-in starts signed in (the cases that deploy take an earlier sign-in for granted). These cases start
+// signed out: saas-17 tests the sign-in itself; saas-1 ("I have nothing set up yet") and saas-4 ("no MCP server
+// connected") have no session in their premise, and a signed-in Owner sent both models off questioning the account
+// instead of answering (2026.1108.0 evals).
+const SIGNED_OUT_CASES = ['cloudbackend-saas-launch-17', 'cloudbackend-saas-launch-1', 'cloudbackend-saas-launch-4'];
 const SIGNED_IN_START = /^- Session at the start: [^\n]*(?:\n  [^\n]*)*/m;
 const SIGNED_OUT_START = '- Session at the start: nobody is signed in on this computer. The user signs in on the page tenant_signin\n  returns, as tenant_status describes.';
 const provenance = readJson(path.join(PLUGIN_DIR, 'SKILLS.json'));

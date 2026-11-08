@@ -143,8 +143,8 @@ changes the account: ask the owner first. Reading needs no yes.
 1. Read `cloudbackend-launch.md`, say in one line which step is next and why. After the tenant, the first step is the
    pre-flight; its answers go into the file as `branches:` and `files reach the tenant via:`.
 2. Open the owner skill for that step and do the work there; give console actions as exact paths, owner-only ones marked.
-3. End with the step's check; tick it only when the user confirmed it (a deferred step says why). Steps that need a test
-   identity are the user's, in a private window: say so when the step starts, so they plan for it.
+3. End with the step's check; tick it only when the user confirmed it (a deferred step says why). Test identities are
+   the user's to create and sign in with, in a private window: say so at the pre-flight and when a step needs one.
 4. Keep evidence: for anything the app writes, the stored document read back (`read_project_file` or the CLI's `cat`),
    never the screen.
 
@@ -174,8 +174,8 @@ realm may add CloudBackend's deploy connector (`references/deploy-connector.md`)
 
 ## Version
 
-cloudbackend-saas-launch 2026.11.8.4, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
+cloudbackend-saas-launch 2026.11.8.5, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
 
-A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-saas-launch` than 2026.11.8.4, tell the user once, in one sentence, without interrupting the task.
+A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-saas-launch` than 2026.11.8.5, tell the user once, in one sentence, without interrupting the task.
 
-Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.8.4&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch the first time the skill is used in a session.
+Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.8.5&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch the first time the skill is used in a session.
