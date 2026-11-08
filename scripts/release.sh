@@ -3,7 +3,8 @@
 # remote (the public GitHub repository the marketplace reads), and only when that remote exists.
 #
 #   scripts/release.sh --dry-run            print every stage's commands and hand-offs; run nothing
-#   scripts/release.sh [--skip-evals] [--no-portal]
+#   scripts/release.sh [--skip-evals] [--no-portal] [--no-push]
+#   --no-push leaves the mirror push to the hand-off: run on big, push from pro (big's GitHub login gets 403)
 #
 # Stages (plan 2026-11-04, Phase 2 parts C and E):
 #   0  clean trees and tool versions          a  build the skills in the hub          b  sync the skills and the docs server
@@ -22,13 +23,14 @@ set -euo pipefail
 here=$(cd "$(dirname "$0")/.." && pwd)
 hub=$(cd "${CBE_DOCS_HUB:-$here/../estate-docs}" 2>/dev/null && pwd || echo "${CBE_DOCS_HUB:-$here/../estate-docs}")
 plugin="$here/plugins/cloudbackend"
-dry=0 evals=1 portal=1
+dry=0 evals=1 portal=1 push=1
 for a in "$@"; do
   case "$a" in
     --dry-run) dry=1 ;;
     --skip-evals) evals=0 ;;
     --no-portal) portal=0 ;;
-    -h|--help) sed -n '2,19p' "$0"; exit 0 ;;
+    --no-push) push=0 ;;
+    -h|--help) sed -n '2,20p' "$0"; exit 0 ;;
     *) echo "unknown option: $a" >&2; exit 2 ;;
   esac
 done
@@ -105,7 +107,8 @@ run "mkdir -p '$hub/public/public/plugin' && cd '$here' && cp $files '$hub/publi
 note "the hub's public/public/plugin/ holds $v beside every older zip (never removed: an installed archive source keeps resolving)"
 handoff "commit public/public/plugin/ and public/plugin.json in the hub (its own workflow); stage h deploys the portal"
 if git -C "$here" remote get-url mirror >/dev/null 2>&1; then
-  if [ "$dry" = 1 ]; then run "git -C '$here' push mirror main --tags"
+  if [ "$push" = 0 ]; then handoff "--no-push: from pro, git -C <this repo> push mirror main --tags"
+  elif [ "$dry" = 1 ]; then run "git -C '$here' push mirror main --tags"
   elif [ "$branch" = main ]; then
     # big's GitHub login cannot reach the mirror (403, 2026-11-07); pro's credential manager can
     if ! git -C "$here" push mirror main --tags; then handoff "the push was refused here: from pro, git -C <this repo> push mirror main --tags"; fi
