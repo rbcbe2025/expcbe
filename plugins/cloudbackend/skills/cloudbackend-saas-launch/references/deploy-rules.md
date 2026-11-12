@@ -1,29 +1,28 @@
 # Deploy rules — what the tools do, and the rules underneath
 
-Hand-written, 2026-11-04. The routes files take to the tenant, and the order to try them, are in `build-phases.md`
-(W0); this page is what the tenant server's tools do and return, the facts a tool cannot hide (a 409, a stuck share,
-a page that is not the page), and the REST rules for pushing files by hand. An account that added CloudBackend's
-deploy connector: `deploy-connector.md`. The console's own wizard and stages are in xios3-app-basics
-`references/deployment.md` and `references/deployment-pipeline.md`.
+Hand-written, 2026-11-04: what the tenant server's tools do and return, the facts a tool cannot hide, and the REST
+rules for pushing files by hand. Routes and their order: `build-phases.md` (W0). The deploy connector:
+`deploy-connector.md`. The console's wizard and stages: xios3-app-basics `references/deployment.md` and
+`references/deployment-pipeline.md`.
 
 ## The tenant server (`cloudbackend-tenant`, inside the plugin)
 
 | Tool | What it does | What to read in the result |
 | --- | --- | --- |
-| `tenant_signin` | Opens a sign-in page on `127.0.0.1` for 15 minutes in the default browser; the user signs in there (and enters the e-mailed code when the account uses one). With `open_browser: false` it only starts the page, for a client that opens it itself, as the Claude desktop app does in its built-in browser | `signin_page`: open it in the built-in browser or give it to the user; leave the tab to them; never ask for the password |
+| `tenant_signin` | Starts a sign-in page on `127.0.0.1` (15 minutes) and opens the default browser, or with `open_browser: false` only starts it, for a client that opens it itself (the desktop app's built-in browser); the user signs in there, with the e-mailed code when the account uses one | `signin_page`: open it in the built-in browser or give it to the user; leave the tab to them; never ask for the password |
 | `tenant_status` | Signed in or not, identity and role, whether CloudBackend still accepts the session, whether the realm exists; `wait_seconds` waits for an open page | `signed_in`, `role`, `deploy_connector` |
 | `list_projects` | The folders under `home://Applications/` and `tenant://Applications/`, and the identity's webshares with what each serves and its stage | which address already serves what |
 | `upload_project` | Copies the local package folder (`path`, the one holding `index.xml`) to `home://Applications/<project_name>/`; lints it with profile `build` first and uploads nothing while an error stands; binaries included; dot-files and `node_modules` left out. **Replaces by path; deletes nothing.** | `uploaded`, `lint`, `on_the_tenant_not_in_the_folder` |
-| `deploy` | Writes the boot page `index.html` and `.types.xml` into the project, creates the webshare or reuses the one that already serves this project, writes the console's pipeline record when there is none (an existing record is left alone), returns `https://<tenant>-<identity>-<name>.cloudbackend.cloud`. Development only; refuses an address that serves another project | `url`, `share` (created or reused), `pipeline` |
-| `verify_deployment` | Fetches the served files anonymously and compares their bytes with the local folder (`path`) or the stored copy; names the boot page when it answered instead; reads the login gate from the pipeline record and the served manifest, as the deploy connector does | `verdict`, `index_xml_match`, `mismatches` with `served_is_fallback_page`, `share.bound`, `login_gate.verdict`, `slug_bound_to` |
+| `deploy` | Writes the boot page `index.html` and `.types.xml` into the project, creates the webshare or reuses the one that already serves this project, adds or updates its own Development card in the console's pipeline record, never replacing it (one it cannot read, or that changes meanwhile, is left as it is), returns `https://<tenant>-<identity>-<name>.cloudbackend.cloud`. Development only; refuses an address that serves another project | `url`, `share` (created or reused), `pipeline` |
+| `verify_deployment` | Fetches the served files anonymously and compares their bytes with the local folder (`path`) or the stored copy; names the boot page when it answered instead; reads the login gate from the pipeline record and the served manifest | `verdict`, `index_xml_match`, `mismatches` with `served_is_fallback_page`, `share.bound`, `login_gate.verdict`, `slug_bound_to` |
 | `enable_deploy_connector` | Creates the account's sign-in realm (owner or administrator only) | `realm`: created or already exists |
 | `tenant_signout` | Ends the session at CloudBackend and deletes it from the computer | `signed_out` |
 
 The session lives in a file only the user can read and is never in a tool result; a 401 deletes it, and
 `tenant_signin` starts a new one.
 
-The sign-in page and where it opens (the desktop app's built-in browser, a terminal's default browser, never over
-SSH): `build-phases.md`, W0. Promotion beyond Development is a console step on every route.
+Where the sign-in page opens, and never over SSH: `build-phases.md`, W0. Promotion beyond Development is a console
+step on every route.
 
 ## Facts a tool cannot hide
 
@@ -40,15 +39,16 @@ SSH): `build-phases.md`, W0. Promotion beyond Development is a console step on e
   refreshes from a `tenant` upload; the address keeps serving the old files. `slug_bound_to` says which.
   A share that sticks on a stale copy, or a slug that is taken, is not repaired by re-deploying: the name
   is taken for good, so deploy under a new name (`<name>v2`) and point the domain at it.
-- **The pipeline record.** The console keeps one record per project under the tenant's Settings, in a
-  folder per project. A record written elsewhere is not shown on the Deployments page even though the
-  share works; `list_deployments` reads what the console shows.
+- **The pipeline record.** One per project: `tenant://Settings/Pipelines/<project>/<project>_pipeline`. A
+  record elsewhere is not listed on the Deployments page though the share works. The console's boards save
+  their cached copy whenever they draw: close them before a deploy, which edits only its own Development
+  card. Shared, Staging and Production stay console steps; promotion to Staging copies the project to
+  `tenant://Deployments/<project>_<YYYYMMDDHHMMSS>`.
 - **A deployed container is public.** Everything in it is readable at the address before the login
   screen; `references/project-layout.md` says what may be there.
 - **The gate can drop.** The login gate is the pipeline record's login configuration plus a stamp in the
-  served manifest. A redeploy, or a promotion done by a script, can serve the app without it for minutes;
-  on one measured redeploy a gated app served open for about two minutes before the gate was restored.
-  Verify after every change that touches the deployment, not once.
+  served manifest. A redeploy, or a promotion done by a script, can serve the app without it for minutes
+  (measured once: about two). Verify after every change that touches the deployment, not once.
 
 ## The console route and the REST rules
 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-08",
+  "generated": "2026-11-12",
   "skills": [
     {
       "name": "cloudbackend-rest-api",
@@ -10,9 +10,9 @@
     },
     {
       "name": "cloudbackend-saas-launch",
-      "version": "2026.11.8.5",
-      "content_hash": "3e7076507cc8f9c3",
-      "sha256": "2fd6d3ee594195d8ab3dd380340a6bab3b8a742e9f22dab82e732dce2dbf4d12",
+      "version": "2026.11.12",
+      "content_hash": "d29e25294fff275c",
+      "sha256": "5e617772321064cb0438ef3d14baff1568a28961e1637381769615f7d9c54d32",
       "files": 16
     },
     {

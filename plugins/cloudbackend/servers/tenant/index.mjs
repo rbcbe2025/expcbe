@@ -313,43 +313,188 @@ function bootPage(s) {
     .replace('$TENANTID$', String(s.tenantGroupId));
 }
 
-/** The console's pipeline record for the deployment, tenant://Settings/Pipelines/<project>/<slug>_pipeline (the folder the
- *  console reads, measured 2026-10-25). A record that already holds markup is the console's and is left as it is. */
+/** The console's pipeline record, tenant://Settings/Pipelines/<project>/<project>_pipeline: the folder and the file the
+ *  console reads and writes (the folder measured 2026-10-25; the file name on transcriber's console-made record,
+ *  2026-11-11, and in cbe_release.py's reading of the console's deployments process). Three writers share it: the
+ *  console's Deployments board, which saves its cached copy whenever it draws; release scripts; and this tool. So the
+ *  record is never replaced. deploy adds or updates its own Development card and appends one history line, leaving every
+ *  other byte as it was. It refuses a record it cannot read, and a record that changed while it worked. It keeps a local
+ *  backup, reads its write back byte for byte (putting the backup back when it differs), and keeps the stored type
+ *  text/xml: the tenant types an upload by its name and stores <project>_pipeline as ISO-8859-1 text, which the console
+ *  cannot open, and the console's next save wrote an empty record over it (the workshop, 2026-10-12). Promotion (Shared,
+ *  Staging, Production and their tenant://Deployments/<project>_<stamp> copies), loginConfig and domains stay the
+ *  console's: nothing here writes them. */
 const pipelineKey = (projectName) => String(projectName).toLowerCase().replace(/[^a-z0-9]/g, '');
+const recordName = (projectName) => `${pipelineKey(projectName)}_pipeline`;
+const PIPELINE_BACKUPS = setting('CBE_PIPELINE_BACKUPS') || join(SESSION_DIR, 'pipeline-backups');
+const START_TAG = String.raw`(?:[^>"']|"[^"]*"|'[^']*')*>`;
+
 async function pipelinesFolder(s) {
   const settings = s.tenantFolderId ? await lookupFolder(s, s.tenantFolderId, 'Settings') : '';
   return settings ? await lookupFolder(s, settings, 'Pipelines') : '';
 }
 
+/** Why a stored record is not one this tool may edit, '' when it is. Without an XML parser this is a shape check:
+ *  UTF-8 text, a <pipelines> root, a closing </pipelines>. */
+export function recordProblem(buf) {
+  const text = buf.toString('utf8');
+  if (!text.trim()) return 'it is empty';
+  if (!Buffer.from(text, 'utf8').equals(buf)) return 'it is not UTF-8 text';
+  if (!/^﻿?\s*(<\?xml[^>]*\?>\s*)?(<!--[\s\S]*?-->\s*)*<pipelines\b/.test(text)) return 'its root is not <pipelines>';
+  if (!/<\/pipelines>\s*$/.test(text)) return 'it does not end with </pipelines>';
+  return '';
+}
+
+/** One attribute set on a start tag, in place when it is there, appended when it is not. */
+function setAttr(tag, name, value) {
+  const v = escXml(value), re = new RegExp(`(\\s${escRe(name)}=)(["'])[\\s\\S]*?\\2`);
+  return re.test(tag) ? tag.replace(re, (_, a) => `${a}"${v}"`) : tag.replace(/\s*(\/?)>$/, (_, sl) => ` ${name}="${v}"${sl}>`);
+}
+
+/** The record with this deployment's Development card added, or brought up to date with one history line; every other
+ *  byte as it was. Throws when the record has no <development> stage. */
+export function mergeDevelopment(xml, { slug, url, container, user, userName, now }) {
+  const dev = /<development\s*\/>|<development\b[^>]*>([\s\S]*?)<\/development>/.exec(xml);
+  if (!dev) throw new ToolError('it has no <development> stage');
+  const who = `user="${escXml(user)}" user-name="${escXml(userName)}"`;
+  const history = (text) => `<history date="${now}" ${who} action="Deploy">\n        <message text="${text}" ${who}/>\n      </history>`;
+  let out;
+  if (dev[1] === undefined) {
+    out = `<development>${freshCard()}</development>`;
+  } else {
+    const open = dev[0].slice(0, dev[0].length - dev[1].length - '</development>'.length), body = dev[1];
+    let card = null;
+    for (const m of body.matchAll(new RegExp(`<deploy\\b${START_TAG}`, 'g'))) {
+      const tag = m[0], selfClosing = /\/>$/.test(tag);
+      const end = selfClosing ? m.index + tag.length : body.indexOf('</deploy>', m.index + tag.length) + '</deploy>'.length;
+      if (!selfClosing && end < '</deploy>'.length) throw new ToolError('a Development card has no </deploy>');
+      if (attrOf(tag, 'internal-version') === slug) { card = { start: m.index, end, tag, selfClosing }; break; }
+    }
+    let next;
+    if (!card) {
+      next = body + freshCard();
+    } else {
+      let tag = card.tag;
+      for (const [k, v] of [['href', url], ['depContainer', container], ['container', container], ['origin-container', container]]) tag = setAttr(tag, k, v);
+      const line = history('pushed to development');
+      const updated = card.selfClosing
+        ? `${tag.replace(/\s*\/>$/, '>')}\n      ${line}\n    </deploy>`
+        : `${tag}${body.slice(card.start + card.tag.length, card.end - '</deploy>'.length)}${line}</deploy>`;
+      next = body.slice(0, card.start) + updated + body.slice(card.end);
+    }
+    out = `${open}${next}</development>`;
+  }
+  return xml.slice(0, dev.index) + out + xml.slice(dev.index + dev[0].length);
+
+  function freshCard() {
+    return `<deploy version="1.0" internal-version="${escXml(slug)}" href="${escXml(url)}" ${who} visibility="private" date="${now}" `
+      + `test="unchecked" depContainer="${escXml(container)}" container="${escXml(container)}" origin-container="${escXml(container)}" active="true" status="">\n`
+      + `      ${history('created deployment')}\n    </deploy>`;
+  }
+}
+
+async function readBytes(s, href, what) {
+  const r = await call(s, 'GET', href);
+  if (!r.ok) { await drain(r); throw new ToolError(`${what}: HTTP ${r.status}`); }
+  return Buffer.from(await r.arrayBuffer());
+}
+
+/** The stored type and keys, as GET /metadata answers them (cbe_release.py's stored_meta); null when it does not. */
+async function storedMeta(s, folderId, name) {
+  const r = await call(s, 'GET', `/metadata?containerid=${folderId}&objectname=${encodeURIComponent(name)}`, { headers: { 'Content-Type': 'application/xml' } });
+  if (!r.ok) { await drain(r); return null; }
+  const xml = await r.text();
+  // The answer nests the object in another (measured 2026-11-11: <loadMetadataResponse><db:object><db:object name=..
+  // mime=..><db:streams .../><root>pipelines</root></db:object></db:object>), so find the start tag that names it.
+  const open = [...xml.matchAll(new RegExp(`<(?:\\w+:)?object\\b${START_TAG}`, 'g'))].find((m) => attrOf(m[0], 'name') === name);
+  if (!open) return null;
+  const rest = xml.slice(open.index + open[0].length), close = rest.search(/<\/(?:\w+:)?object>/);
+  const inner = (close < 0 ? rest : rest.slice(0, close)).replace(/<(\w+:)?streams\b[^>]*\/>|<(\w+:)?streams\b[\s\S]*?<\/(\w+:)?streams>/g, '');
+  const keys = {};
+  for (const [, k, v] of inner.matchAll(/<(?:\w+:)?(\w+)>([^<]*)<\/(?:\w+:)?\1>/g)) keys[k] = unescXml(v);
+  return { mime: attrOf(open[0], 'mime') || '', keys };
+}
+
+/** Sets the stored type to text/xml, carrying the keys over (PUT /metadata replaces them; `root` is how the console
+ *  lists pipelines). '' when done, else what could not be done. */
+async function ensureXmlType(s, folderId, name) {
+  const have = await storedMeta(s, folderId, name);
+  if (!have) return 'its stored type could not be read (GET /metadata)';
+  if (have.mime === 'text/xml') return '';
+  const keys = { ...have.keys }; if (!keys.root) keys.root = 'pipelines';
+  const dc = Object.entries(keys).map(([k, v]) => `<dc:${k}>${escXml(v)}</dc:${k}>`).join('');
+  const body = `<saveMetadata><folder id='${folderId}'/><document>${escXml(name)}</document><content>`
+    + `<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' xmlns:dc='http://xcerion.com/directory.xsd'>`
+    + `<atom:title>${escXml(name)}</atom:title><atom:link rel='alternate' type='text/xml'/>${dc}</atom:entry></content></saveMetadata>`;
+  const r = await call(s, 'PUT', '/metadata', { body, headers: { 'Content-Type': 'application/xml' } });
+  await drain(r);
+  if (!r.ok) return `setting its stored type failed (PUT /metadata: HTTP ${r.status})`;
+  const after = await storedMeta(s, folderId, name);
+  if (!after || after.mime !== 'text/xml') return `it is stored as ${after ? after.mime : 'an unreadable type'}, not text/xml`;
+  const lost = Object.keys(keys).filter((k) => after.keys[k] !== keys[k]);
+  return lost.length ? `PUT /metadata lost the key(s) ${lost.join(', ')}` : '';
+}
+
+function backupRecord(tenant, name, bytes) {
+  const dir = join(PIPELINE_BACKUPS, tenant);
+  mkdirSync(dir, { recursive: true, mode: 0o700 });
+  const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\..*/, '');
+  let file = join(dir, `${name}-${stamp}.xml`);
+  for (let n = 2; existsSync(file); n++) file = join(dir, `${name}-${stamp}-${n}.xml`);
+  writeFileSync(file, bytes, { mode: 0o600 });
+  return file;
+}
+
 async function writePipeline(s, { projectName, slug, url }) {
   const pipes = await pipelinesFolder(s);
   if (!pipes) return 'not written: tenant://Settings/Pipelines was not found. The address works; the console\'s Deployments view will not list it.';
-  const key = pipelineKey(projectName), docName = `${slug}_pipeline`, where = `tenant://Settings/Pipelines/${key}/${docName}`;
+  const key = pipelineKey(projectName), name = recordName(projectName), where = `tenant://Settings/Pipelines/${key}/${name}`;
+  const now = new Date().toISOString().slice(0, 19), container = `home://Applications/${projectName}`;
+  const card = { slug, url, container, user: s.name, userName: s.username, now };
   const folder = await lookupFolder(s, pipes, key);
+  let entry = null;
   if (folder) {
-    const entry = (await listDocuments(s, folder)).items.find((d) => d.name === docName);
-    if (entry && /<pipelines\b/.test(await need(await call(s, 'GET', entry.href), `reading ${where}`))) return `${where} exists and was left as it is (its history is the console's).`;
+    const listing = await listDocuments(s, folder);
+    entry = listing.items.find((d) => d.name === name) || null;
+    if (!entry && !listing.complete) throw new ToolError(`the listing of tenant://Settings/Pipelines/${key} is incomplete; cannot prove ${name} is absent`);
   }
   const target = folder || await ensureFolder(s, pipes, key);
-  const now = new Date().toISOString().slice(0, 19), container = `home://Applications/${projectName}`;
-  const who = `user="${escXml(s.name)}" user-name="${escXml(s.username)}"`;
-  const deployEl = `<deploy version="1.0" internal-version="${escXml(slug)}" href="${escXml(url)}" ${who} visibility="private" date="${now}" `
-    + `test="unchecked" depContainer="${escXml(container)}" container="${escXml(container)}" origin-container="${escXml(container)}" active="true" status="">\n`
-    + `      <history date="${now}" ${who} action="Deploy">\n        <message text="created deployment" ${who}/>\n      </history>\n    </deploy>`;
-  const doc = `<pipelines name="${escXml(projectName)}" git="" origin="home" shared="">\n  <pipeline name="Web">\n    <development>${deployEl}</development>\n`
-    + '    <shared/>\n    <staging/>\n    <production/>\n  </pipeline>\n</pipelines>\n';
-  await putDocument(s, target, docName, Buffer.from(doc), 'text/xml');
-  const back = (await listDocuments(s, target)).items.find((d) => d.name === docName);
-  const xml = back ? await need(await call(s, 'GET', back.href), `reading ${where} back`) : '';
-  if (!/<development>\s*<deploy\b/.test(xml)) throw new ToolError(`${where} did not read back with the deployment in it`);
-  return `wrote ${where} and read it back.`;
+
+  let before = null, sent, verb;
+  if (entry) {
+    before = await readBytes(s, entry.href, `reading ${where}`);
+    const problem = recordProblem(before);
+    if (problem) return `left as it is: ${where} exists but ${problem}. Open it in the console before anything writes it.`;
+    let merged;
+    try { merged = mergeDevelopment(before.toString('utf8'), card); }
+    catch (e) { return `left as it is: ${where} exists but ${e.message}. Open it in the console before anything writes it.`; }
+    sent = Buffer.from(merged, 'utf8');
+    const backup = backupRecord(s.tenant, name, before);
+    const again = await readBytes(s, entry.href, `reading ${where} again`);
+    if (!again.equals(before)) return `left as it is: ${where} changed while deploy worked (a console Deployments board saves its copy whenever it draws). Close the boards, reload the console and deploy again. Backup: ${backup}.`;
+    verb = `updated ${where} (the Development card ${slug}, one history line; backup ${backup})`;
+  } else {
+    sent = Buffer.from(mergeDevelopment(`<pipelines name="${escXml(projectName)}" git="" origin="home" shared="">\n  <pipeline name="Web">\n    <development/>\n`
+      + '    <shared/>\n    <staging/>\n    <production/>\n  </pipeline>\n</pipelines>\n', card), 'utf8');
+    verb = `wrote ${where}`;
+  }
+
+  await putDocument(s, target, name, sent, 'text/xml');
+  const back = (await listDocuments(s, target)).items.find((d) => d.name === name);
+  const got = back ? await readBytes(s, back.href, `reading ${where} back`) : Buffer.alloc(0);
+  if (!got.equals(sent)) {
+    if (before) { await putDocument(s, target, name, before, 'text/xml'); throw new ToolError(`${where} did not read back as written; the record as it was has been put back`); }
+    throw new ToolError(`${where} did not read back as written`);
+  }
+  const typeProblem = await ensureXmlType(s, target, name);
+  return `${verb}, read it back byte for byte${typeProblem ? `. Stored type NOT fixed: ${typeProblem}; the console may not open it, so check it there` : ', stored as text/xml'}.`;
 }
 
 /** The deployment's pipeline record as text, '' when there is none: verify reads the login configuration from it. */
-async function readPipeline(s, projectName, slug) {
+async function readPipeline(s, projectName) {
   const pipes = await pipelinesFolder(s);
   const folder = pipes ? await lookupFolder(s, pipes, pipelineKey(projectName)) : '';
-  const entry = folder ? (await listDocuments(s, folder)).items.find((d) => d.name === `${slug}_pipeline`) : null;
+  const entry = folder ? (await listDocuments(s, folder)).items.find((d) => d.name === recordName(projectName)) : null;
   return entry ? need(await call(s, 'GET', entry.href), 'reading the pipeline record') : '';
 }
 
@@ -466,7 +611,7 @@ async function verifyDeployment({ project_name, deployment_name, tenant, path, s
   if (!servedManifest) servedManifest = await served('index.xml');
   const manifestXml = servedManifest.bytes && sha256(servedManifest.bytes) !== fallbackHash ? servedManifest.bytes.toString('utf8') : '';
   let pipelineXml = '', record;
-  try { pipelineXml = await readPipeline(s, project_name, slug); record = pipelineXml ? 'read' : 'none: the console\'s Deployments view does not list this deployment'; }
+  try { pipelineXml = await readPipeline(s, project_name); record = pipelineXml ? 'read' : 'none: the console\'s Deployments view does not list this deployment'; }
   catch (e) { record = `not readable (${e.message})`; }
   const llms = await served('llms.txt');
   const llmsHash = llms.bytes ? sha256(llms.bytes) : '';
@@ -762,7 +907,7 @@ export const TOOLS = {
   },
   deploy: {
     title: 'Deploy a project to Development',
-    description: 'Publishes home://Applications/<project_name> as a private Development deployment at https://<tenant>-<identity>-<deployment_name>.cloudbackend.cloud: writes the boot page index.html (unless keep_index_html and one exists) and .types.xml into the project, creates the webshare or reuses the one that already serves this project, and writes the console\'s pipeline record when there is none. Refuses an address that serves another project. Promotion beyond Development is a console step.',
+    description: 'Publishes home://Applications/<project_name> as a private Development deployment at https://<tenant>-<identity>-<deployment_name>.cloudbackend.cloud: writes the boot page index.html (unless keep_index_html and one exists) and .types.xml into the project, creates the webshare or reuses the one that already serves this project, and adds or updates its own Development card in the console\'s pipeline record tenant://Settings/Pipelines/<project>/<project>_pipeline, never replacing the record: it refuses one it cannot read or that changes while it works, keeps a local backup, reads its write back byte for byte and keeps the stored type text/xml. Shared, Staging, Production, their tenant://Deployments copies, loginConfig and domains are the console\'s. Refuses an address that serves another project. Promotion beyond Development is a console step.',
     inputSchema: { type: 'object', properties: { project_name: PROJECT_ARG, deployment_name: DEPLOYMENT_ARG, tenant: TENANT_ARG, keep_index_html: { type: 'boolean', default: false, description: 'Keep an index.html the project already has instead of writing the boot page.' } }, required: ['project_name'] },
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
     run: deploy,

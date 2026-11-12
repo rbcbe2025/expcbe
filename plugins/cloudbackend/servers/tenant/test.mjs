@@ -18,7 +18,7 @@ const mk = (name, parent) => { const id = String(nextId++); folders.set(id, { id
 const HOME = mk('home'), TROOT = mk('tenantroot'), SETTINGS = mk('Settings', TROOT), PIPES = mk('Pipelines', SETTINGS);
 mk('Applications', TROOT);
 const shares = [];
-const state = { realm: false, keycloakCalls: 0, sessionsEnded: 0, sessionOk: true };
+const state = { realm: false, keycloakCalls: 0, sessionsEnded: 0, sessionOk: true, onRead: null, corruptUpload: null };
 const LOGIN_XML = `<loginResponse><userid>4242</userid><username>sara</username><firstname>Sara</firstname><lastname>Tester</lastname><home>${HOME}</home>`
   + `<session>${TOKEN}</session><group id="1" name="cbe"><group id="777" folderId="${TROOT}" name="acme" alias="Acme" owner="true" tenantgroup="true">`
   + '<group id="8" role="Owner"/><group id="9" role="Administrator"/></group><group id="778" folderId="5" name="cloudbackend" alias="x" tenantgroup="true"/></group></loginResponse>';
@@ -57,7 +57,11 @@ const fake = http.createServer(async (req, res) => {
     return send(200, `<newFolderResponse><newFolderId>${mk(name, m[1])}</newFolderId></newFolderResponse>`);
   }
   if (req.method === 'POST' && (m = p.match(/^\/v1\/documents\/(\d+)\/$/))) {
-    folders.get(m[1]).docs.set(req.headers['x-file-name'], { bytes: body, type: req.headers['x-content-type'] });
+    const name = req.headers['x-file-name'], old = folders.get(m[1]).docs.get(name);
+    // the tenant types an upload by its name: a <project>_pipeline is stored as ISO-8859-1 text until /metadata is fixed
+    const type = /_pipeline$/.test(name) ? 'text/xml; charset=ISO-8859-1' : req.headers['x-content-type'];
+    const bytes = state.corruptUpload === name ? (state.corruptUpload = null, Buffer.concat([body, Buffer.from('<!-- -->')])) : body;
+    folders.get(m[1]).docs.set(name, { bytes, type, keys: old?.keys || (/_pipeline$/.test(name) ? { root: 'pipelines' } : {}) });
     return send(200, '<ok/>');
   }
   if (req.method === 'GET' && (m = p.match(/^\/v1\/documents\/(\d+)\/$/))) {
@@ -65,7 +69,23 @@ const fake = http.createServer(async (req, res) => {
     const entries = [...f.docs.keys()].map((n) => `<atom:entry><atom:title>${esc(n)}</atom:title><atom:link href="${BASE}/v1/doc/${f.id}/${encodeURIComponent(n)}"/></atom:entry>`);
     return send(200, `<atom:feed><os:totalResults>${entries.length}</os:totalResults>${entries.join('')}</atom:feed>`);
   }
-  if (req.method === 'GET' && (m = p.match(/^\/v1\/doc\/(\d+)\/(.+)$/))) { const d = folders.get(m[1])?.docs.get(m[2]); return d ? send(200, d.bytes, d.type) : send(404); }
+  if (req.method === 'GET' && (m = p.match(/^\/v1\/doc\/(\d+)\/(.+)$/))) {
+    if (state.onRead && state.onRead.name === m[2] && --state.onRead.after < 0) { const f = state.onRead.fn; state.onRead = null; f(folders.get(m[1])); }
+    const d = folders.get(m[1])?.docs.get(m[2]); return d ? send(200, d.bytes, d.type) : send(404);
+  }
+  if (req.method === 'GET' && p === '/v1/metadata') {
+    const d = folders.get(u.searchParams.get('containerid'))?.docs.get(u.searchParams.get('objectname'));
+    if (!d) return send(404);
+    // the shape the tenant answers with (measured 2026-11-11): the object nested in another, keys unprefixed
+    const keys = Object.entries(d.keys || {}).map(([k, v]) => `<${k}>${esc(v)}</${k}>`).join('');
+    return send(200, `<loadMetadataResponse><db:object xmlns:db="https://cloudbackend.com/db.xsd"><db:object name="${esc(u.searchParams.get('objectname'))}" id="1" cid="${u.searchParams.get('containerid')}" mime="${d.type}"><db:streams total="9" first="9"/>${keys}</db:object></db:object></loadMetadataResponse>`);
+  }
+  if (req.method === 'PUT' && p === '/v1/metadata') {
+    const x = body.toString(), f = folders.get(x.match(/<folder id='(\d+)'/)[1]), d = f.docs.get(x.match(/<document>([^<]*)<\/document>/)[1]);
+    d.type = x.match(/type='([^']+)'/)[1];
+    d.keys = Object.fromEntries([...x.matchAll(/<dc:(\w+)>([^<]*)<\/dc:\1>/g)].map(([, k, v]) => [k, v]));
+    return send(200, '<ok/>');
+  }
   if (req.method === 'GET' && (m = p.match(/^\/v1\/containers\/(\d+)$/))) {
     const f = folders.get(m[1]);
     return send(200, `<fs:container id="${f.id}" name="${esc(f.name)}">${[...f.children].map(([n, id]) => `<fs:container id="${id}" name="${esc(n)}"/>`).join('')}</fs:container>`);
@@ -168,17 +188,20 @@ test('upload copies the folder, folders and binaries included, and lists what on
   assert.ok(project().docs.has('old.xml'), 'nothing is deleted');
 });
 
-test('deploy: boot page, datatypes, webshare, pipeline record; a second deploy reuses and leaves the record', async () => {
+test('deploy: boot page, datatypes, webshare, pipeline record; a second deploy reuses the share and updates its own card', async () => {
   const r = await run('deploy', { project_name: 'probe' });
   assert.equal(r.url, `${BASE}/share/acme-sara-probe`); assert.equal(r.share, 'created');
   const boot = project().docs.get('index.html').bytes.toString();
   assert.match(boot, /tenant:"acme"/); assert.match(boot, /tenantId:"777"/); assert.match(boot, /\/xios\/boot\.js/);
   assert.ok(project().docs.get('.types.xml').bytes.length > 10000);
   assert.match(shares[0].description, /^Stage: Development, Deploy: 4242 \[\[\]\] Plugin probe, Project: probe, ProjectHref: home:\/\/Applications\/probe$/);
-  const rec = folders.get(folders.get(PIPES).children.get('probe')).docs.get('probe_pipeline').bytes.toString();
-  assert.match(rec, /<development><deploy version="1.0" internal-version="probe" href="[^"]+acme-sara-probe"/); assert.match(r.pipeline, /^wrote /);
+  const stored = folders.get(folders.get(PIPES).children.get('probe')).docs.get('probe_pipeline'), rec = stored.bytes.toString();
+  assert.match(rec, /<development><deploy version="1.0" internal-version="probe" href="[^"]+acme-sara-probe"/); assert.match(r.pipeline, /^wrote .*byte for byte, stored as text\/xml/);
+  assert.equal(stored.type, 'text/xml', 'the stored type is fixed after the upload'); assert.equal(stored.keys.root, 'pipelines');
   const again = await run('deploy', { project_name: 'probe' });
-  assert.equal(again.share, 'reused'); assert.match(again.pipeline, /left as it is/); assert.equal(shares.length, 1);
+  assert.equal(again.share, 'reused'); assert.match(again.pipeline, /^updated .*probe_pipeline/); assert.equal(shares.length, 1);
+  const rec2 = folders.get(folders.get(PIPES).children.get('probe')).docs.get('probe_pipeline').bytes.toString();
+  assert.equal((rec2.match(/<deploy\b/g) || []).length, 1, 'one card, not two'); assert.match(rec2, /created deployment[\s\S]*pushed to development/);
   shares.push({ id: '1', name: 'taken', description: 'Stage: Development, Deploy: 1 [[]] x, Project: x, ProjectHref: home://Applications/x', folderId: HOME });
   await assert.rejects(run('deploy', { project_name: 'probe', deployment_name: 'taken' }), /already serves home:\/\/Applications\/x/);
   await assert.rejects(run('deploy', { project_name: 'probe', deployment_name: 'probe2' }), /already deployed as probe/);
@@ -217,6 +240,62 @@ test('verify reads the login gate from the pipeline record and the served manife
   r = await run('verify_deployment', { project_name: 'probe' });
   assert.match(r.login_gate.verdict, /^console-only/);
   pipes.docs.set('probe_pipeline', record);
+});
+
+// The shape of a console-made record (transcriber's, read 2026-11-11, names shortened): a Production card on a
+// tenant://Deployments snapshot, its domain, the board's history lines and loginConfig. Deploy may touch only <development>.
+const CONSOLE_RECORD = `<pipelines name="probe" git="" origin="home" shared="">
+  <pipeline name="Web">
+    <development/>
+    <shared/>
+    <staging/>
+    <production><deploy version="61" internal-version="probe_20261107204436" href="https://acme-777-probe_20261107204436.cloudbackend.cloud" user=" " user-name="sara" visibility="public" date="2026-11-07T19:56:57" test="verified" depContainer="tenant://Deployments/probe_20261107204436" container="tenant://Applications/probe" origin-container="home://Applications/probe" active="true" status="" busy-since="">
+      <history date="2026-11-07T19:56:57" user=" " user-name="sara" action="Deploy">
+        <message text="created deployment" user=" " user-name="sara"/>
+      </history><history date="2026-11-07T20:49:11" user=" " user-name="sara" action="Deploy"><message text="promoted to Production" user=" " user-name="sara"/></history><domain href="app.example.se"/></deploy></production>
+  <loginConfig><login session="true"><view>https://app.example.se/login-view.xml</view>
+    <title>Probe</title>
+  </login></loginConfig></pipeline>
+</pipelines>
+`;
+
+test('deploy edits only its own Development card in a console-made record and keeps every other byte', async () => {
+  const pipes = folders.get(folders.get(PIPES).children.get('probe')), kept = pipes.docs.get('probe_pipeline');
+  pipes.docs.set('probe_pipeline', { bytes: Buffer.from(CONSOLE_RECORD), type: 'text/xml', keys: { root: 'pipelines', owner: 'sara' } });
+  const r = await run('deploy', { project_name: 'probe' });
+  assert.match(r.pipeline, /^updated .*backup /);
+  const after = pipes.docs.get('probe_pipeline'), text = after.bytes.toString();
+  const outside = (t) => t.replace(/<development\s*\/>|<development>[\s\S]*?<\/development>/, '');
+  assert.equal(outside(text), outside(CONSOLE_RECORD), 'Production, its domain, loginConfig and the rest are byte-identical');
+  assert.match(text, /<development><deploy version="1.0" internal-version="probe" href="[^"]+acme-sara-probe"[^>]*depContainer="home:\/\/Applications\/probe"/);
+  assert.deepEqual(after.keys, { root: 'pipelines', owner: 'sara' }, 'the keys are carried over');
+  const backup = r.pipeline.match(/backup (\S+?)\)/)[1];
+  assert.equal(readFileSync(backup, 'utf8'), CONSOLE_RECORD, 'the backup is the record as it was');
+  pipes.docs.set('probe_pipeline', kept);
+});
+
+test('deploy leaves a record it cannot read, or one that changes while it works, exactly as it was', async () => {
+  const pipes = folders.get(folders.get(PIPES).children.get('probe')), kept = pipes.docs.get('probe_pipeline');
+  for (const [bytes, why] of [[Buffer.alloc(0), /is empty/], [Buffer.from('<pipeline name="Web"/>'), /root is not <pipelines>/],
+    [Buffer.from([0x3c, 0x70, 0x69, 0x70, 0x65, 0x6c, 0x69, 0x6e, 0x65, 0x73, 0x3e, 0xe5, 0x3c, 0x2f, 0x70, 0x69, 0x70, 0x65, 0x6c, 0x69, 0x6e, 0x65, 0x73, 0x3e]), /not UTF-8/],
+    [Buffer.from('<pipelines name="probe"><pipeline name="Web"/></pipelines>'), /no <development> stage/]]) {
+    pipes.docs.set('probe_pipeline', { bytes, type: 'text/xml', keys: { root: 'pipelines' } });
+    const r = await run('deploy', { project_name: 'probe' });
+    assert.match(r.pipeline, /^left as it is/); assert.match(r.pipeline, why);
+    assert.deepEqual(pipes.docs.get('probe_pipeline').bytes, bytes, 'not a byte written');
+  }
+  pipes.docs.set('probe_pipeline', { bytes: Buffer.from(CONSOLE_RECORD), type: 'text/xml', keys: { root: 'pipelines' } });
+  const board = CONSOLE_RECORD.replace('<staging/>', '<staging><deploy internal-version="probe_x"/></staging>');
+  state.onRead = { name: 'probe_pipeline', after: 1, fn: (f) => f.docs.set('probe_pipeline', { ...f.docs.get('probe_pipeline'), bytes: Buffer.from(board) }) };
+  const r = await run('deploy', { project_name: 'probe' });
+  assert.match(r.pipeline, /^left as it is: .*changed while deploy worked/);
+  assert.equal(pipes.docs.get('probe_pipeline').bytes.toString(), board, 'the board\'s save stands');
+  pipes.docs.set('probe_pipeline', { bytes: Buffer.from(CONSOLE_RECORD), type: 'text/xml', keys: { root: 'pipelines' } });
+  state.corruptUpload = 'probe_pipeline';
+  const bad = await run('deploy', { project_name: 'probe' });
+  assert.match(bad.pipeline, /^not written \(.*did not read back as written; the record as it was has been put back/);
+  assert.equal(pipes.docs.get('probe_pipeline').bytes.toString(), CONSOLE_RECORD);
+  pipes.docs.set('probe_pipeline', kept);
 });
 
 test('list_projects names the projects on both drives and the deployments with their addresses', async () => {

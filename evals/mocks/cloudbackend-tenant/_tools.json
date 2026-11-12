@@ -135,7 +135,7 @@
     {
       "name": "deploy",
       "title": "Deploy a project to Development",
-      "description": "Publishes home://Applications/<project_name> as a private Development deployment at https://<tenant>-<identity>-<deployment_name>.cloudbackend.cloud: writes the boot page index.html (unless keep_index_html and one exists) and .types.xml into the project, creates the webshare or reuses the one that already serves this project, and writes the console's pipeline record when there is none. Refuses an address that serves another project. Promotion beyond Development is a console step.",
+      "description": "Publishes home://Applications/<project_name> as a private Development deployment at https://<tenant>-<identity>-<deployment_name>.cloudbackend.cloud: writes the boot page index.html (unless keep_index_html and one exists) and .types.xml into the project, creates the webshare or reuses the one that already serves this project, and adds or updates its own Development card in the console's pipeline record tenant://Settings/Pipelines/<project>/<project>_pipeline, never replacing the record: it refuses one it cannot read or that changes while it works, keeps a local backup, reads its write back byte for byte and keeps the stored type text/xml. Shared, Staging, Production, their tenant://Deployments copies, loginConfig and domains are the console's. Refuses an address that serves another project. Promotion beyond Development is a console step.",
       "inputSchema": {
         "type": "object",
         "properties": {

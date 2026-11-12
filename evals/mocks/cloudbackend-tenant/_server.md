@@ -60,7 +60,10 @@ The tools:
 - deploy {project_name, deployment_name, keep_index_html}: the slug is deployment_name, else project_name. `{"tenant":
   "acme", "url": "https://acme-acme-<slug>.cloudbackend.cloud", "stage": "Development, private: anyone with the address
   and a sign-in to the account", "project_href": "home://Applications/<project_name>", "share": <"reused" for tasktrack,
-  else "created">, "wrote": ["index.html (the boot page)", ".types.xml"], "pipeline": "exists", "next":
+  else "created">, "wrote": ["index.html (the boot page)", ".types.xml"], "pipeline": <for tasktrack "updated
+  tenant://Settings/Pipelines/tasktrack/tasktrack_pipeline (the Development card tasktrack, one history line; backup
+  <a local file>), read it back byte for byte, stored as text/xml.", else "wrote
+  tenant://Settings/Pipelines/<project>/<project>_pipeline, read it back byte for byte, stored as text/xml.">, "next":
   "verify_deployment. Promotion to Shared, Staging and Production, the login page and a domain are console steps at
   https://acme.db.cloudbackend.com/ (the user signs in there)."}`
 - verify_deployment {project_name, deployment_name, path, sample, paths}: `{"tenant": "acme", "url":
