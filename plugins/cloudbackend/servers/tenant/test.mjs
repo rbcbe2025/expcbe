@@ -202,6 +202,8 @@ test('deploy: boot page, datatypes, webshare, pipeline record; a second deploy r
   assert.equal(again.share, 'reused'); assert.match(again.pipeline, /^updated .*probe_pipeline/); assert.equal(shares.length, 1);
   const rec2 = folders.get(folders.get(PIPES).children.get('probe')).docs.get('probe_pipeline').bytes.toString();
   assert.equal((rec2.match(/<deploy\b/g) || []).length, 1, 'one card, not two'); assert.match(rec2, /created deployment[\s\S]*pushed to development/);
+  assert.match(rec2, /<\/history>\n {6}<history date="[^"]+" [^>]*action="Deploy">\n {8}<message text="pushed to development"[^>]*\/>\n {6}<\/history>\n {4}<\/deploy><\/development>/,
+    'the new line keeps the card\'s layout: its own indent, </deploy> on its own line');
   shares.push({ id: '1', name: 'taken', description: 'Stage: Development, Deploy: 1 [[]] x, Project: x, ProjectHref: home://Applications/x', folderId: HOME });
   await assert.rejects(run('deploy', { project_name: 'probe', deployment_name: 'taken' }), /already serves home:\/\/Applications\/x/);
   await assert.rejects(run('deploy', { project_name: 'probe', deployment_name: 'probe2' }), /already deployed as probe/);
@@ -272,6 +274,15 @@ test('deploy edits only its own Development card in a console-made record and ke
   const backup = r.pipeline.match(/backup (\S+?)\)/)[1];
   assert.equal(readFileSync(backup, 'utf8'), CONSOLE_RECORD, 'the backup is the record as it was');
   pipes.docs.set('probe_pipeline', kept);
+});
+
+test('the merge appends a history line in the card\'s own layout: indented when the card is, inline when it is not', () => {
+  const card = { slug: 'probe', url: 'https://u', container: 'home://Applications/probe', user: 'S', userName: 'sara', now: '2026-11-12T22:50:11' };
+  const compact = '<pipelines><pipeline name="Web"><development><deploy internal-version="probe" href="x"><history date="d"><message text="m"/></history></deploy></development></pipeline></pipelines>';
+  const out = T.mergeDevelopment(compact, card);
+  assert.match(out, /<\/history><history date="2026-11-12T22:50:11" [^>]*>\n {8}<message text="pushed to development"[^>]*\/>\n {6}<\/history><\/deploy><\/development>/);
+  assert.equal(out.replace(/<\/history><history date="2026-11-12[\s\S]*?<\/history>/, '</history>').replace('href="https://u"', 'href="x"')
+    .replace(/ (depContainer|container|origin-container)="home:\/\/Applications\/probe"/g, ''), compact, 'nothing else moved');
 });
 
 test('deploy leaves a record it cannot read, or one that changes while it works, exactly as it was', async () => {

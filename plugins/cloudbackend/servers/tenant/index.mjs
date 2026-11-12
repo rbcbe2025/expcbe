@@ -377,9 +377,14 @@ export function mergeDevelopment(xml, { slug, url, container, user, userName, no
       let tag = card.tag;
       for (const [k, v] of [['href', url], ['depContainer', container], ['container', container], ['origin-container', container]]) tag = setAttr(tag, k, v);
       const line = history('pushed to development');
+      // The new line goes before the whitespace that closes the card, so </deploy> keeps its own line and indent
+      // (live 2026-11-12: appended after it, the line sat at four spaces with </deploy> beside it). A card written
+      // without whitespace, as the console writes its later lines, gets the line the same way.
+      const inner = card.selfClosing ? '' : body.slice(card.start + card.tag.length, card.end - '</deploy>'.length);
+      const tail = /\s*$/.exec(inner)[0], kept = inner.slice(0, inner.length - tail.length);
       const updated = card.selfClosing
         ? `${tag.replace(/\s*\/>$/, '>')}\n      ${line}\n    </deploy>`
-        : `${tag}${body.slice(card.start + card.tag.length, card.end - '</deploy>'.length)}${line}</deploy>`;
+        : `${tag}${kept}${tail ? `\n      ${line}` : line}${tail}</deploy>`;
       next = body.slice(0, card.start) + updated + body.slice(card.end);
     }
     out = `${open}${next}</development>`;
