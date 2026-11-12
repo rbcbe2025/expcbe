@@ -11,13 +11,13 @@
       "label": "rerun-2026-11-08-both"
     },
     "cloudbackend-saas-launch-1": {
-      "case_hash": "c6c248eae61afccd",
+      "case_hash": "796852442d9369ae",
       "score": 0.1667,
       "runs": 1,
-      "costUsd": 0.137,
+      "costUsd": 0.1394,
       "cli": "2.1.316",
-      "date": "2026-11-07",
-      "label": "2026.1107.0-both"
+      "date": "2026-11-12",
+      "label": "rel1112-opus-both"
     },
     "cloudbackend-saas-launch-3": {
       "case_hash": "82508f82461c5a1e",
@@ -29,13 +29,13 @@
       "label": "2026.1107.0-both"
     },
     "cloudbackend-saas-launch-4": {
-      "case_hash": "3aa936669e639432",
+      "case_hash": "d81d2a970ed16e1c",
       "score": 0.1667,
       "runs": 1,
-      "costUsd": 0.1375,
+      "costUsd": 0.158,
       "cli": "2.1.316",
-      "date": "2026-11-08",
-      "label": "regrade-2026-11-08-both"
+      "date": "2026-11-12",
+      "label": "rel1112-opus-both"
     },
     "cloudbackend-saas-launch-5": {
       "case_hash": "300f77a37c27c115",
@@ -308,13 +308,13 @@
       "label": "2026.1107.0-both"
     },
     "cloudbackend-saas-launch-17": {
-      "case_hash": "d8fcaf20b7b25cb2",
-      "score": 0.125,
+      "case_hash": "4fab3ee04df45236",
+      "score": 0,
       "runs": 1,
-      "costUsd": 0.139,
+      "costUsd": 0.1346,
       "cli": "2.1.316",
-      "date": "2026-11-07",
-      "label": "2026.1107.0-both"
+      "date": "2026-11-12",
+      "label": "rel1112-opus-both"
     },
     "cloudbackend-saas-launch-9": {
       "case_hash": "211859130c866d44",
@@ -371,5 +371,5 @@
       "label": "regrade-2026-11-08-both"
     }
   },
-  "updated": "2026-11-08"
+  "updated": "2026-11-12"
 }
