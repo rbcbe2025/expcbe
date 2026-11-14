@@ -84,8 +84,9 @@ const DEFAULT_TEMPLATES = {
   G19: '{file} line {line}: {detail}',
   G20: '{file} line {line}: {detail}',
 };
-// The documented XIOS/3 functions, the XPath 1.0 core library and datadoc, as the reference lists them while the
-// tenant's own list is still to be measured.
+// The documented XIOS/3 functions, the XPath 1.0 core library, datadoc, and login-data and url-param (run in a deployed
+// app's process steps on a tenant, 2026-10), as the reference lists them while the tenant's own list is still to be
+// measured.
 const DEFAULT_FUNCTIONS = [
   'absolute-path', 'apply-locale', 'capitalize', 'changedate', 'changes', 'channelname', 'combine-path', 'concat',
   'contains', 'count', 'count-selection', 'datatype', 'document', 'downcase', 'emitter', 'escape-string', 'file-exists',
@@ -95,6 +96,7 @@ const DEFAULT_FUNCTIONS = [
   'substring', 'substring-after', 'substring-before', 'text-selection', 'translate', 'trim', 'upcase', 'xml',
   'xpath-escape', 'boolean', 'ceiling', 'false', 'floor', 'id', 'lang', 'last', 'name', 'namespace-uri',
   'normalize-space', 'not', 'number', 'round', 'starts-with', 'string', 'string-length', 'sum', 'true', 'datadoc',
+  'login-data', 'url-param',
 ];
 const DEFAULT_LIMITS = { max_files: 500, max_file_bytes: 2097152, max_total_bytes: 8388608, font_file_warning_bytes: 204800 };
 // Every element name view.xsd declares (the CloudBackend extension's schema set, as vendored by the reference on
@@ -379,9 +381,15 @@ class Report {
 const NCNAME = /^[A-Za-z_][A-Za-z0-9._-]*$/;
 const FUNCTION_CALL = /(?<![\w.#$\-:])([A-Za-z_][\w\-]*)\s*\(/g;
 const QUOTED = /'[^']*'|"[^"]*"/g;
+// a name before "(" that is not a function call: the XPath operators (`a and (b or c)`) and the node tests (text())
+const NOT_FUNCTIONS = new Set(['and', 'or', 'div', 'mod', 'text', 'node', 'comment', 'processing-instruction']);
 // not a character reference (&#215;) and not a {#view#component} token
 const HEX_COLOUR = /(?<![&\w{#])#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b(?!#)/;
 const CSS_VAR = /var\([^)]*\)/g;
+// in a stylesheet a hex inside a comment or a string is no colour: svg[stroke="#fff"], url("#a1b"), content: "#123"
+const CSS_COMMENT_OR_STRING = /\/\*[\s\S]*?\*\/|"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'/g;
+/** A stylesheet with its comments and strings blanked, each newline kept so line numbers hold. */
+const cssValues = (text) => text.replace(CSS_COMMENT_OR_STRING, (m) => (m.startsWith('/*') ? '\n'.repeat((m.match(/\n/g) || []).length) : '""'));
 const VIEW_COMPONENT_REF = /(?<![\w$])#([A-Za-z_][\w\-]*)#([A-Za-z_][\w\-]*)/g;
 const FETCH_EXTERNAL = /\bfetch\s*\(\s*["'`](https?:)?\/\/([^/"'`]+)/g;
 const XHR_OPEN = /\.open\s*\(\s*["'`][A-Za-z]+["'`]\s*,\s*["'`](https?:)?\/\/([^/"'`]+)/g;
@@ -458,7 +466,7 @@ const RULES = {
         if (elem.text) sources.push(...expressions(elem.text));
         for (const source of sources) {
           const stripped = source.replace(QUOTED, "''");
-          for (const m of stripped.matchAll(FUNCTION_CALL)) if (!allowed.has(m[1])) report.add('G03', { file: xf.path, line: elem.line, function: m[1] });
+          for (const m of stripped.matchAll(FUNCTION_CALL)) if (!allowed.has(m[1]) && !NOT_FUNCTIONS.has(m[1])) report.add('G03', { file: xf.path, line: elem.line, function: m[1] });
         }
       }
     }
@@ -515,7 +523,8 @@ const RULES = {
       const isView = path in pkg.viewFiles;
       const isStyle = endsWithAny(path, STYLE_EXTENSIONS) || endsWithAny(path, ['.xsl', '.xslt']);
       if (!isView && !isStyle) continue;
-      const stripped = pkg.files[path].replace(CSS_VAR, 'var()');
+      const text = endsWithAny(path, STYLE_EXTENSIONS) ? cssValues(pkg.files[path]) : pkg.files[path];
+      const stripped = text.replace(CSS_VAR, 'var()');
       const m = HEX_COLOUR.exec(stripped);
       if (m) report.add('G10', { file: path, line: lineOf(stripped, m.index), detail: `${path}: a hex colour outside the token theme` });
     }

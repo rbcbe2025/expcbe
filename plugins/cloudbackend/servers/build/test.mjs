@@ -166,6 +166,13 @@ test('G03: unknown functions are named, methods and quoted text are not', () => 
   assert.deepEqual(lint(withProcess(PROCESS.replace("{format-date('now', 'yyyy-MM-dd')}", "{translate($x, 'a(b', '')}")), 'build', ['G03']).errors, []);
 });
 
+test('G03: operators, node tests and the measured login-data and url-param are not flagged', () => {
+  const expr = "{'{$a}' = '1' and ('{$b}' = '1' or 1 = 1)} {6 div(2)} {7 mod(3)} {home://x.xml#/a/text()} {/a/node()} {login-data(username)} {url-param(lang)}";
+  assert.deepEqual(lint(withProcess(PROCESS.replace("{format-date('now', 'yyyy-MM-dd')}", expr)), 'build', ['G03']).errors, []);
+  const [error] = lint(withProcess(PROCESS.replace("{format-date('now', 'yyyy-MM-dd')}", `${expr} {bogus-fn(1)}`)), 'build', ['G03']).errors;
+  assert.match(error.message, /bogus-fn\(\)/);
+});
+
 test('G06: a script needs a start step', () => {
   const process = PROCESS.replace('<trigger view="Notes" event="Loaded" step="init"/>', '<script href="notes.v1.js"/>\n  <trigger view="Notes" event="Loaded" step="init"/>');
   const files = [...withProcess(process), f('processes/notes.v1.js', 'export function init() {}\n')];
@@ -203,6 +210,14 @@ test('G10: a hex outside the theme, a var() fallback, no theme, no font', () => 
   assert.deepEqual(lint(withView(VIEW.replace('<button name="save" text="Save"/>', '<button name="save" text="Save" style="color:var(--xios-color-primary,#fff)"/>')), 'ship', ['G10']).errors, []);
   assert.match(lint(withManifest(MANIFEST.replace('tokens="true"', '')), 'ship', ['G10']).errors[0].message, /token block/);
   assert.match(lint(withManifest(MANIFEST.replace('<font-sans>system-ui, sans-serif</font-sans>', '')), 'ship', ['G10']).errors[0].message, /font/);
+});
+
+test('G10: a hex in a CSS comment or string is no colour, and the line still counts', () => {
+  const css = '/* the seed was #0a84ff,\n   now a token */\nsvg[stroke="#ffffff"] { stroke: currentColor }\n'
+    + ".x { background: url('#a1b') no-repeat }\n.y::after { content: \"#123\" }\n";
+  assert.deepEqual(lint([...withView(VIEW), f('styles/app.css', css)], 'ship', ['G10']).errors, []);
+  const [error] = lint([...withView(VIEW), f('styles/app.css', `${css}.z { color: #123456 }\n`)], 'ship', ['G10']).errors;
+  assert.deepEqual([error.file, error.line], ['styles/app.css', 6]);
 });
 
 test('G11: an external fetch in JavaScript; the platform hosts are fine', () => {
