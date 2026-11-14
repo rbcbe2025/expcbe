@@ -190,6 +190,21 @@ test('G07: links resolve inside the package', () => {
   assert.match(error.message, /escapes/);
 });
 
+test('G07: a binary file in the package resolves, by binaries and by dir', () => {
+  const view = VIEW.replace('<panel name="root"', '<image name="logo" href="../media/logo.png"/>\n  <panel name="root"');
+  assert.deepEqual([...rulesOf(lint(withView(view), 'build', ['G07']).errors)], ['G07']);
+  assert.deepEqual(lint(withView(view), 'build', ['G07'], { binaries: ['media/logo.png'] }).errors, []);
+  const root = mkdtempSync(join(tmpdir(), 'cbe-build-bin-'));
+  try {
+    for (const [rel, content] of [['index.xml', MANIFEST], ['views/notes.xml', view], ['processes/notes.xml', PROCESS], ['media/logo.png', Buffer.from([0x89, 0x50, 0x4e, 0x47, 0, 1])]]) {
+      mkdirSync(dirname(join(root, rel)), { recursive: true }); writeFileSync(join(root, rel), content);
+    }
+    const r = TOOLS.lint_project.run({ dir: root, rules: ['G07'] });
+    assert.deepEqual(r.binary_not_read, ['media/logo.png']);
+    assert.deepEqual(r.errors, []);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
 test('G08: custom tags', () => {
   const manifest = MANIFEST.replace('<settings/>', '<settings/>\n  <components><component name="S" tag="status" class="CA_Status" href="ui/s.js"/><component name="T" tag="good-tag" class="CA_T" href="ui/t.js"/></components>');
   const r = lint([...withManifest(manifest), f('ui/s.js', ''), f('ui/t.js', '')], 'build', ['G08']);
@@ -232,6 +247,13 @@ test('G12: secrets are reported by kind, never by value', () => {
   assert.equal(r.errors.length, 1);
   assert.match(r.errors[0].message, /JSON Web Token/);
   assert.ok(!JSON.stringify(r).includes(token));
+});
+
+test('G12: a password taken from an expression is no secret, a literal one is', () => {
+  const bound = [...good(), f('processes/signup.xml', '<step><createUser password="{#Login#regPassword}" username="{$u}"/></step>\n')];
+  assert.deepEqual(lint(bound, 'build', ['G12']).errors, []);
+  const literal = [...good(), f('processes/signup.xml', '<step><createUser password="hunter2hunter2" username="{$u}"/></step>\n')];
+  assert.deepEqual([...rulesOf(lint(literal, 'build', ['G12']).errors)], ['G12']);
 });
 
 test('G13: an unguarded home:// write on a tenant package is a warning', () => {
@@ -283,6 +305,7 @@ test('G19: triggers and references resolve', () => {
   assert.ok(r.errors.some((e) => e.message.includes('svae')) && r.errors.some((e) => e.message.includes('itmes')));
   assert.match(lint(withProcess(PROCESS.replace('<trigger view="Notes" event="Loaded"', '<trigger view="Main" event="Loaded"')), 'build', ['G19']).errors[0].message, /no view declares/);
   assert.match(lint(withProcess(PROCESS.replace("{format-date('now', 'yyyy-MM-dd')}", '{#Notes#serach}')), 'build', ['G19']).errors[0].message, /serach/);
+  assert.deepEqual(lint(withProcess(PROCESS.replace("{format-date('now', 'yyyy-MM-dd')}", '{#Notes#m{$n}} {#Notes#mx{$n}}')), 'build', ['G19']).errors, []);
 });
 
 test('G20: the login order and actuate', () => {

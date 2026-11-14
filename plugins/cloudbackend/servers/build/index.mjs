@@ -280,6 +280,7 @@ export function componentNames(view) {
 export class Package {
   constructor(files) {
     this.files = {}; this.order = []; this.xml = {}; this.parseErrors = {};
+    this.binaries = new Set(); // paths that exist in the package but were not read as text (lint's binaries)
     for (const { path, content } of files) {
       const norm = checkRelativePath(path).join('/');
       if (norm in this.files) throw new ToolError(`Duplicate path '${path}' in files`);
@@ -390,7 +391,8 @@ const CSS_VAR = /var\([^)]*\)/g;
 const CSS_COMMENT_OR_STRING = /\/\*[\s\S]*?\*\/|"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'/g;
 /** A stylesheet with its comments and strings blanked, each newline kept so line numbers hold. */
 const cssValues = (text) => text.replace(CSS_COMMENT_OR_STRING, (m) => (m.startsWith('/*') ? '\n'.repeat((m.match(/\n/g) || []).length) : '""'));
-const VIEW_COMPONENT_REF = /(?<![\w$])#([A-Za-z_][\w\-]*)#([A-Za-z_][\w\-]*)/g;
+// a name followed by "{" is built at run time (#App#m{$n}), so it is not checked
+const VIEW_COMPONENT_REF = /(?<![\w$])#([A-Za-z_][\w\-]*)#([A-Za-z_][\w\-]*)(?![\w\-{])/g;
 const FETCH_EXTERNAL = /\bfetch\s*\(\s*["'`](https?:)?\/\/([^/"'`]+)/g;
 const XHR_OPEN = /\.open\s*\(\s*["'`][A-Za-z]+["'`]\s*,\s*["'`](https?:)?\/\/([^/"'`]+)/g;
 const XHR_NEW = /\bnew\s+XMLHttpRequest\b/;
@@ -405,7 +407,7 @@ const SECRET_SHAPES = [
   ['a Slack token', /\bxox[abprs]-[A-Za-z0-9-]{10,}/],
   ['a Google API key', /\bAIza[0-9A-Za-z_-]{35}/],
   ['a bearer token in a header', /\bbearer\s+[A-Za-z0-9_\-.=]{24,}/i],
-  ['a credential assignment', /\b(?:api[_-]?key|secret[_-]?key|access[_-]?token|client[_-]?secret|password)\b\s*[:=]\s*["'][^"'\s]{12,}["']/i],
+  ['a credential assignment', /\b(?:api[_-]?key|secret[_-]?key|access[_-]?token|client[_-]?secret|password)\b\s*[:=]\s*["'](?![{$])[^"'\s]{12,}["']/i],
 ];
 
 /** The {...} expressions in an attribute value or text, braces balanced. */
@@ -498,7 +500,7 @@ const RULES = {
         const target = pkg.resolve(path, href);
         const attrName = attr === XLINK_HREF ? 'xlink:href' : 'href';
         if (target === null) report.add('G07', { file: path, line: elem.line, attr: attrName, href, detail: 'escapes the package root' });
-        else if (target && !(target in pkg.files)) report.add('G07', { file: path, line: elem.line, attr: attrName, href, detail: 'does not resolve to a file in the package' });
+        else if (target && !(target in pkg.files) && !pkg.binaries.has(target)) report.add('G07', { file: path, line: elem.line, attr: attrName, href, detail: 'does not resolve to a file in the package' });
       }
     }
   },
@@ -694,8 +696,9 @@ const normalizeFiles = (files) => {
   return files.map((f) => ({ path: String(f && f.path || ''), content: f && f.content !== undefined ? String(f.content) : '' }));
 };
 
-/** The lint result for files ({path, content} pairs); deploymentName is checked by G18 when given. */
-export function lint(files, profile = 'build', rules = null, { tenantTarget = null, deploymentName = null } = {}) {
+/** The lint result for files ({path, content} pairs); deploymentName is checked by G18 when given; binaries are
+ *  package paths that exist but were not read as text (a PDF, an image), so a reference to one resolves (G07). */
+export function lint(files, profile = 'build', rules = null, { tenantTarget = null, deploymentName = null, binaries = [] } = {}) {
   const g = grammar();
   if (!PROFILES.includes(profile)) throw new ToolError(`profile must be one of ${PROFILES.join(', ')}`);
   files = normalizeFiles(files);
@@ -707,6 +710,7 @@ export function lint(files, profile = 'build', rules = null, { tenantTarget = nu
     active = new Set(rules);
   } else active = new Set([...g.rules.values()].filter((r) => r.profile === 'build' || profile === 'ship').map((r) => r.id));
   const pkg = new Package(files);
+  pkg.binaries = new Set(binaries.map(String));
   if (tenantTarget !== null) pkg.tenantTarget = tenantTarget;
   const report = new Report(g, new Set([...active, ...(active.has('G00') ? ['G17'] : [])]));
   for (const id of [...active].sort()) if (RULES[id]) RULES[id](pkg, report);
@@ -859,7 +863,7 @@ export const TOOLS = {
     },
     run: ({ dir, files, profile = 'build', rules = null }) => {
       const input = packageInput({ dir, files });
-      return { ...input.from, ...lint(input.files, profile, rules) };
+      return { ...input.from, ...lint(input.files, profile, rules, { binaries: (input.from && input.from.binary_not_read) || [] }) };
     },
   },
   benchmark_project: {
