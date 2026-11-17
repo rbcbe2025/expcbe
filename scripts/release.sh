@@ -4,7 +4,8 @@
 #
 #   scripts/release.sh --dry-run            print every stage's commands and hand-offs; run nothing
 #   scripts/release.sh [--skip-evals] [--no-portal] [--no-push]
-#   --no-push leaves the mirror push to the hand-off: run on big, push from pro (big's GitHub login gets 403)
+#   --no-push leaves the mirror push to the hand-off: run on big, push from pro (big's GitHub login gets 403); a release
+#             cut on dev names the fast-forward of main that comes first
 #
 # Stages (plan 2026-11-04, Phase 2 parts C and E):
 #   0  clean trees and tool versions          a  build the skills in the hub          b  sync the skills and the docs server
@@ -30,7 +31,7 @@ for a in "$@"; do
     --skip-evals) evals=0 ;;
     --no-portal) portal=0 ;;
     --no-push) push=0 ;;
-    -h|--help) sed -n '2,20p' "$0"; exit 0 ;;
+    -h|--help) sed -n '2,/^[^#]/{/^#/p;}' "$0"; exit 0 ;;
     *) echo "unknown option: $a" >&2; exit 2 ;;
   esac
 done
@@ -52,7 +53,8 @@ for repo in "$here" "$hub" ${RELEASE_EXTRA_REPOS:-}; do
   if [ "$dirty" != 0 ]; then note "$repo: $dirty uncommitted change(s)"; [ "$dry" = 1 ] || { echo "abort: commit or archive first" >&2; exit 1; }; else note "$repo: clean"; fi
 done
 branch=$(git -C "$here" rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?')
-note "branch $branch (testers follow main; a release is cut from main)"
+if [ "$branch" = main ]; then note "branch main (testers follow main)"
+else note "branch $branch (testers follow main: stage f's hand-off fast-forwards main to $branch before the push)"; fi
 note "node $(node --version 2>/dev/null || echo missing) · claude $(claude --version 2>/dev/null | head -1 || echo missing) (evals need 2.1.269+) · $(python3 --version 2>/dev/null || echo 'python3 missing') (the hub's skills build)"
 
 stage a "build the skills in the hub"
@@ -106,14 +108,21 @@ files="dist/marketplace.json dist/index.json dist/cloudbackend-$v.zip"
 run "mkdir -p '$hub/public/public/plugin' && cd '$here' && cp $files '$hub/public/public/plugin/'"
 note "the hub's public/public/plugin/ holds $v beside every older zip (never removed: an installed archive source keeps resolving)"
 handoff "commit public/public/plugin/ and public/plugin.json in the hub (its own workflow); stage h deploys the portal"
+# Testers follow main and the work happens on dev (scripts/lib.mjs), so a release cut on another branch fast-forwards main
+# to it before the push; `fetch .` refuses a main that has diverged. 2026-11-17: the release commit landed on dev and the
+# --no-push hand-off left that step out.
+pushcmd="git -C <this repo> push mirror main --tags"
+ff=""; [ "$branch" = main ] || ff="on big, git -C <this repo> fetch . $branch:main (a fast-forward), then "
 if git -C "$here" remote get-url mirror >/dev/null 2>&1; then
-  if [ "$push" = 0 ]; then handoff "--no-push: from pro, git -C <this repo> push mirror main --tags"
-  elif [ "$dry" = 1 ]; then run "git -C '$here' push mirror main --tags"
+  if [ "$push" = 0 ]; then handoff "--no-push: ${ff}from pro, $pushcmd"
+  elif [ "$dry" = 1 ]; then
+    [ "$branch" = main ] || run "git -C '$here' fetch . '$branch:main'"
+    run "git -C '$here' push mirror main --tags"
   elif [ "$branch" = main ]; then
     # big's GitHub login cannot reach the mirror (403, 2026-11-07); pro's credential manager can
-    if ! git -C "$here" push mirror main --tags; then handoff "the push was refused here: from pro, git -C <this repo> push mirror main --tags"; fi
-  else handoff "on branch $branch: merge into main first, then git push mirror main --tags (testers follow main)"; fi
-else handoff "no mirror remote yet: git remote add mirror <the GitHub repository>, then git push mirror main --tags"; fi
+    if ! git -C "$here" push mirror main --tags; then handoff "the push was refused here: from pro, $pushcmd"; fi
+  else handoff "on branch $branch (testers follow main): ${ff}from pro, $pushcmd"; fi
+else handoff "no mirror remote yet: git remote add mirror <the GitHub repository>, then ${ff}$pushcmd"; fi
 note "after the push: claude plugin marketplace update cloudbackend && claude plugin update cloudbackend@cloudbackend on a tester's machine shows $v"
 
 stage h "portal"
