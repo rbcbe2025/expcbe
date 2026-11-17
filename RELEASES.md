@@ -28,4 +28,4 @@ the same night (big's GitHub login has no push access); the repository went publ
 | 2026.1105.7 | 2026-11-05 | 2026-11-05 | docs: estate-docs commit 7e8271c3be1a · build: in the plugin | evals skipped |
 | 2026.1107.0 | 2026-11-07 | 2026-11-07 | docs: estate-docs commit e69ae816481c · build: in the plugin | evals: evals/results/2026.1107.0-* (Opus 0.93 with, 0.20 without; Fable 0.90 on the 28 cases judged in full) |
 | 2026.1108.0 | 2026-11-08 | 2026-11-08 | docs: estate-docs commit e69ae816481c · build: in the plugin | evals: evals/results/2026.1108.0-*, regrade-2026-11-08-*, regrade2-2026-11-08-* (Opus 0.90 with, 0.19 without; after the grader fixes saas-launch 0.93, basics 0.95; Fable 0.84 on 29 cases, all judged; $62.96) |
-| 2026.1117.0 | 2026-11-17 | 2026-11-12 | docs: estate-docs commit e69ae816481c · build: in the plugin | evals skipped |
+| 2026.1117.0 | 2026-11-17 | 2026-11-12 | docs: estate-docs commit e69ae816481c · build: in the plugin | evals: evals/results/rel1112-* (Opus 0.91 with, 0.20 without, 27 cases; Fable 0.87 on 27 cases, all judged; $60.76), run before the build server's lint fixes 33adc46 and b6aea8a, which carry their own tests |
