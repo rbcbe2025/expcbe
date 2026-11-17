@@ -11,7 +11,7 @@
 #   0  clean trees and tool versions          a  build the skills in the hub          b  sync the skills and the docs server
 #   c  bump the version if plugins/ changed   d  .mcp.json, clients, README blocks, evals, marketplace, hub plugin.json
 #   e  guard, context budget, server tests (when servers/ changed), validate, the servers answer, evals
-#   f  pack, commit, tag, publish             h  portal                                 i  record (RELEASES.md, _reports/plugin/)
+#   f  pack, commit, tag, publish             h  portal and launch page (hub release)   i  record (RELEASES.md, _reports/plugin/)
 # Publishing (f) copies dist/{marketplace.json,index.json,<zip>} into the hub's public/public/plugin/ (older zips stay,
 # an installed archive source keeps resolving) and pushes main and the tags to `mirror`; without that remote it prints
 # the hand-off. Evals (e): scripts/run-evals.sh runs the cases eval-plan.mjs selects (a case whose skill, case files
@@ -107,7 +107,7 @@ else run "git -C '$here' tag 'v$v'"; fi
 files="dist/marketplace.json dist/index.json dist/cloudbackend-$v.zip"
 run "mkdir -p '$hub/public/public/plugin' && cd '$here' && cp $files '$hub/public/public/plugin/'"
 note "the hub's public/public/plugin/ holds $v beside every older zip (never removed: an installed archive source keeps resolving)"
-handoff "commit public/public/plugin/ and public/plugin.json in the hub (its own workflow); stage h deploys the portal"
+note "stage h commits public/public/plugin/ and public/plugin.json in the hub, then deploys the portal and the launch page"
 # Testers follow main and the work happens on dev (scripts/lib.mjs), so a release cut on another branch fast-forwards main
 # to it before the push; `fetch .` refuses a main that has diverged. 2026-11-17: the release commit landed on dev and the
 # --no-push hand-off left that step out.
@@ -125,9 +125,20 @@ if git -C "$here" remote get-url mirror >/dev/null 2>&1; then
 else handoff "no mirror remote yet: git remote add mirror <the GitHub repository>, then ${ff}$pushcmd"; fi
 note "after the push: claude plugin marketplace update cloudbackend && claude plugin update cloudbackend@cloudbackend on a tester's machine shows $v"
 
-stage h "portal"
-if [ "$portal" = 0 ]; then note "skipped (--no-portal)"
-else run "cd '$hub/public' && npm run build:xios && scripts/deploy-big.sh portal"; fi
+stage h "the portal and the launch page (the hub's release)"
+# The hub's release.sh refuses an uncommitted tree, so the files this release wrote there (stage d: public/plugin.json;
+# stage f: public/public/plugin/) are committed first, and nothing else. It then builds, tests and deploys the portal
+# before the launch page, whose live e2e reads the portal's new marketplace (2026-11-17: both had to be run by hand).
+hubpaths="public/plugin.json public/public/plugin"
+if [ "$portal" = 0 ]; then
+  note "skipped (--no-portal)"
+  handoff "in the hub: git add $hubpaths && git commit -m 'plugin $v: marketplace, index and zip', then public/scripts/release.sh --apply --only portal,launch"
+else
+  if [ "$dry" = 1 ] || [ -n "$(git -C "$hub" status --porcelain -- $hubpaths)" ]; then
+    run "git -C '$hub' add -- $hubpaths && git -C '$hub' commit -q -m 'plugin $v: marketplace, index and zip' -- $hubpaths"
+  else note "the hub already has $v's files committed"; fi
+  run "'$hub/public/scripts/release.sh' --apply --only portal,launch"
+fi
 
 stage i "record"
 skills_gen=$(jsonf "$plugin/SKILLS.json" 'o.generated')
