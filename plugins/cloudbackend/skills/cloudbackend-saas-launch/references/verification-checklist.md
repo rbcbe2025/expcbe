@@ -67,8 +67,9 @@ When a probe fails, in this order, because each step is cheaper than the next an
    (it never attaches; bind after the panel shows).
 5. The network tab: a CloudBackend call that answered 4xx. The Chrome extension's DevTools panel matches
    each call to its REST card with credentials masked; the card says what the status means.
-6. Async failures are quiet: a step that calls a module before its start step ran, or a promise that
-   rejected, writes nothing to the console. Check for the start step (G06) and version the module's file
+6. Async failures are easy to miss: a `call` into a module before its start step ran logs nothing (runtime
+   2026.6.0) or one `Step ... not found` line (2026.9.0), and a rejected promise logs an ordinary line, not an
+   error. Check for the start step (G06) and version the module's file
    name after a change (the runtime caches modules).
 
 Fix the file, `lint_project`, upload, `verify_deployment`, and rerun the probe from a fresh context.

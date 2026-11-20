@@ -2,7 +2,7 @@
 
 The hand-written end-to-end guide from the CloudBackend documentation hub: the order of work for a first paid web application on CloudBackend PaaS, with a check for each step and the items the product has not settled yet. Its links point at the published manual. Read the Pre-flight section and the current step's section, not the whole file.
 
-1 topics from the published CloudBackend documentation, generated on 2026-11-12. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+1 topics from the published CloudBackend documentation, generated on 2026-11-20. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 

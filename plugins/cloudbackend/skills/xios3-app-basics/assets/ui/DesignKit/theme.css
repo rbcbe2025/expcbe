@@ -8,8 +8,8 @@
    How it reaches the components: the runtime's token looks read per-component hooks (--xc-<component>-<part>);
    the first block sets them. Components without a token look (panel, label, toggle, slider, accordion, date,
    dialogs) get rules of their own further down. The theme loads this file into every view and dialog through the
-   style element under the theme's view component (designkit.py writes it). ASCII only, and never markup in a
-   comment: runtime 2026.6.0 drops a whole stylesheet as text when a comment holds a tag (measured 2026-10-10). */
+   style element under the theme's view component (designkit.py writes it). ASCII only, and never a style tag in a
+   comment: the runtime (2026.6.0 and 2026.9.0) drops a whole stylesheet as text when a comment holds one. */
 
 /* ---- 1. The kit's own derived values ---- */
 :root {

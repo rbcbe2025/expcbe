@@ -11,13 +11,13 @@
       "label": "rerun-2026-11-08-both"
     },
     "cloudbackend-saas-launch-1": {
-      "case_hash": "796852442d9369ae",
+      "case_hash": "97113d047649d016",
       "score": 0.1667,
       "runs": 1,
-      "costUsd": 0.1394,
+      "costUsd": 0.127,
       "cli": "2.1.316",
-      "date": "2026-11-12",
-      "label": "rel1112-opus-both"
+      "date": "2026-11-20",
+      "label": "rel1120-both"
     },
     "cloudbackend-saas-launch-3": {
       "case_hash": "82508f82461c5a1e",
@@ -74,13 +74,13 @@
       "label": "baseline-opus-2026-11-07-both"
     },
     "singularity-database-4": {
-      "case_hash": "338981c93c384cd3",
+      "case_hash": "fd9a99ba71b69416",
       "score": 0.2,
       "runs": 1,
-      "costUsd": 0.164,
+      "costUsd": 0.1547,
       "cli": "2.1.316",
-      "date": "2026-11-07",
-      "label": "2026.1107.0-both"
+      "date": "2026-11-20",
+      "label": "rel1120-both"
     },
     "xios3-app-basics-2": {
       "case_hash": "337d438bf51bb3d8",
@@ -371,5 +371,5 @@
       "label": "regrade-2026-11-08-both"
     }
   },
-  "updated": "2026-11-12"
+  "updated": "2026-11-20"
 }

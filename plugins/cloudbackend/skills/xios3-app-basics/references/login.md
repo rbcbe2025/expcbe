@@ -61,7 +61,7 @@ runtime's authenticator stores the session the sign-in returns in the browser's 
 `:expire_<tenant>` seven days ahead), moves the expiry forward on every request, and on the next load resumes the stored
 session instead of showing the sign-in page; a rejected session brings the sign-in page back. Its logout removes both
 keys. Without the attribute nothing is stored, so every reload signs the user out (read in the runtime's `system.js`,
-2026.6.0, on 2026-11-05).
+2026.6.0 and 2026.9.0).
 
 Two consequences for the app. It needs a visible **Sign out**: the example carries a `signOut` button (hidden until the
 login option reveals it) whose step runs the runtime's logout (`<operation name="system"><logout silent="true"/></operation>`),

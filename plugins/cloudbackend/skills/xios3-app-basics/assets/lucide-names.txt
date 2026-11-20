@@ -1,5 +1,5 @@
 # Lucide icon names (lucide.dev, ISC licence) in the XIOS/3 runtime's 'lucide' icon collection: lucide-static 1.22.0,
-# from the runtime's icons/lucide.xml (runtime 2026.6.0 and the runtime a CloudBackend deployment boots), read 2026-11-04.
+# from the runtime's icons/lucide.xml (runtime 2026.6.0 and 2026.9.0, the same file, and the runtime a CloudBackend deployment boots), read 2026-11-04 and 2026-11-20.
 # One name per line; designkit.py icons checks every icon:// name against this list.
 a-arrow-down
 a-arrow-up

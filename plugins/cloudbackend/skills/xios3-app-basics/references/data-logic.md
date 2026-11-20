@@ -2,7 +2,8 @@
 
 Hand-written, measured on the hosted runtime 2026.6.0 on 2026-10-09 in sample mode (a listing and records
 served as files), with the database writes in the shape the manual and the measured `javascript-as-steps`
-reference of `xios3-app-basics` give them. The view shows; the process binds and writes.
+reference of `xios3-app-basics` give them. The list and the detail bindings ran the same on 2026.9.0 on
+2026-11-20. The view shows; the process binds and writes.
 
 ## The five bindings
 

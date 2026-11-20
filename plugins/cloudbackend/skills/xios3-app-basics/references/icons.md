@@ -8,8 +8,8 @@ how to name and colour each icon, and what was measured.
 
 - **The runtime ships it.** Its `config/system.xml` declares an icon collection named `lucide` (lucide-static
   1.22.0, 1,993 names, monochrome SVG served from `https://icons.xios3.com/lucide/v1/<name>.svg`). Both the
-  runtime at runtime.xios3.com (2026.6.0 and 2026.7.0) and the runtime a CloudBackend deployment boots (its
-  `/xios` folder) declare it (checked 2026-11-04).
+  runtime at runtime.xios3.com (2026.6.0, 2026.7.0 and 2026.9.0) and the runtime a CloudBackend deployment boots (its
+  `/xios` folder) declare it (checked 2026-11-04; the list is the same file in 2026.6.0 and 2026.9.0).
 - **The licence.** Lucide is ISC: an app may publish it on its own domain. The IconExperience libraries behind
   the other built-in collections need a licence outside the CloudBackend service, as the manual's Icons
   reference says.
@@ -110,6 +110,8 @@ deployment before relying on it.
   a primary button, and `color=primary` drew it invisible. `icon://search?look=lucide` loaded Lucide with no Lucide
   theme. `icon://folders2` under the Lucide theme drew nothing. `theme=<the app's theme>` on an icon drew nothing,
   because that parameter takes only the runtime's own themes.
+- 2026-11-20, on a local page booting the hosted runtime 2026.9.0, with 2026.6.0 beside it: every result of the
+  bullet above again, the same on both releases (the same requests to the icon host, the same picture).
 - On a Development deployment of the kit's app (the runtime a CloudBackend deployment boots): buttons drew Lucide
   from the theme alone. The `iconlist` items needed `look=lucide`. With it, `color=primary` gave `#2E83C3` and
   `color=darkIcon` gave `#2E86C8`, both the platform theme's, so the kit writes the seed out. `class="xios-color-danger"`

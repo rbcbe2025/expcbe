@@ -8,8 +8,8 @@ says what the stylesheet does, why it is needed, how it reaches each component, 
 ## Why a token theme alone is not enough
 
 The runtime styles a component through its look. A token theme sets `look="token"` per component, and a component
-follows the theme's tokens only when it ships a `-token` stylesheet. Measured in the runtime's own CSS (2026.6.0, the
-`style.css` a CloudBackend deployment boots, 2026-11-05):
+follows the theme's tokens only when it ships a `-token` stylesheet. Measured in the runtime's own CSS (2026.9.0, the
+`style.css` a CloudBackend deployment boots, 2026-11-05 and again 2026-11-20):
 
 | Has a token look | No token look: keeps its legacy (frozen) look under any token theme |
 | --- | --- |

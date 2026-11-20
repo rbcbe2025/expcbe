@@ -1,8 +1,8 @@
 /* designkit.css - the kit's own rules. Everything reads the token theme's variables (--xios-color-*,
    --xios-text-*, --xios-radius-*, --xios-font-*), so the status bar and the type helpers follow the
    app's palette without naming a colour. Load it from the view with a style element whose href is
-   ../ui/DesignKit/designkit.css. Never write markup in this comment: runtime 2026.6.0 drops the whole stylesheet as
-   text when a comment holds a tag (measured 2026-10-10). ASCII only. */
+   ../ui/DesignKit/designkit.css. Never write a style tag in this comment, and keep other markup out too: the runtime
+   (2026.6.0 and 2026.9.0) drops the whole stylesheet as text when a comment holds one. ASCII only. */
 
 /* ---- status bar (CA_Status) ---- */
 .xios-status{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:60;max-width:min(92vw,560px);

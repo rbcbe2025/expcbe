@@ -1,7 +1,7 @@
 # Layouts: the example's files, the four patterns, the phone rules
 
-Hand-written, measured on the hosted runtime 2026.6.0 on 2026-10-09 (Chrome, 1280 and 390 px, served from a
-webshare on sample data). `designkit.py app` writes these files with the placeholders filled in.
+Hand-written, measured on the hosted runtime 2026.6.0 and 2026.9.0 (Chrome, 1280 and 390 px, sample data).
+`designkit.py app` writes these files with the placeholders filled in.
 
 ## The example, file by file
 
@@ -94,7 +94,7 @@ nothing else.
 ## Icons
 
 The icon manager recolours from the palette: `icon://plus?color=primary`, `?color=error`, `?color=grey`,
-`?color=darkIcon`. Names seen rendering on 2026.6.0: `plus`, `delete`, `folders2`, `clipboard_checks`,
+`?color=darkIcon`. Names seen rendering on 2026.9.0: `plus`, `delete`, `folders2`, `clipboard_checks`,
 `note`, `earth`, `rocket`, `checkbox_unchecked`. For the Menu button a text label is safer than an icon
 name you have not seen render.
 
