@@ -53,7 +53,7 @@ curl -X POST "https://api.cloudbackend.com/v1/wsauth/{user_id}/{webshare_id}" \
 
 **List webshares for a user**
 
-Lists all webshares owned by a user. Returns an Atom feed.
+Lists all webshares owned by a user. Returns an Atom feed, or the data-model format with `?datasrc=datamodel`.
 
 ### Request
 
@@ -65,6 +65,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
+| `datasrc` | query | no | string · one of `datamodel` | `datamodel` returns the webshare list in the data-model format (`db:` elements) instead of an Atom feed. The `Content-Type` header still says `application/atom+xml`. Lowercase only. |
 | `user_id` | path | yes | integer |  |
 
 ### Responses

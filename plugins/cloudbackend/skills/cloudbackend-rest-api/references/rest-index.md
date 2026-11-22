@@ -1,10 +1,10 @@
 # CloudBackend REST API — every operation
 
-513 operations in 13 tags, from the published OpenAPI specification (CloudBackend Singularity REST API). Base URL `https://api.cloudbackend.com/v1`; every body is XML. One line per operation: method, path, what it does. The full card for each — parameters, bodies, status codes, a curl example — is in `rest/<tag>.md`.
+536 operations in 13 tags, from the published OpenAPI specification (CloudBackend Singularity REST API). Base URL `https://api.cloudbackend.com/v1`; every body is XML. One line per operation: method, path, what it does. The full card for each — parameters, bodies, status codes, a curl example — is in `rest/<tag>.md`.
 
 ⚠ marks an operation the specification itself says is not confirmed against a test case.
 
-## Group (120) — `rest/group.md`
+## Group (126) — `rest/group.md`
 
 - `POST /group` — Create a group
 - `DELETE /group` — Delete a group
@@ -25,6 +25,7 @@
 - `PUT /groupmembership` — Accept join group request
 - `DELETE /groupmembership` — Reject group join request
 - `GET /groups/{group_id}` — Get group info
+- `PUT /groups/{group_id}` — Make a group a project
 - `GET /groups/{group_id}/webshares` — List webshares for a group
 - `DELETE /groups/{group_id}/webshares/{webshare_id}` — Delete a webshare
 - `GET /groups/{group_id}/webshares/{webshare_id}` — Get a group webshare
@@ -101,8 +102,10 @@
 - `GET /wsg[0_9]/{group_id}` — List group public webshares
 - `GET /wsg[0_9]/{group_id}/{webshare_id}` — Get group webshare information
 - `POST /wsg[0_9]/{group_id}/{webshare_id}` — Create a container in a group webshare
-- `POST /wsg[0_9]/{group_id}/{webshare_id}/{path}` — Create group webshare container
+- `POST /wsg[0_9]/{group_id}/{webshare_id}/{path}` — Create group webshare container, or write an object stream
 - `GET /wsg[0_9]/{group_id}/{webshare_id}/{path}` — Browse or download from a group webshare
+- `PUT /wsg[0_9]/{group_id}/{webshare_id}/{path}` — Rename an object through a group webshare
+- `DELETE /wsg[0_9]/{group_id}/{webshare_id}/{path}` — Delete an object through a group webshare
 - `POST /changegroupalias` — Change group alias
 - `GET /testemail` — List test emails
 - `DELETE /testemail` — Delete test emails
@@ -126,8 +129,89 @@
 - `POST /emailgroup` — Add an email group
 - `DELETE /emailgroup` — Delete an email group
 - `GET /diskusage` — Get disk usage
+- `GET /groups/{group_id}/projects` — List a tenant's projects
+- `GET /groups/{group_id}/projects;acl` — Get projects ACL
+- `PUT /groups/{group_id}/projects;acl` — Modify projects ACL
 
-## Identity (72) — `rest/identity.md`
+## Tenant (75) — `rest/tenant.md`
+
+- `POST /emailrules/{organization_id}` — Upload email rules
+- `GET /emailrules/{organization_id}` — Get email rules
+- `GET /accounttype/{tenant_id}` — List account types
+- `POST /accounttype/{tenant_id}` — Create an account type
+- `DELETE /accounttype/{tenant_id}` — Delete an account type
+- `PUT /accounttype/{tenant_id}` — Update an account type
+- `GET /locale` — Get locale
+- `PUT /locale` — Set locale
+- `PUT /locales` — Replace the strings of a locale
+- `PATCH /locales` — Add or change strings of a locale
+- `GET /locales/{locale}` — Get the strings of a locale
+- `DELETE /locales/{locale}` — Delete all strings of a locale
+- `GET /locales/{locale}/entries/{key}` — Get one string of a locale
+- `PUT /locales/{locale}/entries/{key}` — Set one string of a locale
+- `DELETE /locales/{locale}/entries/{key}` — Delete one string of a locale
+- `GET /products/{tenant_id}` — List products
+- `POST /products/{tenant_id}` — Create or update a product
+- `DELETE /products/{tenant_id}` — Delete a product
+- `GET /tenantOptions/{tenant_id}` — Get tenant options
+- `POST /tenantOptions/{tenant_id}` — Set tenant options
+- `DELETE /tenantOptions/{tenant_id}` — Delete tenant options
+- `GET /signupreferralsettings/{group_id}` — Get signup referral settings
+- `POST /signupreferralsettings/{group_id}` — Update signup referral settings
+- `GET /signupreferral/{group_id}` — Generate a referral code
+- `POST /signupreferral/{group_id}` — Grant code-generation allowances
+- `DELETE /signupreferral/{group_id}` — Retract a referral code
+- `GET /signupreferral/{group_id}/list` — List generated referral codes
+- `GET /signupreferral/{group_id}/users` — List who may generate referral codes
+- `GET /users` — List tenant users
+- `GET /campaign` — Activate or test a campaign code
+- `DELETE /cancelSubscription` — Confirm subscription cancellation
+- `GET /cancelSubscription` — Request subscription cancellation
+- `POST /clients/{tenant_group_id}` — Create a client
+- `GET /coupon` — Activate or test a coupon
+- `GET /deleteTenant` — Request tenant deletion code
+- `POST /deleteTenant` — Delete a tenant
+- `DELETE /objects/purge` — Purge deleted data of the tenant
+- `GET /statistictenant/users` — Get user count
+- `GET /tenantkey` — Get tenant keys
+- `GET /users/{user_id}/billing` — Get billing info
+- `PUT /users/{user_id}/billing` — Update billing info
+- `GET /users/{user_id}/invoices/{purchase_id}` — Get invoice
+- `GET /users/{user_id}/invoices` — List invoices
+- `POST /users/{user_id}/invoices/{invoice_id}/credit-notes` — Credit an invoice
+- `POST /users/{user_id}/invoices/{invoice_id}/payments` — Mark an invoice as paid
+- `GET /users/{user_id}/purchases` — List purchases
+- `POST /users/{user_id}/purchases` — Create a purchase
+- `GET /vat-numbers/` — List tenant VAT numbers
+- `POST /vat-numbers/` — Add a tenant VAT number
+- `DELETE /vat-numbers/{vat_number}` — Delete a tenant VAT number (test tenants)
+- `GET /tenantgroup` — Get tenant group
+- `GET /paypalcredentials/{tenant_id}` — Get PayPal credentials
+- `POST /paypalcredentials/{tenant_id}` — Set PayPal credentials
+- `DELETE /paypalcredentials/{tenant_id}` — Delete PayPal credentials
+- `POST /deleteoldfreeusers/{tenant_id}` — Delete old free users
+- `GET /organizations/check` — Check whether a tenant name is available
+- `GET /organizations/{group_id}/bandwidth` — Get tenant bandwidth usage
+- `GET /stripecredentials/{tenant_id}` — Get Stripe credentials
+- `POST /stripecredentials/{tenant_id}` — Set Stripe credentials
+- `DELETE /stripecredentials/{tenant_id}` — Delete Stripe credentials
+- `GET /stats/users` — Get grouped user statistics
+- `GET /stats/users/active` — Get last login count
+- `GET /stats/users/logins` — Get total login count
+- `GET /stats/users/subscriptions` — Get premium user statistics
+- `GET /stats/revenue` — Get revenue statistics
+- `GET /admin/deployments/stats` — Get deployment statistics
+- `POST /emailcredentials` — Add email credentials
+- `GET /stats/projects` — Get statistics per project
+- `GET /stripepublishablekey` — Get the Stripe publishable key
+- `GET /vat-rates/eu` — List EU VAT rates for reverse charge
+- `GET /purchase-records` — List the tenant's purchase records
+- `GET /users/{user_id}/purchase-records` — List a user's purchase records
+- `GET /commission-rates` — List the commission rates of the tenant's sales
+- `GET /reports/commission/{month}` — Get the tenant's commission report of a month
+- `GET /reports/invalid-vat-numbers` — List buyers with invalid VAT numbers
+
+## Identity (73) — `rest/identity.md`
 
 - `GET /avatar/{user_id}` — Get user avatar
 - `GET /users/{user_id}/eula` — Get EULA acceptance
@@ -149,7 +233,6 @@
 - `POST /activate` — Activate user account
 - `GET /avatar/{user_id}/{size}` — Get user avatar
 - `PUT /changegroupowner` — Change group owner
-- `POST /event` — Send an event
 - `POST /logout` — Log out (invalidate session)
 - `POST /push/{user_id}` — Register device for push notifications
 - `GET /recover` — Request password recovery email
@@ -200,80 +283,11 @@
 - `GET /library` — Query a library
 - `POST /queryuser` — Query the user database
 - `GET /stats/users/client/{client_name}` — Get client user count
-- `GET /admin/deployments/stats` — Get end user statistics
+- `GET /admin/users/total` — Get end user statistics
+- `POST /pow-challenges` — Get a proof-of-work challenge
+- `POST /pow-challenges/verify` — Check a proof-of-work solution
 
-## Tenant (68) — `rest/tenant.md`
-
-- `POST /emailrules/{organization_id}` — Upload email rules
-- `GET /emailrules/{organization_id}` — Get email rules
-- `GET /accounttype/{tenant_id}` — List account types
-- `POST /accounttype/{tenant_id}` — Create an account type
-- `DELETE /accounttype/{tenant_id}` — Delete an account type
-- `PUT /accounttype/{tenant_id}` — Update an account type
-- `GET /locale` — Get locale
-- `PUT /locale` — Set locale
-- `PUT /locales` — Replace the strings of a locale
-- `PATCH /locales` — Add or change strings of a locale
-- `GET /locales/{locale}` — Get the strings of a locale
-- `DELETE /locales/{locale}` — Delete all strings of a locale
-- `GET /locales/{locale}/entries/{key}` — Get one string of a locale
-- `PUT /locales/{locale}/entries/{key}` — Set one string of a locale
-- `DELETE /locales/{locale}/entries/{key}` — Delete one string of a locale
-- `GET /products/{tenant_id}` — List products
-- `POST /products/{tenant_id}` — Create or update a product
-- `DELETE /products/{tenant_id}` — Delete a product
-- `GET /tenantOptions/{tenant_id}` — Get tenant options
-- `POST /tenantOptions/{tenant_id}` — Set tenant options
-- `DELETE /tenantOptions/{tenant_id}` — Delete tenant options
-- `GET /signupreferralsettings/{group_id}` — Get signup referral settings
-- `POST /signupreferralsettings/{group_id}` — Update signup referral settings
-- `GET /signupreferral/{group_id}` — Generate a referral code
-- `POST /signupreferral/{group_id}` — Grant code-generation allowances
-- `DELETE /signupreferral/{group_id}` — Retract a referral code
-- `GET /signupreferral/{group_id}/list` — List generated referral codes
-- `GET /signupreferral/{group_id}/users` — List who may generate referral codes
-- `GET /users` — List tenant users
-- `GET /campaign` — Activate or test a campaign code
-- `DELETE /cancelSubscription` — Confirm subscription cancellation
-- `GET /cancelSubscription` — Request subscription cancellation
-- `POST /clients/{tenant_group_id}` — Create a client
-- `GET /coupon` — Activate or test a coupon
-- `GET /deleteTenant` — Request tenant deletion code
-- `POST /deleteTenant` — Delete a tenant
-- `DELETE /objects/purge` — Purge deleted data of the tenant
-- `GET /statistictenant/users` — Get user count
-- `GET /tenantkey` — Get tenant keys
-- `GET /users/{user_id}/billing` — Get billing info
-- `PUT /users/{user_id}/billing` — Update billing info
-- `GET /users/{user_id}/invoices/{purchase_id}` — Get invoice
-- `GET /users/{user_id}/invoices` — List unpaid invoices
-- `POST /users/{user_id}/invoices/{invoice_id}/credit-notes` — Credit an invoice
-- `POST /users/{user_id}/invoices/{invoice_id}/payments` — Mark an invoice as paid
-- `GET /users/{user_id}/purchases` — List purchases
-- `POST /users/{user_id}/purchases` — Create a purchase
-- `POST /users/{user_id}/tpurchases` — Create PayPal purchase URL (not implemented)
-- `GET /vat-numbers/` — List tenant VAT numbers
-- `POST /vat-numbers/` — Add a tenant VAT number
-- `DELETE /vat-numbers/{vat_number}` — Delete a tenant VAT number (test tenants)
-- `GET /tenantgroup` — Get tenant group
-- `GET /paypalcredentials/{tenant_id}` — Get PayPal credentials
-- `POST /paypalcredentials/{tenant_id}` — Set PayPal credentials
-- `DELETE /paypalcredentials/{tenant_id}` — Delete PayPal credentials
-- `POST /deleteoldfreeusers/{tenant_id}` — Delete old free users
-- `GET /organizations/check` — Check whether a tenant name is available
-- `GET /organizations/{group_id}/bandwidth` — Get tenant bandwidth usage
-- `GET /stripecredentials/{tenant_id}` — Get Stripe credentials
-- `POST /stripecredentials/{tenant_id}` — Set Stripe credentials
-- `DELETE /stripecredentials/{tenant_id}` — Delete Stripe credentials
-- `GET /stats/users` — Get grouped user statistics
-- `GET /stats/users/active` — Get last login count
-- `GET /stats/users/logins` — Get total login count
-- `GET /stats/users/subscriptions` — Get premium user statistics
-- `GET /stats/revenue` — Get revenue statistics
-- `GET /admin/users/total` — Get deployment statistics
-- `POST /emailcredentials` — Add email credentials
-
-## Sharing (65) — `rest/sharing.md`
+## Sharing (73) — `rest/sharing.md`
 
 - `GET /wsg0/{tenant_id}/{webshare_id}/{filename}` — Download a file from a public webshare
 - `GET /wsg1/{tenant_id}/{webshare_id}/{filename}` — Download a file from a private webshare
@@ -304,6 +318,9 @@
 - `POST /gwebshares/block` — Block a group webshare
 - `POST /gwebshares/unblock` — Unblock a group webshare
 - `GET /public/users/{username}/{webshare_path}` — Redirect to webshare location
+- `POST /users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}` — Write an object stream through a favorited webshare
+- `PUT /users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}` — Rename an object through a favorited webshare
+- `DELETE /users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}` — Delete an object through a favorited webshare
 - `GET /users/{user_id}/followinvites` — List follow invites
 - `DELETE /users/{user_id}/followinvites/{invite_id}` — Decline follow invite
 - `GET /users/{user_id}/xtenant` — List cross-tenant grants
@@ -325,8 +342,10 @@
 - `GET /webshares/{user_id}` — List user webshares
 - `GET /webshares/{user_id}/{webshare_name}/qr` — Download webshare QR code
 - `GET /ws[0_9]/{user_id}/{webshare_id}` — Get webshare feed
-- `POST /ws[0_9]/{user_id}/{webshare_id}/{path}` — Create webshare container
+- `POST /ws[0_9]/{user_id}/{webshare_id}/{path}` — Create webshare container, or write an object stream
 - `GET /ws[0_9]/{user_id}/{webshare_id}/{path}` — Browse or download from a webshare
+- `PUT /ws[0_9]/{user_id}/{webshare_id}/{path}` — Rename an object through a webshare
+- `DELETE /ws[0_9]/{user_id}/{webshare_id}/{path}` — Delete an object through a webshare
 - `GET /wsd` — Get webshare by domain
 - `POST /wsd` — Create container in domain webshare (parameter form)
 - `GET /wsd/{domain}` — Get domain webshare content
@@ -340,6 +359,9 @@
 - `GET /sharedobjectcheck` — Check a shared object for changes
 - `PUT /sharedobjectsave` — Save a shared object
 - `GET /wsd/{domain}/{path}` — Get an object from a domain webshare
+- `POST /wsd/{domain}/{path}` — Write an object stream through a domain webshare
+- `PUT /wsd/{domain}/{path}` — Rename an object through a domain webshare
+- `DELETE /wsd/{domain}/{path}` — Delete an object through a domain webshare
 
 ## Object (51) — `rest/object.md`
 
@@ -446,7 +468,7 @@
 - `GET /healthcheck` — Health check
 - `POST /callai` — Proxy a request to the AI provider
 
-## Container (43) — `rest/container.md`
+## Container (44) — `rest/container.md`
 
 - `POST /container` — Create a child container
 - `PUT /container` — Modify a container
@@ -458,7 +480,7 @@
 - `POST /container/search` — Search objects in a container
 - `GET /containerxml` — Get container XML
 - `GET /containerpath/{container_id}/{path}` — Get container by path
-- `GET /containers/{container_id}` — List container contents
+- `GET /containers/{container_id}` — List child containers
 - `GET /containers/{container_id}/{child_container_id}` — Get container info
 - `POST /containers/{container_id}/{child_container_id}` — Restore a deleted container
 - `GET /containers/{container_id}/{child_container_id};acl` — Get container ACL
@@ -489,8 +511,9 @@
 - `PUT /movecontainer` — Move a container
 - `POST /container/{container_id}` — Create child container
 - `POST /containersplit` — Split a container into its own root
-- `POST /query` — Query containers
-- `POST /querycontainer` — Query containers
+- `POST /query` — Query objects in containers
+- `POST /querycontainer` — Query objects in containers
+- `POST /containercopy` — Copy a container
 
 ## Publish and Subscribe (19) — `rest/publish-and-subscribe.md`
 

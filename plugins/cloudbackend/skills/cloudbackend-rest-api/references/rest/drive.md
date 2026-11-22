@@ -63,6 +63,10 @@ curl -X PUT "https://api.cloudbackend.com/v1/drive" \
 
 Lists the drives for a user. Returns drive details including quota, size, and system type.
 
+Without `userid` (or with your own id) your own drives are listed. To list another
+user's drives, the caller must be the owner or an administrator of that user's
+tenant (`403` otherwise). An unknown `userid` gives `400` ("Invalid user id").
+
 ### Request
 
 `GET https://api.cloudbackend.com/v1/drive`
@@ -80,7 +84,9 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `200` | List of drives |
+| `400` | Bad Request — "Invalid user id" (unknown `userid`). |
 | `401` | Unauthorized |
+| `403` | Forbidden — `userid` is another user, and the caller is not the owner or an administrator of that user's tenant. |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -162,7 +168,21 @@ curl -X GET "https://api.cloudbackend.com/v1/drive" \
 
 **Resize a drive**
 
-Resizes a drive by changing its quota. Admin can override with the override flag.
+Sets a drive's storage quota, in bytes. Only the owner or an administrator of the
+caller's tenant may resize drives (otherwise `400`, "Not owner or admin of tenant").
+
+The body names the drive in one of two ways:
+
+| Element | Description |
+|---|---|
+| `<username>` | The home drive of this identity in the caller's tenant. |
+| `<driveid>` | A drive by id. Used when `<username>` is left out. The drive must belong to the caller's tenant: the home or other drive of an identity of the tenant, or the drive of the tenant's group or of any group under it (subgroups and projects). Any other drive, also one that exists in another tenant, gives `404` "Drive not found". |
+| `<quota>` | Required. The new quota in bytes. |
+| `<override>` | Optional, default `false`. `true` allows a quota below the drive's current size. |
+
+A drive that is over its new quota keeps its objects, but uploads and writes that
+grow it are refused until it is back under the quota; see
+`PUT /objectsave`.
 
 ### Request
 
@@ -187,8 +207,9 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `200` | Drive resized |
+| `400` | Bad Request — "Missing username or drive ID." (neither `<username>` nor `<driveid>`), "Missing drive ID." (no `<quota>`), "New quota is lower then current drive useage" (without `<override>true</override>`) or "Not owner or admin of tenant". |
 | `401` | Unauthorized |
-| `404` | Not Found |
+| `404` | Not Found — "Drive not found": the drive does not exist, or `<driveid>` names a drive outside the caller's tenant. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<resizeDriveResponse>`

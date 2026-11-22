@@ -1,18 +1,18 @@
 ---
 name: cloudbackend-rest-api
-description: "Call the CloudBackend REST API (api.cloudbackend.com/v1) from any language: log in for a session token, create and query containers, create and save objects and streams, set ACLs, share, manage groups and identities, with the exact XML bodies of all 513 operations. Use it when a developer writes code, curl or a generated client against CloudBackend, gets a 401 after logging in, or asks what XML an endpoint takes or returns."
+description: "Call the CloudBackend REST API (api.cloudbackend.com/v1) from any language: log in for a session token, create and query containers, create and save objects and streams, set ACLs, share, manage groups and identities, with the exact XML bodies of all 536 operations. Use it when a developer writes code, curl or a generated client against CloudBackend, gets a 401 after logging in, or asks what XML an endpoint takes or returns."
 ---
 
 # CloudBackend REST API
 
 The Singularity database speaks HTTP + XML. Every request goes to `https://api.cloudbackend.com/v1`,
 every body in and out is XML, and every call after login carries one header. Once those three facts are
-in hand, the API is a large but regular surface: 513 operations, each documented on its own card in
+in hand, the API is a large but regular surface: 536 operations, each documented on its own card in
 `references/rest/<tag>.md` with parameters, bodies, status codes and a `curl` you can run.
 
 Work from the cards, not from memory. Element names are the contract — `<newContainer>`, not
 `<createContainer>`; `<queryContainer>`, not `<query>` — and a wrong name is a `400` with no hint.
-`references/rest-index.md` lists all 513 operations on one line each; open the tag file it points to.
+`references/rest-index.md` lists all 536 operations on one line each; open the tag file it points to.
 
 ## 1. Authenticate
 
@@ -41,14 +41,14 @@ Log out with `DELETE /login`. `GET /healthcheck` needs no token.
 **The trap that costs the most time:** the published OpenAPI specification declares no security scheme,
 so a client generated from it (openapi-generator, Kiota, orval, …) sends *no* Authorization header and
 every call after a successful login returns `401`. Add the header yourself — a default header on the HTTP
-client, or a request interceptor. The spec's `401` on 486 operations is the symptom; the missing
+client, or a request interceptor. The spec's `401` on 509 operations is the symptom; the missing
 scheme is the cause.
 
 ## 2. Speak the vocabulary
 
 | Word | Meaning | Where it appears |
 | --- | --- | --- |
-| **container** | The unit of organisation — behaves as a folder or as a table depending on how you use it. Has an owner, an ACL, optional datatype (schema). | 66 operations (`/container`, `/containers/{id}`, `/objects/{container_id}`) |
+| **container** | The unit of organisation — behaves as a folder or as a table depending on how you use it. Has an owner, an ACL, optional datatype (schema). | 67 operations (`/container`, `/containers/{id}`, `/objects/{container_id}`) |
 | **object** | A record. Key/value metadata (its "columns") plus zero or more **streams** (the documents/blobs it holds, each up to 2 GB). | `/object`, `/objectsave`, `/metadata`, `/stream` |
 | **stream** | One document or binary attached to an object. The first stream is the object's core content. | `/stream`, `/appendstream`, upload endpoints |
 | **drive** | Storage quota for an identity: home, library, in, out. | `/drive`, `/driveinfo` |
@@ -183,8 +183,8 @@ publish a container on the web with `POST /users/{user_id}/webshares`.
 ### Drives, groups, identities
 
 `GET /drive` lists drives; `PATCH /drive` resizes one (`<resizeDrive><quota>{bytes}</quota><username>…</username><override>false</override></resizeDrive>` — the quota is in **bytes**).
-Groups, roles, members, invitations: the Group tag (120 operations). Identities and user records: the
-Identity tag (72). Tenant administration: the Tenant tag (68).
+Groups, roles, members, invitations: the Group tag (126 operations). Identities and user records: the
+Identity tag (73). Tenant administration: the Tenant tag (75).
 
 ## 4. Responses and errors
 
@@ -214,11 +214,10 @@ list responses are Atom feeds (`<atom:feed>` with `<atom:entry>` items and `<os:
 
 ## 6. Honesty markers
 
-A card that says **"Not implemented"** (6 in this version) is a method the specification
+A card that says **"Not implemented"** (5 in this version) is a method the specification
 lists but the server rejects, has no route for, or accepts and ignores. Each card's description names the
-operation to use instead — for example `POST /users/{user_id}/purchases` for
-`POST /users/{user_id}/tpurchases`, and `DELETE /users/{user_id}/delete?code=…` for `DELETE /users/{user_id}`.
-`GET /users/{user_id}/invoices/{purchase_id}` is marked partly implemented (no JSON format yet).
+operation to use instead — for example `GET` on the same path for `POST /pixlr/{save_key}`, and
+`DELETE /users/{user_id}/delete?code=…` for `DELETE /users/{user_id}`.
 
 An **"Unverified by the API owners"** callout marks a request shape the API team inferred from a sibling
 operation and has no test for (0 cards in this version). Treat such a body as the best
@@ -226,7 +225,7 @@ available guess and verify it against a real tenant.
 
 ## Bundled references
 
-- `references/rest-index.md` — all 513 operations by tag, one line each: method, path, summary. Start here.
+- `references/rest-index.md` — all 536 operations by tag, one line each: method, path, summary. Start here.
 - `references/rest/<tag>.md` — the full cards: `authentication.md`, `container.md`, `object.md`,
   `sharing.md`, `drive.md`, `group.md`, `identity.md`, `tenant.md`, `publish-and-subscribe.md`,
   `jobs.md`, `webshare.md`, `share.md`, `other.md`.
@@ -236,8 +235,8 @@ its own skill, `singularity-database`; the native C++/Java/Swift libraries are `
 
 ## Version
 
-cloudbackend-rest-api 2026.11.7, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
+cloudbackend-rest-api 2026.11.22, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
 
-A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-rest-api` than 2026.11.7, tell the user once, in one sentence, without interrupting the task.
+A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-rest-api` than 2026.11.22, tell the user once, in one sentence, without interrupting the task.
 
-Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-rest-api%2F2026.11.7&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-rest-api the first time the skill is used in a session.
+Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-rest-api%2F2026.11.22&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-rest-api the first time the skill is used in a session.

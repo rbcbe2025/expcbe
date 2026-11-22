@@ -55,7 +55,12 @@ curl -X GET "https://api.cloudbackend.com/v1/object" \
 
 **Create an object or object**
 
-Creates a new object or object in a container. Supports createObject (with data model XML) and createObject (with Atom entry) payloads.
+Creates a new object in a container. The request carries the object either as a
+data-model `<db:object>` (its `cid` and `name` attributes give the container and the
+object's name) or as an `<atom:entry>`.
+
+**Response format.** The response is always the data-model `<db:object>`, whichever form
+the request used. `<datasrc>` is not needed; it is ignored.
 
 ### Request
 
@@ -89,7 +94,6 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 <createObject>
   <overwrite>1</overwrite>
   <extraction>true</extraction>
-  <datasrc>dataModel</datasrc>
   <db:object xmlns:db="https://cloudbackend.com/db.xsd" name="{name}"
     cid="{container_id}" published="{datetime}" updated="{datetime}" mime="text/xml">
     <db:content type="text/xml">
@@ -121,7 +125,6 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 <createObject>
   <overwrite>true</overwrite>
   <extraction>true</extraction>
-  <datasrc>dataModel</datasrc>
   <db:object xmlns:db="https://cloudbackend.com/db.xsd" cid="{container_id}" name="{name}" mime="{mime_type}">
     <key name="{property}">{value}</key>
   </db:object>
@@ -243,6 +246,8 @@ curl -X DELETE "https://api.cloudbackend.com/v1/object" \
 
 Renames an object in a container.
 
+**Response format.** Always the data-model format (`db:` namespace). Nothing needs to be passed to get it; a `<datasrc>` element in the body is ignored.
+
 ### Request
 
 `PUT https://api.cloudbackend.com/v1/object`
@@ -300,6 +305,14 @@ curl -X PUT "https://api.cloudbackend.com/v1/object" \
 **Save or update an object**
 
 Saves new content to an existing object.
+
+**Storage quota.** When the object's drive is already over its storage quota, a save
+that makes the stream larger is refused with `403` "Drive is full: {used} is used of
+its {quota} storage quota."; a save that keeps the stream's size or makes it smaller
+succeeds, so content can be trimmed to get the drive back under its quota. A
+write-locked drive refuses every save ("Drive is write-locked.").
+
+**Response format.** Always the data-model format (`db:` namespace). Nothing needs to be passed to get it; a `<datasrc>` element in the body is ignored.
 
 ### Request
 
@@ -378,7 +391,6 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
   <object>{object_name}</object>
   <extraction>true</extraction>
   <stream title="{stream_name}" />
-  <datasrc>dataModel</datasrc>
   <content>
     <{root_element}>
       <!-- object data -->
@@ -393,6 +405,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | Object saved successfully |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Document write access denied.", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." (the save makes the stream larger and the drive is already over its quota). The quota refusals carry `X-Error-Code: 7101`. |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -422,6 +435,8 @@ curl -X PUT "https://api.cloudbackend.com/v1/objectsave" \
 **Get object metadata**
 
 Gets metadata for an object using query parameters.
+
+**Response format.** Always the data-model format (`db:` namespace); nothing needs to be passed to get it. The object is wrapped in an outer `<db:object>` element, as in the example.
 
 ### Request
 
@@ -477,7 +492,14 @@ curl -X GET "https://api.cloudbackend.com/v1/metadata" \
 
 **Save object metadata**
 
-Updates metadata for an object.
+Updates metadata for an object. Metadata does not count towards the drive's size, so
+a metadata save succeeds even when the drive is over its storage quota; only a
+write-locked drive refuses it (`403`, "Drive is write-locked.").
+
+`<content>` holds the metadata either as an `<atom:entry>` (as in the example) or as a
+data-model `<db:object>` whose `cid` and `name` (or `id`) attributes name the object.
+
+**Response format.** Always the data-model format (`db:` namespace). Nothing needs to be passed to get it; a `<datasrc>` element in the body is ignored. Stored keys come back as plain elements (`<s1>92</s1>`).
 
 ### Request
 
@@ -512,6 +534,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | Metadata saved successfully |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Document write access denied." or "Drive is write-locked." |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -543,6 +566,8 @@ curl -X PUT "https://api.cloudbackend.com/v1/metadata" \
 **List objects in a container**
 
 Lists the objects (files) in a container. Returns an Atom feed with object entries including metadata like title, timestamps, size, and stream links.
+
+**Response format.** Atom only; this call has no data-model variant. For data-model results use `POST /query` with `<datasrc>dataModel</datasrc>`.
 
 ### Request
 
@@ -608,7 +633,8 @@ then be changed node by node with PUT on the same URL.
 
 `object_id` can also be given as `:name` to address the object by its name in the
 container (see `/objects/{container_id}/:{name}`). The caller must be logged in.
-If the content cannot be read the answer is `404`. No request body.
+The caller needs read access to the object (`403`, "Document read access
+denied."). If the content cannot be read the answer is `404`. No request body.
 
 To download a stream with its own content type and download headers, use
 `GET /objects/{container_id}/{object_id}/{stream_id}` instead.
@@ -677,6 +703,11 @@ The request body may use `<object>` or the legacy `<document>` as root element.
 
 Returns `204 No Content` on success, `400` if the new node is not well-formed XML,
 and `404` if the current content cannot be read.
+
+The caller needs write access to the object (`403`, "Document write access
+denied."). For `add`, `replace` and `remove` on a node other than `/`, the
+current document is read first, so read access is needed too (`403`, "Document
+read access denied.").
 
 ### Request
 
@@ -852,7 +883,25 @@ curl -X PUT "https://api.cloudbackend.com/v1/objects/{container_id}/:{name}" \
 
 **Copy an object**
 
-Copies an object to a different container with a new name.
+Copies an object to a container under a new name. The request body is not translated
+from the container/object names, so its elements are `srcFolder`, `srcDocument`,
+`dstFolder` and `dstDocument`. `<srcDocument>` takes either an `id` attribute or the
+object's name as text.
+
+For a cross-tenant copy, log in to the source tenant, send the `xtenant` header naming
+the destination tenant and set `tenant` on `<srcFolder>` to the source tenant's name;
+see `POST /containercopy`. Without the
+header, or with another tenant's name, the call fails with `403`.
+
+**Storage quota.** The copy is refused up front, with `403` and nothing created, when
+the object's size would take the destination drive over its storage quota:
+"Destination drive does not have enough storage space for this: it needs {size} and
+{free} is free." (`X-Error-Code: 7102`). When the copy is sent as an instant message
+to another identity (destination is the caller's outgoing container), the
+recipient's drive is checked and the message starts with "The recipient's drive".
+Sizes are written like `600.00 bytes` or `1.50 MB` (1024-based units).
+
+**Response format.** Always the data-model format (`db:` namespace). Nothing needs to be passed to get it; a `<datasrc>` element in the body is ignored.
 
 ### Request
 
@@ -866,9 +915,10 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 ```xml
 <copyObject>
-  <srcObject id="{source_object_id}" />
-  <dstContainer id="{dest_container_id}" />
-  <dstObject>{dest_object_name}</dstObject>
+  <srcFolder id="{source_container_id}" />
+  <srcDocument id="{source_object_id}" />
+  <dstFolder id="{dest_container_id}" />
+  <dstDocument>{dest_object_name}</dstDocument>
 </copyObject>
 ```
 
@@ -877,6 +927,8 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `200` | Object copied successfully |
+| `403` | Forbidden — "Document read access denied.", "Source drive is read-locked.", "Cannot copy document between encrypted and not encrypted folders", a cross-tenant copy without a matching `xtenant` header, "Folder access denied." (no write access to the destination), "Destination drive is write-locked.", "Destination drive does not have enough storage space for this: it needs {size} and {free} is free." or "The recipient's drive does not have enough storage space for this: it needs {size} and {free} is free." (`X-Error-Code: 7102`). |
+| `404` | Not Found — "Source folder not found.", "Source document not found." or "Document not found." |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<copyObjectResponse>`
@@ -898,9 +950,10 @@ curl -X POST "https://api.cloudbackend.com/v1/objectcopy" \
   -H "Authorization: WRAP access_token=<session_token>" \
   -H "Content-Type: application/xml; charset=utf-8" \
   -d '<copyObject>
-  <srcObject id="{source_object_id}" />
-  <dstContainer id="{dest_container_id}" />
-  <dstObject>{dest_object_name}</dstObject>
+  <srcFolder id="{source_container_id}" />
+  <srcDocument id="{source_object_id}" />
+  <dstFolder id="{dest_container_id}" />
+  <dstDocument>{dest_object_name}</dstDocument>
 </copyObject>'
 ```
 
@@ -911,6 +964,13 @@ curl -X POST "https://api.cloudbackend.com/v1/objectcopy" \
 **Get or copy streams**
 
 Retrieves stream information or copies a stream between objects.
+
+**Storage quota (copyStream).** The destination drive must not be write-locked or
+already over its storage quota ("Destination drive is write-locked.", "Destination
+drive is full: {used} is used of its {quota} storage quota."). When the copy grows
+the destination (the copied stream is larger than the stream it replaces), the
+growth must fit in the quota, otherwise `403` "Destination drive does not have enough
+storage space for this: it needs {size} and {free} is free." (`X-Error-Code: 7102`).
 
 ### Request
 
@@ -961,6 +1021,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | Successful |
 | `401` | Unauthorized |
+| `403` | Forbidden (copyStream) — "Source drive is read-locked.", "Access denied", "Destination drive is write-locked.", "Destination drive is full: {used} is used of its {quota} storage quota." or "Destination drive does not have enough storage space for this: it needs {size} and {free} is free." |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -985,7 +1046,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
     <db:stream>
       <db:id>1</db:id>
       <db:cid>cid:{message_id}</db:cid>
-      <db:link rel="alternate" type="{mime_type}" length="{bytes}" href="" />
+      <db:link rel="alternate" type="{mime_type}" length="{bytes}" etag="&quot;{etag_id}&quot;" href="" />
       <db:title />
       <db:published>{datetime}</db:published>
       <db:updated>{datetime}</db:updated>
@@ -1141,6 +1202,14 @@ curl -X DELETE "https://api.cloudbackend.com/v1/stream" \
 
 Lists all streams (versions/attachments) of an object.
 
+Each stream's `<db:link>` carries an `etag` attribute: the stream's current ETag
+including its double quotes (`"200000577"`), the same value the stream's `GET`
+and upload responses send in the `ETag` header. Send it unchanged as `If-Match`
+to write the stream only if nobody changed it since (see
+`POST /objects/{container_id}/{object_id}/{stream_id}`).
+
+**Response format.** Always the data-model format (`db:` namespace); nothing needs to be passed to get it.
+
 ### Request
 
 `GET https://api.cloudbackend.com/v1/stream`
@@ -1173,7 +1242,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
     <db:stream>
       <db:id>1</db:id>
       <db:cid>cid:100000522/1@xios.xcerion.com</db:cid>
-      <db:link rel="alternate" type="text/plain; charset=ISO-8859-9" length="15" href="https://api.cloudbackend.com/v1/..."/>
+      <db:link rel="alternate" type="text/plain; charset=ISO-8859-9" length="15" etag="&quot;200000577&quot;" href="https://api.cloudbackend.com/v1/..."/>
       <db:title/>
       <db:published>{datetime}</db:published>
       <db:updated>{datetime}</db:updated>
@@ -1181,7 +1250,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
     <db:stream>
       <db:id>2</db:id>
       <db:cid>cid:100000522/2@xios.xcerion.com</db:cid>
-      <db:link rel="alternate" type="" length="20" href="https://api.cloudbackend.com/v1/..."/>
+      <db:link rel="alternate" type="" length="20" etag="&quot;200000581&quot;" href="https://api.cloudbackend.com/v1/..."/>
       <db:title/>
       <db:published>{datetime}</db:published>
       <db:updated>{datetime}</db:updated>
@@ -1189,32 +1258,8 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
     <db:stream>
       <db:id>3</db:id>
       <db:cid>cid:100000522/3@xios.xcerion.com</db:cid>
-      <db:link rel="alternate" type="" length="16" href="https://api.cloudbackend.com/v1/..."/>
+      <db:link rel="alternate" type="" length="16" etag="&quot;200000590&quot;" href="https://api.cloudbackend.com/v1/..."/>
       <db:title>new stream 2 name</db:title>
-      <db:published>{datetime}</db:published>
-      <db:updated>{datetime}</db:updated>
-    </db:stream>
-    <db:stream>
-      <db:id>4</db:id>
-      <db:cid>cid:100000522/4@xios.xcerion.com</db:cid>
-      <db:link rel="alternate" type="" length="20" href="https://api.cloudbackend.com/v1/..."/>
-      <db:title/>
-      <db:published>{datetime}</db:published>
-      <db:updated>{datetime}</db:updated>
-    </db:stream>
-    <db:stream>
-      <db:id>4097</db:id>
-      <db:cid>cid:100000522/1001@xios.xcerion.com</db:cid>
-      <db:link rel="alternate" type="" length="19" href="https://api.cloudbackend.com/v1/..."/>
-      <db:title/>
-      <db:published>{datetime}</db:published>
-      <db:updated>{datetime}</db:updated>
-    </db:stream>
-    <db:stream>
-      <db:id>4098</db:id>
-      <db:cid>cid:100000522/1002@xios.xcerion.com</db:cid>
-      <db:link rel="alternate" type="" length="19" href="https://api.cloudbackend.com/v1/..."/>
-      <db:title/>
       <db:published>{datetime}</db:published>
       <db:updated>{datetime}</db:updated>
     </db:stream>
@@ -1236,6 +1281,8 @@ curl -X GET "https://api.cloudbackend.com/v1/stream" \
 **List append streams**
 
 Lists append-only streams of an object.
+
+**Response format.** Always the data-model format (`db:` namespace); nothing needs to be passed to get it.
 
 ### Request
 
@@ -1628,12 +1675,19 @@ free stream id (2 and up; the main stream 1 is never chosen). The response is
 the Atom entry of the new **stream**, not of the object: read `<dc:stream>` to get
 the id that was assigned.
 
-Send the file as the raw request body with any `Content-Type` other than
-`multipart/form-data` (for example `application/octet-stream`), and give its
-real MIME type in `X-Content-Type` and its name in `X-File-Name`. A
-`Content-Length` header is required and must be within the drive's maximum file
-size. `multipart/form-data` is accepted only in the form produced by the upload
-proxy behind `/upload`.
+Send the file either as the raw request body with
+`Content-Type: application/octet-stream` (other non-multipart types give `415`),
+giving its real MIME type in `X-Content-Type` and its name in `X-File-Name`, or
+as `multipart/form-data` with one file part (the first part that has a file
+name; none gives `400`, "No File Content"), whose `Content-Type` is recorded for
+the stream. A `Content-Length` header is required and must be within the drive's
+maximum file size.
+
+The response carries the new stream's ETag (`"<id>"`) in the `ETag` header.
+`If-Match` / `If-None-Match` are checked as on
+`POST /objects/{container_id}/{object_id}/{stream_id}`;
+since the stream is always new, `If-None-Match: *` always passes and `If-Match`
+always fails with `412` (without an `ETag` header).
 
 The caller needs write access to the container (otherwise `403`, "Folder access
 denied."). Only POST is implemented; a GET on this URL returns `404`.
@@ -1652,6 +1706,8 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `object_id` | path | yes | string | Object id, or `:name` to address the object by name. |
 | `X-Content-Type` | header | no | string | MIME type of the uploaded data. |
 | `X-File-Name` | header | no | string | File name of the uploaded data. |
+| `If-Match` | header | no | string | Write only if the stream's current ETag is this one, e.g. `"200000577"`. Exactly one entity tag; the weak form `W/"200000577"` counts as the same tag. `*` or a list of tags is refused (`400`). |
+| `If-None-Match` | header | no | string · one of `*` | Only `*` — write only if the stream does not exist yet. Any other value is refused (`400`). |
 
 #### Body
 
@@ -1666,12 +1722,14 @@ This is stream any 1
 | Status | Meaning |
 | --- | --- |
 | `200` | Atom entry of the new stream |
-| `400` | Bad Request — for example a missing boundary in a multipart `Content-Type`, or encryption headers that do not match the container. |
+| `400` | Bad Request — for example "Missing boundary in Content-Type.", "No File Content", encryption headers that do not match the container, "If-Match must be one entity tag", "If-None-Match must be *" or "Use either If-Match or If-None-Match". |
 | `401` | Unauthorized |
-| `403` | Forbidden — "Folder access denied." |
+| `403` | Forbidden — "Folder access denied.", "Document write access denied.", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." (the drive is already over its quota). |
 | `404` | Not Found — the object does not exist. |
 | `411` | Length Required — "Missing Content-Length header." |
+| `412` | Precondition Failed — "Stream modified". The `If-Match` tag is not the stream's current ETag (or the stream does not exist), or `If-None-Match` `*` found an existing stream. Nothing is written. |
 | `413` | Request Entity Too Large — the body exceeds the drive's maximum file size. |
+| `415` | Unsupported Media Type — a raw body whose `Content-Type` is not `application/octet-stream`. |
 | `500` | Internal Server Error — for example "No more stream ids left". |
 
 #### `200` · application/xml · `<entry>`
@@ -1687,6 +1745,12 @@ This is stream any 1
 </atom:entry>
 ```
 
+#### `412` · text/plain
+
+```text
+Stream modified
+```
+
 ### Example
 
 ```bash
@@ -1694,6 +1758,8 @@ curl -X POST "https://api.cloudbackend.com/v1/objects/{container_id}/{object_id}
   -H "Authorization: WRAP access_token=<session_token>" \
   -H "X-Content-Type: {x-content-type}" \
   -H "X-File-Name: {x-file-name}" \
+  -H "If-Match: {if-match}" \
+  -H "If-None-Match: {if-none-match}" \
   -H "Content-Type: application/octet-stream; charset=utf-8" \
   -d 'This is stream any 1'
 ```
@@ -1704,7 +1770,14 @@ curl -X POST "https://api.cloudbackend.com/v1/objects/{container_id}/{object_id}
 
 **Get object stream**
 
-Gets the streamStream ID 1 is the default stream If dl is used, Content-Disposition will be added to the HTTP headers.
+Gets the stream. Stream ID 1 is the default stream. If dl is used, Content-Disposition will be added to the HTTP headers.
+
+The stream is sent with `ETag: "<id>"` — the ETag that conditional uploads
+(`POST` on this URL with `If-Match`) compare against; for a gzip-compressed
+response nginx sends it weakened as `W/"<id>"`, and both forms are accepted back.
+Browser scripts can read it (CORS `Access-Control-Expose-Headers`). A matching
+`If-None-Match` (or `*`) answers `304 Not Modified`; an `If-Match` that does not
+match answers `412 Precondition Failed`.
 
 ### Request
 
@@ -1724,15 +1797,18 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `ct` | query | no | string | Content type. Use it to override 'Content-Type' header |
 | `cd` | query | no | string | Content disposition. Use it to override 'Content-Disposition' header |
 | `deleted` | query | no | string | allows downloading of deleted documents |
+| `If-None-Match` | header | no | string | ETag(s) from an earlier response; the weak form `W/"…"` is accepted. When one matches the stream's current ETag (or the value is `*`), the answer is `304 Not Modified` without a body. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | Successful response |
+| `304` | Not Modified — `If-None-Match` matches the stream's current ETag (or is `*`). No body. |
 | `400` | Bad Request |
 | `401` | Unauthorized |
 | `404` | Not Found |
+| `412` | Precondition Failed — an `If-Match` header that does not match the stream's current ETag. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<testdata>`
@@ -1745,7 +1821,8 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 ```bash
 curl -X GET "https://api.cloudbackend.com/v1/objects/{container_id}/{object_id}/{stream_id}" \
-  -H "Authorization: WRAP access_token=<session_token>"
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "If-None-Match: {if-none-match}"
 ```
 
 ---
@@ -1754,7 +1831,48 @@ curl -X GET "https://api.cloudbackend.com/v1/objects/{container_id}/{object_id}/
 
 **Upload a stream to an object**
 
-Uploads a new content stream to an existing object. Returns an atom:entry.
+Stores the request body as stream `{stream_id}` of an existing object, in place:
+the object keeps its id and its other streams. Stream `1` replaces the main
+content. The caller needs write access to the container (otherwise `403`,
+"Folder access denied.").
+
+**Body.** Either the raw content with `Content-Type: application/octet-stream`
+(other non-multipart types give `415`), with `X-Content-Type` and `X-File-Name`
+for the MIME type and file name to record, or `multipart/form-data` with one
+file part (the first part that has a file name; none gives `400`, "No File
+Content"). A `Content-Length` header is required (`411`) and must be within the
+drive's maximum file size (`413`). A raw body creates the stream when the object
+does not have it yet. A multipart body to an existing stream keeps that stream's
+title and content type; a multipart body creates a missing stream only together
+with `If-None-Match: *` (it then records the part's `Content-Type`). A multipart
+upload to an object addressed as `:name` that does not exist creates the object;
+`If-Match` then fails with `412` (without an `ETag` header).
+
+The response is the Atom entry of the object, and the stream's new ETag is in
+the `ETag` header (not for a multipart upload that created the object).
+
+**Conditional write.** Every stored stream version has an ETag: the id of its
+stored content in double quotes, e.g. `"200000577"`. It changes on every write,
+also when the new content has the same length. It is returned in the `ETag`
+header of a successful write, of a `GET` of the stream and of a lost conditional
+write (`412`), and in the `etag` attribute of the stream list
+(`GET /stream`).
+
+- `If-Match: "<etag>"` writes only when that is the stream's current ETag.
+  Exactly one entity tag; the weak form `W/"<etag>"` (nginx gzip weakens the ETag
+  of a compressed `GET` response) counts as the same tag. `*` or a list of tags
+  gives `400` ("If-Match must be one entity tag"). A stream that changed, or
+  does not exist, gives `412`.
+- `If-None-Match: *` writes only when the stream does not exist yet (create
+  only); an existing stream gives `412`. Any other value gives `400`
+  ("If-None-Match must be *").
+- Both headers together give `400` ("Use either If-Match or If-None-Match").
+  Without either, the write is unconditional.
+
+A lost conditional write stores nothing and answers `412 Precondition Failed`
+with the body `Stream modified` and the stream's current ETag in the `ETag`
+header (left out when the stream does not exist), so the client can re-read or
+retry without another `GET`.
 
 ### Request
 
@@ -1771,23 +1889,32 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `stream_id` | path | yes | integer |  |
 | `X-Content-Type` | header | no | string | Overrides the content type recorded for the stream. |
 | `X-File-Name` | header | no | string | Overrides the file name recorded for the stream. |
+| `If-Match` | header | no | string | Write only if the stream's current ETag is this one, e.g. `"200000577"`. Exactly one entity tag; the weak form `W/"200000577"` counts as the same tag. `*` or a list of tags is refused (`400`). |
+| `If-None-Match` | header | no | string · one of `*` | Only `*` — write only if the stream does not exist yet. Any other value is refused (`400`). |
 
 #### Body
 
-`text/plain` (required)
+`application/octet-stream` (required)
 
 ```text
-Stream content as plain text
+Stream content
 ```
+
+`multipart/form-data` (required)
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
-| `200` | Successful response |
-| `400` | Bad Request |
+| `200` | Atom entry of the object; the stream's new ETag is in the `ETag` header. |
+| `400` | Bad Request — for example "Missing boundary in Content-Type.", "No File Content", "If-Match must be one entity tag", "If-None-Match must be *" or "Use either If-Match or If-None-Match". |
 | `401` | Unauthorized |
-| `404` | Not Found |
+| `403` | Forbidden — "Folder access denied.", "Document write access denied.", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." The last is given only when the write makes the stream larger and the drive is already over its storage quota; a write that keeps the stream's size or makes it smaller succeeds over the quota. |
+| `404` | Not Found — the object does not exist (or, for a multipart body without `If-None-Match`, the stream does not exist). |
+| `411` | Length Required — "Missing Content-Length header." |
+| `412` | Precondition Failed — "Stream modified". The `If-Match` tag is not the stream's current ETag (or the stream does not exist), or `If-None-Match` `*` found an existing stream. Nothing is written. |
+| `413` | Request Entity Too Large — the body exceeds the drive's maximum file size. |
+| `415` | Unsupported Media Type — a raw body whose `Content-Type` is not `application/octet-stream`. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<entry>`
@@ -1801,6 +1928,12 @@ Stream content as plain text
 </atom:entry>
 ```
 
+#### `412` · text/plain
+
+```text
+Stream modified
+```
+
 ### Example
 
 ```bash
@@ -1808,8 +1941,10 @@ curl -X POST "https://api.cloudbackend.com/v1/objects/{container_id}/{object_id}
   -H "Authorization: WRAP access_token=<session_token>" \
   -H "X-Content-Type: {x-content-type}" \
   -H "X-File-Name: {x-file-name}" \
-  -H "Content-Type: text/plain; charset=utf-8" \
-  -d 'Stream content as plain text'
+  -H "If-Match: {if-match}" \
+  -H "If-None-Match: {if-none-match}" \
+  -H "Content-Type: application/octet-stream; charset=utf-8" \
+  -d 'Stream content'
 ```
 
 ---
@@ -1926,11 +2061,17 @@ Same as `POST /objects/{container_id}/{object_id}/{stream_id}`; the file name
 segment is ignored. Stores the request body as the given stream of an existing
 object (stream `1` replaces the main content).
 
-Send the data as the raw request body (any `Content-Type` other than
-`multipart/form-data`) with a `Content-Length` header; `X-Content-Type` and
-`X-File-Name` give the MIME type and file name to record. The caller needs write
-access to the container (otherwise `403`, "Folder access denied."). Returns the
-Atom entry of the object.
+Body formats, `If-Match` / `If-None-Match` and the `ETag` response header are
+as on `POST /objects/{container_id}/{object_id}/{stream_id}`:
+the raw body needs `Content-Type: application/octet-stream` (other non-multipart
+types give `415`) and a `Content-Length` header; `X-Content-Type` and
+`X-File-Name` give the MIME type and file name to record; `multipart/form-data`
+with one file part is accepted too. The caller needs write access to the
+container (otherwise `403`, "Folder access denied."). Returns the Atom entry of
+the object, with the stream's new ETag (`"<id>"`) in the `ETag` header.
+`If-Match: "<etag>"` writes only over that stream version, `If-None-Match: *`
+only creates; a lost conditional write answers `412` with the body
+`Stream modified` and the current ETag in `ETag`.
 
 ### Request
 
@@ -1948,6 +2089,8 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `filename` | path | yes | string | Any file name; ignored by the server. |
 | `X-Content-Type` | header | no | string | MIME type of the uploaded data. |
 | `X-File-Name` | header | no | string | File name of the uploaded data. |
+| `If-Match` | header | no | string | Write only if the stream's current ETag is this one, e.g. `"200000577"`. Exactly one entity tag; the weak form `W/"200000577"` counts as the same tag. `*` or a list of tags is refused (`400`). |
+| `If-None-Match` | header | no | string · one of `*` | Only `*` — write only if the stream does not exist yet. Any other value is refused (`400`). |
 
 #### Body
 
@@ -1962,12 +2105,14 @@ Stream content
 | Status | Meaning |
 | --- | --- |
 | `200` | Atom entry of the object |
-| `400` | Bad Request |
+| `400` | Bad Request — for example "Missing boundary in Content-Type.", "No File Content", "If-Match must be one entity tag", "If-None-Match must be *" or "Use either If-Match or If-None-Match". |
 | `401` | Unauthorized |
-| `403` | Forbidden — "Folder access denied." |
+| `403` | Forbidden — "Folder access denied.", "Document write access denied.", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." Writing an existing stream is refused for the quota only when it makes the stream larger and the drive is already over its quota. |
 | `404` | Not Found — the object does not exist. |
 | `411` | Length Required — "Missing Content-Length header." |
+| `412` | Precondition Failed — "Stream modified". The `If-Match` tag is not the stream's current ETag (or the stream does not exist), or `If-None-Match` `*` found an existing stream. Nothing is written. |
 | `413` | Request Entity Too Large — the body exceeds the drive's maximum file size. |
+| `415` | Unsupported Media Type — a raw body whose `Content-Type` is not `application/octet-stream`. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<entry>`
@@ -1981,6 +2126,12 @@ Stream content
 </atom:entry>
 ```
 
+#### `412` · text/plain
+
+```text
+Stream modified
+```
+
 ### Example
 
 ```bash
@@ -1988,6 +2139,8 @@ curl -X POST "https://api.cloudbackend.com/v1/objects/{container_id}/{object_id}
   -H "Authorization: WRAP access_token=<session_token>" \
   -H "X-Content-Type: {x-content-type}" \
   -H "X-File-Name: {x-file-name}" \
+  -H "If-Match: {if-match}" \
+  -H "If-None-Match: {if-none-match}" \
   -H "Content-Type: application/octet-stream; charset=utf-8" \
   -d 'Stream content'
 ```
@@ -2106,7 +2259,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | Atom entry of the restored object |
 | `400` | Bad Request — "Could not restore document, entry not in deleted list." |
 | `401` | Unauthorized |
-| `403` | Forbidden — "Folder access denied.", "Delete access denied." or "Drive is write-locked." |
+| `403` | Forbidden — "Folder access denied.", "Delete access denied.", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." |
 | `404` | Not Found — the object or its parent container does not exist. |
 | `409` | Conflict — "Document already exists." An object with `newName` already exists. |
 | `422` | Unprocessable Entity — "Missing 'newName' attribute". |
@@ -2526,9 +2679,52 @@ curl -X DELETE "https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favor
 
 **Restore object in favorite**
 
-Restores a deleted object inside a webshare favorite (see `DELETE` on the same
-URL) under the name given in `newName`, and returns its Atom entry. The caller
-must be `{user_id}`.
+Restores a deleted object, or writes one stream of an object, inside a webshare
+favorite. The caller must be `{user_id}`.
+
+- **Without `s`**: restores a deleted object (see `DELETE` on the same URL)
+  under the name given in `newName` (`<restoreObject newName="…"/>`), and returns
+  its Atom entry.
+- **With `?s={stream_id}`**: writes that stream of the object in place. The object
+  keeps its id and its other streams, and a stream id the object does not have
+  yet is created. The body is the raw stream content, sent with
+  `Content-Type: application/octet-stream` (any other type gives `415`) and a
+  `Content-Length` header (`411` without it, `413` when the drive's maximum file
+  size is exceeded). The favorite's webshare must have visibility `private` or
+  `invited`, and the higher of the webshare's and the favorite's access must be
+  `update` (`403`, "This webshareFavorite is not set to update sharing"). For a
+  password-protected webshare, the password stored with the favorite must still
+  be valid (`403`, "You need to provide a valid password to access this
+  webshare"). These checks, and that the container is part of the webshare and
+  holds the object (`404`), come before `s` is checked: `s` must be from 1 to
+  32768 (`400`, "'s' must be a stream id from 1 to 32768"). A write-locked or
+  full drive gives `403`. The response is the object's Atom entry with its
+  updated stream lengths, and the new ETag of the stream in the `ETag` header.
+  The same write is available by path, through
+  `POST /users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}`.
+
+**Conditional write.** Every stored stream version has an ETag: the id of its
+stored content in double quotes, e.g. `"200000577"`. It changes on every write,
+also when the new content has the same length. It is returned in the `ETag`
+header of a successful write, of a `GET` of the stream and of a lost conditional
+write (`412`), and in the `etag` attribute of the stream list
+(`GET /stream`).
+
+- `If-Match: "<etag>"` writes only when that is the stream's current ETag.
+  Exactly one entity tag; the weak form `W/"<etag>"` (nginx gzip weakens the ETag
+  of a compressed `GET` response) counts as the same tag. `*` or a list of tags
+  gives `400` ("If-Match must be one entity tag"). A stream that changed, or
+  does not exist, gives `412`.
+- `If-None-Match: *` writes only when the stream does not exist yet (create
+  only); an existing stream gives `412`. Any other value gives `400`
+  ("If-None-Match must be *").
+- Both headers together give `400` ("Use either If-Match or If-None-Match").
+  Without either, the write is unconditional.
+
+A lost conditional write stores nothing and answers `412 Precondition Failed`
+with the body `Stream modified` and the stream's current ETag in the `ETag`
+header (left out when the stream does not exist), so the client can re-read or
+retry without another `GET`.
 
 ### Request
 
@@ -2543,9 +2739,14 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `user_id` | path | yes | integer | The logged-in identity that follows the webshare. |
 | `favorite_id` | path | yes | integer | Id of the favorite. |
 | `container_id` | path | yes | integer | Container holding the object. |
-| `object_id` | path | yes | integer | The deleted object to restore. |
+| `object_id` | path | yes | integer | The deleted object to restore, or the object whose stream is written. |
+| `s` | query | no | integer | Stream id to write (1 is the main stream). When given, the body is the raw stream content instead of `<restoreObject>`. |
+| `If-Match` | header | no | string | Write only if the stream's current ETag is this one, e.g. `"200000577"`. Exactly one entity tag; the weak form `W/"200000577"` counts as the same tag. `*` or a list of tags is refused (`400`). |
+| `If-None-Match` | header | no | string · one of `*` | Only `*` — write only if the stream does not exist yet. Any other value is refused (`400`). |
 
 #### Body
+
+`application/octet-stream` (required)
 
 `application/xml` (required), root element `<restoreObject>`
 
@@ -2557,11 +2758,15 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Status | Meaning |
 | --- | --- |
-| `200` | Atom entry of the restored object |
-| `400` | Bad Request — malformed XML, `Missing newName entry` or `Must have a name` |
+| `200` | Atom entry of the restored object, or with `s` of the object whose stream was written |
+| `400` | Bad Request — malformed XML, `Missing newName entry` or `Must have a name`; with `s`, "'s' must be a stream id from 1 to 32768", "If-Match must be one entity tag", "If-None-Match must be *" or "Use either If-Match or If-None-Match". |
 | `401` | Unauthorized |
-| `403` | Forbidden — caller is not `{user_id}` |
-| `404` | Not Found — object not found |
+| `403` | Forbidden — caller is not `{user_id}`; with `s`, also `This webshareFavorite is not set to update sharing`, `You need to provide a valid password to access this webshare`, `Drive is write-locked.` or `Drive is full: {used} is used of its {quota} storage quota.` |
+| `404` | Not Found — object not found, "WebShare favorite not found", "The given folder is not part of this webshareFavorite", "Document not found" or "Folder not found." |
+| `411` | Length Required — with `s`, "Missing Content-Length header." |
+| `412` | With `s` only. Precondition Failed — "Stream modified". The `If-Match` tag is not the stream's current ETag (or the stream does not exist), or `If-None-Match` `*` found an existing stream. Nothing is written. |
+| `413` | Request Entity Too Large — with `s`, the content exceeds the drive's maximum file size. |
+| `415` | Unsupported Media Type — with `s`, the `Content-Type` is not `application/octet-stream`. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<entry>`
@@ -2578,13 +2783,20 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 </atom:entry>
 ```
 
+#### `412` · text/plain
+
+```text
+Stream modified
+```
+
 ### Example
 
 ```bash
 curl -X POST "https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favorite_id}/{container_id}/objects/{object_id}" \
   -H "Authorization: WRAP access_token=<session_token>" \
-  -H "Content-Type: application/xml; charset=utf-8" \
-  -d '<restoreObject newName="restored file1.txt"/>'
+  -H "If-Match: {if-match}" \
+  -H "If-None-Match: {if-none-match}" \
+  -H "Content-Type: application/octet-stream; charset=utf-8"
 ```
 
 ---
@@ -2660,7 +2872,18 @@ curl -X PUT "https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favorite
 
 **Move an object**
 
-Moves an object from one container to another, optionally renaming it. Supports data model objects.
+Moves an object from one container to another, optionally renaming it. Supports data
+model objects.
+
+**Storage quota.** A move to a container on another drive is refused up front, with
+`403`, when the object's size would take the destination drive over its storage
+quota: "Destination drive does not have enough storage space for this: it needs
+{size} and {free} is free." (`X-Error-Code: 7102`). When the object is sent as an
+instant message to another identity, the recipient's drive is checked and the
+message starts with "The recipient's drive". Moves within one drive are not checked
+against the quota.
+
+**Response format.** Always the data-model format (`db:` namespace). Nothing needs to be passed to get it; a `<datasrc>` element in the body is ignored.
 
 ### Request
 
@@ -2678,7 +2901,6 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
   <srcDocument>{source_object_name}</srcDocument>
   <dstFolder id="{destination_container_id}" />
   <dstDocument>{destination_object_name}</dstDocument>
-  <datasrc>dataModel</datasrc>
 </moveObject>
 ```
 
@@ -2688,6 +2910,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | Object moved |
 | `401` | Unauthorized |
+| `403` | Forbidden — for example "Folder write access denied.", "Destination drive is write-locked.", "Destination drive does not have enough storage space for this: it needs {size} and {free} is free." or "The recipient's drive does not have enough storage space for this: it needs {size} and {free} is free." |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -2712,7 +2935,6 @@ curl -X PUT "https://api.cloudbackend.com/v1/objectmove" \
   <srcDocument>{source_object_name}</srcDocument>
   <dstFolder id="{destination_container_id}" />
   <dstDocument>{destination_object_name}</dstDocument>
-  <datasrc>dataModel</datasrc>
 </moveObject>'
 ```
 
@@ -2728,6 +2950,11 @@ entry of the new object.
 
 To append to an existing stream rather than create, see
 `POST /upload/{group_id}/{container_id}/{md5}`.
+
+**Storage quota.** An upload is refused with `403` when the drive is write-locked
+("Drive is write-locked.") or already over its storage quota ("Drive is full: {used}
+is used of its {quota} storage quota."), as on
+`POST /objects/{container_id}`.
 
 ### Request
 
@@ -2753,6 +2980,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | File uploaded |
 | `401` | Unauthorized |
+| `403` | Forbidden — for example "Folder access denied.", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 

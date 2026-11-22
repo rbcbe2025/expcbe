@@ -1,6 +1,6 @@
 # REST API — Sharing
 
-65 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
+73 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
 
 ## GET /wsg0/{tenant_id}/{webshare_id}/{filename} <a id="getv1wsg0"></a>
 
@@ -228,6 +228,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
+| `datasrc` | query | no | string · one of `datamodel` | `datamodel` returns the uploaded object as a data-model `<db:object>` instead of an Atom entry. Lowercase only; any other value gives Atom. |
 | `group_id` | path | yes | integer |  |
 | `webshare_id` | path | yes | string |  |
 | `container_id` | path | yes | integer |  |
@@ -554,7 +555,21 @@ curl -X POST "https://api.cloudbackend.com/v1/listmyshare" \
 
 **Create a webshare**
 
-Creates a webshare for a container, optionally with visibility, access level, and password.
+Creates a webshare for a container, optionally with visibility, access level, and
+password. If a webshare with the same name already exists it is returned as is,
+unless `?force=true`, which renames the existing one and creates a new one.
+
+**Who may share.** A container or object on the caller's own drives can be shared
+only by its owner ("Only folders you own may be shared.", "Only documents you own
+may be shared."). A container or object on a group's drive creates a group
+webshare. It needs write access to the group's webshares ("Can't create folder group
+webshare", "Can't create document group webshare") and also rights on the shared
+item itself: read access, plus write access when `access` is not `read`. Without them
+the call fails with `403` "Folder access denied" or "Document access denied". The
+read and write rights may come from different ACL entries.
+
+If creating the webshare fails, for example with `403` because the caller has no
+access to the container, no webshare is left behind.
 
 ### Request
 
@@ -599,7 +614,9 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `200` | Webshare created |
+| `400` | Bad Request — for example "Sharing of only one folder or document allowed per webshare", "Not A Valid Inbound Webshare" or "Folder is encrypted". |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Only folders you own may be shared.", "Only documents you own may be shared.", "Folder access denied." (no read access to the container); for a group webshare "Can't create folder group webshare", "Can't create document group webshare", "Folder access denied" or "Document access denied" (no read access to the shared item, or no write access to it for an inbound `access`). With `?force=true` on a group webshare, renaming the existing one can also give "Access to the shared folder or document denied". |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -1005,7 +1022,28 @@ curl -X DELETE "https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favor
 
 **Copy favorite content**
 
-Copies folders from a favorite webshare to a destination folder.
+Copies containers and objects from a favorite (followed) webshare to a destination
+container. The body is a `<copy destinationContainer>` element holding
+`<containers><container childContainer/></containers>` and/or
+`<objects><object container object/></objects>`; every item must be part of the
+favorite's webshare (`403`, "Item not part of Favorite").
+
+The caller needs write access to the destination container ("Destination folder
+access denied"), which may not be encrypted ("Cannot copy to an encrypted folder").
+The destination drive must not be write-locked or already over its storage quota
+("Drive is write-locked.", "Drive is full: {used} is used of its {quota} storage
+quota.").
+
+**Limits.** Each object must fit within the destination drive's maximum file size
+(`400`, "Source item too big for destination"). A copied container may hold at most
+100 objects in total, all levels included (`400`, "Too many documents found"); this
+limit applies only here, not to
+`POST /containercopy`. Each object
+and each container tree is checked against the destination drive's storage quota
+before it is copied, and refused with `403` "Destination drive does not have enough
+storage space for this: it needs {size} and {free} is free." (`X-Error-Code: 7102`).
+The items are copied one by one, so items listed before a refused one may already
+have been copied.
 
 ### Request
 
@@ -1037,7 +1075,9 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `204` | Content copied |
+| `400` | Bad Request — "Missing <copy> element", "Source item too big for destination" or "Too many documents found" (a copied container holds more than 100 objects). |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Destination folder access denied", "Cannot copy to an encrypted folder", "Item not part of Favorite", "Drive is write-locked.", "Drive is full: {used} is used of its {quota} storage quota." or "Destination drive does not have enough storage space for this: it needs {size} and {free} is free." |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -1560,6 +1600,272 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 ```bash
 curl -X GET "https://api.cloudbackend.com/v1/public/users/{username}/{webshare_path}" \
+  -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## POST /users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path} <a id="postv1usersfavoriteswebsharepath"></a>
+
+**Write an object stream through a favorited webshare**
+
+Writes one stream of the object at `{webshare_path}` in the favorited webshare.
+
+**Who may write.** The caller must be logged in as `{user_id}`. The favorite's
+webshare must have visibility `private` or `invited`, and the higher of the
+webshare's and the favorite's access must be `update`; otherwise `403` ("This
+webshareFavorite is not set to update sharing", checked before the path, so for
+any path). For a password-protected webshare, the password stored with the
+favorite must still be valid (`403`, "You need to provide a valid password to
+access this webshare"); no password is sent with the request.
+
+**Body.** The raw new content of the stream, sent with
+`Content-Type: application/octet-stream` (any other type, `multipart/form-data`
+included, gives `415`) and a `Content-Length` header (`411` without it, `413`
+above the drive's maximum file size). The stream is written in place: the object
+keeps its id and its other streams, and a stream id the object does not have yet
+is created. A write-locked or full drive gives `403`. The response is the
+object's Atom entry with its updated stream lengths, and the new ETag of the
+stream in the `ETag` header.
+
+**Conditional write.** Every stored stream version has an ETag: the id of its
+stored content in double quotes, e.g. `"200000577"`. It changes on every write,
+also when the new content has the same length. It is returned in the `ETag`
+header of a successful write, of a `GET` of the stream and of a lost conditional
+write (`412`), and in the `etag` attribute of the stream list
+(`GET /stream`).
+
+- `If-Match: "<etag>"` writes only when that is the stream's current ETag.
+  Exactly one entity tag; the weak form `W/"<etag>"` (nginx gzip weakens the ETag
+  of a compressed `GET` response) counts as the same tag. `*` or a list of tags
+  gives `400` ("If-Match must be one entity tag"). A stream that changed, or
+  does not exist, gives `412`.
+- `If-None-Match: *` writes only when the stream does not exist yet (create
+  only); an existing stream gives `412`. Any other value gives `400`
+  ("If-None-Match must be *").
+- Both headers together give `400` ("Use either If-Match or If-None-Match").
+  Without either, the write is unconditional.
+
+A lost conditional write stores nothing and answers `412 Precondition Failed`
+with the body `Stream modified` and the stream's current ETag in the `ETag`
+header (left out when the stream does not exist), so the client can re-read or
+retry without another `GET`.
+
+### Request
+
+`POST https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `user_id` | path | yes | integer | The logged-in identity that follows the webshare. |
+| `favorite_id` | path | yes | integer | Id of the favorite. |
+| `webshare_path` | path | yes | string | Object inside the favorited webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+| `s` | query | yes | integer | Stream id to write; `1` is the main stream. Ids from 32769 up are reserved. |
+| `If-Match` | header | no | string | Write only if the stream's current ETag is this one, e.g. `"200000577"`. Exactly one entity tag; the weak form `W/"200000577"` counts as the same tag. `*` or a list of tags is refused (`400`). |
+| `If-None-Match` | header | no | string · one of `*` | Only `*` — write only if the stream does not exist yet. Any other value is refused (`400`). |
+
+#### Body
+
+`application/octet-stream` (required)
+
+```text
+New content of stream 2
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Atom entry of the object; the new ETag of the stream is in the `ETag` header. |
+| `400` | Bad Request — "'s' must be a stream id from 1 to 32768", "If-Match must be one entity tag", "If-None-Match must be *" or "Use either If-Match or If-None-Match". |
+| `401` | Unauthorized |
+| `403` | Forbidden — caller is not `{user_id}`, "This webshareFavorite is not set to update sharing", or "You need to provide a valid password to access this webshare", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota.". |
+| `404` | Not Found — "WebShare favorite not found", "Path not found in webshare", "Folder '…' not found", "Document '…' not found", "Path is not a document" (the path names a container), or "The given folder is not part of this webshareFavorite". |
+| `411` | Length Required — "Missing Content-Length header." |
+| `412` | Precondition Failed — "Stream modified". The `If-Match` tag is not the stream's current ETag (or the stream does not exist), or `If-None-Match` `*` found an existing stream. Nothing is written. |
+| `413` | Request Entity Too Large — "Request Entity Too Large."; the body exceeds the drive's maximum file size. |
+| `415` | Unsupported Media Type — the `Content-Type` is not `application/octet-stream`. |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<entry>`
+
+```xml
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://xcerion.com/directory.xsd">
+  <atom:title>doc1.txt</atom:title>
+  <atom:published>{datetime}</atom:published>
+  <atom:updated>{datetime}</atom:updated>
+  <atom:link rel="alternate" type="text/plain" href="{object_url}" length="16" stream_1_length="16" />
+  <atom:id>{atom_id}</atom:id>
+  <dc:folder>{container_id}</dc:folder>
+  <dc:document>{object_id}</dc:document>
+</atom:entry>
+```
+
+#### `403` · text/plain
+
+```text
+This webshareFavorite is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Path is not a document
+```
+
+#### `412` · text/plain
+
+```text
+Stream modified
+```
+
+### Example
+
+```bash
+curl -X POST "https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}?s={s}" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "If-Match: {if-match}" \
+  -H "If-None-Match: {if-none-match}" \
+  -H "Content-Type: application/octet-stream; charset=utf-8" \
+  -d 'New content of stream 2'
+```
+
+---
+
+## PUT /users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path} <a id="putv1usersfavoriteswebsharepath"></a>
+
+**Rename an object through a favorited webshare**
+
+Renames the object at `{webshare_path}` and returns its Atom entry. The body is
+`<renameDocument newName="…"/>`; `<renameObject newName="…"/>` is accepted too.
+A missing or empty `newName` gives `400` ("Missing newName entry"). Needs the
+same access as a stream write (`POST` with `?s=` on this URL); the rename is
+made on behalf of the webshare's owner.
+
+### Request
+
+`PUT https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `user_id` | path | yes | integer | The logged-in identity that follows the webshare. |
+| `favorite_id` | path | yes | integer | Id of the favorite. |
+| `webshare_path` | path | yes | string | Object inside the favorited webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+
+#### Body
+
+`application/xml` (required), root element `<renameDocument>`
+
+```xml
+<renameDocument newName="doc3 renamed.txt"/>
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Atom entry of the renamed object |
+| `400` | Bad Request — malformed XML, or `Missing newName entry` |
+| `401` | Unauthorized |
+| `403` | Forbidden — caller is not `{user_id}`, "This webshareFavorite is not set to update sharing", or "You need to provide a valid password to access this webshare". |
+| `404` | Not Found — "WebShare favorite not found", "Path not found in webshare", "Folder '…' not found", "Document '…' not found", "Path is not a document" (the path names a container), or "The given folder is not part of this webshareFavorite". |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<entry>`
+
+```xml
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://xcerion.com/directory.xsd">
+  <atom:title>doc3 renamed.txt</atom:title>
+  <atom:published>{datetime}</atom:published>
+  <atom:updated>{datetime}</atom:updated>
+  <atom:link rel="alternate" type="text/plain" href="{object_url}" length="16" stream_1_length="16" />
+  <atom:id>{atom_id}</atom:id>
+  <dc:folder>{container_id}</dc:folder>
+  <dc:document>{object_id}</dc:document>
+</atom:entry>
+```
+
+#### `403` · text/plain
+
+```text
+This webshareFavorite is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Path is not a document
+```
+
+### Example
+
+```bash
+curl -X PUT "https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "Content-Type: application/xml; charset=utf-8" \
+  -d '<renameDocument newName="doc3 renamed.txt"/>'
+```
+
+---
+
+## DELETE /users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path} <a id="deletev1usersfavoriteswebsharepath"></a>
+
+**Delete an object through a favorited webshare**
+
+Deletes the object at `{webshare_path}` the same way as
+`DELETE /users/{user_id}/favorites/{favorite_id}/{container_id}/objects/{object_id}`,
+on behalf of the webshare's owner. Needs the same access as a stream write
+(`POST` with `?s=` on this URL). No request body; the answer is
+`204 No Content`.
+
+### Request
+
+`DELETE https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `user_id` | path | yes | integer | The logged-in identity that follows the webshare. |
+| `favorite_id` | path | yes | integer | Id of the favorite. |
+| `webshare_path` | path | yes | string | Object inside the favorited webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `204` | Object deleted. No response body. |
+| `401` | Unauthorized |
+| `403` | Forbidden — caller is not `{user_id}`, "This webshareFavorite is not set to update sharing", or "You need to provide a valid password to access this webshare". |
+| `404` | Not Found — "WebShare favorite not found", "Path not found in webshare", "Folder '…' not found", "Document '…' not found", "Path is not a document" (the path names a container), or "The given folder is not part of this webshareFavorite". |
+| `500` | Internal Server Error |
+
+#### `403` · text/plain
+
+```text
+This webshareFavorite is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Path is not a document
+```
+
+### Example
+
+```bash
+curl -X DELETE "https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}" \
   -H "Authorization: WRAP access_token=<session_token>"
 ```
 
@@ -2691,9 +2997,60 @@ curl -X GET "https://api.cloudbackend.com/v1/ws/{user_id}/{webshare_id}" \
 
 ## POST /ws[0_9]/{user_id}/{webshare_id}/{path} <a id="postv1ws"></a>
 
-**Create webshare container**
+**Create webshare container, or write an object stream**
 
-Creates a container inside a webshare, at the given path.
+Two requests share this URL; the `s` query parameter selects the second.
+
+**Without `s` — create a container.** Creates a child container inside the
+webshare. The body is `<newContainer containerId="…" childName="…"/>`; the
+response is `<newFolderId>`. A password-protected webshare needs the webshare
+password with HTTP Digest or Basic authentication (any username, e.g.
+`anonymous`); otherwise `401`.
+
+**With `?s={stream_id}` — write one stream of an object.** `{path}` must name an
+object in the webshare.
+
+**Who may write.** The webshare must have access `update` and visibility
+`private` or `invited`; otherwise `403` ("This webshare is not set to update
+sharing"). A `private` webshare needs no CloudBackend PaaS login; when it is
+password-protected, send the webshare password with HTTP Digest or Basic
+authentication (any username, e.g. `anonymous`), otherwise `401` ("You need to
+provide a valid password to access this webshare-resource"). An `invited`
+webshare needs a logged-in identity that owns it or was invited to it
+(otherwise `401`, or `403` "You need to login to access this webshare" or
+"Webshare requires invitation").
+
+**Body.** The raw new content of the stream, sent with
+`Content-Type: application/octet-stream` (any other type, `multipart/form-data`
+included, gives `415`) and a `Content-Length` header (`411` without it, `413`
+above the drive's maximum file size). The stream is written in place: the object
+keeps its id and its other streams, and a stream id the object does not have yet
+is created. A write-locked or full drive gives `403`. The response is the
+object's Atom entry with its updated stream lengths, and the new ETag of the
+stream in the `ETag` header.
+
+**Conditional write.** Every stored stream version has an ETag: the id of its
+stored content in double quotes, e.g. `"200000577"`. It changes on every write,
+also when the new content has the same length. It is returned in the `ETag`
+header of a successful write, of a `GET` of the stream and of a lost conditional
+write (`412`), and in the `etag` attribute of the stream list
+(`GET /stream`).
+
+- `If-Match: "<etag>"` writes only when that is the stream's current ETag.
+  Exactly one entity tag; the weak form `W/"<etag>"` (nginx gzip weakens the ETag
+  of a compressed `GET` response) counts as the same tag. `*` or a list of tags
+  gives `400` ("If-Match must be one entity tag"). A stream that changed, or
+  does not exist, gives `412`.
+- `If-None-Match: *` writes only when the stream does not exist yet (create
+  only); an existing stream gives `412`. Any other value gives `400`
+  ("If-None-Match must be *").
+- Both headers together give `400` ("Use either If-Match or If-None-Match").
+  Without either, the write is unconditional.
+
+A lost conditional write stores nothing and answers `412 Precondition Failed`
+with the body `Stream modified` and the stream's current ETag in the `ETag`
+header (left out when the stream does not exist), so the client can re-read or
+retry without another `GET`.
 
 `{path}` is a location within the webshare's container structure and is parsed by
 the service, so it may span several segments — it is not a single path segment.
@@ -2711,11 +3068,16 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
-| `user_id` | path | yes | string | Owner of the webshare — a user id or a username. |
-| `webshare_id` | path | yes | string | The webshare — an id or a name. |
-| `path` | path | yes | string | Location within the webshare's container structure, parsed by the service. May span several segments. |
+| `user_id` | path | yes | string | Owner of the webshare — a numeric user id, or a username prefixed with `:` (e.g. `:jdoe`). |
+| `webshare_id` | path | yes | string | The webshare — a numeric id, or a name prefixed with `:` (e.g. `:Photos`). |
+| `path` | path | yes | string | Location within the webshare's container structure, parsed by the service. May span several segments. With `s`, the object whose stream is written. |
+| `s` | query | no | integer | Stream id to write (`1` is the main stream). When given, the body is the raw stream content instead of `<newContainer>`. |
+| `If-Match` | header | no | string | Write only if the stream's current ETag is this one, e.g. `"200000577"`. Exactly one entity tag; the weak form `W/"200000577"` counts as the same tag. `*` or a list of tags is refused (`400`). |
+| `If-None-Match` | header | no | string · one of `*` | Only `*` — write only if the stream does not exist yet. Any other value is refused (`400`). |
 
 #### Body
+
+`application/octet-stream` (required)
 
 `application/xml` (required), root element `<newContainer>`
 
@@ -2727,19 +3089,53 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Status | Meaning |
 | --- | --- |
-| `200` | Container created |
-| `400` | Bad Request |
-| `401` | Unauthorized |
-| `404` | Not Found |
+| `200` | Without `s`, the new container's id. With `s`, the Atom entry of the object with its updated stream lengths, and the new ETag of the stream in the `ETag` header. |
+| `400` | Bad Request — without `s`, `No folder id given.` or `No ChildFolderName could be found.`; with `s`, "'s' must be a stream id from 1 to 32768", "If-Match must be one entity tag", "If-None-Match must be *" or "Use either If-Match or If-None-Match". |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
+| `403` | Forbidden — with `s`, "This webshare is not set to update sharing", "You need to login to access this webshare", "Webshare requires invitation", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." |
+| `404` | Not Found — user or webshare not found; with `s`, "Path not found in webshare", "Folder '…' not found", "Document '…' not found" or "Path is not a document". |
+| `411` | Length Required — with `s`, "Missing Content-Length header." |
+| `412` | Precondition Failed — "Stream modified". The `If-Match` tag is not the stream's current ETag (or the stream does not exist), or `If-None-Match` `*` found an existing stream. Nothing is written. |
+| `413` | Request Entity Too Large — with `s`, the body exceeds the drive's maximum file size. |
+| `415` | Unsupported Media Type — with `s`, the `Content-Type` is not `application/octet-stream`. |
 | `500` | Internal Server Error |
+
+#### `200` · application/xml
+
+*Container created (without s)*
+
+```xml
+<newFolderId>{container_id}</newFolderId>
+```
+
+*Stream written (with s)*
+
+```xml
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://xcerion.com/directory.xsd">
+  <atom:title>doc1.txt</atom:title>
+  <atom:published>{datetime}</atom:published>
+  <atom:updated>{datetime}</atom:updated>
+  <atom:link rel="alternate" type="text/plain" href="{object_url}" length="16" stream_1_length="16" />
+  <atom:id>{atom_id}</atom:id>
+  <dc:folder>{container_id}</dc:folder>
+  <dc:document>{object_id}</dc:document>
+</atom:entry>
+```
+
+#### `412` · text/plain
+
+```text
+Stream modified
+```
 
 ### Example
 
 ```bash
 curl -X POST "https://api.cloudbackend.com/v1/ws/{user_id}/{webshare_id}/{path}" \
   -H "Authorization: WRAP access_token=<session_token>" \
-  -H "Content-Type: application/xml; charset=utf-8" \
-  -d '<newContainer containerId="{container_id}" childName="{child_name}" />'
+  -H "If-Match: {if-match}" \
+  -H "If-None-Match: {if-none-match}" \
+  -H "Content-Type: application/octet-stream; charset=utf-8"
 ```
 
 ---
@@ -2769,6 +3165,30 @@ Basic authentication (any username, e.g. `anonymous`); otherwise `401`.
 [`GET /ws[0_9]/{user_id}/{webshare_id}?meta=true`](#tag/Sharing/operation/getv1ws)
 for the webshare description. No request body.
 
+**Object responses.** The stream is sent with its stored content type (`text/*`
+types get `; charset=UTF-8` added), `Last-Modified`, and `ETag: "<id>"` — the
+ETag that conditional writes compare against (see `POST` with `?s=` on this
+URL). For a gzip-compressed response nginx sends it weakened as `W/"<id>"`; both
+forms are accepted back. Browser scripts can read `ETag` (CORS
+`Access-Control-Expose-Headers`). A matching `If-None-Match` answers
+`304 Not Modified`; an `If-Match` that does not match answers
+`412 Precondition Failed`.
+
+**Download headers.** With `?dl` and a file name (the `dl` value, or the stream
+title when `dl` is empty), the `Content-Type` is `application/octet-stream`,
+`Content-Disposition` is `attachment; filename="…"; filename*=UTF-8''…` (the
+URL-encoded name), and `Content-Transfer-Encoding: binary` and
+`Pragma: public` are added. Without a download file name, a stream whose type
+is not `audio/*`, `image/*`, `video/*`, `application/pdf` or
+`application/x-shockwave-flash` still gets `Content-Disposition: attachment`, so
+a browser does not render it in the page. The request header
+`Suppress-Header: content-disposition` leaves `Content-Disposition` out in both
+cases (the other download headers stay), on every host.
+
+To write a stream, rename or delete an object through this URL, see `POST` (with
+`?s=`), `PUT` and `DELETE` on the same path; they need a webshare with access
+`update`.
+
 ### Request
 
 `GET https://api.cloudbackend.com/v1/ws[0_9]/{user_id}/{webshare_id}/{path}`
@@ -2791,7 +3211,9 @@ Needs no session token: the description above says how this operation is authori
 | `type` | query | no | string | Container listing only — filter on entry type. |
 | `datasrc` | query | no | string · one of `datamodel` | Container listing only — `datamodel` returns the listing in the data-model variant. |
 | `s` | query | no | integer | Object only — stream id to return. Default the object's default stream. |
-| `dl` | query | no | string | Object only — when present, the stream is sent as a download (`Content-Disposition: attachment`) with this file name; an empty `dl` uses the stream's title. |
+| `dl` | query | no | string | Object only — when present, the stream is sent as a download (`Content-Type: application/octet-stream`, `Content-Disposition: attachment`) with this file name; an empty `dl` uses the stream's title. `Suppress-Header` leaves the `Content-Disposition` header out. |
+| `Suppress-Header` | header | no | string · one of `content-disposition` | Object only — `content-disposition` (any letter case) sends no `Content-Disposition` header: neither the `attachment` one that `?dl` adds nor the default `attachment` for types that are not audio, image, video or PDF. The other `?dl` headers stay. Honoured on every host. Other values are ignored. |
+| `If-None-Match` | header | no | string | Object only — ETag(s) from an earlier response; the weak form `W/"…"` is accepted. When one matches the stream's current ETag (or the value is `*`), the answer is `304 Not Modified` without a body. |
 
 ### Responses
 
@@ -2799,10 +3221,12 @@ Needs no session token: the description above says how this operation is authori
 | --- | --- |
 | `200` | Container listing (Atom feed) or the object's content |
 | `303` | See Other — a container was addressed without a trailing slash; `Location` holds the URL with the slash |
+| `304` | Not Modified — `If-None-Match` matches the stream's current ETag (or is `*`). No body. |
 | `400` | Bad Request — `Meta-request with path not allowed`, or `'count' must be less than 1000` |
 | `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource`, or an `invited` webshare without login |
 | `403` | Forbidden — the caller was not invited to the webshare, or an object was requested from a `createonly` webshare |
 | `404` | Not Found — user, webshare or path not found |
+| `412` | Precondition Failed — an `If-Match` header that does not match the stream's current ETag. |
 | `500` | Internal Server Error |
 
 #### `200` · application/atom+xml · `<feed>`
@@ -2842,7 +3266,148 @@ Document 'invalid-file.txt' not found
 ### Example
 
 ```bash
-curl -X GET "https://api.cloudbackend.com/v1/ws/{user_id}/{webshare_id}/{path}"
+curl -X GET "https://api.cloudbackend.com/v1/ws/{user_id}/{webshare_id}/{path}" \
+  -H "Suppress-Header: {suppress-header}" \
+  -H "If-None-Match: {if-none-match}"
+```
+
+---
+
+## PUT /ws[0_9]/{user_id}/{webshare_id}/{path} <a id="putv1wspath"></a>
+
+**Rename an object through a webshare**
+
+Renames the object at `{path}` and returns its Atom entry. The body is
+`<renameDocument newName="…"/>`; `<renameObject newName="…"/>` is accepted too.
+A missing or empty `newName` gives `400` ("Missing newName entry").
+
+Needs the same access as a stream write (`POST` with `?s=` on this URL): access
+`update`, visibility `private` or `invited`, the webshare password with HTTP
+Digest or Basic authentication (any username) for a password-protected
+webshare, and an invited identity for an `invited` webshare. The rename is made
+on behalf of the webshare's owner (for a group webshare, the group's owner).
+
+### Request
+
+`PUT https://api.cloudbackend.com/v1/ws[0_9]/{user_id}/{webshare_id}/{path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `user_id` | path | yes | string | Owner of the webshare — a numeric user id, or a username prefixed with `:` (e.g. `:jdoe`). |
+| `webshare_id` | path | yes | string | The webshare — a numeric id, or a name prefixed with `:` (e.g. `:Photos`). |
+| `path` | path | yes | string | Object inside the webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+
+#### Body
+
+`application/xml` (required), root element `<renameDocument>`
+
+```xml
+<renameDocument newName="doc2 renamed.txt"/>
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Atom entry of the renamed object |
+| `400` | Bad Request — malformed XML, or `Missing newName entry` |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
+| `403` | Forbidden — "This webshare is not set to update sharing", "You need to login to access this webshare" or "Webshare requires invitation". |
+| `404` | Not Found — "Path not found in webshare", "Folder '…' not found", "Document '…' not found", or "Path is not a document" (the path names a container). |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<entry>`
+
+```xml
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://xcerion.com/directory.xsd">
+  <atom:title>doc2 renamed.txt</atom:title>
+  <atom:published>{datetime}</atom:published>
+  <atom:updated>{datetime}</atom:updated>
+  <atom:link rel="alternate" type="text/plain" href="{object_url}" length="16" stream_1_length="16" />
+  <atom:id>{atom_id}</atom:id>
+  <dc:folder>{container_id}</dc:folder>
+  <dc:document>{object_id}</dc:document>
+</atom:entry>
+```
+
+#### `403` · text/plain
+
+```text
+This webshare is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Document 'doc2.txt' not found
+```
+
+### Example
+
+```bash
+curl -X PUT "https://api.cloudbackend.com/v1/ws/{user_id}/{webshare_id}/{path}" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "Content-Type: application/xml; charset=utf-8" \
+  -d '<renameDocument newName="doc2 renamed.txt"/>'
+```
+
+---
+
+## DELETE /ws[0_9]/{user_id}/{webshare_id}/{path} <a id="deletev1wspath"></a>
+
+**Delete an object through a webshare**
+
+Deletes the object at `{path}`, the same way the owner deletes it, on behalf of
+the webshare's owner (for a group webshare, the group's owner). Needs the same
+access as a stream write (`POST` with `?s=` on this URL). No request body; the
+answer is `204 No Content`. A later `GET` of the path gives `404`
+("Document '…' not found").
+
+### Request
+
+`DELETE https://api.cloudbackend.com/v1/ws[0_9]/{user_id}/{webshare_id}/{path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `user_id` | path | yes | string | Owner of the webshare — a numeric user id, or a username prefixed with `:` (e.g. `:jdoe`). |
+| `webshare_id` | path | yes | string | The webshare — a numeric id, or a name prefixed with `:` (e.g. `:Photos`). |
+| `path` | path | yes | string | Object inside the webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `204` | Object deleted. No response body. |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
+| `403` | Forbidden — "This webshare is not set to update sharing", "You need to login to access this webshare" or "Webshare requires invitation". |
+| `404` | Not Found — "Path not found in webshare", "Folder '…' not found", "Document '…' not found", or "Path is not a document" (the path names a container). |
+| `500` | Internal Server Error |
+
+#### `403` · text/plain
+
+```text
+This webshare is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Document 'doc2.txt' not found
+```
+
+### Example
+
+```bash
+curl -X DELETE "https://api.cloudbackend.com/v1/ws/{user_id}/{webshare_id}/{path}" \
+  -H "Authorization: WRAP access_token=<session_token>"
 ```
 
 ---
@@ -3610,7 +4175,10 @@ curl -X PUT "https://api.cloudbackend.com/v1/sharedobjectsave" \
 
 Fetches a single object from a domain-based webshare and returns its content.
 
-No authentication is required — a domain webshare is public.
+No CloudBackend PaaS login is needed. When the webshare mapped to the domain is
+password-protected, send its password with HTTP Digest or Basic authentication
+(any username, e.g. `anonymous`); otherwise `401` ("You need to provide a valid
+password to access this webshare-resource").
 
 `GET /wsd?domain={domain}&path=/{path}` is the equivalent parameter form. Note the
 difference in how the path is written: the parameter form takes a leading slash
@@ -3624,6 +4192,30 @@ normally follows those links rather than building the path itself.
 The response is the object's own content, so its shape and content type vary by
 object — the examples below are two real cases, not a fixed schema.
 
+**Object responses.** The stream is sent with its stored content type (`text/*`
+types get `; charset=UTF-8` added), `Last-Modified`, and `ETag: "<id>"` — the
+ETag that conditional writes compare against (see `POST` with `?s=` on this
+URL). For a gzip-compressed response nginx sends it weakened as `W/"<id>"`; both
+forms are accepted back. Browser scripts can read `ETag` (CORS
+`Access-Control-Expose-Headers`). A matching `If-None-Match` answers
+`304 Not Modified`; an `If-Match` that does not match answers
+`412 Precondition Failed`.
+
+**Download headers.** With `?dl` and a file name (the `dl` value, or the stream
+title when `dl` is empty), the `Content-Type` is `application/octet-stream`,
+`Content-Disposition` is `attachment; filename="…"; filename*=UTF-8''…` (the
+URL-encoded name), and `Content-Transfer-Encoding: binary` and
+`Pragma: public` are added. Without a download file name, a stream whose type
+is not `audio/*`, `image/*`, `video/*`, `application/pdf` or
+`application/x-shockwave-flash` still gets `Content-Disposition: attachment`, so
+a browser does not render it in the page. The request header
+`Suppress-Header: content-disposition` leaves `Content-Disposition` out in both
+cases (the other download headers stay), on every host.
+
+To write a stream, rename or delete an object through this URL, see `POST` (with
+`?s=`), `PUT` and `DELETE` on the same path; they need a webshare with access
+`update`.
+
 ### Request
 
 `GET https://api.cloudbackend.com/v1/wsd/{domain}/{path}`
@@ -3636,13 +4228,20 @@ Needs no session token: the description above says how this operation is authori
 | --- | --- | --- | --- | --- |
 | `domain` | path | yes | string | Domain the webshare is published under, e.g. `example.org`. |
 | `path` | path | yes | string | Object name within the webshare, URL-encoded — `Some file` is written `Some%20file`. May span several segments for an object nested below the webshare root. |
+| `s` | query | no | integer | Stream id to return. Default the object's main stream (`1`). |
+| `dl` | query | no | string | When present, the stream is sent as a download (`Content-Type: application/octet-stream`, `Content-Disposition: attachment`) with this file name; an empty `dl` uses the stream's title. `Suppress-Header` leaves the `Content-Disposition` header out. |
+| `Suppress-Header` | header | no | string · one of `content-disposition` | `content-disposition` (any letter case) sends no `Content-Disposition` header: neither the `attachment` one that `?dl` adds nor the default `attachment` for types that are not audio, image, video or PDF. The other `?dl` headers stay. Honoured on every host. Other values are ignored. |
+| `If-None-Match` | header | no | string | ETag(s) from an earlier response; the weak form `W/"…"` is accepted. When one matches the stream's current ETag (or the value is `*`), the answer is `304 Not Modified` without a body. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | The object's content |
+| `304` | Not Modified — `If-None-Match` matches the stream's current ETag (or is `*`). No body. |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
 | `404` | No such domain webshare, or no object at that path |
+| `412` | Precondition Failed — an `If-Match` header that does not match the stream's current ETag. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml
@@ -3685,7 +4284,296 @@ Needs no session token: the description above says how this operation is authori
 ### Example
 
 ```bash
-curl -X GET "https://api.cloudbackend.com/v1/wsd/{domain}/{path}"
+curl -X GET "https://api.cloudbackend.com/v1/wsd/{domain}/{path}" \
+  -H "Suppress-Header: {suppress-header}" \
+  -H "If-None-Match: {if-none-match}"
+```
+
+---
+
+## POST /wsd/{domain}/{path} <a id="postv1wsddomainpath"></a>
+
+**Write an object stream through a domain webshare**
+
+Writes one stream of the object at `{path}`, through the webshare URL.
+
+**Who may write.** The webshare must have access `update` and visibility
+`private` or `invited`; otherwise `403` ("This webshare is not set to update
+sharing"). A `private` webshare needs no CloudBackend PaaS login; when it is
+password-protected, send the webshare password with HTTP Digest or Basic
+authentication (any username, e.g. `anonymous`), otherwise `401` ("You need to
+provide a valid password to access this webshare-resource"). An `invited`
+webshare needs a logged-in identity that owns it or was invited to it
+(otherwise `401`, or `403` "You need to login to access this webshare" or
+"Webshare requires invitation").
+
+**Body.** The raw new content of the stream, sent with
+`Content-Type: application/octet-stream` (any other type, `multipart/form-data`
+included, gives `415`) and a `Content-Length` header (`411` without it, `413`
+above the drive's maximum file size). The stream is written in place: the object
+keeps its id and its other streams, and a stream id the object does not have yet
+is created. A write-locked or full drive gives `403`. The response is the
+object's Atom entry with its updated stream lengths, and the new ETag of the
+stream in the `ETag` header.
+
+**Conditional write.** Every stored stream version has an ETag: the id of its
+stored content in double quotes, e.g. `"200000577"`. It changes on every write,
+also when the new content has the same length. It is returned in the `ETag`
+header of a successful write, of a `GET` of the stream and of a lost conditional
+write (`412`), and in the `etag` attribute of the stream list
+(`GET /stream`).
+
+- `If-Match: "<etag>"` writes only when that is the stream's current ETag.
+  Exactly one entity tag; the weak form `W/"<etag>"` (nginx gzip weakens the ETag
+  of a compressed `GET` response) counts as the same tag. `*` or a list of tags
+  gives `400` ("If-Match must be one entity tag"). A stream that changed, or
+  does not exist, gives `412`.
+- `If-None-Match: *` writes only when the stream does not exist yet (create
+  only); an existing stream gives `412`. Any other value gives `400`
+  ("If-None-Match must be *").
+- Both headers together give `400` ("Use either If-Match or If-None-Match").
+  Without either, the write is unconditional.
+
+A lost conditional write stores nothing and answers `412 Precondition Failed`
+with the body `Stream modified` and the stream's current ETag in the `ETag`
+header (left out when the stream does not exist), so the client can re-read or
+retry without another `GET`.
+
+The parameter forms `/wsd/{domain}?path=/{path}` and
+`/wsd?domain={domain}&path=/{path}` reach the same handler, so this method works
+there too.
+
+### Request
+
+`POST https://api.cloudbackend.com/v1/wsd/{domain}/{path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `domain` | path | yes | string | Domain the webshare is published under, e.g. `example.org`. |
+| `path` | path | yes | string | Object inside the webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+| `s` | query | yes | integer | Stream id to write; `1` is the main stream. Ids from 32769 up are reserved. |
+| `If-Match` | header | no | string | Write only if the stream's current ETag is this one, e.g. `"200000577"`. Exactly one entity tag; the weak form `W/"200000577"` counts as the same tag. `*` or a list of tags is refused (`400`). |
+| `If-None-Match` | header | no | string · one of `*` | Only `*` — write only if the stream does not exist yet. Any other value is refused (`400`). |
+
+#### Body
+
+`application/octet-stream` (required)
+
+```text
+New content of stream 2
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Atom entry of the object; the new ETag of the stream is in the `ETag` header. |
+| `400` | Bad Request — "'s' must be a stream id from 1 to 32768", "If-Match must be one entity tag", "If-None-Match must be *" or "Use either If-Match or If-None-Match". |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
+| `403` | Forbidden — "This webshare is not set to update sharing" (access is not `update`, or visibility is `public`), "You need to login to access this webshare" or "Webshare requires invitation" (`invited` webshare), "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." |
+| `404` | Not Found — "Path not found in webshare", "Folder '…' not found", "Document '…' not found", or "Path is not a document" (the path names a container). |
+| `411` | Length Required — "Missing Content-Length header." |
+| `412` | Precondition Failed — "Stream modified". The `If-Match` tag is not the stream's current ETag (or the stream does not exist), or `If-None-Match` `*` found an existing stream. Nothing is written. |
+| `413` | Request Entity Too Large — "Request Entity Too Large."; the body exceeds the drive's maximum file size. |
+| `415` | Unsupported Media Type — the `Content-Type` is not `application/octet-stream`. |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<entry>`
+
+```xml
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://xcerion.com/directory.xsd">
+  <atom:title>wsddoc.txt</atom:title>
+  <atom:published>{datetime}</atom:published>
+  <atom:updated>{datetime}</atom:updated>
+  <atom:link rel="alternate" type="text/plain" href="{object_url}" length="16" stream_1_length="16" />
+  <atom:id>{atom_id}</atom:id>
+  <dc:folder>{container_id}</dc:folder>
+  <dc:document>{object_id}</dc:document>
+</atom:entry>
+```
+
+#### `401` · text/plain
+
+```text
+You need to provide a valid password to access this webshare-resource
+```
+
+#### `403` · text/plain
+
+```text
+This webshare is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Path is not a document
+```
+
+#### `412` · text/plain
+
+```text
+Stream modified
+```
+
+### Example
+
+```bash
+curl -X POST "https://api.cloudbackend.com/v1/wsd/{domain}/{path}?s={s}" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "If-Match: {if-match}" \
+  -H "If-None-Match: {if-none-match}" \
+  -H "Content-Type: application/octet-stream; charset=utf-8" \
+  -d 'New content of stream 2'
+```
+
+---
+
+## PUT /wsd/{domain}/{path} <a id="putv1wsddomainpath"></a>
+
+**Rename an object through a domain webshare**
+
+Renames the object at `{path}` and returns its Atom entry. The body is
+`<renameDocument newName="…"/>`; `<renameObject newName="…"/>` is accepted too.
+A missing or empty `newName` gives `400` ("Missing newName entry").
+
+Needs the same access as a stream write (`POST` with `?s=` on this URL): access
+`update`, visibility `private` or `invited`, the webshare password with HTTP
+Digest or Basic authentication (any username) for a password-protected
+webshare, and an invited identity for an `invited` webshare. The rename is made
+on behalf of the webshare's owner (for a group webshare, the group's owner).
+
+The parameter forms `/wsd/{domain}?path=/{path}` and
+`/wsd?domain={domain}&path=/{path}` reach the same handler, so this method works
+there too.
+
+### Request
+
+`PUT https://api.cloudbackend.com/v1/wsd/{domain}/{path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `domain` | path | yes | string | Domain the webshare is published under, e.g. `example.org`. |
+| `path` | path | yes | string | Object inside the webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+
+#### Body
+
+`application/xml` (required), root element `<renameDocument>`
+
+```xml
+<renameDocument newName="wsddoc renamed.txt"/>
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Atom entry of the renamed object |
+| `400` | Bad Request — malformed XML, or `Missing newName entry` |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
+| `403` | Forbidden — "This webshare is not set to update sharing", "You need to login to access this webshare" or "Webshare requires invitation". |
+| `404` | Not Found — "Path not found in webshare", "Folder '…' not found", "Document '…' not found", or "Path is not a document" (the path names a container). |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<entry>`
+
+```xml
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://xcerion.com/directory.xsd">
+  <atom:title>wsddoc renamed.txt</atom:title>
+  <atom:published>{datetime}</atom:published>
+  <atom:updated>{datetime}</atom:updated>
+  <atom:link rel="alternate" type="text/plain" href="{object_url}" length="16" stream_1_length="16" />
+  <atom:id>{atom_id}</atom:id>
+  <dc:folder>{container_id}</dc:folder>
+  <dc:document>{object_id}</dc:document>
+</atom:entry>
+```
+
+#### `403` · text/plain
+
+```text
+This webshare is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Document 'doc2.txt' not found
+```
+
+### Example
+
+```bash
+curl -X PUT "https://api.cloudbackend.com/v1/wsd/{domain}/{path}" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "Content-Type: application/xml; charset=utf-8" \
+  -d '<renameDocument newName="wsddoc renamed.txt"/>'
+```
+
+---
+
+## DELETE /wsd/{domain}/{path} <a id="deletev1wsddomainpath"></a>
+
+**Delete an object through a domain webshare**
+
+Deletes the object at `{path}`, the same way the owner deletes it, on behalf of
+the webshare's owner (for a group webshare, the group's owner). Needs the same
+access as a stream write (`POST` with `?s=` on this URL). No request body; the
+answer is `204 No Content`. A later `GET` of the path gives `404`
+("Document '…' not found").
+
+The parameter forms `/wsd/{domain}?path=/{path}` and
+`/wsd?domain={domain}&path=/{path}` reach the same handler, so this method works
+there too.
+
+### Request
+
+`DELETE https://api.cloudbackend.com/v1/wsd/{domain}/{path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `domain` | path | yes | string | Domain the webshare is published under, e.g. `example.org`. |
+| `path` | path | yes | string | Object inside the webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `204` | Object deleted. No response body. |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
+| `403` | Forbidden — "This webshare is not set to update sharing", "You need to login to access this webshare" or "Webshare requires invitation". |
+| `404` | Not Found — "Path not found in webshare", "Folder '…' not found", "Document '…' not found", or "Path is not a document" (the path names a container). |
+| `500` | Internal Server Error |
+
+#### `403` · text/plain
+
+```text
+This webshare is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Document 'doc2.txt' not found
+```
+
+### Example
+
+```bash
+curl -X DELETE "https://api.cloudbackend.com/v1/wsd/{domain}/{path}" \
+  -H "Authorization: WRAP access_token=<session_token>"
 ```
 
 ---

@@ -59,6 +59,11 @@ branding; omitted for the legacy default tenant), `<managed>` (account managed
 by an external marketplace), `<externalPayment>`, `<associatedAccount>`,
 `<adminAccount>` and `<businessAccount>`.
 
+**Throttling.** After too many wrong passwords or MFA codes for the identity, or
+from the client address, the call answers `429 Too Many Requests` with a
+`Retry-After` header (seconds), even with the right credentials, until the block
+ends.
+
 The login response is not renamed to the public naming: drive and group
 entries carry `folderId` (the container id) exactly as shown in the example.
 
@@ -109,6 +114,7 @@ Authenticates the caller — no session token yet. Send HTTP basic credentials.
 | `401` | Unauthorized |
 | `403` | Account suspended or not activated (raised during authentication) |
 | `415` | Content-Type is not `application/xml` or `text/xml` |
+| `429` | Too Many Requests — too many failed attempts for the identity or from the client address. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<loginResponse>`
@@ -244,6 +250,12 @@ Account suspended
 
 ```text
 Account not activated
+```
+
+#### `429` · text/plain
+
+```text
+Too many failed attempts, try again later
 ```
 
 ### Example
@@ -462,6 +474,14 @@ The body root must be `<syncML>` with the child elements `<username>`, `<digest>
 The user is looked up in the tenant named by the `tenant` query parameter. If that
 tenant does not allow free users, identities on the `FREE` account type are refused.
 
+An unknown user, a user without a SyncML digest and a wrong digest all return the
+same `403 Authentication failed`, so the response does not tell whether a username
+exists. Only an unknown tenant returns `404`.
+
+Failed attempts are limited like password logins and count toward the same block
+for that username: after too many failures the call returns `429` with a
+`Retry-After` header, even for a correct digest, until the block ends.
+
 ### Request
 
 `POST https://api.cloudbackend.com/v1/auth`
@@ -492,10 +512,11 @@ The specification does not say whether this operation needs a session token; it 
 | --- | --- |
 | `204` | Credentials are valid |
 | `400` | Bad Request — the body is not well-formed XML |
-| `403` | Forbidden — `Authentication failed`, or `Free users can't use this API` |
-| `404` | Not Found — `Tenant not found` or `User not found` |
+| `403` | Forbidden — `Authentication failed` (unknown user, no SyncML digest, or wrong digest), or `Free users can't use this API` |
+| `404` | Not Found — `Tenant not found` |
 | `415` | Unsupported Media Type — `Content-Type` must be `application/xml` or `text/xml` |
 | `422` | Unprocessable Entity — `Invalid root element: …` or `Required syncML element(s) missing` |
+| `429` | Too Many Requests — "Too many failed attempts, try again later". The `Retry-After` header gives the seconds to wait. |
 | `500` | Internal Server Error |
 
 #### `403` · text/plain
@@ -507,13 +528,19 @@ Authentication failed
 #### `404` · text/plain
 
 ```text
-User not found
+Tenant not found
 ```
 
 #### `422` · text/plain
 
 ```text
 Required syncML element(s) missing
+```
+
+#### `429` · text/plain
+
+```text
+Too many failed attempts, try again later
 ```
 
 ### Example

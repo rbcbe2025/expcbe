@@ -1,11 +1,11 @@
 {
-  "generated": "2026-11-20",
+  "generated": "2026-11-22",
   "skills": [
     {
       "name": "cloudbackend-rest-api",
-      "version": "2026.11.7",
-      "content_hash": "e8e7ac4a9670c639",
-      "sha256": "bcf3cdb900ce189e9d88a755a33df9b52b7d176f464b23b7611709d04b6f28fc",
+      "version": "2026.11.22",
+      "content_hash": "e1d7188020ff3b54",
+      "sha256": "0cc663bb2bf68ddbb90857da8edcc9d1424fc37571c211df082d88674d6f8bdc",
       "files": 15
     },
     {

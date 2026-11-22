@@ -1,6 +1,6 @@
 # REST API — Group
 
-120 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
+126 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
 
 ## POST /group <a id="postv1group"></a>
 
@@ -465,6 +465,8 @@ curl -X PUT "https://api.cloudbackend.com/v1/groupapplication" \
 **Query group database**
 
 Queries the group database to list groups for a parent group.
+
+**Response format.** Always the data-model format (`db:` namespace); nothing needs to be passed to get it.
 
 ### Request
 
@@ -1127,7 +1129,10 @@ curl -X DELETE "https://api.cloudbackend.com/v1/groupmembership" \
 
 **Get group info**
 
-Returns group metadata including visibility and application settings.
+Returns group metadata including visibility and application settings. `type` is
+`project` for a project (a group directly under a tenant group, see
+`POST /groups/{group_id}/subgroups`)
+and `group` for any other group.
 
 ### Request
 
@@ -1153,7 +1158,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 #### `200` · application/xml · `<groupInfo>`
 
 ```xml
-<groupInfo parent_group_id="{parent_group_id}" group_id="{group_id}" drive_id="" home_container_id="" visibility="{visibility}" application="{application}" />
+<groupInfo parent_group_id="{parent_group_id}" group_id="{group_id}" drive_id="" home_container_id="" visibility="{visibility}" application="{application}" type="group" />
 ```
 
 ### Example
@@ -1161,6 +1166,121 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 ```bash
 curl -X GET "https://api.cloudbackend.com/v1/groups/{group_id}" \
   -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## PUT /groups/{group_id} <a id="putv1groups"></a>
+
+**Make a group a project**
+
+Changes a group's type. The only change is `type=project`, which makes a group that
+sits directly under the tenant group a project; a project can't be changed back to a
+group. Sending `type=project` for a group that is already a project repairs the
+project's grants (see below) and succeeds.
+
+The field is sent as a form (`Content-Type: application/x-www-form-urlencoded`).
+
+To make a group a project the caller must be owner or administrator of the group or
+of its tenant, and needs `write` on the tenant's projects ACL
+(`/groups/{tenant_group_id}/projects;acl`). By default the tenant's Owner and
+Administrator roles have all rights there and the tenant's `Developer` role has
+read/write. The tenant's Owner and Administrator roles then get all rights on every
+ACL of the project. `type=group` changes nothing and only needs the right to read the
+group.
+
+Returns the group info as for `GET`.
+
+### Request
+
+`PUT https://api.cloudbackend.com/v1/groups/{group_id}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `group_id` | path | yes | integer |  |
+
+#### Body
+
+`application/x-www-form-urlencoded` (required)
+
+```text
+type=project
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The group info after the change |
+| `400` | Bad Request |
+| `401` | Unauthorized |
+| `403` | Forbidden |
+| `404` | Not Found |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<groupInfo>`
+
+```xml
+<groupInfo parent_group_id="{tenant_group_id}" group_id="{group_id}" drive_id="{drive_id}" home_container_id="{container_id}" visibility="{visibility}" application="{application}" type="project" />
+```
+
+#### `400` · text/plain
+
+*No type field*
+
+```text
+Missing type argument
+```
+
+*type is not project or group*
+
+```text
+Invalid type argument
+```
+
+*The group is not directly under a tenant group (or is a role or a tenant group)*
+
+```text
+Only groups directly under the tenant group can be projects
+```
+
+*type=group for a project*
+
+```text
+A project can't be changed back to a group
+```
+
+#### `403` · text/plain
+
+*Not owner/administrator, or no write on the tenant's projects ACL*
+
+```text
+You are not allowed to make this group a project
+```
+
+*type=group without read access to the group*
+
+```text
+You don't have rights for this group
+```
+
+#### `404` · text/plain
+
+```text
+Group not found.
+```
+
+### Example
+
+```bash
+curl -X PUT "https://api.cloudbackend.com/v1/groups/{group_id}" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" \
+  -d 'type=project'
 ```
 
 ---
@@ -1341,7 +1461,11 @@ description, type and password), so send the full set every time.
 Inbound access (`create`, `update`, `createonly`) is not allowed on a `public`
 webshare (`400 Not A Valid Inbound Webshare`).
 
-The caller needs write access to the group's webshares. Returns no content.
+The caller needs write access to the group's webshares, and the same rights on the
+shared container or object as for creating the webshare: read access, plus write
+access when the new `access` is not `read` (`403`, "Access to the shared folder or
+document denied"). The read and write rights may come from different ACL entries.
+Returns no content.
 
 ### Request
 
@@ -1371,7 +1495,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `204` | Webshare updated |
 | `400` | Bad Request — invalid name, or `Not A Valid Inbound Webshare` |
 | `401` | Unauthorized |
-| `403` | Forbidden — the caller may not change the group's webshares |
+| `403` | Forbidden — the caller may not change the group's webshares, or "Access to the shared folder or document denied" (no read access to the shared item, or no write access to it for an inbound `access`). |
 | `404` | Not Found — group or webshare not found |
 | `422` | Unprocessable Entity — `Missing 'name' attribute` |
 | `500` | Internal Server Error |
@@ -2782,6 +2906,9 @@ curl -X PUT "https://api.cloudbackend.com/v1/gkeys/{group_id}/{key_id}" \
 
 Returns the access control list (ACL) of a group key. The ACL decides who besides the group's owners and administrators may read (`read`), update and delete (`changeACL`) the key.
 
+Reading the ACL requires `read` on it, or being an owner or administrator of the
+group; otherwise `403` ("Access denied.").
+
 The ACL is an `<acl>` element with one `<user id>` entry per identity and one
 `<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
 `changeACL` (`1` or `0`). The `tag` attribute is the ACL's ETag.
@@ -2809,6 +2936,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The ACL |
 | `304` | Not Modified — `If-None-Match` equals the current ETag. |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller may not read this ACL). |
 | `404` | Not Found — the group key does not exist. |
 | `500` | Internal Server Error |
 
@@ -2984,6 +3112,8 @@ curl -X DELETE "https://api.cloudbackend.com/v1/groups/{group_id}/bans/{member_u
 
 Returns the access control list (ACL) of the group's ban list. `read` on this ACL is required to list banned members with `GET /groups/{group_id}/bans`.
 
+Reading the ACL requires `read` on it; otherwise `403` ("Access denied.").
+
 The ACL is an `<acl>` element with one `<user id>` entry per identity and one
 `<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
 `changeACL` (`1` or `0`). The `tag` attribute is the ACL's ETag.
@@ -3010,6 +3140,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The ACL |
 | `304` | Not Modified — `If-None-Match` equals the current ETag. |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller may not read this ACL). |
 | `404` | Not Found — the group does not exist. |
 | `500` | Internal Server Error |
 
@@ -3146,6 +3277,8 @@ curl -X GET "https://api.cloudbackend.com/v1/groups/{group_id}/invitations" \
 
 Returns the access control list (ACL) of the group's invitations. `write` on this ACL is required to invite identities to the group and `delete` to withdraw invitations.
 
+Reading the ACL requires `read` on it; otherwise `403` ("Access denied.").
+
 The ACL is an `<acl>` element with one `<user id>` entry per identity and one
 `<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
 `changeACL` (`1` or `0`). The `tag` attribute is the ACL's ETag.
@@ -3172,6 +3305,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The ACL |
 | `304` | Not Modified — `If-None-Match` equals the current ETag. |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller may not read this ACL). |
 | `404` | Not Found — the group does not exist. |
 | `500` | Internal Server Error |
 
@@ -3345,6 +3479,8 @@ curl -X GET "https://api.cloudbackend.com/v1/groups/{group_id}/requests" \
 
 Returns the access control list (ACL) of the group's membership requests. The ACL governs who may see and handle requests to join the group.
 
+Reading the ACL requires `read` on it; otherwise `403` ("Access denied.").
+
 The ACL is an `<acl>` element with one `<user id>` entry per identity and one
 `<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
 `changeACL` (`1` or `0`). The `tag` attribute is the ACL's ETag.
@@ -3371,6 +3507,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The ACL |
 | `304` | Not Modified — `If-None-Match` equals the current ETag. |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller may not read this ACL). |
 | `404` | Not Found — the group does not exist. |
 | `500` | Internal Server Error |
 
@@ -3521,6 +3658,8 @@ curl -X POST "https://api.cloudbackend.com/v1/groups/{group_id}/roles" \
 
 Returns the access control list (ACL) of one role of the group. A new role starts with a copy of the group's roles ACL (`/groups/{group_id}/roles;acl`).
 
+Reading the ACL requires `read` on it; otherwise `403` ("Access denied.").
+
 The ACL is an `<acl>` element with one `<user id>` entry per identity and one
 `<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
 `changeACL` (`1` or `0`). The `tag` attribute is the ACL's ETag.
@@ -3548,6 +3687,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The ACL |
 | `304` | Not Modified — `If-None-Match` equals the current ETag. |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller may not read this ACL). |
 | `404` | Not Found — the group or role does not exist. |
 | `500` | Internal Server Error |
 
@@ -3637,6 +3777,8 @@ curl -X PUT "https://api.cloudbackend.com/v1/groups/{group_id}/roles/{role_id};a
 
 Returns the access control list (ACL) of the group's roles. `write` on this ACL is required to create roles with `POST /groups/{group_id}/roles`; new roles get this ACL as their initial role ACL.
 
+Reading the ACL requires `read` on it; otherwise `403` ("Access denied.").
+
 The ACL is an `<acl>` element with one `<user id>` entry per identity and one
 `<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
 `changeACL` (`1` or `0`). The `tag` attribute is the ACL's ETag.
@@ -3663,6 +3805,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The ACL |
 | `304` | Not Modified — `If-None-Match` equals the current ETag. |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller may not read this ACL). |
 | `404` | Not Found — the group does not exist. |
 | `500` | Internal Server Error |
 
@@ -3756,9 +3899,9 @@ for any group id.
 Each group carries `id`, `memberId` (the caller's member id in it), `driveId`,
 `folderId` (the group's root container — this response keeps the internal attribute
 name), `name` and `alias` (the caller's alias); `owner="true"` marks groups the
-caller owns and `tenantgroup="true"` marks tenant groups. Role entries appear as child
-`<group id role>` elements (`Owner`, `Administrator`, ...). The root of the tree is the
-`cbe` group.
+caller owns, `tenantgroup="true"` marks tenant groups and `type="project"` marks
+projects. Role entries appear as child `<group id role>` elements (`Owner`,
+`Administrator`, ...). The root of the tree is the `cbe` group.
 
 ### Request
 
@@ -3817,13 +3960,23 @@ form (`Content-Type: application/x-www-form-urlencoded`):
 - `alias` (required) — the caller's alias in the new group.
 - `application` (optional) — how identities join: `open` (default), `invite`, `review`
   or `closed`.
-- `visibility` — the code intends `public` (default), `friends`, `private` or
-  `invited`, but because of a server defect any `visibility` field is rejected with
-  `400 Invalid visibility argument`; leave it out.
+- `visibility` (optional) — `public` (default), `friends`, `private` or `invited`.
+- `type` (optional) — `group` (default) or `project`.
 
-The caller needs `write` on the parent's subgroups ACL. Returns the new group with its
-drive, root container (`folderId`), the caller's member id and alias, and its Owner and
-Administrator roles.
+**Projects.** With `type=project` the new group is a project of the tenant. A project
+can only be created directly under a tenant group, so `{group_id}` must be the tenant
+group. Instead of `write` on the subgroups ACL, the caller needs `write` on the
+tenant's projects ACL (`/groups/{tenant_group_id}/projects;acl`); by default the
+tenant's Owner and Administrator roles have all rights there and the tenant's
+`Developer` role has read/write. The tenant's Owner and Administrator roles get all
+rights on every ACL of the new project, so they can administer it like its own owner
+and administrators. Projects count toward the tenant's group limit. An existing group
+directly under the tenant group can be made a project with
+`PUT /groups/{group_id}`.
+
+For any other group the caller needs `write` on the parent's subgroups ACL. Returns
+the new group with its drive, root container (`folderId`), the caller's member id and
+alias, and its Owner and Administrator roles; a project also has `type='project'`.
 
 ### Request
 
@@ -3835,14 +3988,22 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
-| `group_id` | path | yes | integer | Parent group id. |
+| `group_id` | path | yes | integer | Parent group id. For `type=project`, the tenant group. |
 
 #### Body
 
 `application/x-www-form-urlencoded` (required)
 
+*A group*
+
 ```text
 name=new-group&alias=my-alias&application=open
+```
+
+*A project under the tenant group*
+
+```text
+name=new-project&alias=my-alias&type=project
 ```
 
 ### Responses
@@ -3850,20 +4011,59 @@ name=new-group&alias=my-alias&application=open
 | Status | Meaning |
 | --- | --- |
 | `200` | The created group |
-| `400` | Bad Request — `name` or `alias` missing, invalid `application` or any `visibility`, the root group as parent, or the tenant's group limit reached. |
+| `400` | Bad Request — `name` or `alias` missing, invalid `application`, `visibility` or `type`, the root group as parent, `type=project` under a group that is not a tenant group, or the tenant's group limit reached. |
 | `401` | Unauthorized |
-| `403` | Forbidden — the caller may not create groups under this parent. |
+| `403` | Forbidden — the caller may not create groups under this parent, or (with `type=project`) has no `write` on the tenant's projects ACL. |
 | `409` | Conflict — the parent already has a group with that name. |
 | `415` | Unsupported Media Type — the body is not `application/x-www-form-urlencoded`. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<group>`
 
+*A group*
+
 ```xml
 <group id='{group_id}' driveId='{drive_id}' folderId='{container_id}' name='new-group' memberId='{member_id}' alias='my-alias'>
   <group id='{owner_role_id}' role='Owner' />
   <group id='{admin_role_id}' role='Administrator' />
 </group>
+```
+
+*A project*
+
+```xml
+<group id='{group_id}' driveId='{drive_id}' folderId='{container_id}' name='new-project' memberId='{member_id}' alias='my-alias' type='project'>
+  <group id='{owner_role_id}' role='Owner' />
+  <group id='{admin_role_id}' role='Administrator' />
+</group>
+```
+
+#### `400` · text/plain
+
+*type is not group or project*
+
+```text
+Invalid type argument
+```
+
+*type=project and {group_id} is not a tenant group*
+
+```text
+Projects can only be created directly under the tenant group
+```
+
+#### `403` · text/plain
+
+*No write on the parent's subgroups ACL*
+
+```text
+You are not allowed to create groups on this level.
+```
+
+*No write on the tenant's projects ACL*
+
+```text
+You are not allowed to create projects
 ```
 
 #### `409` · text/plain
@@ -3888,6 +4088,8 @@ curl -X POST "https://api.cloudbackend.com/v1/groups/{group_id}/subgroups" \
 **Get subgroups ACL**
 
 Returns the access control list (ACL) of the group's subgroups. `write` on this ACL is required to create or rename subgroups and `delete` to remove them.
+
+Reading the ACL requires `read` on it; otherwise `403` ("Access denied.").
 
 The ACL is an `<acl>` element with one `<user id>` entry per identity and one
 `<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
@@ -3915,6 +4117,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The ACL |
 | `304` | Not Modified — `If-None-Match` equals the current ETag. |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller may not read this ACL). |
 | `404` | Not Found — the group does not exist. |
 | `500` | Internal Server Error |
 
@@ -4003,6 +4206,8 @@ curl -X PUT "https://api.cloudbackend.com/v1/groups/{group_id}/subgroups;acl" \
 
 Returns the access control list (ACL) of the group's member list. The ACL governs who may list and manage the members of the group.
 
+Reading the ACL requires `read` on it; otherwise `403` ("Access denied.").
+
 The ACL is an `<acl>` element with one `<user id>` entry per identity and one
 `<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
 `changeACL` (`1` or `0`). The `tag` attribute is the ACL's ETag.
@@ -4029,6 +4234,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The ACL |
 | `304` | Not Modified — `If-None-Match` equals the current ETag. |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller may not read this ACL). |
 | `404` | Not Found — the group does not exist. |
 | `500` | Internal Server Error |
 
@@ -4117,6 +4323,8 @@ curl -X PUT "https://api.cloudbackend.com/v1/groups/{group_id}/users;acl" \
 
 Returns the access control list (ACL) of the group's webshares. The ACL governs who may list and manage the group's webshares.
 
+Reading the ACL requires `read` on it; otherwise `403` ("Access denied.").
+
 The ACL is an `<acl>` element with one `<user id>` entry per identity and one
 `<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
 `changeACL` (`1` or `0`). The `tag` attribute is the ACL's ETag.
@@ -4143,6 +4351,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The ACL |
 | `304` | Not Modified — `If-None-Match` equals the current ETag. |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller may not read this ACL). |
 | `404` | Not Found — the group does not exist. |
 | `500` | Internal Server Error |
 
@@ -4583,6 +4792,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
+| `datasrc` | query | no | string · one of `datamodel` | `datamodel` returns the embedded user entry in its data-model form (`<db:user>`) instead of an Atom entry. Lowercase only. |
 | `group_id` | path | yes | integer |  |
 | `user_id` | path | yes | integer |  |
 
@@ -5008,6 +5218,13 @@ child per invitation; the element name selects the role:
 `email` is required; `productId` (optional) attaches a product (price plan) to the
 invitation. The caller needs `write` on the group's invitations ACL.
 
+A caller who is not the owner or an administrator of the group may only invite
+to a role they hold themselves: `customer`, or a custom role they are a member
+of. They cannot invite with a `productId`. Inviting as `admin` (by `<admin>` or
+`<role>admin</role>`), to a role the caller does not hold, or with a product gives
+`403` ("You can only invite to a role you have." or "Only the owner or an admin
+can invite with a product."). This aborts the whole request.
+
 The response lists an `<invite>` for every invitation created and a `<failed>` element
 (with `status` and `reason`) for every address that already belongs to the
 organization. Any other error aborts the whole request.
@@ -5045,7 +5262,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | Created invitations and failures |
 | `400` | Bad Request — group id 0, an entry without `email`, an unknown element name, or a `<user>` without a valid `<role>`. |
 | `401` | Unauthorized |
-| `403` | Forbidden — the caller may not invite users to this group. |
+| `403` | Forbidden — the caller may not invite users to this group, "You can only invite to a role you have." or "Only the owner or an admin can invite with a product." |
 | `404` | Not Found — the group or a referenced identity does not exist. |
 | `500` | Internal Server Error |
 
@@ -5111,7 +5328,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | Created invitations and failures |
 | `400` | Bad Request — group id 0, an entry without `email`, an unknown element name, or a `<user>` without a valid `<role>`. |
 | `401` | Unauthorized |
-| `403` | Forbidden — the caller may not invite users to this group. |
+| `403` | Forbidden — the caller may not invite users to this group, "You can only invite to a role you have." or "Only the owner or an admin can invite with a product." |
 | `404` | Not Found — the group or a referenced identity does not exist. |
 | `500` | Internal Server Error |
 
@@ -5312,7 +5529,18 @@ curl -X GET "https://api.cloudbackend.com/v1/organizations/{group_id}/usersearch
 
 **Get group products**
 
-Get all products added to/Settings/Products/ Output The output (theproducttags) is similar to the files stored in/Settings/Products/
+Get all products added to /Settings/Products/. The output (the product tags) is
+similar to the files stored in /Settings/Products/.
+
+A product file's `<product>` can carry `project="{project_id}"` to link the product to
+one of the tenant's projects; a product whose `project` is not a project of the
+tenant (or not a number) is skipped when the file is stored. A linked product is
+listed with its `project` attribute. Purchases of the product record the project,
+and a cart's products decide which Stripe or PayPal account is used, see
+`POST /users/{user_id}/purchases`.
+
+`?project={project_id}` lists only the products of that project, and `?project=0`
+only the products that aren't linked to a project.
 
 ### Request
 
@@ -5325,6 +5553,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `group_id` | path | yes | integer |  |
+| `project` | query | no | integer | Only products linked to this project; `0` for products without a project. |
 
 ### Responses
 
@@ -5343,13 +5572,19 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 <product id='prod1' description='This is product #1' subscription='false' duration='0'>
 <price cents='12345' currency='EUR' />
 </product>
-<product id='prod2' description='Another product' subscription='false' duration='0'>
+<product id='prod2' description='Another product' subscription='false' duration='0' project='{project_id}'>
 <price cents='34' currency='EUR' />
 </product>
 <product id='sub1' description='A subscription' subscription='true' duration='1'>
 <price cents='79999' currency='EUR' />
 </product>
 </products>
+```
+
+#### `400` · text/plain
+
+```text
+Invalid value for parameter 'project'
 ```
 
 ### Example
@@ -5551,6 +5786,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
+| `datasrc` | query | no | string · one of `datamodel` | `datamodel` returns the webshare list in the data-model format (`db:` elements) instead of an Atom feed. The `Content-Type` header still says `application/atom+xml`. Lowercase only. |
 | `group_id` | path | yes | integer | Group whose public webshares are listed. |
 | `offset` | query | no | integer | integer |
 | `count` | query | no | integer | integer: 0-1000 |
@@ -5710,9 +5946,60 @@ curl -X POST "https://api.cloudbackend.com/v1/wsg/{group_id}/{webshare_id}" \
 
 ## POST /wsg[0_9]/{group_id}/{webshare_id}/{path} <a id="postv1wsg"></a>
 
-**Create group webshare container**
+**Create group webshare container, or write an object stream**
 
-Creates a container inside a group webshare, at the given path.
+Two requests share this URL; the `s` query parameter selects the second.
+
+**Without `s` — create a container.** Creates a child container inside the
+webshare. The body is `<newContainer containerId="…" childName="…"/>`; the
+response is `<newFolderId>`. A password-protected webshare needs the webshare
+password with HTTP Digest or Basic authentication (any username, e.g.
+`anonymous`); otherwise `401`.
+
+**With `?s={stream_id}` — write one stream of an object.** `{path}` must name an
+object in the webshare.
+
+**Who may write.** The webshare must have access `update` and visibility
+`private` or `invited`; otherwise `403` ("This webshare is not set to update
+sharing"). A `private` webshare needs no CloudBackend PaaS login; when it is
+password-protected, send the webshare password with HTTP Digest or Basic
+authentication (any username, e.g. `anonymous`), otherwise `401` ("You need to
+provide a valid password to access this webshare-resource"). An `invited`
+webshare needs a logged-in identity that owns it or was invited to it
+(otherwise `401`, or `403` "You need to login to access this webshare" or
+"Webshare requires invitation").
+
+**Body.** The raw new content of the stream, sent with
+`Content-Type: application/octet-stream` (any other type, `multipart/form-data`
+included, gives `415`) and a `Content-Length` header (`411` without it, `413`
+above the drive's maximum file size). The stream is written in place: the object
+keeps its id and its other streams, and a stream id the object does not have yet
+is created. A write-locked or full drive gives `403`. The response is the
+object's Atom entry with its updated stream lengths, and the new ETag of the
+stream in the `ETag` header.
+
+**Conditional write.** Every stored stream version has an ETag: the id of its
+stored content in double quotes, e.g. `"200000577"`. It changes on every write,
+also when the new content has the same length. It is returned in the `ETag`
+header of a successful write, of a `GET` of the stream and of a lost conditional
+write (`412`), and in the `etag` attribute of the stream list
+(`GET /stream`).
+
+- `If-Match: "<etag>"` writes only when that is the stream's current ETag.
+  Exactly one entity tag; the weak form `W/"<etag>"` (nginx gzip weakens the ETag
+  of a compressed `GET` response) counts as the same tag. `*` or a list of tags
+  gives `400` ("If-Match must be one entity tag"). A stream that changed, or
+  does not exist, gives `412`.
+- `If-None-Match: *` writes only when the stream does not exist yet (create
+  only); an existing stream gives `412`. Any other value gives `400`
+  ("If-None-Match must be *").
+- Both headers together give `400` ("Use either If-Match or If-None-Match").
+  Without either, the write is unconditional.
+
+A lost conditional write stores nothing and answers `412 Precondition Failed`
+with the body `Stream modified` and the stream's current ETag in the `ETag`
+header (left out when the stream does not exist), so the client can re-read or
+retry without another `GET`.
 
 `{path}` is a location within the webshare's container structure and is parsed by
 the service, so it may span several segments — it is not a single path segment.
@@ -5734,10 +6021,15 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `group_id` | path | yes | integer | Group owning the webshare. |
-| `webshare_id` | path | yes | string | The webshare — an id or a name. |
-| `path` | path | yes | string | Location within the webshare's container structure, parsed by the service. May span several segments. |
+| `webshare_id` | path | yes | string | The webshare — a numeric id, or a name prefixed with `:` (e.g. `:Photos`). |
+| `path` | path | yes | string | Location within the webshare's container structure, parsed by the service. May span several segments. With `s`, the object whose stream is written. |
+| `s` | query | no | integer | Stream id to write (`1` is the main stream). When given, the body is the raw stream content instead of `<newContainer>`. |
+| `If-Match` | header | no | string | Write only if the stream's current ETag is this one, e.g. `"200000577"`. Exactly one entity tag; the weak form `W/"200000577"` counts as the same tag. `*` or a list of tags is refused (`400`). |
+| `If-None-Match` | header | no | string · one of `*` | Only `*` — write only if the stream does not exist yet. Any other value is refused (`400`). |
 
 #### Body
+
+`application/octet-stream` (required)
 
 `application/xml` (required), root element `<newContainer>`
 
@@ -5749,19 +6041,53 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Status | Meaning |
 | --- | --- |
-| `200` | Container created |
-| `400` | Bad Request |
-| `401` | Unauthorized |
-| `404` | Not Found |
+| `200` | Without `s`, the new container's id. With `s`, the Atom entry of the object with its updated stream lengths, and the new ETag of the stream in the `ETag` header. |
+| `400` | Bad Request — without `s`, `No folder id given.` or `No ChildFolderName could be found.`; with `s`, "'s' must be a stream id from 1 to 32768", "If-Match must be one entity tag", "If-None-Match must be *" or "Use either If-Match or If-None-Match". |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
+| `403` | Forbidden — with `s`, "This webshare is not set to update sharing", "You need to login to access this webshare", "Webshare requires invitation", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." |
+| `404` | Not Found — group or webshare not found; with `s`, "Path not found in webshare", "Folder '…' not found", "Document '…' not found" or "Path is not a document". |
+| `411` | Length Required — with `s`, "Missing Content-Length header." |
+| `412` | Precondition Failed — "Stream modified". The `If-Match` tag is not the stream's current ETag (or the stream does not exist), or `If-None-Match` `*` found an existing stream. Nothing is written. |
+| `413` | Request Entity Too Large — with `s`, the body exceeds the drive's maximum file size. |
+| `415` | Unsupported Media Type — with `s`, the `Content-Type` is not `application/octet-stream`. |
 | `500` | Internal Server Error |
+
+#### `200` · application/xml
+
+*Container created (without s)*
+
+```xml
+<newFolderId>{container_id}</newFolderId>
+```
+
+*Stream written (with s)*
+
+```xml
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://xcerion.com/directory.xsd">
+  <atom:title>gws3doc.txt</atom:title>
+  <atom:published>{datetime}</atom:published>
+  <atom:updated>{datetime}</atom:updated>
+  <atom:link rel="alternate" type="text/plain" href="{object_url}" length="16" stream_1_length="16" />
+  <atom:id>{atom_id}</atom:id>
+  <dc:folder>{container_id}</dc:folder>
+  <dc:document>{object_id}</dc:document>
+</atom:entry>
+```
+
+#### `412` · text/plain
+
+```text
+Stream modified
+```
 
 ### Example
 
 ```bash
 curl -X POST "https://api.cloudbackend.com/v1/wsg/{group_id}/{webshare_id}/{path}" \
   -H "Authorization: WRAP access_token=<session_token>" \
-  -H "Content-Type: application/xml; charset=utf-8" \
-  -d '<newContainer containerId="{container_id}" childName="{child_name}" />'
+  -H "If-Match: {if-match}" \
+  -H "If-None-Match: {if-none-match}" \
+  -H "Content-Type: application/octet-stream; charset=utf-8"
 ```
 
 ---
@@ -5791,6 +6117,30 @@ Basic authentication (any username, e.g. `anonymous`); otherwise `401`.
 [`GET /wsg[0_9]/{group_id}/{webshare_id}`](#tag/Group/operation/getv1wsgwebshare)
 for the webshare description. No request body.
 
+**Object responses.** The stream is sent with its stored content type (`text/*`
+types get `; charset=UTF-8` added), `Last-Modified`, and `ETag: "<id>"` — the
+ETag that conditional writes compare against (see `POST` with `?s=` on this
+URL). For a gzip-compressed response nginx sends it weakened as `W/"<id>"`; both
+forms are accepted back. Browser scripts can read `ETag` (CORS
+`Access-Control-Expose-Headers`). A matching `If-None-Match` answers
+`304 Not Modified`; an `If-Match` that does not match answers
+`412 Precondition Failed`.
+
+**Download headers.** With `?dl` and a file name (the `dl` value, or the stream
+title when `dl` is empty), the `Content-Type` is `application/octet-stream`,
+`Content-Disposition` is `attachment; filename="…"; filename*=UTF-8''…` (the
+URL-encoded name), and `Content-Transfer-Encoding: binary` and
+`Pragma: public` are added. Without a download file name, a stream whose type
+is not `audio/*`, `image/*`, `video/*`, `application/pdf` or
+`application/x-shockwave-flash` still gets `Content-Disposition: attachment`, so
+a browser does not render it in the page. The request header
+`Suppress-Header: content-disposition` leaves `Content-Disposition` out in both
+cases (the other download headers stay), on every host.
+
+To write a stream, rename or delete an object through this URL, see `POST` (with
+`?s=`), `PUT` and `DELETE` on the same path; they need a webshare with access
+`update`.
+
 ### Request
 
 `GET https://api.cloudbackend.com/v1/wsg[0_9]/{group_id}/{webshare_id}/{path}`
@@ -5813,7 +6163,9 @@ Needs no session token: the description above says how this operation is authori
 | `type` | query | no | string | Container listing only — filter on entry type. |
 | `datasrc` | query | no | string · one of `datamodel` | Container listing only — `datamodel` returns the listing in the data-model variant. |
 | `s` | query | no | integer | Object only — stream id to return. Default the object's default stream. |
-| `dl` | query | no | string | Object only — when present, the stream is sent as a download (`Content-Disposition: attachment`) with this file name; an empty `dl` uses the stream's title. |
+| `dl` | query | no | string | Object only — when present, the stream is sent as a download (`Content-Type: application/octet-stream`, `Content-Disposition: attachment`) with this file name; an empty `dl` uses the stream's title. `Suppress-Header` leaves the `Content-Disposition` header out. |
+| `Suppress-Header` | header | no | string · one of `content-disposition` | Object only — `content-disposition` (any letter case) sends no `Content-Disposition` header: neither the `attachment` one that `?dl` adds nor the default `attachment` for types that are not audio, image, video or PDF. The other `?dl` headers stay. Honoured on every host. Other values are ignored. |
+| `If-None-Match` | header | no | string | Object only — ETag(s) from an earlier response; the weak form `W/"…"` is accepted. When one matches the stream's current ETag (or the value is `*`), the answer is `304 Not Modified` without a body. |
 
 ### Responses
 
@@ -5821,10 +6173,12 @@ Needs no session token: the description above says how this operation is authori
 | --- | --- |
 | `200` | Container listing (Atom feed) or the object's content |
 | `303` | See Other — a container was addressed without a trailing slash; `Location` holds the URL with the slash |
+| `304` | Not Modified — `If-None-Match` matches the stream's current ETag (or is `*`). No body. |
 | `400` | Bad Request — `Meta-request with path not allowed`, or `'count' must be less than 1000` |
 | `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource`, or an `invited` webshare without login |
 | `403` | Forbidden — the caller was not invited to the webshare, or an object was requested from a `createonly` webshare |
 | `404` | Not Found — group, webshare or path not found |
+| `412` | Precondition Failed — an `If-Match` header that does not match the stream's current ETag. |
 | `500` | Internal Server Error |
 
 #### `200` · application/atom+xml · `<feed>`
@@ -5864,7 +6218,148 @@ Document 'invalid-file.txt' not found
 ### Example
 
 ```bash
-curl -X GET "https://api.cloudbackend.com/v1/wsg/{group_id}/{webshare_id}/{path}"
+curl -X GET "https://api.cloudbackend.com/v1/wsg/{group_id}/{webshare_id}/{path}" \
+  -H "Suppress-Header: {suppress-header}" \
+  -H "If-None-Match: {if-none-match}"
+```
+
+---
+
+## PUT /wsg[0_9]/{group_id}/{webshare_id}/{path} <a id="putv1wsgpath"></a>
+
+**Rename an object through a group webshare**
+
+Renames the object at `{path}` and returns its Atom entry. The body is
+`<renameDocument newName="…"/>`; `<renameObject newName="…"/>` is accepted too.
+A missing or empty `newName` gives `400` ("Missing newName entry").
+
+Needs the same access as a stream write (`POST` with `?s=` on this URL): access
+`update`, visibility `private` or `invited`, the webshare password with HTTP
+Digest or Basic authentication (any username) for a password-protected
+webshare, and an invited identity for an `invited` webshare. The rename is made
+on behalf of the webshare's owner (for a group webshare, the group's owner).
+
+### Request
+
+`PUT https://api.cloudbackend.com/v1/wsg[0_9]/{group_id}/{webshare_id}/{path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `group_id` | path | yes | integer | Group owning the webshare. |
+| `webshare_id` | path | yes | string | The webshare — a numeric id, or a name prefixed with `:` (e.g. `:Photos`). |
+| `path` | path | yes | string | Object inside the webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+
+#### Body
+
+`application/xml` (required), root element `<renameDocument>`
+
+```xml
+<renameDocument newName="gws3doc renamed.txt"/>
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Atom entry of the renamed object |
+| `400` | Bad Request — malformed XML, or `Missing newName entry` |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
+| `403` | Forbidden — "This webshare is not set to update sharing", "You need to login to access this webshare" or "Webshare requires invitation". |
+| `404` | Not Found — "Path not found in webshare", "Folder '…' not found", "Document '…' not found", or "Path is not a document" (the path names a container). |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<entry>`
+
+```xml
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://xcerion.com/directory.xsd">
+  <atom:title>gws3doc renamed.txt</atom:title>
+  <atom:published>{datetime}</atom:published>
+  <atom:updated>{datetime}</atom:updated>
+  <atom:link rel="alternate" type="text/plain" href="{object_url}" length="16" stream_1_length="16" />
+  <atom:id>{atom_id}</atom:id>
+  <dc:folder>{container_id}</dc:folder>
+  <dc:document>{object_id}</dc:document>
+</atom:entry>
+```
+
+#### `403` · text/plain
+
+```text
+This webshare is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Document 'doc2.txt' not found
+```
+
+### Example
+
+```bash
+curl -X PUT "https://api.cloudbackend.com/v1/wsg/{group_id}/{webshare_id}/{path}" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "Content-Type: application/xml; charset=utf-8" \
+  -d '<renameDocument newName="gws3doc renamed.txt"/>'
+```
+
+---
+
+## DELETE /wsg[0_9]/{group_id}/{webshare_id}/{path} <a id="deletev1wsgpath"></a>
+
+**Delete an object through a group webshare**
+
+Deletes the object at `{path}`, the same way the owner deletes it, on behalf of
+the webshare's owner (for a group webshare, the group's owner). Needs the same
+access as a stream write (`POST` with `?s=` on this URL). No request body; the
+answer is `204 No Content`. A later `GET` of the path gives `404`
+("Document '…' not found").
+
+### Request
+
+`DELETE https://api.cloudbackend.com/v1/wsg[0_9]/{group_id}/{webshare_id}/{path}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `group_id` | path | yes | integer | Group owning the webshare. |
+| `webshare_id` | path | yes | string | The webshare — a numeric id, or a name prefixed with `:` (e.g. `:Photos`). |
+| `path` | path | yes | string | Object inside the webshare, URL-encoded; may span several segments (`sub1/doc1.txt`). |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `204` | Object deleted. No response body. |
+| `401` | Unauthorized — `You need to provide a valid password to access this webshare-resource` |
+| `403` | Forbidden — "This webshare is not set to update sharing", "You need to login to access this webshare" or "Webshare requires invitation". |
+| `404` | Not Found — "Path not found in webshare", "Folder '…' not found", "Document '…' not found", or "Path is not a document" (the path names a container). |
+| `500` | Internal Server Error |
+
+#### `403` · text/plain
+
+```text
+This webshare is not set to update sharing
+```
+
+#### `404` · text/plain
+
+```text
+Document 'doc2.txt' not found
+```
+
+### Example
+
+```bash
+curl -X DELETE "https://api.cloudbackend.com/v1/wsg/{group_id}/{webshare_id}/{path}" \
+  -H "Authorization: WRAP access_token=<session_token>"
 ```
 
 ---
@@ -5929,7 +6424,11 @@ Returns the test emails captured for the caller's current group. Used to verify
 that email sending works.
 
 These are emails captured for inspection, not sent mail — to *send* a test email,
-use `POST /sendemail` with `test="true"`.
+use `POST /sendemail` with `test="true"`. Reading them removes them. Only the Owner or an
+Administrator of a test tenant may call it (`400 Not owner or admin of tenant` or
+`400 Not test tenant` otherwise); emails are kept per tenant.
+
+Also reachable as `/groups/{group_id}/testemail`; `{group_id}` is ignored.
 
 ### Request
 
@@ -5969,7 +6468,7 @@ curl -X GET "https://api.cloudbackend.com/v1/testemail" \
 
 **Delete test emails**
 
-Deletes all captured test emails for the caller's current group.
+Deletes all captured test emails for the caller's current tenant. Also reachable as `/groups/{group_id}/testemail`; `{group_id}` is ignored.
 
 ### Request
 
@@ -6000,7 +6499,10 @@ curl -X DELETE "https://api.cloudbackend.com/v1/testemail" \
 **Get exchange rate**
 
 Gets the current exchange rate for a currency pair, using the caller's current
-group's configuration.
+group's configuration. Only for the Owner or an Administrator of a test tenant; `from`
+and `to` are both required (`400 Missing parameter from or to`).
+
+Also reachable as `/groups/{group_id}/testexchangerate`; `{group_id}` is ignored.
 
 ### Request
 
@@ -6783,6 +7285,8 @@ Queries the group database.
 Omit `<query>` to list all groups under `<group id>`. This replaces the
 deprecated `GET /group` (`listGroups`) call.
 
+**Response format.** Always the data-model format (`db:` namespace). Nothing needs to be passed to get it; a `<datasrc>` element in the body is ignored.
+
 ### Request
 
 `POST https://api.cloudbackend.com/v1/querygroup`
@@ -6860,6 +7364,11 @@ addresses, or both.
 Setting `test="true"` sends a single test email. Where the template needs data that
 is only available in a real send, example data is substituted.
 
+The optional `project` attribute names one of the tenant's projects (its group id).
+The project's email rules for `type` are then used, falling back to the tenant's
+rules when the project has none, and the mail can use the `{$project}` and
+`{$projectid}` variables. It must be a project of the caller's tenant.
+
 ### Request
 
 `POST https://api.cloudbackend.com/v1/sendemail`
@@ -6896,6 +7405,14 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 </email>
 ```
 
+*Send with a project's email rules*
+
+```xml
+<email type="{email_type}" project="{project_id}">
+  <userIds>{user_id}</userIds>
+</email>
+```
+
 ### Responses
 
 | Status | Meaning |
@@ -6906,6 +7423,20 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `403` | Caller is not an admin or owner of the tenant |
 | `404` | Not Found |
 | `500` | Internal Server Error |
+
+#### `400` · text/plain
+
+*project is not a number*
+
+```text
+Invalid project
+```
+
+*project is not a project of the caller's tenant*
+
+```text
+Not a project of this tenant
+```
 
 ### Example
 
@@ -6925,7 +7456,7 @@ curl -X POST "https://api.cloudbackend.com/v1/sendemail" \
 
 **List email groups**
 
-Lists the email groups defined for the caller's current group.
+Lists the email groups defined for the caller's current group. Also reachable as `/groups/{group_id}/emailgroup`; `{group_id}` is ignored.
 
 ### Request
 
@@ -6968,7 +7499,7 @@ curl -X GET "https://api.cloudbackend.com/v1/emailgroup" \
 
 **Add an email group**
 
-Adds an email group to the caller's current group.
+Adds an email group to the caller's current group. Also reachable as `/groups/{group_id}/emailgroup`; `{group_id}` is ignored.
 
 | Field | Description |
 |---|---|
@@ -7040,7 +7571,7 @@ curl -X POST "https://api.cloudbackend.com/v1/emailgroup" \
 
 **Delete an email group**
 
-Deletes an email group from the caller's current group, identified by `name`.
+Deletes an email group from the caller's current group, identified by `name`. Also reachable as `/groups/{group_id}/emailgroup`; `{group_id}` is ignored.
 
 ### Request
 
@@ -7083,7 +7614,10 @@ curl -X DELETE "https://api.cloudbackend.com/v1/emailgroup" \
 
 Gets database and disk usage for the caller's current group.
 
-The caller must be the owner or an admin.
+The caller must be the owner or an admin (`400 Not owner or admin of tenant`
+otherwise).
+
+Also reachable as `/groups/{group_id}/diskusage`; `{group_id}` is ignored.
 
 | Attribute | Description |
 |---|---|
@@ -7118,6 +7652,201 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 ```bash
 curl -X GET "https://api.cloudbackend.com/v1/diskusage" \
   -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## GET /groups/{group_id}/projects <a id="getv1groupsprojects"></a>
+
+**List a tenant's projects**
+
+Lists the projects of a tenant. A project is a group directly under the tenant group
+whose type is `project`; it is created with
+`POST /groups/{group_id}/subgroups` and
+`type=project`, or an existing group is made one with
+`PUT /groups/{group_id}`. Deleted projects are not
+listed.
+
+`{group_id}` must be the tenant (root) group; any other group returns
+`400 Not a tenant group`. The caller needs `read` on the tenant's projects ACL
+(`GET /groups/{group_id}/projects;acl`),
+which by default the tenant's Owner and Administrator roles and a custom role named
+`Developer` have.
+
+Each `<project>` has the project's group `id`, `name`, `driveId`, `folderId` (the
+project's root container; this response keeps the internal attribute name) and
+`creatorUserId`; `frozen="true"` marks a frozen project. Projects are listed in the
+order they were created. No request body.
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/groups/{group_id}/projects`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `group_id` | path | yes | integer | The tenant group id. |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The tenant's projects (zero or more) |
+| `400` | Bad Request — "Not a tenant group" |
+| `401` | Unauthorized |
+| `403` | Forbidden — "You are not allowed to list projects" |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<projects>`
+
+```xml
+<projects>
+  <project id='{group_id}' name='{project_name}' driveId='{drive_id}' folderId='{container_id}' creatorUserId='{user_id}'/>
+  <project id='{group_id}' name='{project_name}' driveId='{drive_id}' folderId='{container_id}' creatorUserId='{user_id}' frozen='true'/>
+</projects>
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/groups/{group_id}/projects" \
+  -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## GET /groups/{group_id}/projects;acl <a id="getv1groupsprojectsacl"></a>
+
+**Get projects ACL**
+
+Returns the access control list (ACL) of a tenant's projects. `read` on this ACL is
+required to list projects
+(`GET /groups/{group_id}/projects`) and
+`write` to create projects or to make a group a project.
+
+The ACL exists only on tenant groups; any other `{group_id}` returns
+`400 Not a tenant group`. It is created on first use with all rights for the tenant's
+Owner and Administrator roles and `read` and `write` for a custom role named
+`Developer`, if the tenant has one at that moment.
+
+The caller needs `read` on this ACL itself (`403 Access denied.` otherwise).
+
+The ACL is an `<acl>` element with one `<user id>` entry per identity and one
+`<group id>` entry per group or role, each with the flags `read`, `write`, `delete` and
+`changeACL` (`1` or `0`). The `tag` attribute is the ACL's ETag.
+
+The same tag is returned in the `ETag` response header. Send it in `If-None-Match` to get `304 Not Modified` (no body) when the ACL is unchanged, and in `If-Match` when changing the ACL with PUT.
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/groups/{group_id}/projects;acl`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `group_id` | path | yes | integer | The tenant group id. |
+| `If-None-Match` | header | no | string | ETag from an earlier GET; if it still matches, the server answers `304 Not Modified`. |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The ACL |
+| `304` | Not Modified — `If-None-Match` equals the current ETag. |
+| `400` | Bad Request — "Not a tenant group" |
+| `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." (the caller has no `read` on this ACL) |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<acl>`
+
+```xml
+<acl tag='{etag}'>
+  <group id='{owner_role_id}' read='1' write='1' delete='1' changeACL='1'/>
+  <group id='{admin_role_id}' read='1' write='1' delete='1' changeACL='1'/>
+  <group id='{developer_role_id}' read='1' write='1' delete='0' changeACL='0'/>
+</acl>
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/groups/{group_id}/projects;acl" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "If-None-Match: {if-none-match}"
+```
+
+---
+
+## PUT /groups/{group_id}/projects;acl <a id="putv1groupsprojectsacl"></a>
+
+**Modify projects ACL**
+
+Replaces the access control list (ACL) of a tenant's projects. `read` on this ACL is
+required to list projects and `write` to create projects or to make a group a project.
+Only tenant groups have this ACL; any other `{group_id}` returns `400 Not a tenant group`.
+
+Send the complete new ACL as an `<acl>` document (same format as GET returns) and the current ETag in the `If-Match` header. Entries left out lose all rights; flags left out are `0`. At least one entry must have `changeACL="1"`. If the body carries a `tag` attribute it must equal `If-Match`.
+
+Only identities that have `changeACL` in the current ACL, or that are in the tenant group's Owner role, may change it (otherwise `403 Forbidden`). After a change, a `groupprojectsaclchanged` notification is sent to all members of the tenant group.
+
+If the ACL changed since the ETag was read, the call fails with `412 Precondition Failed`. On success the response is `204 No Content` and the `ETag` header carries the tag of the new ACL.
+
+### Request
+
+`PUT https://api.cloudbackend.com/v1/groups/{group_id}/projects;acl`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `group_id` | path | yes | integer | The tenant group id. |
+| `If-Match` | header | yes | string | Current ETag of the ACL, from the `tag` attribute or `ETag` header of GET. |
+
+#### Body
+
+`application/xml` (required), root element `<acl>`
+
+```xml
+<acl tag="{etag}">
+  <group id="{owner_role_id}" read="1" write="1" delete="1" changeACL="1" />
+  <group id="{admin_role_id}" read="1" write="1" delete="1" changeACL="1" />
+  <group id="{developer_role_id}" read="1" write="0" delete="0" changeACL="0" />
+</acl>
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `204` | ACL replaced |
+| `400` | Bad Request — "Not a tenant group", `If-Match` header missing ("Missing If-Match Header"), `tag` attribute differs from `If-Match`, an entry without a valid `id`, an invalid flag value, or no entry with `changeACL="1"`. |
+| `401` | Unauthorized |
+| `403` | Forbidden — the caller may not change this ACL. |
+| `404` | Not Found — "Group not found" |
+| `412` | Precondition Failed — the ACL changed since the ETag in `If-Match` was read. |
+| `500` | Internal Server Error |
+
+### Example
+
+```bash
+curl -X PUT "https://api.cloudbackend.com/v1/groups/{group_id}/projects;acl" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "If-Match: {if-match}" \
+  -H "Content-Type: application/xml; charset=utf-8" \
+  -d '<acl tag="{etag}">
+  <group id="{owner_role_id}" read="1" write="1" delete="1" changeACL="1" />
+  <group id="{admin_role_id}" read="1" write="1" delete="1" changeACL="1" />
+  <group id="{developer_role_id}" read="1" write="0" delete="0" changeACL="0" />
+</acl>'
 ```
 
 ---

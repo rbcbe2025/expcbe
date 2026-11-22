@@ -64,6 +64,14 @@ curl -X POST "https://api.cloudbackend.com/v1/port" \
 
 Creates pub/sub ports with drive and container listeners.
 
+A drive listener (`<drive id>`) is only granted for the caller's own drive, or a
+group drive of a group the caller owns or is a member of. Other drives are listed
+under `<failures>`. An `owner` attribute on `<drive>` is ignored. The caller's own
+drive listener also gets security notifications for the caller:
+`<updateUserSecurity userId="{user_id}" action="passwordChanged|mfaChanged" client="{client_id}">{datetime}</updateUserSecurity>`.
+After this notification the session is no longer valid, so the client should log
+out.
+
 ### Request
 
 `POST https://api.cloudbackend.com/v1/ports`

@@ -1,6 +1,6 @@
 # REST API — Tenant
 
-68 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
+75 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
 
 ## POST /emailrules/{organization_id} <a id="postv1emailrules"></a>
 
@@ -8,6 +8,30 @@
 
 Uploads the email rules of the caller's tenant, in the `<rules>` format that
 `GET /emailrules/{organization_id}` returns.
+
+**Project rules.** A `<rule>` can carry `project="{project_id}"` to make it a rule of
+one of the tenant's projects. For an event in that project — a sign-up through
+`POST /user` with `<project>`, a `projectJoin`
+when an identity joins the project, or
+`POST /sendemail` with `project` — the
+project's rules for that event type are used. When the project has no rule for the
+event type, the tenant's own rules are used instead. Project rules never fire for
+events outside the project.
+
+Project rules are event rules only, so they can't have `<filter>` criteria. The
+project must be a project of the caller's tenant. A project id that is already stored
+on one of the tenant's rules is always accepted, so the output of `GET /emailrules`
+can be uploaded again after a project is deleted.
+
+Mails sent for a project event can use the variables `{$project}` (the project's name)
+and `{$projectid}` (its group id).
+
+**A rule's own sender and recipients.** A `<mail>` can carry the attributes `sender`,
+`senderName`, `replyTo`, `replyToName`, `to`, `toName`, `cc`, `ccName`, `bcc` and
+`bccName`, as `GET /emailrules` writes them. An attribute wins over the child element
+of the same name (`<sender>`, `<replyTo>` and so on), which earlier rules XML used and
+is still read when the attribute is missing. So the output of `GET /emailrules` can
+be uploaded unchanged without losing a rule's own sender or recipients.
 
 The caller must be owner or administrator of the tenant. The `{organization_id}`
 path segment is ignored — the caller's own tenant is always used, and
@@ -27,12 +51,21 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 #### Body
 
-`application/xml` (required), root element `<emailrules>`
+`application/xml` (required), root element `<rules>`
 
 ```xml
-<emailrules>
-<rule name="rule-name" type="forward" destination="user@example.com" />
-</emailrules>
+<rules>
+  <rule project="{project_id}">
+    <event type="projectJoin" />
+    <mail name="Project welcome mail" group="welcome">
+      <subject>Welcome to {$project}</subject>
+      <body>
+        <h1 />
+        <p />
+      </body>
+    </mail>
+  </rule>
+</rules>
 ```
 
 ### Responses
@@ -40,9 +73,30 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `204` | Email rules uploaded successfully |
+| `400` | Bad Request. `N` is the 1-based position of the rule in the body. |
 | `401` | Unauthorized |
 | `404` | Not Found |
 | `500` | Internal Server Error |
+
+#### `400` · text/plain
+
+*project is not a number*
+
+```text
+Rule 1: invalid project 'abc'
+```
+
+*project is not a project of the caller's tenant*
+
+```text
+Rule 1: {project_id} isn't a project of this tenant
+```
+
+*A project rule with filter criteria*
+
+```text
+Rule 1: project rules can't have filters
+```
 
 ### Example
 
@@ -50,9 +104,18 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 curl -X POST "https://api.cloudbackend.com/v1/emailrules/{organization_id}" \
   -H "Authorization: WRAP access_token=<session_token>" \
   -H "Content-Type: application/xml; charset=utf-8" \
-  -d '<emailrules>
-<rule name="rule-name" type="forward" destination="user@example.com" />
-</emailrules>'
+  -d '<rules>
+  <rule project="{project_id}">
+    <event type="projectJoin" />
+    <mail name="Project welcome mail" group="welcome">
+      <subject>Welcome to {$project}</subject>
+      <body>
+        <h1 />
+        <p />
+      </body>
+    </mail>
+  </rule>
+</rules>'
 ```
 
 ---
@@ -65,7 +128,17 @@ Returns the tenant's email rules — the mails sent on events such as `signup` o
 `share` — in the same `<rules>` format that
 `POST /emailrules/{organization_id}`
 uploads. Each `<rule>` names its `<event type>`, optional `<action>` elements and
-the `<mail>` to send (name, group, sender, reply-to, subject and body).
+the `<mail>` to send (name, group, sender, reply-to, subject and body). A rule of one
+of the tenant's projects has a `project` attribute with the project's group id; rules
+without it are the tenant's own.
+
+A mail used by only one rule is written in full; its `<sender>`, `<senderName>`,
+`<replyTo>` and `<replyToName>` elements are the mail's defaults. A mail used by
+several rules is written as `<mail name="..."/>` only. In both forms the rule's own
+sender and recipients are `<mail>` attributes: `sender` and `senderName`, `replyTo`
+and `replyToName`, `to` and `toName`, `cc` and `ccName`, `bcc` and `bccName`, each
+pair written only when set (in a full `<mail>`, a sender or reply-to pair only when
+it differs from the defaults).
 
 The caller must be owner or administrator of the tenant. The `{organization_id}`
 path segment is ignored — the caller's own tenant is always used, and
@@ -116,7 +189,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
   </rule>
   <rule created="{datetime}" updated="{datetime}">
     <event type="share" />
-    <mail name="User shared notification" group="sharing" created="{datetime}" updated="{datetime}" deleted="">
+    <mail name="User shared notification" replyTo="support@example.com" replyToName="Example Support" bcc="audit@example.com" bccName="" group="sharing" created="{datetime}" updated="{datetime}" deleted="">
       <description />
       <sender />
       <senderName />
@@ -419,6 +492,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | The updated account type |
 | `400` | Bad Request |
 | `401` | Unauthorized |
+| `403` | Forbidden — `account_type_id` is an account type of another tenant. The caller must be owner or administrator of the tenant the account type belongs to. |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -446,6 +520,12 @@ Missing uiName attribute
 
 ```text
 Not owner or admin of tenant
+```
+
+#### `403` · text/plain
+
+```text
+Not owner or admin of the account type's tenant
 ```
 
 #### `404` · text/plain
@@ -1210,7 +1290,12 @@ curl -X DELETE "https://api.cloudbackend.com/v1/products/{tenant_id}" \
 
 **Get tenant options**
 
-Returns tenant-level options and configuration.
+Returns tenant-level options and configuration: every option stored for the
+caller's tenant, as `<option name value>` elements. See
+`POST /tenantOptions/{tenant_id}` for the
+options the service reads.
+
+The caller must be owner or administrator of the tenant.
 
 ### Request
 
@@ -1272,7 +1357,20 @@ curl -X GET "https://api.cloudbackend.com/v1/tenantOptions/{tenant_id}" \
 
 **Set tenant options**
 
-Sets or updates tenant-level options.
+Sets or updates tenant-level options. Each `<option>` needs a non-empty `name` and a
+`value`; an option that is already set is overwritten. Any name can be stored. These
+options change how the service behaves for the tenant:
+
+| Option | Values |
+|---|---|
+| `purchase.invoice.enable` | `0` turns off new invoice purchases (`paymentMethod` `invoice` in `POST /users/{user_id}/purchases` then gives `403`). `1` or not set: invoices are allowed. Only `0` and `1` are accepted. Stripe or PayPal don't need to be set up to turn invoices off. |
+| `usersearch.enable` | `1` turns on user search for the tenant. Not set or `0`: off. |
+| `email.user.max-per-day` | Maximum number of emails a user may send per day; the name can be suffixed with `.<account type>`. |
+| `pow.signup.enable` | `1` or `true` requires a proof-of-work solution to sign up, see `POST /user`. Anything else: not required. |
+| `pow.signup.difficulty` | Leading zero bits of the tenant's proof-of-work challenges, `1` to `32`. Not set or out of range: `18`. |
+| `honeypot.signup.mode` | What happens when a sign-up fills in the hidden `<website>` field: `log` logs it, `enforce` logs and rejects it with `422`. Anything else: nothing. |
+
+The caller must be owner or administrator of the tenant.
 
 ### Request
 
@@ -1297,6 +1395,23 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 </tenantOptions>
 ```
 
+*Any options*
+
+```xml
+<tenantOptions>
+  <option name="option1" value="value1"/>
+  <option name="option2" value="value2"/>
+</tenantOptions>
+```
+
+*Turn off invoice purchases*
+
+```xml
+<tenantOptions>
+  <option name="purchase.invoice.enable" value="0"/>
+</tenantOptions>
+```
+
 ### Responses
 
 | Status | Meaning |
@@ -1304,12 +1419,39 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | Options set successfully |
 | `401` | Unauthorized |
 | `404` | Not Found |
+| `422` | Unprocessable Entity — an option without a name or value, an invalid `purchase.invoice.enable` value, or `purchase.invoice.enable` set to `0` for CloudMe. No option is stored. |
 | `500` | Internal Server Error |
 
 #### `200` · text/plain
 
 ```text
 OK
+```
+
+#### `422` · text/plain
+
+*purchase.invoice.enable not 0 or 1*
+
+```text
+'purchase.invoice.enable' must be 0 or 1
+```
+
+*Invoices can't be turned off for CloudMe*
+
+```text
+Invoice can't be disabled for CloudMe
+```
+
+*An option without a name*
+
+```text
+Missing or empty 'name' attribute
+```
+
+*An option without a value*
+
+```text
+Missing 'value' attribute
 ```
 
 ### Example
@@ -2435,8 +2577,11 @@ curl -X GET "https://api.cloudbackend.com/v1/tenantkey" \
 **Get billing info**
 
 Returns the user's billing information. If none has been stored yet, defaults are
-returned: the user's e-mail and the country from the user's config. `<country>` is
-the country code and `<countryFull>` its full name.
+returned: the user's e-mail and the user's country. `<country>` is the upper-case
+country code and `<countryFull>` its full name.
+
+`<country>` is the user's `/user/country` config value when that is a known country
+code; otherwise it is guessed from the user's locale, and `US` if that fails too.
 
 Only the user itself may call it.
 
@@ -2474,8 +2619,8 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
   <address></address>
   <city></city>
   <zipCode></zipCode>
-  <country>us</country>
-  <countryFull>United States</countryFull>
+  <country>SE</country>
+  <countryFull>Sverige</countryFull>
 </billing>
 ```
 
@@ -2492,9 +2637,15 @@ curl -X GET "https://api.cloudbackend.com/v1/users/{user_id}/billing" \
 
 **Update billing info**
 
-Stores the user's billing information. All elements are optional. If `<country>` is
-empty, the country from the user's config is used. If `<vat>` (a VAT number) is
-given, `<name>` and the country must be set too, and the VAT number is validated.
+Stores the user's billing information. `<country>` is required: a country code such
+as `SE`, in any case (it is stored upper case). A missing, empty or unknown country
+(for example a country name such as `Sweden`) gives `400 Missing or invalid country`.
+The other elements are optional.
+
+If `<vat>` (a VAT number) is given, `<name>` must be set too, and the VAT number is
+validated. An EU VAT number is checked with VIES; it may be entered with its country
+prefix (`DK26121264`; `EL` or `GR` for Greece) and with spaces, dots or dashes, which
+are removed before the check.
 
 Only the user itself may call it.
 
@@ -2525,7 +2676,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
   <address></address>
   <city></city>
   <zipCode></zipCode>
-  <country>us</country>
+  <country>SE</country>
 </billing>
 ```
 
@@ -2534,10 +2685,30 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `204` | Billing information stored |
-| `400` | Bad Request (missing required business parameters, invalid VAT number, or the information could not be stored) |
+| `400` | Bad Request (missing or invalid country, missing required business parameters, invalid VAT number, or the information could not be stored) |
 | `401` | Unauthorized |
 | `403` | Forbidden (not the logged-in user) |
 | `500` | Internal Server Error |
+
+#### `400` · text/plain
+
+*country missing or not a known country code*
+
+```text
+Missing or invalid country
+```
+
+*VAT number without name*
+
+```text
+Missing required business parameters
+```
+
+*VAT number rejected*
+
+```text
+Invalid VAT number
+```
 
 ### Example
 
@@ -2555,7 +2726,7 @@ curl -X PUT "https://api.cloudbackend.com/v1/users/{user_id}/billing" \
   <address></address>
   <city></city>
   <zipCode></zipCode>
-  <country>us</country>
+  <country>SE</country>
 </billing>'
 ```
 
@@ -2565,9 +2736,38 @@ curl -X PUT "https://api.cloudbackend.com/v1/users/{user_id}/billing" \
 
 **Get invoice**
 
-Get invoice as html, xml, json (not implemented) or pdf.
+Gets one of `{user_id}`'s invoices as HTML, XML or PDF.
 
-> **Partly implemented.** Get invoice as html, xml, json (not implemented) or pdf.
+`?id=purchase` (the default) takes `{purchase_id}` as a purchase id; `?id=invoice`
+takes it as an invoice number, which can also be the number of a usage-based invoice
+or a commission invoice of a tenant. `?format=` is `html` (default), `xml` or `pdf`,
+in any case.
+
+A commission invoice bills CloudBackend's commission on a tenant's sales of one month
+(see `GET /reports/commission/{month}`).
+It is in EUR and has one product line per commission rate, described like
+`Commission 5 % of sales 20.00 EUR`, with VAT as for a business purchase (reverse
+charge, Swedish VAT or the VAT of the owner's country).
+
+Find the ids with
+`GET /users/{user_id}/invoices`:
+`purchaseId` with `?id=purchase`, or `number` with `?id=invoice`. Purchases that have
+no stored invoice number (e.g. PayPal purchases) are listed with a generated number
+that `?id=invoice` can't find (`400 Invalid invoice number`); fetch those by
+`purchaseId`.
+
+The caller must be the user itself, or an Owner or Administrator of the user's tenant
+(the current tenant); `403 Access denied.` otherwise. Owners and Administrators get
+the same invoice as the user, both for purchase invoices and usage-based invoices. A
+usage-based or commission invoice belongs to the tenant's owner: for any other
+`{user_id}` it is not found.
+
+Purchases paid by invoice have an invoice from the start, other purchases once they
+are paid. Stripe purchases have no invoice here: Stripe makes their invoices.
+
+An invoice file is generated the first time it is asked for in a format, stored in
+CloudBackend's database (no longer in the tenant's `/System/UserInvoices` folder) and
+returned unchanged after that. The response body is the file itself.
 
 ### Request
 
@@ -2579,23 +2779,64 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
-| `user_id` | path | yes | integer |  |
-| `purchase_id` | path | yes | integer |  |
+| `user_id` | path | yes | integer | Identity the invoice was issued to. |
+| `purchase_id` | path | yes | string | A purchase id (`?id=purchase`) or an invoice number (`?id=invoice`). |
+| `id` | query | no | string · one of `purchase`, `invoice` · default `purchase` | Whether `{purchase_id}` is a purchase id or an invoice number. |
+| `format` | query | no | string · one of `html`, `xml`, `pdf` · default `html` | (optional) Format of the invoice file, case-insensitive. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
-| `200` | Successful response |
-| `400` | Bad Request |
+| `200` | The invoice file, `text/html`, `application/xml` or `application/pdf` by `format` |
+| `400` | Bad Request — `Invalid purchase id`, `Invalid invoice number`, `Invalid id kind` or `Format not supported` |
 | `401` | Unauthorized |
-| `404` | Not Found |
+| `403` | Forbidden — not the user itself or an Owner or Administrator of the user's tenant |
+| `404` | Not Found — not the user's purchase or invoice, or the purchase has no invoice |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<invoice>`
 
 ```xml
-<invoice purchaseId="PURCHASE-ID" date="2024-01-15" amount="9.99" currency="USD" status="paid" />
+<invoice><user id='1001'/><purchase><paymentMethod>invoice</paymentMethod>…</purchase>…<products><product price='9900' amount='1' total='9900' description='Pro monthly'/></products>…</invoice>
+```
+
+#### `400` · text/plain
+
+```text
+Invalid invoice number
+```
+
+#### `403` · text/plain
+
+```text
+Access denied.
+```
+
+#### `404` · text/plain
+
+*No such purchase of the user*
+
+```text
+No purchase found with that id
+```
+
+*A purchase that is not paid by invoice and not paid yet*
+
+```text
+No invoice found with that id, the purchase hasn't been paid
+```
+
+*A Stripe purchase*
+
+```text
+No invoice found with that id, Stripe creates the invoices of Stripe purchases
+```
+
+*A usage-based invoice and {user_id} is not the tenant's owner*
+
+```text
+No invoice found with that id
 ```
 
 ### Example
@@ -2609,16 +2850,52 @@ curl -X GET "https://api.cloudbackend.com/v1/users/{user_id}/invoices/{purchase_
 
 ## GET /users/{user_id}/invoices <a id="getv1usersinvoiceslist"></a>
 
-**List unpaid invoices**
+**List invoices**
 
-Lists the caller's unpaid invoices: purchases paid by invoice that have not been
-paid yet, plus unpaid usage-based invoices of tenants the caller owns.
-`{user_id}` must be the logged-in identity (`403` otherwise).
+Lists `{user_id}`'s invoices, newest first.
+
+- By default the unpaid ones: purchases paid by invoice that have not been paid
+  yet, plus unpaid usage-based and commission invoices of tenants `{user_id}` owns.
+  Credit notes and invoices that have been credited are not listed; an unpaid
+  invoice whose credit note has been deleted is listed again.
+- `paid=true` lists the paid ones instead: paid purchases (a PayPal subscription
+  only once a payment has been received) and paid usage-based and commission
+  invoices of tenants `{user_id}` owns. Credit notes are not listed.
+- `all=true` lists both, plus credit notes and credited invoices. `all` wins over
+  `paid`.
+
+Stripe purchases are never listed: Stripe makes their invoices.
+
+The caller must be the user itself, or an Owner or Administrator of the user's tenant
+(the current tenant); `403 Access denied.` otherwise.
+
+Paging: `offset` (default `0`) and `count` (at most `1000`). With `paid` or `all`,
+`count` defaults to `100`; the default unpaid list returns every unpaid invoice
+unless `count` is given. `total` on `<invoices>` is the number of invoices in the
+chosen mode before paging.
 
 Each `<invoice>` has the invoice `number`, the `created`, `due`, `start` and `end`
-times (Atom format), the price in cents (`priceCents`), the `currency` and the
-subscription length in months (`durationMonths`). Fetch one invoice as HTML, XML or
-PDF with `GET /users/{user_id}/invoices/{purchase_id}?id=invoice`.
+times (Atom format, UTC), the price in cents (`priceCents`), the `currency`, the
+subscription length in months (`durationMonths`), `paid` (`true` or `false`, always
+`false` for a credit note), `kind` (`invoice`, `credit-note` or `credited-invoice`)
+and either `purchaseId` (an invoice of a purchase) or `usagePurchaseId` (a
+usage-based invoice or a commission invoice). A credit note also has `credits`, the
+number of the invoice it credits.
+
+A commission invoice bills CloudBackend's commission on one month of a tenant's sales
+(see `GET /reports/commission/{month}`).
+It is listed like a usage-based invoice: `kind='invoice'`, `usagePurchaseId`,
+`currency='EUR'`, `durationMonths='1'`, `start` and `end` in the month of the
+commissions, and `priceCents` with VAT. The list doesn't tell the two apart; the
+invoice itself does. Tenant owners are CloudBackend users, so these invoices are
+listed for the owner's user in the `cloudbackend` tenant. A commission invoice still
+unpaid 14 days after its `due` date stops the tenant's sales (see
+`POST /users/{user_id}/purchases`).
+
+Fetch one invoice as HTML, XML or PDF with
+`GET /users/{user_id}/invoices/{purchase_id}`,
+passing `purchaseId` (`?id=purchase`) or a usage-based or commission invoice's
+`number` (`?id=invoice`).
 
 Works for blocked accounts too. No request body.
 
@@ -2632,23 +2909,58 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
-| `user_id` | path | yes | integer | The logged-in identity. |
+| `user_id` | path | yes | integer | Identity the invoices were issued to. |
+| `paid` | query | no | string · one of `true`, `1`, `false`, `0` | (optional) `true` or `1` to list the paid invoices instead of the unpaid ones. |
+| `all` | query | no | string · one of `true`, `1`, `false`, `0` | (optional) `true` or `1` to list unpaid and paid invoices, credit notes and credited invoices. |
+| `offset` | query | no | integer · default `0` | (optional) Number of invoices to skip. |
+| `count` | query | no | integer | (optional) Maximum number of invoices to return, at most 1000. Default 100 with `paid` or `all`; the default unpaid list has no limit unless `count` is given. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
-| `200` | Unpaid invoices (zero or more) |
+| `200` | Invoices (zero or more), newest first |
+| `400` | Bad Request — `count can be at most 1000`, or `Invalid value for parameter '…'` (an `offset` or `count` that is not a number) |
 | `401` | Unauthorized |
-| `403` | Forbidden — `{user_id}` is not the logged-in identity |
+| `403` | Forbidden — not the user itself or an Owner or Administrator of the user's tenant |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<invoices>`
 
+*Default, unpaid invoices*
+
 ```xml
-<invoices>
-  <invoice number='CB-1042' created='2026-10-01T08:00:00Z' due='2026-10-31T08:00:00Z' start='2026-10-01T08:00:00Z' end='2026-11-01T08:00:00Z' priceCents='9900' currency='EUR' durationMonths='1'/>
+<invoices total='1'>
+  <invoice number='CB-1042' created='2026-10-01T08:00:00Z' due='2026-10-31T08:00:00Z' start='2026-10-01T08:00:00Z' end='2026-11-01T08:00:00Z' priceCents='9900' currency='EUR' durationMonths='1' paid='false' kind='invoice' purchaseId='8812'/>
 </invoices>
+```
+
+*all=true, with a credit note and the invoice it credits*
+
+```xml
+<invoices total='3'>
+  <invoice number='CB-1057' created='2026-11-02T09:14:00Z' due='2026-12-02T09:14:00Z' start='2026-10-01T08:00:00Z' end='2026-11-01T08:00:00Z' priceCents='-9900' currency='EUR' durationMonths='1' paid='false' kind='credit-note' purchaseId='8840' credits='CB-1042'/>
+  <invoice number='CB-1042' created='2026-10-01T08:00:00Z' due='2026-10-31T08:00:00Z' start='2026-10-01T08:00:00Z' end='2026-11-01T08:00:00Z' priceCents='9900' currency='EUR' durationMonths='1' paid='false' kind='credited-invoice' purchaseId='8812'/>
+  <invoice number='CB-1031' created='2026-09-01T00:00:00Z' due='2026-09-30T00:00:00Z' start='2026-08-01T00:00:00Z' end='2026-09-01T00:00:00Z' priceCents='4900' currency='EUR' durationMonths='1' paid='true' kind='invoice' usagePurchaseId='77'/>
+</invoices>
+```
+
+*No invoices*
+
+```xml
+<invoices total="0" />
+```
+
+#### `400` · text/plain
+
+```text
+count can be at most 1000
+```
+
+#### `403` · text/plain
+
+```text
+Access denied.
 ```
 
 ### Example
@@ -2666,12 +2978,25 @@ curl -X GET "https://api.cloudbackend.com/v1/users/{user_id}/invoices" \
 
 Credits an issued invoice: a credit note (a new invoice with negated amounts that
 refers to the original purchase) is created for `{user_id}` and the action is logged
-in the identity's purchase transactions. Only a tenant Owner or Administrator may
-call it (`400 Not owner or admin of tenant` otherwise).
+in the identity's purchase transactions. Only an Owner or Administrator of
+`{user_id}`'s tenant may call it: `400 Not owner or admin of tenant` when the caller
+administers no tenant, `403 Access denied.` when `{user_id}` is not a user of the
+caller's tenant.
+
+Only an invoice of one of `{user_id}`'s purchases can be credited, and only once: an
+unknown invoice number, another identity's invoice, a usage-based invoice, a credit
+note, or an invoice that has already been credited gives
+`400 Invoice can't be credited`. Credit note lines show negative prices, matching
+their negative totals.
 
 The body is a `<credit-note>` with a required `<reason>` and an optional
 `<recordedBy>` naming who credited the invoice. The reason is written to the
 transaction log only.
+
+The credited invoice is no longer listed as unpaid. Credit notes and credited
+invoices are listed by
+`GET /users/{user_id}/invoices?all=true`
+(`kind` `credit-note` and `credited-invoice`).
 
 Works for blocked accounts too. The response has no body.
 
@@ -2704,14 +3029,29 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `200` | Invoice credited |
-| `400` | Bad Request — `Missing reason`, `Not owner or admin of tenant`, or a body that is not XML |
+| `400` | Bad Request — `Missing reason`, `Not owner or admin of tenant`, `Invoice can't be credited`, or a body that is not XML |
 | `401` | Unauthorized |
+| `403` | Forbidden — `{user_id}` is not a user of the caller's tenant |
 | `500` | Internal Server Error |
 
 #### `400` · text/plain
 
+*No reason*
+
 ```text
 Missing reason
+```
+
+*Unknown, another identity's, usage-based, already credited, or a credit note*
+
+```text
+Invoice can't be credited
+```
+
+#### `403` · text/plain
+
+```text
+Access denied.
 ```
 
 ### Example
@@ -2732,8 +3072,15 @@ curl -X POST "https://api.cloudbackend.com/v1/users/{user_id}/invoices/{invoice_
 
 **Mark an invoice as paid**
 
-Records a payment for an invoice and marks it as paid. Only a tenant Owner or
-Administrator may call it (`400 Not owner or admin of tenant` otherwise).
+Records a payment for an invoice and marks it as paid. Only an Owner or Administrator
+of `{user_id}`'s tenant may call it: `400 Not owner or admin of tenant` when the
+caller administers no tenant, `403 Access denied.` when `{user_id}` is not a user of
+the caller's tenant. An identity can't mark its own invoices as paid unless it
+administers its tenant.
+
+The invoice must be `{user_id}`'s: an invoice of one of its purchases, or for a
+usage-based invoice, `{user_id}` must be the tenant's owner. Otherwise the call fails
+with `400 Invalid invoice number` and nothing is marked as paid.
 
 The body is a `<payment>` with the `currency` attribute and the children
 `<amount>` and `<bankFee>` (in cents), `<paidAt>` (date the money arrived,
@@ -2743,6 +3090,10 @@ The body is a `<payment>` with the `currency` attribute and the children
 For a subscription invoice the identity's drive is unlocked. For a usage-based
 (tenant) invoice the tenant and its owner are unblocked when no unpaid invoices
 remain.
+
+The invoice then moves from the default (unpaid) list of
+`GET /users/{user_id}/invoices` to
+its `paid=true` list.
 
 Works for blocked accounts too. The response has no body.
 
@@ -2779,12 +3130,19 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | Payment recorded |
 | `400` | Bad Request — `Missing payment data`, `Invalid invoice number`, `Failed marking purchase as paid: …` (unknown invoice number) or `Not owner or admin of tenant` |
 | `401` | Unauthorized |
+| `403` | Forbidden — `{user_id}` is not a user of the caller's tenant |
 | `500` | Internal Server Error |
 
 #### `400` · text/plain
 
 ```text
 Missing payment data
+```
+
+#### `403` · text/plain
+
+```text
+Access denied.
 ```
 
 ### Example
@@ -2812,7 +3170,10 @@ For each purchase: payment method (`invoice` or `paypal`), creation time, invoic
 number, an optional `<creditedPurchase>` (another `<purchase>`), the time payment was
 received (when paid), due date, price with currency, and the coupon used (if any).
 
-Only the user itself may call it.
+Only the user itself may call it. The payment processor events of the purchases
+(payments, failed payments, refunds, cancelled subscriptions) are listed by
+`GET /users/{user_id}/purchase-records`,
+which the tenant's Owner and Administrators may call too.
 
 ### Request
 
@@ -2872,16 +3233,41 @@ Body elements:
 - `paymentMethod` (required): `invoice`, `paypal` or `stripe`.
 - `products/product` (one or more): `id` and `amount` (max 100000). A numeric `id`
   is an account type product; a non-numeric `id` is a tenant product. Both kinds can
-  not be mixed in one purchase.
+  not be mixed in one purchase. A user has one account type, so a purchase can hold
+  only one account type product (not sub-account products), with `amount` 1.
 - `coupon/@code` (optional): coupon code.
 - `@sendEmail` (optional): the only supported value is `signup`, which also sends the
   sign-up e-mail.
-- `billing` (optional): `vat`, `name`, `reference`, `reference2`, `email`, `phone`,
-  `address`, `city`, `zipCode`, `country`. If a VAT number is set, `name` must be set
-  too. If `country` is empty, the user's `/user/country` config value is used.
+- `billing` (required): `vat`, `name`, `reference`, `reference2`, `email`, `phone`,
+  `address`, `city`, `zipCode`, `country`. `country` is required: a country code
+  such as `SE` (any case). If a VAT number is set, `name` must be set too. An EU VAT
+  number may be entered with its country prefix (`DK26121264`; `EL` or `GR` for
+  Greece) and with spaces, dots or dashes; these are removed before it is checked
+  with VIES.
 - `currency` (optional): must be `EUR` (the default).
 - `returnUrl` (required for `stripe`): where Stripe returns after checkout.
 - `uiMode` (optional, `stripe` only): Stripe checkout UI mode, default `embedded_page`.
+
+Payment accounts: account type products are paid to the tenant's Stripe or PayPal
+account. Tenant products linked to a project (see
+`GET /tproducts/{group_id}`) are paid to the
+project's account when the project has Stripe or PayPal credentials of its own, and
+to the tenant's account otherwise. Products that would be paid to different accounts
+can't be bought together.
+
+Only tenants whose owner has a paid CloudBackend account can sell: when the owner of
+the user's tenant has the `FREE` account type, or the owner's paid period ended more
+than 14 days ago, the purchase is refused with
+`403 Purchases are not available for this tenant`. The same happens while the tenant
+has a commission invoice (CloudBackend's commission on the tenant's sales, see
+`GET /reports/commission/{month}`)
+that is still unpaid 14 days after its due date; sales start again once it is paid.
+CloudBackend's own tenants and test tenants can always sell. Renewals and
+cancellations of existing subscriptions are not affected.
+
+Invoice payments can be turned off by the tenant with the tenant option
+`purchase.invoice.enable` set to `0` (see
+`POST /tenantOptions/{tenant_id}`).
 
 Responses by payment method:
 
@@ -2952,6 +3338,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
   </products>
   <billing>
     <email>{email}</email>
+    <country>SE</country>
   </billing>
 </purchase>
 ```
@@ -2962,9 +3349,9 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | Payment URL (PayPal) or client secret (Stripe) |
 | `204` | Invoice purchase created |
-| `400` | Bad Request (missing products, mixed product kinds, invalid payment method, amount too high, currency not EUR, missing returnUrl, not a valid coupon code, usage based product not supported by the payment method) |
+| `400` | Bad Request (missing products, mixed product kinds, invalid payment method, amount too high, currency not EUR, missing returnUrl, not a valid coupon code, usage based product not supported by the payment method, missing or unknown billing country, VAT number without name, invalid VAT number, more than one account type, products paid to different accounts) |
 | `401` | Unauthorized |
-| `403` | Forbidden (not the logged-in user) |
+| `403` | Forbidden |
 | `500` | Internal Server Error |
 
 #### `200` · application/json
@@ -2979,6 +3366,58 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 ```xml
 <auth url='https://www.paypal.com/cgi-bin/webscr?cmd=_xclick-subscriptions&amp;...' tid='{transaction_id}'/>
+```
+
+#### `400` · text/plain
+
+*billing/country missing or not a known country code*
+
+```text
+Missing or invalid country
+```
+
+*More than one account type product, or amount above 1*
+
+```text
+Multiple account types
+```
+
+*Tenant products paid to different Stripe or PayPal accounts*
+
+```text
+Products from different payment accounts
+```
+
+*VAT number without name*
+
+```text
+Missing required business parameters
+```
+
+*VAT number rejected*
+
+```text
+Invalid VAT number
+```
+
+#### `403` · text/plain
+
+*Not the logged-in user*
+
+```text
+Access denied.
+```
+
+*The tenant's owner doesn't pay for CloudBackend, or the tenant has an overdue commission invoice*
+
+```text
+Purchases are not available for this tenant
+```
+
+*paymentMethod invoice and the tenant has turned invoices off*
+
+```text
+Invoice payments are not enabled for this tenant
 ```
 
 ### Example
@@ -2998,48 +3437,6 @@ curl -X POST "https://api.cloudbackend.com/v1/users/{user_id}/purchases" \
     <country>SE</country>
   </billing>
 </purchase>'
-```
-
----
-
-## POST /users/{user_id}/tpurchases <a id="postv1userstpurchases"></a>
-
-**Create PayPal purchase URL (not implemented)**
-
-**Not implemented.** The server has no route for `/users/{user_id}/tpurchases`, so
-every request is answered with `404 Not Found`. No request body.
-
-Tenant products are bought with `POST /users/{user_id}/purchases` instead: use
-`<paymentMethod>paypal</paymentMethod>` (or `stripe`) and give the tenant product ids
-(non-numeric) in `<products><product id="..." amount="..."/></products>`. The PayPal
-response is `<auth url='...'/>`; visit the URL to pay. After payment, PayPal notifies
-the server (this can take a few minutes) and the purchase is recorded.
-
-> **Not implemented.** The specification lists this operation, but the server does not carry it out; the description above says what a request gets instead.
-
-### Request
-
-`POST https://api.cloudbackend.com/v1/users/{user_id}/tpurchases`
-
-Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
-
-#### Parameters
-
-| Name | In | Required | Type | Notes |
-| --- | --- | --- | --- | --- |
-| `user_id` | path | yes | integer | Id of the user. |
-
-### Responses
-
-| Status | Meaning |
-| --- | --- |
-| `404` | Not Found (route does not exist) |
-
-### Example
-
-```bash
-curl -X POST "https://api.cloudbackend.com/v1/users/{user_id}/tpurchases" \
-  -H "Authorization: WRAP access_token=<session_token>"
 ```
 
 ---
@@ -3095,10 +3492,18 @@ curl -X GET "https://api.cloudbackend.com/v1/vat-numbers/" \
 
 **Add a tenant VAT number**
 
-Registers a VAT number for the caller's tenant. The number (in `<number>`) is
-upper-cased, must be at least 3 letters/digits starting with the country code
-(`EL` is accepted for Greece), and is validated with the EU VIES service before it
-is stored. Only the tenant Owner or an Administrator may call it.
+Registers a VAT number for the caller's tenant. Only EU VAT numbers can be added: the
+tenant's newest number is the seller's number used for reverse charge, VIES checks
+and the OSS report, which all need an EU number.
+
+The number (in `<number>`) is upper-cased and must be at least 3 letters/digits,
+starting with the EU country code (`EL` or `GR` for Greece). Spaces, dots and dashes
+are not accepted here. A number whose prefix is not an EU country gives
+`400 Only EU VAT numbers can be added`. The number is validated with the EU VIES
+service before it is stored, and is stored as sent (upper case). It takes effect
+from the time it is added (its `effective_from`, inclusive); an OSS VAT report uses
+the number in effect at the last second of its quarter. Only the tenant Owner or an
+Administrator may call it.
 
 The trailing slash is required. Works for blocked tenants too. The response has no
 body.
@@ -3124,14 +3529,22 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `200` | VAT number stored |
-| `400` | Bad Request — `Invalid VAT number` (malformed or rejected by VIES), or `Not owner or admin of tenant` |
+| `400` | Bad Request — `Invalid VAT number` (malformed or rejected by VIES), `Only EU VAT numbers can be added`, or `Not owner or admin of tenant` |
 | `401` | Unauthorized |
 | `500` | Internal Server Error |
 
 #### `400` · text/plain
 
+*Malformed, or rejected by VIES*
+
 ```text
 Invalid VAT number
+```
+
+*Not an EU country prefix (e.g. NO or GB)*
+
+```text
+Only EU VAT numbers can be added
 ```
 
 ### Example
@@ -3155,8 +3568,10 @@ Deletes a VAT number of the caller's tenant. For testing only: the caller must b
 Owner or Administrator of a test tenant (`400 Not test tenant` otherwise). Real
 tenants keep their VAT number history.
 
-Deleting a number that is not registered also returns `200`. No request body. The
-response has no body.
+Purchases by businesses fail while the tenant has no VAT number in effect, so the
+last number in effect can't be deleted (`409`): add the new number first. Deleting a
+number that is not registered also returns `200` as long as another number is in
+effect. No request body. The response has no body.
 
 ### Request
 
@@ -3177,7 +3592,14 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | VAT number deleted |
 | `400` | Bad Request — `Not test tenant` or `Not owner or admin of tenant` |
 | `401` | Unauthorized |
+| `409` | Conflict — no other VAT number of the tenant is in effect |
 | `500` | Internal Server Error |
+
+#### `409` · text/plain
+
+```text
+The last VAT number can't be deleted, add the new one first
+```
 
 ### Example
 
@@ -3228,7 +3650,15 @@ curl -X GET "https://api.cloudbackend.com/v1/tenantgroup" \
 
 **Get PayPal credentials**
 
-Gets the PayPal credentials for a tenant. Only the tenant owner can access this.
+Gets the PayPal credentials of the caller's tenant, or with `?project=` of one of its
+projects. The API password and signature are not returned. `handler_id` names the
+account's IPN handler, `/paypalhandler_{handler_id}`: the tenant's source id for the
+tenant's own account, `{source_id}_{project_id}` for a project's.
+
+A project without PayPal credentials of its own uses the tenant's account; asking for
+such a project gives `404`.
+
+Only an owner or administrator of the tenant can access this.
 
 ### Request
 
@@ -3241,12 +3671,14 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `tenant_id` | path | yes | integer |  |
+| `project` | query | no | integer | Group id of one of the tenant's projects. Left out, `0` or the tenant group's id means the tenant's own account. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | PayPal credentials |
+| `400` | Bad Request |
 | `401` | Unauthorized |
 | `404` | Not Found |
 | `500` | Internal Server Error |
@@ -3254,7 +3686,35 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 #### `200` · application/xml · `<paypalCredentials>`
 
 ```xml
-<paypalCredentials business='{email}' api_username='{username}' />
+<paypalCredentials business='{email}' api_username='{username}' is_sandbox='false' handler_id='{source_id}_{project_id}'/>
+```
+
+#### `400` · text/plain
+
+*project is not a number*
+
+```text
+'project' must be a project group id
+```
+
+*Caller is not tenant owner or administrator*
+
+```text
+Not owner or admin of tenant
+```
+
+#### `404` · text/plain
+
+*project is not a project of the tenant*
+
+```text
+No such project in the tenant
+```
+
+*The project has no PayPal credentials of its own*
+
+```text
+PayPal credentials not configured for this project
 ```
 
 ### Example
@@ -3270,7 +3730,17 @@ curl -X GET "https://api.cloudbackend.com/v1/paypalcredentials/{tenant_id}" \
 
 **Set PayPal credentials**
 
-Sets or updates the PayPal credentials for a tenant. Only the tenant owner can use this.
+Sets or updates the PayPal credentials of the caller's tenant, or with `?project=` of
+one of its projects. A project with its own credentials gets its own IPN handler,
+`/paypalhandler_{source_id}_{project_id}`, and purchases of the project's products
+are paid to that account (see
+`POST /users/{user_id}/purchases`).
+
+`business`, `api_username`, `api_password` and `api_signature` are required and may
+not be empty. `is_sandbox` (`true`, `false`, `1` or `0`, default `false`) selects
+PayPal's sandbox for this account.
+
+Only an owner or administrator of the tenant can use this.
 
 ### Request
 
@@ -3283,20 +3753,21 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `tenant_id` | path | yes | integer |  |
+| `project` | query | no | integer | Group id of one of the tenant's projects. Left out, `0` or the tenant group's id means the tenant's own account. |
 
 #### Body
 
 `application/xml` (required), root element `<paypalCredentials>`
 
 ```xml
-<paypalCredentials business="{email}" api_username="{username}" api_password="{password}" api_signature="{signature}" />
+<paypalCredentials business="{email}" api_username="{username}" api_password="{password}" api_signature="{signature}" is_sandbox="false" />
 ```
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
-| `200` | Credentials saved |
+| `204` | Credentials saved |
 | `400` | Bad Request |
 | `401` | Unauthorized |
 | `404` | Not Found |
@@ -3304,8 +3775,28 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 #### `400` · text/plain
 
+*A required attribute was empty*
+
 ```text
 'api_signature' can't be empty
+```
+
+*Invalid is_sandbox*
+
+```text
+'is_sandbox' must be one of: true, false, 1, 0
+```
+
+*project is not a number*
+
+```text
+'project' must be a project group id
+```
+
+#### `404` · text/plain
+
+```text
+No such project in the tenant
 ```
 
 ### Example
@@ -3314,7 +3805,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 curl -X POST "https://api.cloudbackend.com/v1/paypalcredentials/{tenant_id}" \
   -H "Authorization: WRAP access_token=<session_token>" \
   -H "Content-Type: application/xml; charset=utf-8" \
-  -d '<paypalCredentials business="{email}" api_username="{username}" api_password="{password}" api_signature="{signature}" />'
+  -d '<paypalCredentials business="{email}" api_username="{username}" api_password="{password}" api_signature="{signature}" is_sandbox="false" />'
 ```
 
 ---
@@ -3323,7 +3814,12 @@ curl -X POST "https://api.cloudbackend.com/v1/paypalcredentials/{tenant_id}" \
 
 **Delete PayPal credentials**
 
-Deletes the PayPal credentials for a tenant. Only the tenant owner can use this.
+Deletes the PayPal credentials of the caller's tenant, or with `?project=` of one of
+its projects. A deleted project's credentials are kept for its existing
+subscriptions, and can be removed here too. After deleting a project's credentials
+its products are paid to the tenant's account.
+
+Only an owner or administrator of the tenant can use this.
 
 ### Request
 
@@ -3336,15 +3832,29 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `tenant_id` | path | yes | integer |  |
+| `project` | query | no | integer | Group id of one of the tenant's projects, also a deleted one. Left out, `0` or the tenant group's id means the tenant's own account. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `204` | Credentials deleted |
+| `400` | Bad Request |
 | `401` | Unauthorized |
 | `404` | Not Found |
 | `500` | Internal Server Error |
+
+#### `400` · text/plain
+
+```text
+'project' must be a project group id
+```
+
+#### `404` · text/plain
+
+```text
+No such project in the tenant
+```
 
 ### Example
 
@@ -3536,10 +4046,19 @@ curl -X GET "https://api.cloudbackend.com/v1/organizations/{group_id}/bandwidth"
 
 **Get Stripe credentials**
 
-Returns the Stripe credentials stored for a tenant. Secrets are not echoed back,
-so an empty `<stripeCredentials/>` element means none are stored.
+Returns the Stripe credentials stored for the caller's tenant, or with `?project=` for
+one of its projects. The secrets (`api_key`, `whsec`) are not echoed back; the
+publishable key is. `handler_id` names the account's webhook,
+`/stripehandler_{handler_id}`: the tenant's source id for the tenant's own account,
+`{source_id}_{project_id}` for a project's. Point the Stripe webhook endpoint of the
+account at that path.
 
-Compare `/paypalcredentials/{tenant_id}`.
+For the tenant's own account an empty `publishable_key` means none is stored. A
+project without Stripe credentials of its own uses the tenant's account; asking for
+such a project gives `404`.
+
+The caller must be owner or administrator of the tenant. Compare
+`/paypalcredentials/{tenant_id}`.
 
 ### Request
 
@@ -3552,12 +4071,14 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `tenant_id` | path | yes | integer | Tenant the credentials belong to. |
+| `project` | query | no | integer | Group id of one of the tenant's projects. Left out, `0` or the tenant group's id means the tenant's own account. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | Stored Stripe credentials |
+| `400` | Bad Request |
 | `401` | Unauthorized |
 | `404` | Not Found |
 | `500` | Internal Server Error |
@@ -3565,7 +4086,35 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 #### `200` · application/xml · `<stripeCredentials>`
 
 ```xml
-<stripeCredentials />
+<stripeCredentials publishable_key='{stripe_publishable_key}' handler_id='{source_id}_{project_id}'/>
+```
+
+#### `400` · text/plain
+
+*project is not a number*
+
+```text
+'project' must be a project group id
+```
+
+*Caller is not tenant owner or administrator*
+
+```text
+Not owner or admin of tenant
+```
+
+#### `404` · text/plain
+
+*project is not a project of the tenant*
+
+```text
+No such project in the tenant
+```
+
+*The project has no Stripe credentials of its own*
+
+```text
+Stripe credentials not configured for this project
 ```
 
 ### Example
@@ -3581,8 +4130,30 @@ curl -X GET "https://api.cloudbackend.com/v1/stripecredentials/{tenant_id}" \
 
 **Set Stripe credentials**
 
-Stores or replaces the Stripe credentials for a tenant. Both attributes are
-required and neither may be empty. Returns 204 with an empty body on success.
+Stores or replaces the Stripe credentials of the caller's tenant, or with `?project=`
+of one of its projects. A project with its own credentials gets its own webhook,
+`/stripehandler_{source_id}_{project_id}`, and purchases of the project's products
+are paid to that account (see
+`POST /users/{user_id}/purchases`).
+
+Attributes of `<stripeCredentials>`:
+
+- `api_key` (required, not empty) — the account's secret or restricted key.
+- `whsec` (required, not empty) — the webhook signing secret.
+- `is_sandbox` (optional) — `true`, `false`, `1` or `0`, default `false`.
+- `publishable_key` (optional) — served to the CloudBackend PaaS checkout. It must
+  start with `pk_test_` when `is_sandbox` is true and with `pk_live_` otherwise. An
+  empty value clears it; when the attribute is left out the stored key is kept, and
+  it must still match `is_sandbox`.
+
+A Stripe account can only be one of the tenant's accounts, because Stripe sends an
+account's events to all of its webhook endpoints. Storing the tenant's own account
+for a project, or a project's account for another project or for the tenant, is
+refused (`400`). The same
+key is always detected; a different key of the same account only when Stripe reports
+the keys' account ids.
+
+Returns 204 with an empty body on success.
 
 ### Request
 
@@ -3595,13 +4166,14 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `tenant_id` | path | yes | integer | Tenant the credentials belong to. |
+| `project` | query | no | integer | Group id of one of the tenant's projects. Left out, `0` or the tenant group's id means the tenant's own account. |
 
 #### Body
 
 `application/xml` (required), root element `<stripeCredentials>`
 
 ```xml
-<stripeCredentials api_key="{stripe_api_key}" whsec="{stripe_webhook_secret}" />
+<stripeCredentials api_key="{stripe_api_key}" whsec="{stripe_webhook_secret}" publishable_key="{stripe_publishable_key}" is_sandbox="false" />
 ```
 
 ### Responses
@@ -3609,7 +4181,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `204` | Credentials stored. Empty body. |
-| `400` | A required attribute was empty. |
+| `400` | Bad Request |
 | `401` | Unauthorized |
 | `404` | Not Found |
 | `500` | Internal Server Error |
@@ -3628,13 +4200,55 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 'whsec' can't be empty
 ```
 
+*Invalid is_sandbox*
+
+```text
+'is_sandbox' must be one of: true, false, 1, 0
+```
+
+*publishable_key doesn't match is_sandbox*
+
+```text
+'publishable_key' must start with pk_live_ when 'is_sandbox' is false
+```
+
+*A project given the tenant's own Stripe account*
+
+```text
+This is the tenant's Stripe account, a project uses it when it has no Stripe credentials of its own
+```
+
+*The account is already another project's*
+
+```text
+This Stripe account is already used by project {project_id}
+```
+
+*The account is still kept for a deleted project's existing subscriptions*
+
+```text
+This Stripe account is still used by deleted project {project_id} for its existing subscriptions. DELETE /v1/stripecredentials?project={project_id} frees it, but Stripe then keeps charging those subscriptions while CloudBackend no longer records their renewals and can't cancel or refund them: cancel them in Stripe first
+```
+
+*project is not a number*
+
+```text
+'project' must be a project group id
+```
+
+#### `404` · text/plain
+
+```text
+No such project in the tenant
+```
+
 ### Example
 
 ```bash
 curl -X POST "https://api.cloudbackend.com/v1/stripecredentials/{tenant_id}" \
   -H "Authorization: WRAP access_token=<session_token>" \
   -H "Content-Type: application/xml; charset=utf-8" \
-  -d '<stripeCredentials api_key="{stripe_api_key}" whsec="{stripe_webhook_secret}" />'
+  -d '<stripeCredentials api_key="{stripe_api_key}" whsec="{stripe_webhook_secret}" publishable_key="{stripe_publishable_key}" is_sandbox="false" />'
 ```
 
 ---
@@ -3643,7 +4257,12 @@ curl -X POST "https://api.cloudbackend.com/v1/stripecredentials/{tenant_id}" \
 
 **Delete Stripe credentials**
 
-Removes the Stripe credentials stored for a tenant.
+Removes the Stripe credentials stored for the caller's tenant, or with `?project=` for
+one of its projects. A deleted project's credentials are kept for its existing
+subscriptions and can be removed here too; Stripe then keeps charging those
+subscriptions, but CloudBackend no longer records their renewals and can't cancel or
+refund them, so cancel them in Stripe first. After deleting a project's credentials
+its products are paid to the tenant's account.
 
 ### Request
 
@@ -3656,15 +4275,29 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `tenant_id` | path | yes | integer | Tenant the credentials belong to. |
+| `project` | query | no | integer | Group id of one of the tenant's projects, also a deleted one. Left out, `0` or the tenant group's id means the tenant's own account. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `204` | Credentials deleted. Empty body. |
+| `400` | Bad Request |
 | `401` | Unauthorized |
 | `404` | Not Found |
 | `500` | Internal Server Error |
+
+#### `400` · text/plain
+
+```text
+'project' must be a project group id
+```
+
+#### `404` · text/plain
+
+```text
+No such project in the tenant
+```
 
 ### Example
 
@@ -3701,20 +4334,22 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- | --- | --- | --- |
 | `groupby` | query | no | string | (optional) year, month, day, hour, total |
 | `premium` | query | no | string | (optional) If true, also group by account type / subscription |
-| `after` | query | no | string | (optional) after date (unix epoch time or past timespan) |
-| `before` | query | no | string | (optional) before date (unix epoch time or past timespan) |
+| `from` | query | no | string | (optional) Start of the period, as unix epoch time, an HTTP or UTC date, or a past timespan such as `30d`. |
+| `until` | query | no | string | (optional) End of the period (exclusive), in the same formats as `from`. Default now. |
 | `activeafter` | query | no | string | (optional) show only users that logged in within timespan after creation |
 | `accounttypes` | query | no | string | (optional) 1 = include account types in result; 0 = do not include them |
 | `subscriptions` | query | no | string | (optional) 1 = include user defined subscriptions in result; 0 = do not include them |
 | `deleted` | query | no | string | (optional) "only" for users deleted in the period, "include" for total users whether created or deleted during the period |
+| `project` | query | no | integer | (optional) Limit the statistics to one project: payments by the share of their purchase's lines that belong to it, subscriptions of its products, and users who are its members (counted from the day they joined). `0` = what is not linked to a project. The project's Owner and Administrators may call this with their project's id. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | Successful response |
-| `400` | Bad Request |
+| `400` | Bad Request — e.g. "Invalid project" or "Invalid query parameters …" (an unreadable `from`, `until` or `groupby`) |
 | `401` | Unauthorized |
+| `403` | Forbidden — the caller may not read the tenant's (or the project's) statistics. |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -3758,17 +4393,19 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
-| `after` | query | no | string | (optional) after date (unix epoch time) |
-| `before` | query | no | string | (optional) before date (unix epoch time) |
+| `from` | query | no | string | (optional) Start of the period, as unix epoch time, an HTTP or UTC date, or a past timespan such as `30d`. |
+| `until` | query | no | string | (optional) End of the period (exclusive), in the same formats as `from`. Default now. |
 | `deleted` | query | no | string | (optional) "only" for users deleted at some point, "include" for total users whether created or deleted as of the time |
+| `project` | query | no | integer | (optional) Limit the statistics to one project: payments by the share of their purchase's lines that belong to it, subscriptions of its products, and users who are its members (counted from the day they joined). `0` = what is not linked to a project. The project's Owner and Administrators may call this with their project's id. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | Successful response. The body is a bare count. |
-| `400` | Bad Request |
+| `400` | Bad Request — e.g. "Invalid project" or "Invalid query parameters …" (an unreadable `from`, `until` or `groupby`) |
 | `401` | Unauthorized |
+| `403` | Forbidden — the caller may not read the tenant's (or the project's) statistics. |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -3810,14 +4447,16 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `less` | query | no | string | (optional) count users with fewer logins than this |
 | `equal` | query | no | string | (optional) count users with exactly this many logins |
 | `deleted` | query | no | string | (optional) "only" for users deleted at some point, "include" for total users whether created or deleted |
+| `project` | query | no | integer | (optional) Limit the statistics to one project: payments by the share of their purchase's lines that belong to it, subscriptions of its products, and users who are its members (counted from the day they joined). `0` = what is not linked to a project. The project's Owner and Administrators may call this with their project's id. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | Successful response. The body is a bare count of users. |
-| `400` | Bad Request |
+| `400` | Bad Request — e.g. "Invalid project" or "Invalid query parameters …" (an unreadable `from`, `until` or `groupby`) |
 | `401` | Unauthorized |
+| `403` | Forbidden — the caller may not read the tenant's (or the project's) statistics. |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -3861,19 +4500,21 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `groupby` | query | no | string | (optional) year, month, day, hour |
-| `after` | query | no | string | (optional) after date (unix epoch time) |
-| `before` | query | no | string | (optional) before date (unix epoch time) |
+| `from` | query | no | string | (optional) Start of the period, as unix epoch time, an HTTP or UTC date, or a past timespan such as `30d`. |
+| `until` | query | no | string | (optional) End of the period (exclusive), in the same formats as `from`. Default now. |
 | `accounttypes` | query | no | string | (optional) 1 = include account types in result; 0 = do not include them |
 | `subscriptions` | query | no | string | (optional) 1 = include user defined subscriptions in result; 0 = do not include them |
 | `deleted` | query | no | string | (optional) "only" for deleted users, "include" for deleted and non-deleted users |
+| `project` | query | no | integer | (optional) Limit the statistics to one project: payments by the share of their purchase's lines that belong to it, subscriptions of its products, and users who are its members (counted from the day they joined). `0` = what is not linked to a project. The project's Owner and Administrators may call this with their project's id. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | Successful response |
-| `400` | Bad Request |
+| `400` | Bad Request — e.g. "Invalid project" or "Invalid query parameters …" (an unreadable `from`, `until` or `groupby`) |
 | `401` | Unauthorized |
+| `403` | Forbidden — the caller may not read the tenant's (or the project's) statistics. |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -3922,20 +4563,22 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
 | `groupby` | query | no | string | (optional) year, month, day |
-| `after` | query | no | string | (optional) after date (unix epoch time) |
-| `before` | query | no | string | (optional) before date (unix epoch time) |
+| `from` | query | no | string | (optional) Start of the period, as unix epoch time, an HTTP or UTC date, or a past timespan such as `30d`. |
+| `until` | query | no | string | (optional) End of the period (exclusive), in the same formats as `from`. Default now. |
 | `deleted` | query | no | string | (optional) "only" for users deleted in the period, "include" for total users whether created or deleted during the period |
 | `includeFee` | query | no | string | (optional) if true or 1, include the payment processor fee in the result, i.e. amount = sum - fee |
 | `convertToEUR` | query | no | string | (optional) if true or 1, convert all payments to EUR before returning the result |
 | `sub` | query | no | string | (optional) `sub` for subscriptions only, `one` for non-recurring, `all` for all revenue |
+| `project` | query | no | integer | (optional) Limit the statistics to one project: payments by the share of their purchase's lines that belong to it, subscriptions of its products, and users who are its members (counted from the day they joined). `0` = what is not linked to a project. The project's Owner and Administrators may call this with their project's id. |
 
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | Successful response |
-| `400` | Bad Request |
+| `400` | Bad Request — e.g. "Invalid project" or "Invalid query parameters …" (an unreadable `from`, `until` or `groupby`) |
 | `401` | Unauthorized |
+| `403` | Forbidden — the caller may not read the tenant's (or the project's) statistics. |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -3957,18 +4600,21 @@ curl -X GET "https://api.cloudbackend.com/v1/stats/revenue" \
 
 ---
 
-## GET /admin/users/total <a id="getv1adminuserstotal"></a>
+## GET /admin/deployments/stats <a id="getv1admindeploymentsstats"></a>
 
 **Get deployment statistics**
 
 Gets deployment counts per tenant. Requires the caller to be the CloudBackend
-owner or an administrator.
+owner or an administrator (`403` "Access denied." otherwise).
+
+Give a time range with `after` and/or `before`. Without one, or with an invalid
+range, the response body is just `0`.
 
 Replaces `/statisticdeploys`.
 
 ### Request
 
-`GET https://api.cloudbackend.com/v1/admin/users/total`
+`GET https://api.cloudbackend.com/v1/admin/deployments/stats`
 
 Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
 
@@ -3987,6 +4633,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | Successful response |
 | `400` | Bad Request |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -3994,16 +4641,16 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 ```xml
 <deployCount>
-  <totalResults>1</totalResults>
-  <tenant name="testtenantcbe" count="1" groupByValue="1"/>
-  <tenant name="bobtenant" count="3" groupByValue="2"/>
+  <totalResults>2</totalResults>
+  <tenant name="testtenantcbe" count="1" groupbyValue="1"/>
+  <tenant name="bobtenant" count="3" groupbyValue="2"/>
 </deployCount>
 ```
 
 ### Example
 
 ```bash
-curl -X GET "https://api.cloudbackend.com/v1/admin/users/total" \
+curl -X GET "https://api.cloudbackend.com/v1/admin/deployments/stats" \
   -H "Authorization: WRAP access_token=<session_token>"
 ```
 
@@ -4020,12 +4667,19 @@ path takes no tenant id: it applies to the tenant the caller currently has set o
 Anything after `/emailcredentials/` in the path is ignored. The caller must be owner or
 administrator of that tenant. Only POST is implemented; other methods answer 405.
 
+Only public mail servers can be used. `host` must resolve, and every address it
+resolves to must be public: loopback, private, link-local, CGNAT, multicast, reserved
+and documentation addresses (IPv4 and IPv6) are refused. The service checks the host
+again each time it sends, since its DNS can change. `port` must be one of the SMTP
+ports `587`, `465`, `25`, `588`, `2465`, `2525` or `2587`; `465` and `2465` use TLS
+from the start, the others STARTTLS.
+
 #### Attributes of `<emailCredentials>`
 
 | Attribute | Description |
 |---|---|
-| `host` | Required. Email host |
-| `port` | Required. Email port, 1 to 65535, e.g. 587; use an encrypted port |
+| `host` | Required. Email host, a name or an IP address that resolves to public addresses only |
+| `port` | Required. SMTP port: `587`, `465`, `25`, `588`, `2465`, `2525` or `2587` |
 | `username` | Required. Username. When `password` holds an API key rather than an account password, this is typically the literal `apikey` |
 | `password` | Required. Password, or API key |
 
@@ -4048,20 +4702,47 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `204` | Credentials stored. No response body. |
-| `400` | `Not owner or admin of tenant`, `Invalid email host`, `Invalid email port`, `Invalid email username` or `Invalid email password`. |
+| `400` | `Not owner or admin of tenant`, `Invalid email host`, an invalid or non-SMTP port, a host that does not resolve or resolves to a non-public address, `Invalid email username` or `Invalid email password`. |
 | `401` | Unauthorized |
 | `500` | Internal Server Error |
+| `502` | Bad Gateway — the host's DNS lookup failed temporarily; try again later. |
 
 #### `400` · text/plain
 
+*port is not one of the SMTP ports*
+
 ```text
-Invalid email port
+Invalid email port: it must be 587, 465, 25, 588, 2465, 2525 or 2587
+```
+
+*host doesn't resolve*
+
+```text
+Invalid email host: it doesn't resolve
+```
+
+*host resolves to a loopback, private or other non-public address*
+
+```text
+Invalid email host: it must resolve to public addresses only
+```
+
+*host is empty*
+
+```text
+Invalid email host
 ```
 
 #### `401` · text/plain
 
 ```text
 You need to provide credentials to access this resource
+```
+
+#### `502` · text/plain
+
+```text
+Could not look up the email host, try again later
 ```
 
 ### Example
@@ -4071,6 +4752,694 @@ curl -X POST "https://api.cloudbackend.com/v1/emailcredentials" \
   -H "Authorization: WRAP access_token=<session_token>" \
   -H "Content-Type: application/xml; charset=utf-8" \
   -d '<emailCredentials host="{smtp_host}" port="587" username="apikey" password="{password}" />'
+```
+
+---
+
+## GET /stats/projects <a id="getv1statsprojects"></a>
+
+**Get statistics per project**
+
+Gets subscription, revenue and member figures per project for the caller's tenant over
+a period.
+
+Without `project` the response has one `<project>` row for `id="0"` (what is not linked
+to any project), one for every current project of the tenant (with `name`, `members`
+and `membersJoined`), and one for every other project id that has payments or
+subscriptions in the tenant, e.g. a deleted project (without `name`, `members` and
+`membersJoined`). Rows are sorted by id. With `project` only that project's row is
+returned; an id that is not one of the tenant's projects gives a row with zeros.
+
+Who may call it: the tenant Owner and Administrators (anyone allowed to read the
+tenant's statistics). With `project` set to a project id, also the Owner and
+Administrators of that project; they see only that project. Everyone else gets `403`.
+
+| Attribute of `<project>` | Description |
+|---|---|
+| `id` | Project group id; `0` = not linked to a project |
+| `name` | Project name (current projects only) |
+| `activeSubscriptions` | Active subscriptions of the project's products at the end of the period |
+| `payingUsers` | Users with an active subscription at the end of the period |
+| `subscriptionsAtStart` | Active subscriptions at the start of the period |
+| `subscriptionsAdded` | Subscriptions started in the period |
+| `subscriptionsRemoved` | Cancelled subscriptions that expired in the period |
+| `members` | Current members of the project (current projects only) |
+| `membersJoined` | Members who joined in the period (current projects only) |
+
+Child elements, one per currency:
+
+- `<revenue currency amount vat rateEUR>` — payments received in the period as paid
+  (VAT included, payment processor fees not deducted); `vat` is the VAT part of
+  `amount`.
+- `<mrr currency amount rateEUR>` — monthly recurring revenue at the end of the period:
+  the latest payment of each active subscription, without VAT, per month.
+
+`rateEUR` is the EUR value of one unit of the currency (the ECB's latest rate in the
+week before the end of the period; `1` for EUR). It is left out when no rate is known.
+
+The `from` and `until` attributes of `<projects>` echo the period used (UTC).
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/stats/projects`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `project` | query | no | integer | (optional) Only this project's row. `0` = what is not linked to a project. |
+| `from` | query | no | string | (optional) Start of the period (inclusive): a date such as `2026-01-01`, an HTTP date, a Unix epoch time, or a timespan before now such as `30d` (units `min`, `h`, `d`, `mo`, `y`; floored to the minute, hour or midnight UTC). Default: the beginning of time. |
+| `until` | query | no | string | (optional) End of the period (exclusive), same formats as `from`. Default now. Must not be in the future. |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Successful response |
+| `400` | Bad Request — "Invalid project", "Invalid query parameters: …" (e.g. "Cannot parse from time; …") or "Invalid time range." |
+| `401` | Unauthorized |
+| `403` | Forbidden — the caller may not read the tenant's (or the project's) statistics. |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<projects>`
+
+```xml
+<projects from="2026-01-01 00:00:00" until="2026-11-01 00:00:00">
+  <project id="0" activeSubscriptions="0" payingUsers="0" subscriptionsAtStart="0" subscriptionsAdded="0" subscriptionsRemoved="0"/>
+  <project id="{group_id}" name="{project_name}" activeSubscriptions="12" payingUsers="11" subscriptionsAtStart="8" subscriptionsAdded="6" subscriptionsRemoved="2" members="40" membersJoined="9">
+    <revenue currency="EUR" amount="1190.00" vat="238.00" rateEUR="1"/>
+    <revenue currency="SEK" amount="1250.00" vat="250.00" rateEUR="0.08900000"/>
+    <mrr currency="EUR" amount="96.00" rateEUR="1"/>
+  </project>
+</projects>
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/stats/projects" \
+  -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## GET /stripepublishablekey <a id="getv1stripepublishablekey"></a>
+
+**Get the Stripe publishable key**
+
+Returns the Stripe publishable key of the tenant the logged-in identity belongs to, for
+a client that embeds Stripe's checkout. It is the key of the same Stripe account the
+checkout session is created in. Any identity of the tenant may call it; the key is not
+secret. No request body.
+
+With `project`, the key of the account that project's products are bought with: the
+project's own Stripe account if it has credentials, otherwise the tenant's.
+
+The tenant Owner or an Administrator sets the key with the `publishable_key` attribute
+of `POST /stripecredentials/{tenant_id}`.
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/stripepublishablekey`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `project` | query | no | integer | (optional) A project group id of the tenant. `0` or the tenant group id means the tenant itself. |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The publishable key |
+| `400` | Bad Request — "'project' must be a project group id" |
+| `401` | Unauthorized |
+| `404` | Not Found — "Stripe publishable key not configured", or "No such project in the tenant". |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<stripePublishableKey>`
+
+```xml
+<stripePublishableKey key='pk_live_51Hxxxxxxxxxxxxxxxx'/>
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/stripepublishablekey" \
+  -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## GET /vat-rates/eu <a id="getv1vatrateseu"></a>
+
+**List EU VAT rates for reverse charge**
+
+Lists the active EU countries whose business customers buy from the caller's tenant
+without being charged VAT (reverse charge), with each country's standard VAT rate. The
+seller's (tenant's) own country is left out, since businesses there are charged VAT.
+Countries are sorted by code and use the VAT-number prefixes, so Greece appears as both
+`EL` and `GR`.
+
+`vat` is the rate in hundredths of a percent: `2000` is 20 %, `2550` is 25.5 %.
+
+The response is XML unless the `Accept` header starts with `application/json`. The
+tenant must have a VAT number
+(`POST /vat-numbers/`), otherwise the
+call fails with `500 The seller has no VAT number`. No request body.
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/vat-rates/eu`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `Accept` | header | no | string | `application/json` for JSON; anything else gives XML. |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The countries and their rates |
+| `401` | Unauthorized |
+| `500` | Internal Server Error — "The seller has no VAT number", or another server error. |
+
+#### `200` · application/json
+
+```json
+{"vat-rates":[{"country":[{"country_code":"AT","vat":"2000"},{"country_code":"BE","vat":"2100"},{"country_code":"FI","vat":"2550"}]}]}
+```
+
+#### `200` · application/xml · `<vat-rates>`
+
+```xml
+<vat-rates>
+  <country>
+    <country_code>AT</country_code>
+    <vat>2000</vat>
+  </country>
+  <country>
+    <country_code>BE</country_code>
+    <vat>2100</vat>
+  </country>
+  <country>
+    <country_code>FI</country_code>
+    <vat>2550</vat>
+  </country>
+</vat-rates>
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/vat-rates/eu" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "Accept: {accept}"
+```
+
+---
+
+## GET /purchase-records <a id="getv1purchaserecords"></a>
+
+**List the tenant's purchase records**
+
+Lists the purchase records of the current tenant's buyers, newest first. A purchase
+record is written for each completed, failed or refunded Stripe or PayPal payment
+and for each cancelled subscription. Records used to be files in the tenant's
+`/System/Purchases` and `/System/UserPurchases/{user_id}` folders; they are now
+stored in CloudBackend's database and can only be read through this API and
+`GET /users/{user_id}/purchase-records`.
+
+Only the Owner and Administrators of the current tenant may call it
+(`403 Access denied.` otherwise). They see the whole record, including the payment
+processor's `fee` and the buyer's `<user>` element.
+
+Filters (all optional, combined with AND):
+
+- `user`: one buyer's records. A user of another tenant gives an empty list.
+- `kind`: `purchase`, `purchase-failed`, `purchase-refunded` or
+  `subscription-cancel` (`400 Invalid kind` otherwise).
+- `start` and `end`: unix epoch seconds (UTC). Records created at or after `start`
+  and before `end`. `0` or no value means no limit.
+
+Paging: `offset` (default `0`) and `count` (default `100`, at most `1000`).
+`total` on `<purchaseRecords>` is the number of matching records before paging.
+
+Each `<purchaseRecord>` has the record's `id`, `kind`, `created` (Atom format, UTC),
+the buyer's `userId` and, when the payment belongs to a purchase, its `purchaseId`.
+It holds the record: a `<purchase>` element (kinds `purchase`, `purchase-failed`,
+`purchase-refunded`) or a `<subscription-cancel>` element, with
+`<paymentProcessor>` (`name` is `stripe` or `paypal`; a completed payment also has
+`gross`, `fee`, `currency`, `transactionId`, a subscription's `subscriptionId`, and
+for Stripe a `receiptUrl`), a `<refund>` for a refunded payment (`reason` is `refund`
+or `chargeback`, `amount`, `currency`, optional `full`, `paymentId`), `<user>`
+(`id`, `firstname`, `lastname`, `email`, `payerId`, `country`), one `<product>` per
+purchased product and `<vat>`. Characters XML can't hold are dropped. A record that
+can't be read is sent as an empty `<purchaseRecord/>` instead of failing the list.
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/purchase-records`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `user` | query | no | integer | (optional) Only this buyer's records. `0` means all buyers. |
+| `kind` | query | no | string · one of `purchase`, `purchase-failed`, `purchase-refunded`, `subscription-cancel` | (optional) Only records of this kind. |
+| `start` | query | no | integer · default `0` | (optional) Only records created at or after this time, as unix epoch seconds. `0` = no limit. |
+| `end` | query | no | integer · default `0` | (optional) Only records created before this time (exclusive), as unix epoch seconds. `0` = no limit. |
+| `offset` | query | no | integer · default `0` | (optional) Number of matching records to skip. |
+| `count` | query | no | integer · default `100` | (optional) Maximum number of records to return, at most 1000. |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The purchase records (zero or more), as the tenant's Owner and Administrators see them |
+| `400` | Bad Request — `Invalid kind`, `count can be at most 1000`, `start and end can't be negative`, or `Invalid value for parameter '…'` (a `user`, `start`, `end`, `offset` or `count` that is not a number) |
+| `401` | Unauthorized |
+| `403` | Forbidden — not an Owner or Administrator of the current tenant |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<purchaseRecords>`
+
+```xml
+<purchaseRecords total='2'>
+  <purchaseRecord id='312' kind='subscription-cancel' created='2026-11-17T09:40:12Z' userId='1001' purchaseId='8812'><subscription-cancel date="2026-11-17T09:40:12Z" purchaseId="8812"><paymentProcessor name="stripe" subscriptionId="sub_1QxYz2AbCdEf"/><user id="1001" firstname="Ann" lastname="Smith" email="ann@example.com" payerId="cus_R4tUv5WxYz" country="SE"/><product quantity="1" id="pro-monthly" price="9.5" currency="EUR" subscription="1" duration="1" description="Pro monthly"/><vat price="2.38" currency="EUR"/></subscription-cancel></purchaseRecord>
+  <purchaseRecord id='311' kind='purchase' created='2026-10-17T09:38:02Z' userId='1001' purchaseId='8812'><purchase type="subscription" date="2026-10-17T09:38:02Z" purchaseId="8812"><paymentProcessor name="paypal" gross="11.88" fee="0.60" currency="EUR" transactionId="5TY12345AB678901C" subscriptionId="I-BW452GLLEP1G"/><user id="1001" firstname="Ann" lastname="Smith" email="ann@example.com" payerId="Q8ZK3V5LXYZ2A" country="SE"/><product quantity="1" id="pro-monthly" price="9.5" currency="EUR" subscription="1" duration="1" description="Pro monthly"/><vat price="2.38" currency="EUR"/></purchase></purchaseRecord>
+</purchaseRecords>
+```
+
+#### `400` · text/plain
+
+*Unknown kind*
+
+```text
+Invalid kind
+```
+
+*count over 1000*
+
+```text
+count can be at most 1000
+```
+
+*start is not a number*
+
+```text
+Invalid value for parameter 'start'
+```
+
+*Negative start or end*
+
+```text
+start and end can't be negative
+```
+
+#### `403` · text/plain
+
+```text
+Access denied.
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/purchase-records" \
+  -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## GET /users/{user_id}/purchase-records <a id="getv1userspurchaserecords"></a>
+
+**List a user's purchase records**
+
+Lists `{user_id}`'s purchase records, newest first: one per completed, failed or
+refunded Stripe or PayPal payment and per cancelled subscription. Records used to be
+files in `/System/UserPurchases/{user_id}`; they are now stored in CloudBackend's
+database.
+
+The caller must be the user itself, or an Owner or Administrator of the user's tenant
+(the current tenant); `403 Access denied.` otherwise, also for an unknown user.
+
+What the caller sees:
+
+- The user itself (the buyer) gets each record without the payment processor's
+  `fee` and without the `<user>` element (name, e-mail, payment processor customer
+  id). This also applies when an Owner or Administrator lists their own records.
+- The tenant's Owner and Administrators get the whole record, as with
+  `GET /purchase-records`.
+
+Takes the same `kind`, `start`, `end`, `offset` and `count` parameters, with the same
+errors, as `GET /purchase-records`; see there for the record format. `total` on
+`<purchaseRecords>` is the number of matching records before paging.
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/users/{user_id}/purchase-records`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `user_id` | path | yes | integer | The buyer. |
+| `kind` | query | no | string · one of `purchase`, `purchase-failed`, `purchase-refunded`, `subscription-cancel` | (optional) Only records of this kind. |
+| `start` | query | no | integer · default `0` | (optional) Only records created at or after this time, as unix epoch seconds. `0` = no limit. |
+| `end` | query | no | integer · default `0` | (optional) Only records created before this time (exclusive), as unix epoch seconds. `0` = no limit. |
+| `offset` | query | no | integer · default `0` | (optional) Number of matching records to skip. |
+| `count` | query | no | integer · default `100` | (optional) Maximum number of records to return, at most 1000. |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The user's purchase records (zero or more); the buyer's own view shown |
+| `400` | Bad Request — `Invalid kind`, `count can be at most 1000`, `start and end can't be negative`, or `Invalid value for parameter '…'` (a `start`, `end`, `offset` or `count` that is not a number) |
+| `401` | Unauthorized |
+| `403` | Forbidden — not the user itself or an Owner or Administrator of the user's tenant |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<purchaseRecords>`
+
+*Called by the user itself (no fee, no user)*
+
+```xml
+<purchaseRecords total='1'>
+  <purchaseRecord id='311' kind='purchase' created='2026-10-17T09:38:02Z' userId='1001' purchaseId='8812'><purchase type="subscription" date="2026-10-17T09:38:02Z" purchaseId="8812"><paymentProcessor name="paypal" gross="11.88" currency="EUR" transactionId="5TY12345AB678901C" subscriptionId="I-BW452GLLEP1G"/><product quantity="1" id="pro-monthly" price="9.5" currency="EUR" subscription="1" duration="1" description="Pro monthly"/><vat price="2.38" currency="EUR"/></purchase></purchaseRecord>
+</purchaseRecords>
+```
+
+*Called by an Owner or Administrator of the user's tenant*
+
+```xml
+<purchaseRecords total='1'>
+  <purchaseRecord id='311' kind='purchase' created='2026-10-17T09:38:02Z' userId='1001' purchaseId='8812'><purchase type="subscription" date="2026-10-17T09:38:02Z" purchaseId="8812"><paymentProcessor name="paypal" gross="11.88" fee="0.60" currency="EUR" transactionId="5TY12345AB678901C" subscriptionId="I-BW452GLLEP1G"/><user id="1001" firstname="Ann" lastname="Smith" email="ann@example.com" payerId="Q8ZK3V5LXYZ2A" country="SE"/><product quantity="1" id="pro-monthly" price="9.5" currency="EUR" subscription="1" duration="1" description="Pro monthly"/><vat price="2.38" currency="EUR"/></purchase></purchaseRecord>
+</purchaseRecords>
+```
+
+*No records*
+
+```xml
+<purchaseRecords total="0" />
+```
+
+#### `400` · text/plain
+
+```text
+Invalid kind
+```
+
+#### `403` · text/plain
+
+```text
+Access denied.
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/users/{user_id}/purchase-records" \
+  -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## GET /commission-rates <a id="getv1commissionrates"></a>
+
+**List the commission rates of the tenant's sales**
+
+Lists the commission rules in force now that can apply to the caller's tenant's sales.
+
+CloudBackend takes a commission on each payment the tenant's buyers make for the
+tenant's account types and products (by Stripe, PayPal or invoice): a percentage of
+the price without VAT. The payment processor's fee is not deducted, and a refund takes
+back the commission of the refunded part. Each line of a payment gets the rate of the
+most specific rule that matches it and was in force when the payment was received.
+A rule for this tenant beats the general ones; after that a rule naming a product
+beats one naming a project, then the item kind, the payment method and the owner's
+account type. A line that no rule matches has no commission. The rules are set by
+CloudBackend and can't be changed with the API.
+
+The commissions of a month are invoiced to the tenant's owner as a commission invoice
+(see `GET /users/{user_id}/invoices`).
+A month whose commissions add up to less than 1 EUR is carried over to a later month.
+Each payment's commission is listed by
+`GET /reports/commission/{month}`.
+
+`<commissionRates>` has the tenant id (`tenant`) and the tenant owner's CloudBackend
+account type (`ownerAccountType`, e.g. `PROF`; empty if unknown). Each `<rule>`, in
+id order, has:
+
+- `id`: the rule's id.
+- `rate`: the commission in percent with two decimals: `5.00` is 5 %, `2.50` is 2.5 %.
+- `from`: when the rule came into force, `YYYY-MM-DD HH:MM:SS` (UTC).
+- What the rule is limited to. A missing attribute matches anything:
+  - `tenant`: only this tenant's sales.
+  - `ownerAccountType`: only while the tenant's owner has this account type.
+  - `project`: only sales of products of this project (group id).
+  - `kind`: `account-type` (account type products), `product` (tenant products), or
+    empty for lines that are neither.
+  - `product`: the tenant product id or account type name.
+  - `paymentMethod`: `invoice`, `paypal` or `stripe`.
+
+Rules of other tenants and rules for another owner account type are not listed.
+
+Only the tenant Owner or an Administrator may call it
+(`400 Not owner or admin of tenant` otherwise). The trailing slash is optional.
+Works for blocked tenants too. No request body.
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/commission-rates`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The commission rules in force (zero or more) |
+| `400` | Bad Request — the caller is not owner or administrator of a tenant |
+| `401` | Unauthorized |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<commissionRates>`
+
+```xml
+<commissionRates tenant='762' ownerAccountType='PROF'>
+  <rule id='1' rate='10.00' from='2025-11-01 00:00:00'/>
+  <rule id='2' rate='5.00' tenant='762' from='2025-11-01 00:00:00'/>
+  <rule id='4' rate='2.50' tenant='762' kind='product' paymentMethod='invoice' from='2026-01-01 00:00:00'/>
+</commissionRates>
+```
+
+#### `400` · text/plain
+
+```text
+Not owner or admin of tenant
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/commission-rates" \
+  -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## GET /reports/commission/{month} <a id="getv1reportscommission"></a>
+
+**Get the tenant's commission report of a month**
+
+Lists the commission CloudBackend takes on each of the caller's tenant's payments
+received in a calendar month (UTC), with the month's totals in EUR. Refunds are
+payments too: they have negative amounts and take back their share of the commission.
+The rules are described under
+`GET /commission-rates`.
+
+A payment is listed once its commission has been computed, which CloudBackend does
+once a day, so the newest payments may not be listed yet. A month without payments
+gives an empty `<commissionReport>`.
+
+`<commissionReport>` has the `month`, the `tenant` id, `currency` (always `EUR`),
+`sales` (the prices without VAT, in EUR) and `commission` (in EUR). Amounts have two
+decimals.
+
+Each `<payment>`, oldest first, has its `id`, when it was `received`
+(`YYYY-MM-DD HH:MM:SS`, UTC), the buyer (`user`), the `purchase` id, the
+`paymentMethod` (`invoice`, `paypal` or `stripe`), the payment processor's
+`transaction` id, for a refund `refunds` (the transaction id of the refunded payment),
+and the payment's `currency` and `total` (with VAT).
+
+Each `<line>` of a payment has:
+
+- `line`: the purchased line's number, from `0`.
+- `kind`: `account-type`, `product` or empty; `product`: the product id or account
+  type name, or empty; `project`: the project's group id, `0` for none.
+- `base`: the price without VAT in the payment's currency, `rate`: the commission in
+  percent, `commission`: the commission in the payment's currency.
+- `eurRate`: the ECB rate used, units of the payment's currency per EUR (`1` for
+  EUR); `baseEur` and `commissionEur`: the same amounts in EUR.
+- `billed`: the month (`YYYY-MM`) of the commission invoice the line was billed on.
+  Missing while the line is not billed yet, e.g. a month under 1 EUR that is carried
+  over.
+
+Only the tenant Owner or an Administrator may call it
+(`400 Not owner or admin of tenant` otherwise). The trailing slash is optional.
+Works for blocked tenants too. No request body.
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/reports/commission/{month}`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `month` | path | yes | string · pattern `^[0-9]{4}-(0[1-9]\|1[0-2])$` | The month, `YYYY-MM` (e.g. `2025-10`). Any other value gives `404 Unknown API endpoint`. |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The month's commissions |
+| `400` | Bad Request — the caller is not owner or administrator of a tenant |
+| `401` | Unauthorized |
+| `404` | Not Found — `{month}` is not a valid `YYYY-MM` month |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<commissionReport>`
+
+*Three payments and a refund at 5 %*
+
+```xml
+<commissionReport month='2025-10' tenant='762' currency='EUR' sales='20.00' commission='1.00'>
+  <payment id='12' received='2025-10-03 10:00:00' user='3' purchase='800201' paymentMethod='paypal' transaction='PAYPAL800201' currency='EUR' total='12.55'>
+    <line line='0' kind='' product='' project='0' base='10.00' rate='5.00' commission='0.50' eurRate='1' baseEur='10.00' commissionEur='0.50' billed='2025-10'/>
+  </payment>
+  <payment id='13' received='2025-10-06 10:00:00' user='3' purchase='800202' paymentMethod='stripe' transaction='pi_monthly800202' currency='EUR' total='12.50'>
+    <line line='0' kind='' product='' project='0' base='10.00' rate='5.00' commission='0.50' eurRate='1' baseEur='10.00' commissionEur='0.50' billed='2025-10'/>
+  </payment>
+  <payment id='16' received='2025-10-07 10:00:00' user='3' purchase='800203' paymentMethod='stripe' transaction='pi_monthly800203' currency='EUR' total='10.00'>
+    <line line='0' kind='' product='' project='0' base='10.00' rate='5.00' commission='0.50' eurRate='1' baseEur='10.00' commissionEur='0.50' billed='2025-10'/>
+  </payment>
+  <payment id='17' received='2025-10-20 10:00:00' user='3' purchase='800203' paymentMethod='stripe' transaction='re_monthly800203' refunds='pi_monthly800203' currency='EUR' total='-10.00'>
+    <line line='0' kind='' product='' project='0' base='-10.00' rate='5.00' commission='-0.50' eurRate='1' baseEur='-10.00' commissionEur='-0.50' billed='2025-10'/>
+  </payment>
+</commissionReport>
+```
+
+*A month without payments*
+
+```xml
+<commissionReport month='2025-09' tenant='762' currency='EUR' sales='0.00' commission='0.00'/>
+```
+
+#### `400` · text/plain
+
+```text
+Not owner or admin of tenant
+```
+
+#### `404` · text/plain
+
+```text
+Unknown API endpoint
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/reports/commission/{month}" \
+  -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## GET /reports/invalid-vat-numbers <a id="getv1reportsinvalidvatnumbers"></a>
+
+**List buyers with invalid VAT numbers**
+
+Lists the caller's tenant's buyers whose current billing VAT number the EU VIES service
+said is invalid in its latest answer.
+
+CloudBackend checks a VAT number with VIES when the billing information is saved or a
+purchase is made, and checks again, about every 30 days, the reverse-charged numbers
+of buyers with an active subscription. A check that VIES could not answer doesn't
+count. A buyer whose number is invalid is still reverse charged: their subscription
+is not changed, so the tenant may want to contact them.
+
+Each `<vatNumber>`, latest check first, has the buyer's `user` id and `username`, the
+billing `name`, the VAT `number` as entered, the `country` (VIES country code, `EL`
+for Greece), when it was `checked` (`YYYY-MM-DD HH:MM:SS`, UTC), why it was checked
+(`reason`: `billing`, `usage-invoice` or `recheck`), and `lastValid`, the last time
+VIES said the same number was valid (missing if never). Deleted users are left out.
+
+Only the tenant Owner or an Administrator may call it
+(`400 Not owner or admin of tenant` otherwise). The trailing slash is optional.
+Works for blocked tenants too. No request body.
+
+### Request
+
+`GET https://api.cloudbackend.com/v1/reports/invalid-vat-numbers`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The buyers with an invalid VAT number (zero or more) |
+| `400` | Bad Request — the caller is not owner or administrator of a tenant |
+| `401` | Unauthorized |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<invalidVatNumbers>`
+
+*One buyer whose number was valid before*
+
+```xml
+<invalidVatNumbers tenant='762'>
+  <vatNumber user='4021' username='buyer@example.com' name='Example GmbH' number='DE123456789' country='DE' checked='2026-11-19 03:12:40' reason='recheck' lastValid='2026-10-18 03:10:02'/>
+</invalidVatNumbers>
+```
+
+*No invalid numbers*
+
+```xml
+<invalidVatNumbers tenant='762'/>
+```
+
+#### `400` · text/plain
+
+```text
+Not owner or admin of tenant
+```
+
+### Example
+
+```bash
+curl -X GET "https://api.cloudbackend.com/v1/reports/invalid-vat-numbers" \
+  -H "Authorization: WRAP access_token=<session_token>"
 ```
 
 ---

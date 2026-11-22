@@ -1,6 +1,6 @@
 # REST API — Identity
 
-72 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
+73 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
 
 ## GET /avatar/{user_id} <a id="getv1avatar"></a>
 
@@ -231,8 +231,10 @@ curl -X GET "https://api.cloudbackend.com/v1/mygroups" \
 
 Returns detailed user information including profile, locale, and billing.
 
-The e-mail address (in the user entry and in `<billing>`) is only included when the
-caller is the user itself, or the owner or an administrator of the user's tenant.
+Only the user itself, or the owner or an administrator of the user's tenant, may
+read it (`403 Forbidden` for anyone else, also when the user does not exist). The
+response always includes the e-mail address (in the user entry and in
+`<billing>`).
 
 ### Request
 
@@ -253,6 +255,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | User info |
 | `401` | Unauthorized |
+| `403` | Forbidden — the caller is not the user, nor the owner or an administrator of the user's tenant. |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -297,6 +300,12 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
     <countryFull>{country_full}</countryFull>
   </billing>
 </userInfo>
+```
+
+#### `403` · text/plain
+
+```text
+Forbidden
 ```
 
 ### Example
@@ -358,7 +367,13 @@ curl -X DELETE "https://api.cloudbackend.com/v1/users/{user_id}?code={code}" \
 
 Changes the user's password. The body is form encoded with the current and the new
 password. The current password is verified before the change; a wrong current
-password gives `403`.
+password gives `403` ("Invalid password").
+
+A password change ends **all** of the user's sessions, including the one that made
+the call, and the user's object sessions. Log in again with the new password.
+The user's own drive listeners (see `POST /ports`) get
+`<updateUserSecurity userId="{user_id}" action="passwordChanged" client="{client_id}">{datetime}</updateUserSecurity>`,
+so the user's other clients can log out.
 
 ### Request
 
@@ -401,6 +416,8 @@ curl -X POST "https://api.cloudbackend.com/v1/users/{user_id}" \
 **Query user database**
 
 Queries the user database for a group using OpenSearch-style queries.
+
+**Response format.** Always the data-model format (`db:` namespace); nothing needs to be passed to get it.
 
 ### Request
 
@@ -484,7 +501,12 @@ curl -X GET "https://api.cloudbackend.com/v1/userdb" \
 
 **Update user entry**
 
-Updates the Atom entry metadata for a user in a group.
+Updates the Atom entry metadata for a user in a group. `<user id>` is the member
+id in the group. A caller may only update their own entry (`403`, "User
+information entry access denied.").
+
+Do not send `<dc:userid>` in the entry. The server always sets it to the real
+user id behind the member id, and drops any `<dc:userid>` in the request.
 
 ### Request
 
@@ -500,17 +522,15 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 <updateUserEntry>
   <group id="{group_id}" />
   <user id="{member_id}" />
-  <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+  <atom:entry xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://xcerion.com/directory.xsd" xmlns:ni="http://xcerion.com/noindex.xsd">
     <atom:title>{username}</atom:title>
     <atom:author>
       <atom:name>{author_name}</atom:name>
     </atom:author>
-    <dc:userid xmlns:dc="http://xcerion.com/directory.xsd">{user_id}</dc:userid>
-    <dc:userid xmlns:dc="http://xcerion.com/directory.xsd">{user_id}</dc:userid>
     <dc:gender>male</dc:gender>
     <dc:utag1>somedata1</dc:utag1>
     <dc:utag2>somedata1</dc:utag2>
-    <ni:utag3 xmlns:ni="http://xcerion.com/noindex.xsd">somedata1</ni:utag3>
+    <ni:utag3>somedata1</ni:utag3>
     <ni:utag4>somedata1</ni:utag4>
   </atom:entry>
 </updateUserEntry>
@@ -522,6 +542,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | User entry updated |
 | `401` | Unauthorized |
+| `403` | Forbidden |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -550,6 +571,12 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 </updateUserEntryResponse>
 ```
 
+#### `403` · text/plain
+
+```text
+User information entry access denied.
+```
+
 #### `404` · text/plain
 
 ```text
@@ -571,7 +598,11 @@ curl -X PUT "https://api.cloudbackend.com/v1/userdb" \
 
 **Get user entry**
 
-Returns the Atom entry for a user in a group.
+Returns a user's entry in a group.
+
+**Response format.** Always the data-model format: a `<db:user>` element with `db:`
+children. Nothing needs to be passed to get it. `<db:email>` is only included in the
+caller's own entry. (The SOAP `getUserEntry` returns the same data as an Atom entry.)
 
 ### Request
 
@@ -603,26 +634,26 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 ```xml
 <getUserEntryResponse>
-  <atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
-    <atom:title>{username}</atom:title>
-    <atom:published></atom:published>
-    <atom:updated></atom:updated>
-    <atom:link rel="alternate" type="application/octet-stream" href="" length="0" />
-    <atom:id></atom:id>
-    <dc:group xmlns:dc="http://xcerion.com/directory.xsd">{group_id}</dc:group>
-    <dc:user>{user_id}</dc:user>
-    <dc:unique>{user_id}</dc:unique>
-    <atom:author>
-      <atom:name>{author_name}</atom:name>
-    </atom:author>
-    <dc:gender>male</dc:gender>
-    <dc:country>{country}</dc:country>
-    <ni:profile xmlns:ni="http://xcerion.com/noindex.xsd" />
-    <dc:email>{email}</dc:email>
-    <dc:client>{client}</dc:client>
-    <dc:display>{display_name}</dc:display>
-    <dc:social>{social}</dc:social>
-  </atom:entry>
+  <db:user xmlns:db="https://cloudbackend.com/db.xsd" xmlns:atom="http://www.w3.org/2005/Atom">
+    <db:username>{username}</db:username>
+    <db:published>{datetime}</db:published>
+    <db:updated>{datetime}</db:updated>
+    <db:link rel="alternate" type="application/octet-stream" href="urn:x-i-o-s:users/{group_id}/{user_id}/1" length="0" />
+    <db:id>mid:{user_id}@xios.xcerion.com</db:id>
+    <db:group>{group_id}</db:group>
+    <db:userid>{user_id}</db:userid>
+    <db:unique>{user_id}</db:unique>
+    <db:author>
+      <db:name>{first_name} {last_name}</db:name>
+    </db:author>
+    <db:gender>{gender}</db:gender>
+    <db:country>{country}</db:country>
+    <db:profile />
+    <db:email>{email}</db:email>
+    <db:client>Mobile Web FileExplorer</db:client>
+    <db:display>{first_name}</db:display>
+    <db:social>mycloudme</db:social>
+  </db:user>
 </getUserEntryResponse>
 ```
 
@@ -744,6 +775,11 @@ required: the code is the proof of ownership.
 
 The code is valid for 48 hours and can be used once. The deletion runs
 asynchronously; the call returns `204 No Content` as soon as it has been queued.
+
+Wrong codes are counted per identity, and unknown usernames per client address.
+After too many failures (default 10 per identity or 20 per address in 15 minutes),
+the call answers `429 Too Many Requests` with a `Retry-After` header until the
+block ends.
 
 ### Request
 
@@ -1130,86 +1166,6 @@ curl -X PUT "https://api.cloudbackend.com/v1/changegroupowner" \
 
 ---
 
-## POST /event <a id="postv1event"></a>
-
-**Send an event**
-
-Sends a lifestream event (notification) from the caller to another identity. The
-event is queued for the event notification service, which delivers it to the
-receiver's lifestream (and, for `emailMessage`, by e-mail).
-
-The request body is a `<sendEvent>` element (the root name is not checked) with:
-
-- `<sender id>` — must be the caller (or an alias of the caller), otherwise `403`.
-- `<receiver id>` — the identity that receives the event; must exist (otherwise
-  `404`, "User not found.").
-- `<type>` — required: `friendRequest`, `friendAccept`, `guestbookEntry`,
-  `sharePackage`, `statusMessage`, `statusChanged`, `profileVisitor`,
-  `profileUpdate`, `itemExpiry`, `webshareUpdate`, `campaignMessage`,
-  `webshareInvite`, `emailMessage` or `associationInvite`.
-- `<thread id>` — optional id of the event this one answers.
-- `<visibility>` — optional: `public` (default), `friends`, `private` or `invited`.
-- `<data>` — optional; its content is stored as the event data.
-
-If neither sender nor receiver is given the answer is `400` ("Missing sender and
-receiver"). The response is `<sendEventResponse>OK</sendEventResponse>`. The
-`Content-Type` must be `application/xml` or `text/xml`.
-
-### Request
-
-`POST https://api.cloudbackend.com/v1/event`
-
-Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
-
-#### Body
-
-`application/xml` (required), root element `<sendEvent>`
-
-```xml
-<sendEvent>
-  <sender id="{user_id}" />
-  <receiver id="{receiver_user_id}" />
-  <type>statusMessage</type>
-  <visibility>public</visibility>
-  <data><message>Hello</message></data>
-</sendEvent>
-```
-
-### Responses
-
-| Status | Meaning |
-| --- | --- |
-| `200` | Event sent |
-| `400` | Bad Request — "Missing sender and receiver" or "Missing type". |
-| `401` | Unauthorized |
-| `403` | Forbidden — "Access denied." (sender is not the caller). |
-| `404` | Not Found — "User not found." (receiver). |
-| `415` | Unsupported Media Type — "Content-Type must be text/xml or appliction/xml". |
-| `500` | Internal Server Error — for example an unknown `type`. |
-
-#### `200` · application/xml · `<sendEventResponse>`
-
-```xml
-<sendEventResponse>OK</sendEventResponse>
-```
-
-### Example
-
-```bash
-curl -X POST "https://api.cloudbackend.com/v1/event" \
-  -H "Authorization: WRAP access_token=<session_token>" \
-  -H "Content-Type: application/xml; charset=utf-8" \
-  -d '<sendEvent>
-  <sender id="{user_id}" />
-  <receiver id="{receiver_user_id}" />
-  <type>statusMessage</type>
-  <visibility>public</visibility>
-  <data><message>Hello</message></data>
-</sendEvent>'
-```
-
----
-
 ## POST /logout <a id="postv1logout"></a>
 
 **Log out (invalidate session)**
@@ -1356,6 +1312,11 @@ curl -X POST "https://api.cloudbackend.com/v1/push/{user_id}" \
 Sends a password recovery email containing a recovery code. No authorization is
 needed.
 
+Every request mails a new code and is counted. After too many requests for the
+same account (default 10 in 15 minutes), more requests get `429 Too Many Requests`
+with a `Retry-After` header until the block ends. Unknown users (`400`, "Unknown
+user") are counted per client address.
+
 Identify the account with either `user` or `email`. Follow up with
 `POST /recover` to set the new password.
 
@@ -1379,9 +1340,10 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `200` | Recovery email sent |
-| `400` | Bad Request |
+| `400` | Bad Request — "Missing or empty user/email argument" or "Unknown user". |
 | `401` | Unauthorized |
 | `404` | Not Found |
+| `429` | Too Many Requests — "Too many failed attempts, try again later". The `Retry-After` header gives the seconds to wait. |
 | `500` | Internal Server Error |
 
 #### `200` · text/plain
@@ -1405,6 +1367,15 @@ curl -X GET "https://api.cloudbackend.com/v1/recover" \
 
 Sets a new password using the recovery code emailed by `GET /recover`. The code
 is valid for 24 hours; once it expires, request a new one.
+
+A successful change ends all of the user's sessions and sends
+`<updateUserSecurity action="passwordChanged">` to the user's drive listeners,
+as with `POST /users/{user_id}`.
+
+Wrong, missing and expired codes are counted per account, and unknown users per
+client address. After too many failures (default 10 per account or 20 per address
+in 15 minutes), the call answers `429 Too Many Requests` with a `Retry-After`
+header, even when the code is right, until the block ends.
 
 Identify the account with either `username` or `email` on the `<recover>`
 element.
@@ -1446,9 +1417,10 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `204` | Password changed. Empty body. |
-| `400` | Bad Request |
+| `400` | Bad Request — missing `code`, `password`, `username`/`email` or `tenant`, "Unknown tenant", "Unknown user", "Confirmation code not found", "Confirmation code does not match" or "Confirmation code expired". |
 | `401` | Unauthorized |
 | `404` | Not Found |
+| `429` | Too Many Requests — "Too many failed attempts, try again later". The `Retry-After` header gives the seconds to wait. |
 | `500` | Internal Server Error |
 
 ### Example
@@ -1507,7 +1479,10 @@ curl -X POST "https://api.cloudbackend.com/v1/sendVerificationCode" \
 Returns the account (subscription) of the user: balance, account type, account state
 and, when set, cost, lifespan, expiry, lock time, free size, payment-processor
 subscription id, the administrating (associating) user and the features of the
-account type. Only the user itself may call it.
+account type.
+
+The user itself, and an owner or administrator of the user's tenant, may call it
+(`403 Forbidden` otherwise), so a tenant can read the account of each of its users.
 
 `<state>` is one of:
 
@@ -1527,6 +1502,14 @@ account type. Only the user itself may call it.
 The optional elements `<cost>`, `<lifespan>`, `<expires>`, `<lockTime>`, `<freeSize>`,
 `<subscriptionId>`, `<admin>` and `<features>` are only present when they have a value.
 
+`<subscriptions>` lists the user's active subscriptions to the tenant's own products
+(tenant products, not account types), and is only present when there is one. Each
+`<subscription>` has the `product` id, the tenant's `groupId`, `description`, `price`
+in cents and its `currency`, the purchase's total `vat` in cents, `quantity`,
+`paymentMethod` (`invoice`, `paypal` or `stripe`), `period` in months, and `start`
+and `nextCharge` as Unix times in seconds. `project` is the project the product is
+linked to, only present when it is linked to one.
+
 ### Request
 
 `GET https://api.cloudbackend.com/v1/users/{user_id}/account`
@@ -1537,7 +1520,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
-| `user_id` | path | yes | integer | Id of the user. Must be the logged-in user. |
+| `user_id` | path | yes | integer | Id of the user. The logged-in user, or a user of a tenant the caller is owner or administrator of. |
 
 ### Responses
 
@@ -1545,7 +1528,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | The account |
 | `401` | Unauthorized |
-| `403` | Forbidden (not the user's own account) |
+| `403` | Forbidden — neither the user itself nor an owner or administrator of the user's tenant |
 | `404` | Not Found (no account, or no FREE account type in the tenant) |
 | `500` | Internal Server Error |
 
@@ -1582,6 +1565,26 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 </account>
 ```
 
+*With a subscription to a tenant product*
+
+```xml
+<account>
+  <balance>0</balance>
+  <type>FREE</type>
+  <state>NORM</state>
+  <freeSize>104857600</freeSize>
+  <subscriptions>
+    <subscription product='{product_id}' groupId='{tenant_group_id}' description='{description}' price='{price_cents}' currency='EUR' vat='{vat_cents}' quantity='1' paymentMethod='stripe' period='1' start='{unix_time}' nextCharge='{unix_time}' project='{project_id}'/>
+  </subscriptions>
+</account>
+```
+
+#### `403` · text/plain
+
+```text
+Forbidden
+```
+
 ### Example
 
 ```bash
@@ -1611,7 +1614,11 @@ the action:
 If payment is needed, the response is `200` with `<auth url='...'/>`; the user must
 visit that PayPal URL and pay to activate the new type. If the change could be done
 directly (for example a change covered by the existing balance, or a change to `FREE`
-on an expired account), the response is `204 No Content`.
+on an expired account), the response is `204 No Content`. A change that needs payment
+is refused with `403 Purchases are not available for this tenant` when the owner of
+the user's tenant doesn't pay for CloudBackend, or the tenant has a commission invoice
+unpaid 14 days after its due date (the same rules as
+`POST /users/{user_id}/purchases`).
 
 **Cancel subscription** — root element `<cancel>` with an optional `<reason>` text.
 Cancels the PayPal subscription or invoice. Only the user itself may cancel. Returns
@@ -1657,7 +1664,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `204` | Account type changed, or subscription cancelled |
 | `400` | Bad Request (missing/invalid `type` or `vat`, invalid account type, too much data for the new type, cancellation in progress, failed to cancel, unknown root element) |
 | `401` | Unauthorized (also returned for AppDirect users) |
-| `403` | Forbidden (not the user's own account) |
+| `403` | Forbidden (not the user's own account, or a change that needs payment while the tenant can't sell — its owner doesn't pay for CloudBackend, or it has an overdue commission invoice) |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -1665,6 +1672,12 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 ```xml
 <auth url='https://www.paypal.com/cgi-bin/webscr?cmd=_xclick-subscriptions&amp;...'/>
+```
+
+#### `403` · text/plain
+
+```text
+Purchases are not available for this tenant
 ```
 
 ### Example
@@ -3071,8 +3084,16 @@ Turning on `email` is a two-step flow:
    and `<sentTo email='...'/>`.
 2. `POST ...?mfa=email&code=<code>` — the result has `code="0"` and MFA is changed.
 
-The response is always `200` with `<mfaResult code message>`:
+The response is `200` with `<mfaResult code message>`:
 `0` = MFA changed, `1` = need MFA code (code sent), `2` = invalid MFA code.
+
+When the change succeeds (`code="0"`), all of the user's sessions end, including
+the one that made the call. The user's drive listeners get
+`<updateUserSecurity action="mfaChanged">`. Log in again with the new MFA method.
+
+Wrong codes are counted per user. After too many (default 10 in 15 minutes),
+further codes are refused with `429 Too Many Requests` and a `Retry-After` header.
+The same limit applies to the MFA `<code>` in `POST /login`.
 
 ### Request
 
@@ -3096,6 +3117,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `400` | Bad Request (missing `mfa` query parameter) |
 | `401` | Unauthorized |
 | `403` | Forbidden (not the logged-in user) |
+| `429` | Too Many Requests — too many wrong MFA codes. The `Retry-After` header gives the seconds to wait. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<mfaResult>`
@@ -3476,7 +3498,8 @@ contains the given country code, `valid` is `true` and the other fields are empt
 
 The result is returned as XML (`text/xml`, root `<validateVatResponse>`) by
 default, or as JSON (root `checkVatResponse`) with `?format=json`. All values,
-including `valid`, are strings.
+including `valid`, are strings. `address` is the address as VIES returns it, with
+its line breaks (`\n` in JSON).
 
 ### Request
 
@@ -3503,13 +3526,14 @@ Needs no session token: the description above says how this operation is authori
 #### `200` · application/json
 
 ```json
-{"checkVatResponse": {"countryCode": "SE","vatNumber": "556677889901","requestDate": "2026-10-16+02:00","valid": "true","name": "EXAMPLE AB","address": "STORGATAN 1 111 22 STOCKHOLM"}}
+{"checkVatResponse": {"countryCode": "SE","vatNumber": "556677889901","requestDate": "2026-10-16+02:00","valid": "true","name": "EXAMPLE AB","address": "STORGATAN 1\n111 22 STOCKHOLM"}}
 ```
 
 #### `200` · text/xml · `<validateVatResponse>`
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?><validateVatResponse><countryCode>SE</countryCode><vatNumber>556677889901</vatNumber><requestDate>2026-10-16+02:00</requestDate><valid>true</valid><name>EXAMPLE AB</name><address>STORGATAN 1 111 22 STOCKHOLM</address></validateVatResponse>
+<?xml version="1.0" encoding="UTF-8"?><validateVatResponse><countryCode>SE</countryCode><vatNumber>556677889901</vatNumber><requestDate>2026-10-16+02:00</requestDate><valid>true</valid><name>EXAMPLE AB</name><address>STORGATAN 1
+111 22 STOCKHOLM</address></validateVatResponse>
 ```
 
 ### Example
@@ -3682,11 +3706,68 @@ curl -X PUT "https://api.cloudbackend.com/v1/notification" \
 
 Creates a new user account.
 
+**Project.** The optional `<project>` element is the group id of one of the tenant's
+projects that the new user signs up to. It is checked before anything is created:
+it must be a project of the tenant the user signs up to, and the project must take
+new members (application `open`, or `review` with join requests). After the user is
+created it joins the project, or requests to join when the project reviews join
+requests. If joining fails at that point the user is still created (and gets the
+tenant's welcome email instead of the project's). The sign-up email then uses the
+project's email rules, see
+`POST /emailrules/{organization_id}`.
+
+**Honeypot.** Sign-up forms can include a `<website>` element that is hidden from
+people, so bots that fill in every field give themselves away. Leave it out or empty.
+What happens when it is filled in depends on the tenant option
+`honeypot.signup.mode` (see
+`POST /tenantOptions/{tenant_id}`):
+not set does nothing, `log` logs the sign-up, `enforce` logs it and rejects it with
+`422 Signup rejected`.
+
+**Proof of work.** When the tenant option `pow.signup.enable` is `1` or `true`, the
+request must carry a `PoW-Solution: <token>.<nonce>` header with a solved, unused
+challenge of scope `signup` from `POST /pow-challenges`. Without one the call fails
+with `428 Precondition Required` and the reason as the body: `missing_solution`,
+`malformed`, `unsupported_version`, `bad_signature`, `expired`, `scope_mismatch`,
+`insufficient_work` or `already_used`. Solve a new challenge and retry. Invalid
+sign-up data is rejected (`400`) before the solution is used, so the same solution
+can be sent again until it expires. A solution is used up by the first sign-up that
+passes this check, even if the sign-up fails later. A request authenticated as an
+owner or administrator of the tenant needs no solution.
+
+The checks run in this order: sign-up data, honeypot, proof of work, project.
+
+**Username rules.** Letters from any script are allowed, for example `åsa`, `иван`
+or `李明`. The server stores the name in Unicode NFC form with its non-ASCII letters
+in lower case, so `Åsa` is stored as `åsa`; ASCII letters keep their case. The
+response's `<atom:title>` is the stored name, and the password hashes are computed
+from it. A name is rejected with `400` when it:
+
+- is empty (`Empty user name`);
+- is longer than 255 bytes in UTF-8 (`Username exceeds maximum allowed length`).
+  Most non-ASCII letters take 2 or 3 bytes, so such names hold fewer characters;
+- contains a control or whitespace character (`Control character found in
+  username`, `Whitespace character found in username`);
+- contains any of `\ / * ? " < > | ' ( ) # % & :` (`Illegal character found in
+  username`);
+- is only digits (`Username requires non-numeric characters.`).
+
+Without `<username>` the e-mail address is used as the username. `<first>` and
+`<last>` can each be at most 255 bytes (`Name exceeds maximum allowed length`).
+Passwords must be printable ASCII, 16 to 128 characters (8 with MFA or on the
+cloudme tenant).
+
 ### Request
 
 `POST https://api.cloudbackend.com/v1/user`
 
 Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `PoW-Solution` | header | no | string | `<token>.<nonce>` for a solved `signup` challenge. Required when the tenant has `pow.signup.enable` set, unless the caller is an owner or administrator of the tenant. |
 
 #### Body
 
@@ -3705,13 +3786,47 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 </createUser>
 ```
 
+*Sign up*
+
+```xml
+<createUser>
+  <username>{username}</username>
+  <password>{password}</password>
+  <first>{first_name}</first>
+  <last>{last_name}</last>
+  <email>{email}</email>
+  <source>{tenant}</source>
+  <token>{token}</token>
+  <eulaVersion>0</eulaVersion>
+</createUser>
+```
+
+*Sign up to a project, with an empty honeypot field*
+
+```xml
+<createUser>
+  <username>{username}</username>
+  <password>{password}</password>
+  <first>{first_name}</first>
+  <last>{last_name}</last>
+  <email>{email}</email>
+  <source>{tenant}</source>
+  <eulaVersion>0</eulaVersion>
+  <project>{project_id}</project>
+  <website></website>
+</createUser>
+```
+
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
 | `200` | User created |
-| `400` | Bad Request |
+| `400` | Bad Request — invalid sign-up data (for example a username that breaks the username rules above, an invalid e-mail address or a password that is too short), or a `<project>` that is not a number (`Invalid project`) or not a project of the tenant (`Not a project of this tenant`) |
+| `403` | Forbidden — the project doesn't take new members |
 | `409` | Conflict (duplicate username or email) |
+| `422` | Unprocessable Entity — the `<website>` honeypot was filled in and the tenant has `honeypot.signup.mode` set to `enforce` |
+| `428` | Precondition Required — the tenant requires proof of work and the request has no valid, unused `PoW-Solution`. The body is the reason. |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<createUserResponse>`
@@ -3729,11 +3844,58 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 </createUserResponse>
 ```
 
+#### `400` · text/plain
+
+*username too long*
+
+```text
+Username exceeds maximum allowed length
+```
+
+*project is not a number*
+
+```text
+Invalid project
+```
+
+*project is not a project of the tenant*
+
+```text
+Not a project of this tenant
+```
+
+#### `403` · text/plain
+
+```text
+You can not request membership in this project
+```
+
+#### `422` · text/plain
+
+```text
+Signup rejected
+```
+
+#### `428` · text/plain
+
+*No PoW-Solution header*
+
+```text
+missing_solution
+```
+
+*The solution was already used*
+
+```text
+already_used
+```
+
 ### Example
 
 ```bash
 curl -X POST "https://api.cloudbackend.com/v1/user" \
   -H "Authorization: WRAP access_token=<session_token>" \
+  -H "PoW-Solution: {pow-solution}" \
   -H "Content-Type: application/xml; charset=utf-8" \
   -d '<createUser>
   <username>{username}</username>
@@ -3810,6 +3972,8 @@ Queries the contents of a library.
 Unlike most endpoints in this API the handler emits no wrapper element, so the
 response is the raw `queryLibrary` result.
 
+**Response format.** Atom only; this call has no data-model variant. For data-model results use `POST /query` with `<datasrc>dataModel</datasrc>`.
+
 ### Request
 
 `GET https://api.cloudbackend.com/v1/library`
@@ -3854,6 +4018,8 @@ curl -X GET "https://api.cloudbackend.com/v1/library" \
 **Query the user database**
 
 Queries the user database for a group.
+
+**Response format.** Always the data-model format (`db:` namespace). Nothing needs to be passed to get it; a `<datasrc>` element in the body is ignored.
 
 ### Request
 
@@ -3959,18 +4125,21 @@ curl -X GET "https://api.cloudbackend.com/v1/stats/users/client/{client_name}" \
 
 ---
 
-## GET /admin/deployments/stats <a id="getv1admindeploymentsstats"></a>
+## GET /admin/users/total <a id="getv1adminuserstotal"></a>
 
 **Get end user statistics**
 
-Gets end users created per tenant. Requires the caller to be the CloudBackend
-owner or an administrator.
+Gets the number of end users created per tenant. Requires the caller to be the
+CloudBackend owner or an administrator (`403` "Access denied." otherwise).
+
+Give a time range with `after` and/or `before`. Without one, or with an invalid
+range, the response body is just `0`.
 
 Replaces `/statisticeus`.
 
 ### Request
 
-`GET https://api.cloudbackend.com/v1/admin/deployments/stats`
+`GET https://api.cloudbackend.com/v1/admin/users/total`
 
 Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
 
@@ -3978,7 +4147,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
-| `groupby` | query | no | string | (optional) year, month, day, hour, total |
+| `groupby` | query | no | string | (optional) year, month, day, hour, total. Default month. |
 | `after` | query | no | string | (optional) created after date (unix epoch time) |
 | `before` | query | no | string | (optional) created before date (unix epoch time) |
 | `deleted` | query | no | string | (optional) "only" for deleted users, "include" for deleted and non-deleted users |
@@ -3990,24 +4159,172 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | `200` | Successful response |
 | `400` | Bad Request |
 | `401` | Unauthorized |
+| `403` | Forbidden — "Access denied." |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
-#### `200` · application/xml · `<deployCount>`
+#### `200` · application/xml · `<endUserCount>`
 
 ```xml
-<deployCount>
-  <totalResults>1</totalResults>
-  <tenant name="cloudbackend" count="7" groupByValue="1"/>
-  <tenant name="cloudme" count="20" groupByValue="3"/>
-</deployCount>
+<endUserCount>
+  <totalResults>2</totalResults>
+  <tenant name="cloudbackend" count="7" groupbyValue="1"/>
+  <tenant name="cloudme" count="20" groupbyValue="3"/>
+</endUserCount>
 ```
 
 ### Example
 
 ```bash
-curl -X GET "https://api.cloudbackend.com/v1/admin/deployments/stats" \
+curl -X GET "https://api.cloudbackend.com/v1/admin/users/total" \
   -H "Authorization: WRAP access_token=<session_token>"
+```
+
+---
+
+## POST /pow-challenges <a id="postv1powchallenges"></a>
+
+**Get a proof-of-work challenge**
+
+Issues a proof-of-work challenge that a client solves before it signs up a new identity
+with `POST /user`. It makes each scripted sign-up
+cost CPU time. No authentication is required. The tenant is the one the request is made
+against (`tenant` header, `?tenant=` query parameter, `tenant` cookie or host name).
+
+**Request.** `<challenge-request>` with `<scope>signup</scope>`; `signup` is the only
+scope. A body that is not such a document returns `422 Malformed challenge-request`,
+another scope `422 Unknown scope`.
+
+**Response.** A `<challenge>` (sent with `Cache-Control: no-store`):
+
+| Field | Description |
+|---|---|
+| `v` | Protocol version, `1` |
+| `required` | `true` if this tenant requires proof of work for sign-ups. A challenge is issued either way. |
+| `alg` | `SHA-256` |
+| `salt` | Random salt, unpadded base64url |
+| `difficulty` | Number of leading zero bits the hash must have (the tenant's setting, default 18) |
+| `expires` | Expiry time, Unix epoch milliseconds (5 minutes after issue) |
+| `scope` | `signup` |
+| `token` | The signed challenge, `1.<salt>.<difficulty>.<expires>.<scope>.<signature>` |
+
+**Solving.** Find a decimal `nonce` (1 to 20 digits) for which SHA-256 of the string
+`<salt>.<nonce>` has at least `difficulty` leading zero bits. A browser typically needs
+1–5 seconds. The solution is `<token>.<nonce>`.
+
+**Using it.** Send the solution in the `PoW-Solution` request header of
+`POST /user` (or the SOAP `createUser` action).
+The server checks the sign-up data first, so a request with invalid data can be retried
+with the same solution until it expires. Then the solution is used up, even if the
+sign-up fails later: each solution creates at most one identity. Without a valid,
+unused solution `POST /user` returns `428 Precondition Required` with the reason
+(`missing_solution`, `malformed`, `unsupported_version`, `bad_signature`, `expired`,
+`scope_mismatch`, `insufficient_work` or `already_used`); get a new challenge and retry.
+To check a solution without using it, call
+`POST /pow-challenges/verify`.
+
+Proof of work is off unless the tenant sets the tenant option `pow.signup.enable` to
+`1` or `true`; `pow.signup.difficulty` (1 to 32) sets the difficulty (see
+`/tenantOptions/{tenant_id}`). Identities that authenticate as the
+tenant's Owner or an Administrator can create identities without a solution.
+
+### Request
+
+`POST https://api.cloudbackend.com/v1/pow-challenges`
+
+Needs no session token: the description above says how this operation is authorized.
+
+#### Body
+
+`application/xml` (required), root element `<challenge-request>`
+
+```xml
+<challenge-request><scope>signup</scope></challenge-request>
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The challenge |
+| `422` | Unprocessable Entity — "Malformed challenge-request" or "Unknown scope" |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<challenge>`
+
+```xml
+<challenge v="1" required="true"><alg>SHA-256</alg><salt>q3J9mF0bXa1KkQ2zT7cVhw</salt><difficulty>18</difficulty><expires>1795432800000</expires><scope>signup</scope><token>1.q3J9mF0bXa1KkQ2zT7cVhw.18.1795432800000.signup.{signature}</token></challenge>
+```
+
+### Example
+
+```bash
+curl -X POST "https://api.cloudbackend.com/v1/pow-challenges" \
+  -H "Content-Type: application/xml; charset=utf-8" \
+  -d '<challenge-request><scope>signup</scope></challenge-request>'
+```
+
+---
+
+## POST /pow-challenges/verify <a id="postv1powchallengesverify"></a>
+
+**Check a proof-of-work solution**
+
+Checks the solution in the `PoW-Solution` header without using it up, so a client can
+test its solver or a solution before calling
+`POST /user`. No authentication is required and
+no request body is read. See
+`POST /pow-challenges` for the protocol.
+
+The answer is always `200`. `<verification valid="true"/>` means the solution would be
+accepted now: correctly signed, not expired, enough work for both the challenge and the
+tenant's current difficulty, and not used yet. Otherwise `valid="false"` and `<reason>`
+is one of `missing_solution`, `malformed`, `unsupported_version`, `bad_signature`,
+`expired`, `insufficient_work` or `already_used`. For `insufficient_work` the response
+also has `<leading-zero-bits>` (what the solution has) and `<required>`.
+
+### Request
+
+`POST https://api.cloudbackend.com/v1/pow-challenges/verify`
+
+Needs no session token: the description above says how this operation is authorized.
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `PoW-Solution` | header | no | string | The solution, `<token>.<nonce>`. |
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | The result of the check |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<verification>`
+
+```xml
+<verification valid="false"><reason>already_used</reason></verification>
+```
+
+*Valid, unused solution*
+
+```xml
+<verification valid="true"/>
+```
+
+*Not enough work*
+
+```xml
+<verification valid="false"><reason>insufficient_work</reason><leading-zero-bits>11</leading-zero-bits><required>18</required></verification>
+```
+
+### Example
+
+```bash
+curl -X POST "https://api.cloudbackend.com/v1/pow-challenges/verify" \
+  -H "PoW-Solution: {pow-solution}"
 ```
 
 ---

@@ -1,6 +1,6 @@
 # REST API — Container
 
-43 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
+44 operations. Every request needs `Authorization: WRAP access_token=<session_token>` except the ones that authenticate. Bodies are `application/xml` unless the card says otherwise.
 
 ## POST /container <a id="postv1container"></a>
 
@@ -129,6 +129,8 @@ curl -X PUT "https://api.cloudbackend.com/v1/container" \
 **Query a container**
 
 Queries container contents. Returns 403 if access is denied.
+
+**Response format.** Atom only; this call has no data-model variant. For data-model results use `POST /query` with `<datasrc>dataModel</datasrc>`.
 
 ### Request
 
@@ -321,6 +323,10 @@ curl -X DELETE "https://api.cloudbackend.com/v1/container" \
 
 Returns the ACL for a container.
 
+A locked container (see `PUT /containeracl`) has an extra
+`<user id="18446744073709551615" .../>` entry in its ACL. That entry is the lock
+marker, not an identity.
+
 ### Request
 
 `GET https://api.cloudbackend.com/v1/containeracl`
@@ -392,7 +398,44 @@ curl -X GET "https://api.cloudbackend.com/v1/containeracl" \
 
 **Set container ACL**
 
-Sets the ACL permissions for a container.
+Sets the ACL permissions for a container. The `tag` attribute of `<acl>` must be
+the current tag of the container's ACL (`400` "Missing ACL tag attribute." without
+it, `412` "ACL modified" when it is out of date). The response carries the tag of
+the new ACL.
+
+Every `<user id>` in the ACL must be an existing identity or a member id of a
+group. Otherwise the call fails with `400` ("User not found.").
+
+**Recursive.** Add `<recursive>true</recursive>` to the request to also give the
+new ACL to every container and object below the container. The container itself
+changes at once. The subtree is updated asynchronously, shortly after the
+response. Items that are locked keep their own ACL.
+
+```xml
+<setContainerACL>
+  <container id="{container_id}" />
+  <acl tag="{acl_tag}">
+    <user id="{user_id}" read="1" write="1" delete="0" changeACL="1" />
+  </acl>
+  <recursive>true</recursive>
+</setContainerACL>
+```
+
+**Lock.** To lock a container, add the lock entry
+`<user id="18446744073709551615" read="0" write="0" delete="0" changeACL="1" />`
+to the new ACL. Locking always applies to everything below the container, as if
+`recursive` were given. In a locked container and everything below it:
+
+- Nobody can write, delete or change the ACL, not even the owner or someone with a
+  temporary share. Read access stays as the ACL grants it.
+- The container cannot be renamed, moved or deleted. A container that holds a
+  locked container cannot be deleted either. These attempts give `403`.
+- Changing the ACL again gives `403` ("Folder is locked."). For an object ACL it
+  gives `403` ("Document is locked.").
+
+A lock cannot be undone through the API. Root (home) containers, system
+containers, and containers that hold system containers cannot be locked (`403`,
+"System folders can't be locked.").
 
 ### Request
 
@@ -440,9 +483,11 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `200` | ACL updated |
+| `400` | Bad Request — "Missing ACL tag attribute." or "User not found." (an unknown `<user id>` in the ACL). |
 | `401` | Unauthorized |
-| `403` | Access denied |
-| `404` | Not Found |
+| `403` | Forbidden — "Access denied.", "Folder is locked." or "System folders can't be locked." |
+| `404` | Not Found — "Folder not found". |
+| `412` | Precondition Failed — "ACL modified" (the `tag` is not the current one). |
 | `500` | Internal Server Error |
 
 #### `200` · application/xml · `<setContainerACLResponse>`
@@ -456,7 +501,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 #### `403` · text/plain
 
 ```text
-Access denied.
+Folder is locked.
 ```
 
 ### Example
@@ -481,6 +526,12 @@ curl -X PUT "https://api.cloudbackend.com/v1/containeracl" \
 
 Uploads a file (binary) to a container. The file metadata is returned in the response.
 
+**Storage quota.** An upload is refused with `403` when the drive is write-locked
+("Drive is write-locked.") or already over its storage quota ("Drive is full: {used}
+is used of its {quota} storage quota."). The upload's own size is not checked against
+the quota up front, so an upload into a drive that is under its quota is stored even
+if it takes the drive over.
+
 ### Request
 
 `POST https://api.cloudbackend.com/v1/objects/{container_id}`
@@ -491,6 +542,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Name | In | Required | Type | Notes |
 | --- | --- | --- | --- | --- |
+| `datasrc` | query | no | string · one of `datamodel` | `datamodel` returns the uploaded object as a data-model `<db:object>` (with `<db:streams>`, without custom keys) instead of an Atom entry. Lowercase only; any other value gives Atom. |
 | `container_id` | path | yes | integer |  |
 | `X-Content-Type` | header | no | string | The MIME type of the uploaded file (e.g. image/jpeg, text/xml) |
 | `X-File-Name` | header | no | string | The filename for the uploaded file |
@@ -505,6 +557,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | File uploaded successfully |
 | `401` | Unauthorized |
+| `403` | Forbidden — for example "Folder access denied.", "Drive is write-locked." or "Drive is full: {used} is used of its {quota} storage quota." |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -770,7 +823,7 @@ curl -X GET "https://api.cloudbackend.com/v1/containerpath/{container_id}/{path}
 
 ## GET /containers/{container_id} <a id="getv1containers"></a>
 
-**List container contents**
+**List child containers**
 
 Lists the child containers of a container. The response is an `<fs:container>`
 element for the requested container with one `<fs:container>` child per
@@ -1009,6 +1062,15 @@ curl -X GET "https://api.cloudbackend.com/v1/containers/{container_id}/{child_co
 Replaces the access control list (ACL) of a child container, addressed through
 its parent.
 
+Every `<user id>` must be an existing identity or a member id of a group.
+Otherwise the call fails with `400` ("User not found."). To **lock** the child
+container, include `<user id="18446744073709551615" read="0" write="0" delete="0" changeACL="1" />`.
+The lock covers everything below the container and cannot be undone. See
+`PUT /containeracl`. Changing the
+ACL of a locked container gives `403` ("Folder is locked."). System containers
+cannot be locked (`403`, "System folders can't be locked."). This URL has no
+`recursive` option.
+
 Send the complete new ACL as an `<acl>` document (same format as GET returns) and
 the current ETag in the `If-Match` header. Entries left out lose all rights;
 flags left out are `0`. At least one entry must have `changeACL="1"`. If the body
@@ -1050,9 +1112,9 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `204` | ACL replaced |
-| `400` | Bad Request — `If-Match` header missing ("Missing If-Match Header"), `tag` attribute differs from `If-Match`, or no entry with `changeACL="1"`. |
+| `400` | Bad Request — `If-Match` header missing ("Missing If-Match Header"), `tag` attribute differs from `If-Match`, no entry with `changeACL="1"`, or an unknown `<user id>` ("User not found."). |
 | `401` | Unauthorized |
-| `403` | Forbidden — the caller may not change this ACL. |
+| `403` | Forbidden — the caller may not change this ACL, the container is locked ("Folder is locked."), or a system container cannot be locked ("System folders can't be locked."). |
 | `404` | Not Found — "Folder not found". |
 | `412` | Precondition Failed — the ACL changed since the ETag in `If-Match` was read. |
 | `500` | Internal Server Error |
@@ -1237,6 +1299,16 @@ curl -X GET "https://api.cloudbackend.com/v1/containers/{container_id};acl" \
 
 Replaces the access control list (ACL) of a container.
 
+Every `<user id>` must be an existing identity or a member id of a group.
+Otherwise the call fails with `400` ("User not found."). To **lock** the
+container, include `<user id="18446744073709551615" read="0" write="0" delete="0" changeACL="1" />`.
+The lock covers everything below the container and cannot be undone. See
+`PUT /containeracl` for what a lock
+refuses. Changing the ACL of a locked container gives `403` ("Folder is locked.").
+Root and system containers cannot be locked (`403`, "System folders can't be
+locked."). This URL has no `recursive` option. To give an ACL to a whole subtree,
+use `PUT /containeracl` with `<recursive>true</recursive>`.
+
 Send the complete new ACL as an `<acl>` document (same format as GET returns) and
 the current ETag in the `If-Match` header. Entries left out lose all rights;
 flags left out are `0`. At least one entry must have `changeACL="1"`. If the body
@@ -1277,9 +1349,9 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `204` | ACL replaced |
-| `400` | Bad Request — `If-Match` header missing ("Missing If-Match Header"), `tag` attribute differs from `If-Match`, or no entry with `changeACL="1"`. |
+| `400` | Bad Request — `If-Match` header missing ("Missing If-Match Header"), `tag` attribute differs from `If-Match`, no entry with `changeACL="1"`, or an unknown `<user id>` ("User not found."). |
 | `401` | Unauthorized |
-| `403` | Forbidden — the caller may not change this ACL. |
+| `403` | Forbidden — the caller may not change this ACL, the container is locked ("Folder is locked."), or a system container cannot be locked ("System folders can't be locked."). |
 | `404` | Not Found — "Folder not found". |
 | `412` | Precondition Failed — the ACL changed since the ETag in `If-Match` was read. |
 | `500` | Internal Server Error |
@@ -1711,7 +1783,15 @@ feed. The call has two modes.
 Matching containers come first, as entries with `<atom:id>urn:x-i-o-s:folder:…`,
 `<dc:folder>` (parent) and `<dc:childFolder>`. They are left out when a `type:`
 filter is given that does not contain `folder`. Matching objects follow as their
-regular Atom entries.
+regular Atom entries. There is no filter that returns containers only.
+
+Containers are matched on their name only (case-insensitive, name starts with the
+term); a container id in `query` is treated as text. They are searched across the
+whole tree only when `container_id` is a root container, such as a drive's root
+(the `<home>` id from login). From any other container the search returns objects
+but no containers. To read a container whose id you already know, use
+`GET /containers/{container_id}` or
+`GET /path/{container_id}`.
 
 **Tag search** (`tag` given). Lists objects by their indexed fields instead of by
 title: `tag` holds one or more `field:value` pairs separated by `|`, for example
@@ -1904,6 +1984,13 @@ curl -X GET "https://api.cloudbackend.com/v1/tags/{container_id}" \
 
 Optional query params that are used if it's a container. If it's a file, only "s" is used. If it's a container, this API will list the container, else this API will download the file.
 
+A file is sent with `ETag: "<id>"` (the ETag that conditional writes compare
+against; `W/"<id>"` when nginx compressed the response) and `Last-Modified`. A
+matching `If-None-Match` (the weak form is accepted) answers `304 Not Modified`.
+
+To write a stream, rename or delete an object through this URL, see `POST` (with
+`?s=`), `PUT` and `DELETE` on the same path.
+
 ### Request
 
 `GET https://api.cloudbackend.com/v1/users/{user_id}/favorites/{favorite_id}/webshare/{webshare_path}`
@@ -1931,6 +2018,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | Status | Meaning |
 | --- | --- |
 | `200` | Successful response |
+| `304` | Not Modified — `If-None-Match` matches the file's current ETag. |
 | `400` | Bad Request |
 | `401` | Unauthorized |
 | `404` | Not Found |
@@ -2409,7 +2497,7 @@ Needs no session token: the description above says how this operation is authori
 | `200` | Atom entry of the uploaded object |
 | `400` | Bad Request — e.g. `Missing boundary in Content-Type.` |
 | `401` | Unauthorized — missing or wrong webshare password, or `The webshare requires a password for inbound!` |
-| `403` | Forbidden — `This webshare is not set to inbound sharing`, `Invited only`, `The given folder is not part of this webshare` or `Drive is write-locked.` |
+| `403` | Forbidden — `This webshare is not set to inbound sharing`, `Invited only`, `The given folder is not part of this webshare`, `Drive is write-locked.` or `Drive is full: {used} is used of its {quota} storage quota.` |
 | `404` | Not Found — webshare not found, or `Folder not found.` |
 | `411` | Length Required — `Missing Content-Length header.` |
 | `413` | Payload Too Large — `Request Entity Too Large.` |
@@ -2450,6 +2538,13 @@ curl -X POST "https://api.cloudbackend.com/v1/users/{user_id}/webshares/{webshar
 
 Moves a container from one parent to another, optionally renaming it.
 
+**Storage quota.** A move to a container on another drive is refused up front, with
+`403` and nothing moved, when the container's whole tree would take the destination
+drive over its storage quota: "Destination drive does not have enough storage space
+for this: it needs {size} and {free} is free." (`X-Error-Code: 7102`). A write-locked
+destination drive gives "Destination drive is write-locked.". Moves within one drive
+are not checked against the quota.
+
 ### Request
 
 `PUT https://api.cloudbackend.com/v1/movecontainer`
@@ -2475,6 +2570,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 | --- | --- |
 | `200` | Container moved |
 | `401` | Unauthorized |
+| `403` | Forbidden — for example "Destination drive is write-locked.", "Destination drive is full: {used} is used of its {quota} storage quota." (an empty container moved to a drive that is over its quota) or "Destination drive does not have enough storage space for this: it needs {size} and {free} is free." |
 | `404` | Not Found |
 | `500` | Internal Server Error |
 
@@ -2633,20 +2729,24 @@ curl -X POST "https://api.cloudbackend.com/v1/containersplit" \
 
 ## POST /query <a id="postv1query"></a>
 
-**Query containers**
+**Query objects in containers**
 
-Queries one or more containers and returns matching containers and objects as an
-Atom feed. Short form of `/querycontainer`; both resolve to the same handler.
+Searches the objects in one or more containers and returns the matching objects as an
+Atom feed, or in the data-model format when the body has
+`<datasrc>dataModel</datasrc>`. Child containers are not returned; use
+`GET /search/{container_id}` to find containers
+by name. Short form of `/querycontainer`; both resolve to the same handler.
 
 #### Request elements
 
 | Element | Description |
 |---|---|
 | `<container id="…" count="…"/>` | Container to search. Repeat it to search several in one call. The optional `count` attribute limits results. |
-| `<query>` | Search expression — see the grammar below. Omit it to list the container. |
+| `<query>` | Search expression — see the grammar below. Omit it to list the container's objects. |
 | `<order>` | Field to sort by, e.g. `title` or `updated`. |
 | `<ascending>` | `true` or `false`. |
 | `<numeric>` | `true` to treat `groupby` values as numbers rather than strings. |
+| `<datasrc>` | `dataModel` (case-sensitive) returns the results in the data-model format: a `<db:result>` with `<db:paging>` and one `<db:object>` per match, and `<db:bucket>` instead of `<dc:bucket>` for `groupby`. Leave it out for an Atom feed. |
 
 #### Query expression grammar
 
@@ -2751,11 +2851,21 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 </queryContainer>
 ```
 
+*Return the results in the data-model format*
+
+```xml
+<queryContainer>
+  <container id="{container_id}" />
+  <query>{search_term}</query>
+  <datasrc>dataModel</datasrc>
+</queryContainer>
+```
+
 ### Responses
 
 | Status | Meaning |
 | --- | --- |
-| `200` | Query results as an Atom feed. The shape of the feed body depends on the pipeline operators used in `<query>`. |
+| `200` | Query results as an Atom feed, or as a data-model `<db:result>` with `<datasrc>dataModel</datasrc>`. The shape of the body depends on the pipeline operators used in `<query>`. |
 | `400` | Bad Request. The request body root element is not a recognised operation. |
 | `401` | Unauthorized |
 | `404` | Not Found |
@@ -2851,6 +2961,20 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 </queryContainerResponse>
 ```
 
+*`<datasrc>dataModel</datasrc>` — data-model result*
+
+```xml
+<queryContainerResponse>
+  <db:result xmlns:db="https://cloudbackend.com/db.xsd" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:actuate="onRequest" xlink:href="home://">
+    <db:paging start="0" size="100" total="{total}" />
+    <db:object name="{object_name}" id="{object_id}" cid="{container_id}" published="{datetime}" updated="{datetime}" mime="{mime_type}">
+      <db:streams total="{bytes}" first="{bytes}" />
+      <s1>{value}</s1>
+    </db:object>
+  </db:result>
+</queryContainerResponse>
+```
+
 ### Example
 
 ```bash
@@ -2867,10 +2991,13 @@ curl -X POST "https://api.cloudbackend.com/v1/query" \
 
 ## POST /querycontainer <a id="postv1querycontainer"></a>
 
-**Query containers**
+**Query objects in containers**
 
-Queries one or more containers and returns matching containers and objects as an
-Atom feed. Identical to `/query`; both resolve to the same handler.
+Searches the objects in one or more containers and returns the matching objects as an
+Atom feed, or in the data-model format when the body has
+`<datasrc>dataModel</datasrc>`. Child containers are not returned; use
+`GET /search/{container_id}` to find containers
+by name. Identical to `/query`; both resolve to the same handler.
 
 See `POST /query` for the full request
 element list, the query expression grammar, and the pipeline operators.
@@ -2896,7 +3023,7 @@ Requires a session token: `Authorization: WRAP access_token=<session_token>`. Se
 
 | Status | Meaning |
 | --- | --- |
-| `200` | Query results as an Atom feed |
+| `200` | Query results as an Atom feed, or as a data-model `<db:result>` with `<datasrc>dataModel</datasrc>` (see `POST /query`). |
 | `400` | Bad Request. The request body root element is not a recognised operation. |
 | `401` | Unauthorized |
 | `404` | Not Found |
@@ -2925,6 +3052,141 @@ curl -X POST "https://api.cloudbackend.com/v1/querycontainer" \
   <container id="{container_id}" count="2" />
   <query>'\''{search_term}'\''</query>
 </queryContainer>'
+```
+
+---
+
+## POST /containercopy <a id="postv1containercopy"></a>
+
+**Copy a container**
+
+Copies a container, recursively, into another container: its child containers and
+objects are copied under a container named `<name>` in the destination container. The
+source is left unchanged. `/foldercopy` is an alias that reaches the same handler.
+
+**Request body.** An XML document whose root element name is not checked (by
+convention `<copyContainer>`), sent as `application/xml` or `text/xml`; another content
+type returns `415`. Unlike the URL, the request body is not translated from the
+container/object names, so the elements are named `srcFolder` and `dstFolder`:
+
+| Element | Description |
+|---|---|
+| `<srcFolder id>` | Required. The container to copy. |
+| `<srcFolder tenant>` | Optional. Name of the tenant the source container is in, for a cross-tenant copy (see below). |
+| `<dstFolder id>` | Required. The container to copy into. |
+| `<name>` | Required, not empty. Name of the copy inside `dstFolder`. |
+
+**Merging.** If `dstFolder` already has a child container named `<name>`, the copy is
+merged into it instead of creating a new one, and objects with the same name are
+replaced. The same applies to every child container.
+
+**Rules.** The caller needs read access to the source container and its objects and
+write access to the destination. Within one tenant a container can't be copied into
+itself or into one of its own child containers. Source and destination must both be
+encrypted or both unencrypted. There is no limit on the number of objects copied
+(copying from a followed webshare with
+`POST /users/{user_id}/favorites/{favorite_id}`
+keeps a limit of 100 objects per container). Each object's size is checked against
+the destination drive's maximum file size.
+
+**Storage quota.** Before anything is created, the size of the whole source tree is
+checked against the destination drive's storage quota. Objects that the copy
+replaces in a merge free their space, so their sizes are subtracted. A copy that does
+not fit is refused with `403` "Destination drive does not have enough storage space
+for this: it needs {size} and {free} is free." (`X-Error-Code: 7102`) and leaves
+nothing behind. Sizes are written like `600.00 bytes` or `1.50 MB` (1024-based units).
+
+The copy is not atomic otherwise: child containers are copied before the file-size
+limit of their parent container's objects is checked, so a call that fails with `400`
+"Source item too big for destination" may already have copied part of the tree.
+
+**Cross-tenant copy.** To copy from tenant A into tenant B, log in to tenant A (the
+`tenant` header names A), send the `xtenant` request header naming tenant B
+(`xtenant: B` or `xtenant: B,username`), and set `tenant="A"` on `<srcFolder>`. The source
+is then read in tenant A as the identity that authenticated there; the destination is
+written in tenant B as the identity the `xtenant` header maps to (see
+`GET /users/{user_id}/xtenant`). The
+`tenant` attribute must name the tenant the caller authenticated in, and the `xtenant`
+header is required with it, otherwise the call fails with `403`.
+
+**Response.** The id of the new (or merged-into) container. Through `/containercopy`
+the response is `<copyContainerResponse><newContainerId>`; through `/foldercopy` it is
+`<copyFolderResponse><newFolderId>`.
+
+### Request
+
+`POST https://api.cloudbackend.com/v1/containercopy`
+
+Requires a session token: `Authorization: WRAP access_token=<session_token>`. See [Authentication](authentication.md).
+
+#### Parameters
+
+| Name | In | Required | Type | Notes |
+| --- | --- | --- | --- | --- |
+| `xtenant` | header | no | string | Only for a cross-tenant copy: the destination tenant's name, optionally followed by `,` and the username to act as there. |
+
+#### Body
+
+`application/xml` (required), root element `<copyContainer>`
+
+```xml
+<copyContainer>
+  <srcFolder id="{source_container_id}" />
+  <dstFolder id="{dest_container_id}" />
+  <name>{new_container_name}</name>
+</copyContainer>
+```
+
+*Copy within the tenant*
+
+```xml
+<copyContainer>
+  <srcFolder id="{source_container_id}" />
+  <dstFolder id="{dest_container_id}" />
+  <name>{new_container_name}</name>
+</copyContainer>
+```
+
+*Copy from the tenant the caller logged in to into the xtenant tenant*
+
+```xml
+<copyContainer>
+  <srcFolder id="{source_container_id}" tenant="{source_tenant_name}" />
+  <dstFolder id="{dest_container_id}" />
+  <name>{new_container_name}</name>
+</copyContainer>
+```
+
+### Responses
+
+| Status | Meaning |
+| --- | --- |
+| `200` | Container copied |
+| `400` | Bad Request — "Failed to get source folder id", "Bad source folder id.", "Failed to get destination folder id", "Bad destination folder id.", "Failed to get destination folder name", "You can't copy a folder into itself", "Source item too big for destination" (an object above the destination drive's maximum file size), "Illegal character found in folder name"; with `xtenant`: "Invalid cross-tenant", "No user with this name on the cross-tenant". |
+| `401` | Unauthorized |
+| `403` | Forbidden — "Folder access denied." (no read access to the source, or no write access to the destination), "Document read access denied.", "Source drive is read-locked.", "Cannot copy an encrypted folder to an unencrypted folder", "Cannot copy an unencrypted folder to an encrypted folder", "The source tenant must be the tenant you authenticated in, with an xtenant header naming the destination tenant", "Destination drive is write-locked." or "Destination drive does not have enough storage space for this: it needs {size} and {free} is free." (`X-Error-Code: 7102`). |
+| `404` | Not Found — "Folder not found", "Source folder not found." or "Source document not found." |
+| `415` | Unsupported Media Type — the body is not `application/xml` or `text/xml`. |
+| `500` | Internal Server Error |
+
+#### `200` · application/xml · `<copyContainerResponse>`
+
+```xml
+<copyContainerResponse><newContainerId>{container_id}</newContainerId></copyContainerResponse>
+```
+
+### Example
+
+```bash
+curl -X POST "https://api.cloudbackend.com/v1/containercopy" \
+  -H "Authorization: WRAP access_token=<session_token>" \
+  -H "xtenant: {xtenant}" \
+  -H "Content-Type: application/xml; charset=utf-8" \
+  -d '<copyContainer>
+  <srcFolder id="{source_container_id}" />
+  <dstFolder id="{dest_container_id}" />
+  <name>{new_container_name}</name>
+</copyContainer>'
 ```
 
 ---
