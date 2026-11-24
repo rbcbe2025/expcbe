@@ -2,7 +2,7 @@
 
 Every component, process operation, event, function, action and method, one line each. Open the linked page for attributes, children and examples.
 
-Every entry links to its reference page on the XIOS/3 developer portal (https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud). Generated 2026-11-20.
+Every entry links to its reference page on the XIOS/3 developer portal (https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud). Generated 2026-11-24.
 
 ## Components (55)
 
@@ -11,7 +11,7 @@ Every entry links to its reference page on the XIOS/3 developer portal (https://
 - **[Boxlist](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/boxlist)** — Defines an boxlist plate component that gives a searchable overview of a list of some sort.
 - **[Breadcrumbs](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/breadcrumbs)** — Creates a clickable path into a structure, like a path to an Object.
 - **[Bush](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/bush)** — Defines a bush, which is a tree type of component that uses lazy loading to build the tree and expands the tree when the user click on branches.
-- **[Button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)** — Defines a clickable button with a text label.
+- **[Button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)** — A clickable control that fires Select - on click, on Enter/Space while it has focus, or on Enter anywhere in the view when it is the view's default button.
 - **[ButtonBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/buttonbox)** — Defines a button looking box located inside its parent component, such as Container, Group, Menu, or ToolBar.
 - **[Calendar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/calendar)** — Defines a visually flexible and highly interactive calendar component that can be navigated by week or month.
 - **[Carousel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/carousel)** — The carousel component shows one child panel at a time and lets the user move between panels as slides.
@@ -19,8 +19,8 @@ Every entry links to its reference page on the XIOS/3 developer portal (https://
 - **[Clock](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/clock)** — Defines a clock component that shows an analog or digital clock.
 - **[CodeEditor](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/codeeditor)** — The CodeEditor component is a specialized XML editing interface designed for structured markup validation and editing.
 - **[Color](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/color)** — Defines a visual color picker and/or an inputfield for entering colors in hexadecimal format and the picker.
-- **[ColorPicker](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/colorpicker)**
-- **[ComboBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/combobox)** — Defines a component that displays and allows for selection of item values.
+- **[ColorPicker](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/colorpicker)** — An OKLCH color picker bound two-way to a color node.
+- **[ComboBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/combobox)** — A text field with a dropdown list of choices.
 - **[Container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/container)** — Use the container component if you want to create a repeating list of something by building up the design of each list item with ordinary UI components and…
 - **[DataItem](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/dataitem)** — Defines a component that creates data-dependent menu items.
 - **[Date](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/date)** — Defines a date component that is used to format and display date values.
@@ -28,22 +28,22 @@ Every entry links to its reference page on the XIOS/3 developer portal (https://
 - **[Dummy](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/dummy)** — The dummy component acts as a component placeholder to avoid warnings about non-existing components.
 - **[FileList](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/filelist)** — If you are going to display content from the Data Virtualization Layer with information organized as a filesystem abstraction with Databases, Containers, and…
 - **[Form](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/form)** — Defines a form component that is used to stack and populate traditional form components such as Input, ComboBox and TextArea.
-- **[Grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)** — The grid component is used to present a large amount of data in cell format.
+- **[Grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)** — Presents data in rows and cells, one row per matched node and one column per cell.
 - **[Group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/group)** — Defines a group Container component that will group several components and let them share behavior.
 - **[HTML](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/html)** — Defines a html
 - **[IconList](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/iconlist)** — The iconlist component is used to visualize lists of things with an icon and a text label describing the icon.
 - **[Identity](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/identity)** — Defines an identity plate component that gives an overview of identities.
 - **[Image](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/image)** — The image component displays an image or icon in the user interface with various options for how to show it under different conditions.
-- **[Input](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/input)** — Defines a single-line, editable input field that can be styled in several different ways.
+- **[Input](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/input)** — A single-line, editable text field.
 - **[Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/item)** — The item is not a stand-alone component, rather it defines item child elements for the list, menu, and plate components.
-- **[Label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/label)** — Defines a text label, used mainly to display small or large amounts of text.
-- **[List](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list)** — Defines a list component that displays item entries populated by data bound to it.
+- **[Label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/label)** — A read-only piece of text - a caption, a value display, a formatted timestamp, or (with look="link") a clickable line of text.
+- **[List](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list)** — Shows the items of a document as rows.
 - **[ListView](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/listview)** — Defines a very flexible component that is driven by an XSLT document as well as data, which means in order for the component to work you need to have a…
 - **[Map](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/map)** — Defines a map component utilizing Google Maps.
 - **[Menu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menu)** — Defines a menu plate that contains item elements, which are defined as child elements called Menu Items.
 - **[Menu Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menu-item)** — Defines static menu items in application menus.
 - **[MenuBar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menubar)** — Defines a menubar that is filled with menu component elements.
-- **[Panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel)** — Defines a panel, which are infrastructure building blocks in applications, used for arranging other components and creating a desirable layout.
+- **[Panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel)** — The fundamental layout building block - almost every other layout-bearing component (tabstrip, accordion, and panel itself when nested) renders through the…
 - **[Plate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/plate)** — Defines a plate component that serves as a Container for Plate Item elements.
 - **[Plate Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/plate-item)** — Defines static items in the Plate component.
 - **[QR](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/qr)** — Defines a QR code, in the form of a scannable QR code.
@@ -52,8 +52,8 @@ Every entry links to its reference page on the XIOS/3 developer portal (https://
 - **[RichText](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/richtext)** — Defines a Rich Text Editor that makes it possible for end users to style and format text.
 - **[Shell](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/shell)** — Defines a text-based command line interface.
 - **[Slider](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/slider)** — The slider component allow the selection of any value between the min and max values or if the slider has a plate component as a child element, the selection…
-- **[TabStrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)** — The tabstrip component handles and shows tabs.
-- **[TextArea](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/textarea)** — Defines a Text Area used for displaying and editing text that needs several lines.
+- **[TabStrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)** — A row of tabs, each showing one child panel at a time.
+- **[TextArea](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/textarea)** — A multi-line, editable text field.
 - **[Toggle](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toggle)** — A toggle is a switch between two mutually exclusive states — typically on/off, enabled/disabled, or active/inactive.
 - **[ToolBar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar)** — The toolbar component is a Container for a specific set of child components.
 - **[Tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tree)** — Defines a tree view.

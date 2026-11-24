@@ -72,7 +72,7 @@ overflow menu when the bar's content is taller than the bar, which a 44 px touch
 
 A `confirm` or `alert` opens in a frame of its own that carries the platform's theme (`cbeapps`), not the app's, and
 the runtime places it at a fixed 462 px, partly off a phone's screen (measured 2026-11-05). The boot page that the
-CloudBackend plugin's tenant server and the deploy connector write copies the app's theme and this stylesheet into each
+CloudBackend plugin's tenant server writes copies the app's theme and this stylesheet into each
 dialog frame, and keeps dialog frames inside a phone's width; the stylesheet then draws the dialog as a sheet (a white
 card, a semibold title, the default action filled, the others tinted, no close glyph). A deployment made with the
 console's Deploy Wizard keeps the console's boot page and the platform's dialog. Prefer an in-app panel over a dialog for

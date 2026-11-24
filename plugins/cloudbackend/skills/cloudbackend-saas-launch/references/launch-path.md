@@ -2,7 +2,7 @@
 
 The hand-written end-to-end guide from the CloudBackend documentation hub: the order of work for a first paid web application on CloudBackend PaaS, with a check for each step and the items the product has not settled yet. Its links point at the published manual. Read the Pre-flight section and the current step's section, not the whole file.
 
-1 topics from the published CloudBackend documentation, generated on 2026-11-20. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+1 topics from the published CloudBackend documentation, generated on 2026-11-24. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -117,7 +117,7 @@ Measured 2026-11-05 on a Development deployment:
 
 - In the manifest, a `logo` and a `background` that name a file next to `index.xml` render: the login application now resolves them against the app. (On 2026-10-07 a bare name was looked up in the login application's own folder.)
 - **Create an account** opens the sign-up page (names, e-mail, username, a password of at least 16 characters, repeated), and **Forgot your password?** opens the reset page; `button`, `buttonColor`, `linkColor` and `createPrompt` take effect.
-- The card is 470 px wide, so on a phone narrower than that it runs off the screen. The boot page that the CloudBackend plugin's tenant server and the deploy connector write fits it to the screen on all three pages (measured at 375 px); a deployment made with the console's Deploy Wizard keeps the overflow. The responsive card itself is the login application's to fix; it has been reported.
+- The card is 470 px wide, so on a phone narrower than that it runs off the screen. The boot page that the CloudBackend plugin's tenant server writes fits it to the screen on all three pages (measured at 375 px); a deployment made with the console's Deploy Wizard keeps the overflow. The responsive card itself is the login application's to fix; it has been reported.
 - Without a published `Tenant` container, the login's lookup of the tenant's licence text answers 404 in the browser console; the screen works.
 - On a tenant without the CRM, the sign-up and reset flows may not finish (seen on 2026-10-07 with the earlier login application, not measured again). Keep both links on every app, a team tool included, set up the CRM before Production (step 4), and until then create customer accounts yourself (4b).
 - Collect the brand assets now: the logo file (SVG, uploaded next to `index.xml`), the title, the description and the copyright holder.

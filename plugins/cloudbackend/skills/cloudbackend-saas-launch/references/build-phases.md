@@ -25,10 +25,10 @@ via:` line:
    Then `tenant_status` with `wait_seconds` waits for them. If the page cannot be reached, Claude runs on another
    computer than the user's browser (over SSH, in a cloud session) and `127.0.0.1` points at the wrong one: take
    the console route.
-2. **CloudBackend's deploy connector**, when the user added it (`https://mcp.cloudbackend.com/mcp/<tenant>`,
-   `deploy-connector.md`): it answers only for an account with its own sign-in realm. `tenant_status`'s `deploy_connector` line says whether
-   the account has one; when it has not and the user is the owner, offer `enable_deploy_connector` once, as a
-   question, because it changes the account.
+2. **CloudBackend's deploy connector**, when the user added it (`deploy-connector.md`): it answers only for an
+   account with its own sign-in realm, so without one `/mcp` shows it failed; it uploads and reads, no `deploy`.
+   `tenant_status`'s `deploy_connector` line says whether the account has one; when it has not and the user is
+   the owner, say so and offer `enable_deploy_connector` once, as a question, because it changes the account.
 3. **The console, with the user's help.** The user opens `https://<tenant>.db.cloudbackend.com/` and signs in
    themselves. A browser tool then performs the clicks, each change with its own yes; without one, give the click
    path in words and wait for "done" after each step.
@@ -73,8 +73,8 @@ Gate: the step-1 check. Evidence: `W3 data — <datatype> in tenant://Settings/D
    reason and fix, and a finding is reported with all three.
 4. The throwaway deploy, as soon as the first list binds, on W0's route: `upload_project`, then `deploy` from
    `home` (a private Development deployment). The tenant server takes the local `app/` folder as `path`, lints it
-   first and uploads nothing while an error stands; the deploy connector takes the files with `validate` on; on
-   the console route the user uploads with the Upload Files dialog and runs the Deploy Wizard. `deploy-rules.md`
+   first and uploads nothing while an error stands; the deploy connector takes the files with `validate` on, then
+   the user runs the Deploy Wizard, as on the console route after its Upload Files dialog. `deploy-rules.md`
    says what each call returns, what a 409 on a seed means (kept, correct) and the REST rules.
 One question, only when the spec lists a channel the plan card left open: "the provider for <channel>?"
 Gate: lint 0 errors, upload done, deploy returned a URL. Evidence: `W4 build — lint build 0E/nW (<ids>); upload N files ok; deploy dev <url> <UTC>`.
