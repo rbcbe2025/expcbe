@@ -49,7 +49,13 @@ today=$(date +%Y-%m-%d)
 stage 0 "clean trees and tool versions"
 for repo in "$here" "$hub" ${RELEASE_EXTRA_REPOS:-}; do
   if [ ! -d "$repo/.git" ]; then note "$repo: not a git checkout"; [ "$dry" = 1 ] || exit 1; continue; fi
-  dirty=$(git -C "$repo" status --porcelain | wc -l | tr -d ' ')
+  # The hub's own release lets its AI notes (.ai/), drops waiting untracked in inbox/ and inbox/TRIAGE.md pass: no build
+  # reads them (the hub's public/scripts/release-plan.mjs, Robin's call of 2026-11-23). The same holds here, for the hub only.
+  if [ "$repo" = "$hub" ]; then
+    dirty=$(git -C "$repo" status --porcelain | { grep -Ev '^.. \.ai/|^\?\? "?inbox/|^.. inbox/TRIAGE\.md$' || true; } | wc -l | tr -d ' ')
+  else
+    dirty=$(git -C "$repo" status --porcelain | wc -l | tr -d ' ')
+  fi
   if [ "$dirty" != 0 ]; then note "$repo: $dirty uncommitted change(s)"; [ "$dry" = 1 ] || { echo "abort: commit or archive first" >&2; exit 1; }; else note "$repo: clean"; fi
 done
 branch=$(git -C "$here" rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?')

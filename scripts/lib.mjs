@@ -64,7 +64,7 @@ export const SERVERS = [
    entry: 'servers/tenant/index.mjs', test: 'servers/tenant/test.mjs', env: {CBE_SESSION_DIR: '${CLAUDE_PLUGIN_DATA}/sessions'},
    what: 'your CloudBackend account, signed in on a page on your computer (the password goes from your browser to CloudBackend, never through the chat): upload_project (a local package folder, linted first), deploy (a Development deployment: private in the console, yet anyone with its address can open it unless the app has a login), verify_deployment (served bytes, not a 200), list_projects, and enable_deploy_connector (the owner creates the account\'s sign-in realm the deploy connector needs)'},
   {key: 'deploy', name: 'cloudbackend-deploy', kind: 'remote', optional: true, url_form: DEPLOY_URL_FORM,
-   what: 'optional, added by hand: CloudBackend\'s per-tenant deploy server (list_projects, upload_project, deploy, verify_deployment and the rest), for an account whose owner created its sign-in realm (enable_deploy_connector on cloudbackend-tenant); not in the plugin\'s .mcp.json, because without the realm it can only fail to connect'},
+   what: 'optional, added by hand: CloudBackend\'s per-tenant server (list_projects, upload_project and the rest; no deploy since 2026-11-24, so cloudbackend-tenant or the console deploys), for an account whose owner created its sign-in realm (enable_deploy_connector on cloudbackend-tenant); not in the plugin\'s .mcp.json, because without the realm it can only fail to connect'},
 ];
 export const serverByKey = key => SERVERS.find(s => s.key === key);
 

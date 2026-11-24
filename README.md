@@ -81,8 +81,9 @@ CLAUDE.md                           the repo contract
   `scaffold_project`, the design skill covers scaffolding). It reads the rule table from the plugin's copy of the
   workflow skill's `tenant-grammar.json` at run time, so the rules have one source; schema validation (G00) is what
   `upload_project` does on the deploy connector, and the server says so. Node 22, which Claude Code brings.
-- **The deploy connector:** CloudBackend's live per-tenant server, `https://mcp.cloudbackend.com/mcp/<tenant>`, the
-  tenant from `plugin.json`'s `userConfig` in Claude Code and by hand elsewhere. Nothing else of ours is on that host.
+- **The deploy connector:** CloudBackend's live per-tenant server, `https://mcp.cloudbackend.com/mcp/<tenant>`, added
+  by hand (`scripts/connect-deploy.sh`). It uploads and reads; it has no deploy since 2026-11-24 (CloudBackend's own
+  plugin, v1.6.0), so the tenant server deploys. Nothing else of ours is on that host.
 - **The portal's address:** the hub's `public/portal.json`. The marketplace, index and zip the portal serves live at
   `<portal>/plugin/`; `gen-clients.mjs` derives every URL from it, and `release.sh` copies the files into the hub's
   `public/public/plugin/` for the portal build to publish.
