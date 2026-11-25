@@ -2,7 +2,7 @@
 
 Creating identities and roles, setting role ACLs, assigning roles, and managing groups (create, configure, invite, group ACLs, delete) in the CloudBackend PaaS console, with the CLI command and the XIOS/3 process markup for each.
 
-12 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+12 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -45,7 +45,7 @@ members
 
 For more information see:
 
-- [Group Members](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-members)
+- [Group Members](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-members)
 
 ### Process Development Information
 
@@ -61,9 +61,9 @@ Example creating an identity sub account in the tenant group.
 
 #### Next
 
-- [Create Role](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-role)
+- [Create Role](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-role)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-identity>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-identity>*
 
 ---
 
@@ -97,7 +97,7 @@ roles tenant
 
 For more information see:
 
-- [Group Roles](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-roles)
+- [Group Roles](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-roles)
 
 ### Process Development Information
 
@@ -117,9 +117,9 @@ For more information see:
 
 #### Next
 
-- [Role ACLs](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/role-acls)
+- [Role ACLs](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/role-acls)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-role>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-role>*
 
 ---
 
@@ -136,11 +136,11 @@ This subsection will cover how to perform the following operations through the g
 
 #### Next
 
-- [Create Group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/create)
+- [Create Group](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/create)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups>*
 
 ---
 
@@ -159,15 +159,15 @@ The group details window allows for various configuration of the group. The grou
 
 #### Next
 
-- [Group ACLs](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/group_acls)
+- [Group ACLs](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/group_acls)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/configuration>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/configuration>*
 
 ---
 
 ## Create Group
 
-In figure 1 we can see the `Create Sub-Group...` button for creating a new group directly under the `tenant` group. [Groups](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/group) allow you to partition data within the database, creating logical separations for different projects, teams or applications.
+In figure 1 we can see the `Create Sub-Group...` button for creating a new group directly under the `tenant` group. [Groups](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/group) allow you to partition data within the database, creating logical separations for different projects, teams or applications.
 
 > **Note:** Sub-groups may contain other sub-groups, and are not limited to being directly under the tenant group.
 
@@ -177,8 +177,8 @@ When the `Create Group` application is open it allows for the configuration of g
 The `group security` options limits the ability for users to join the group.
 
 - **open** - If the group type is set to `public` anyone may search for and join the group.
-- **invite** - Users must receive an invite from a user that has write [ACL](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl) rights.
-- **review** - Users may apply to join the group, but must be approved by a user with write [ACL](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl) rights.
+- **invite** - Users must receive an invite from a user that has write [ACL](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl) rights.
+- **review** - Users may apply to join the group, but must be approved by a user with write [ACL](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl) rights.
 - **closed** - No one may join the group.
 
 
@@ -187,9 +187,9 @@ Once the group has been added it automatically appear and be selected under the 
 
 #### Next
 
-- [Create Invites](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/invite)
+- [Create Invites](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/invite)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/create>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/create>*
 
 ---
 
@@ -202,15 +202,15 @@ Groups may be deleted with the `Delete...` button or from right clicking the gro
 
 #### Next
 
-- [Configure Group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/configuration)
+- [Configure Group](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/configuration)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/delete>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/delete>*
 
 ---
 
 ## Group ACLs
 
-[Groups](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/group) may be configured with different [ACLs](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl) to control its users access to part of the CloudBackend system. Below is an image depicting what the Group ACL settings look like and what you can change. Most notably a toggle for "Enable User Search" that allows you to enable if the users of this group should be able to search for other users.
+[Groups](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/group) may be configured with different [ACLs](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl) to control its users access to part of the CloudBackend system. Below is an image depicting what the Group ACL settings look like and what you can change. Most notably a toggle for "Enable User Search" that allows you to enable if the users of this group should be able to search for other users.
 
 
 ### CLI Commands
@@ -225,13 +225,13 @@ groupacl [Name of Group]
 
 For more information see:
 
-- [Group ACL Security Information](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-acl)
+- [Group ACL Security Information](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-acl)
 
 #### Next
 
-- [Price plans](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/priceplans)
+- [Price plans](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/priceplans)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/group_acls>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/group_acls>*
 
 ---
 
@@ -247,9 +247,9 @@ The invited user will see a notification in the bottom right on their screen, fr
 
 #### Next
 
-- [Delete Group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/delete)
+- [Delete Group](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/delete)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/invite>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups/invite>*
 
 ---
 
@@ -278,7 +278,7 @@ roles tenant
 
 For more information see:
 
-- [Group Roles](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-roles)
+- [Group Roles](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-roles)
 
 ### Process Development Information
 
@@ -294,9 +294,9 @@ Example adding a role.
 
 #### Next
 
-- [Remove Role](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-role)
+- [Remove Role](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-role)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-roles>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-roles>*
 
 ---
 
@@ -317,9 +317,9 @@ For more information see:
 
 #### Next
 
-- [Manage Groups](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups)
+- [Manage Groups](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-groups)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-identity>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-identity>*
 
 ---
 
@@ -352,7 +352,7 @@ roles tenant
 
 For more information see:
 
-- [Group Roles](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-roles)
+- [Group Roles](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-roles)
 
 ### Process Development Information
 
@@ -368,9 +368,9 @@ Example deleting a role.
 
 #### Next
 
-- [Remove Identity](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-identity)
+- [Remove Identity](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-identity)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-role>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-role>*
 
 ---
 
@@ -382,7 +382,7 @@ When a role is created it will show up in the list of the `Manage Roles` applica
 
 > **Note:** Please note that any identity assigned to the role will have the ability to perform all the actions allowed by the configured ACLs of the role on the group where the role belongs to, but not on any other group.
 
-These ACL permissions given at the group level are quite different from ACL permissions set for the role on a `container` or `object`. This is were a role in most cases is being used, to control access to the database through the use of ACLs on `containers` and `objects`. These important ACLs are configured using the [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer) properties dialogue and through the `Manage Roles` application.
+These ACL permissions given at the group level are quite different from ACL permissions set for the role on a `container` or `object`. This is were a role in most cases is being used, to control access to the database through the use of ACLs on `containers` and `objects`. These important ACLs are configured using the [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer) properties dialogue and through the `Manage Roles` application.
 
 > **Note:** To login to the tool, the identity needs a role with at least ACL read access to `Roles` and `Identities`.
 
@@ -407,7 +407,7 @@ groupacl tenant
 
 For more information see:
 
-- [Group ACL Security Information](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-acl)
+- [Group ACL Security Information](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/group-commands/group-acl)
 
 ### Process Development Information
 
@@ -425,8 +425,8 @@ Example setting ACL for a role.
 
 #### Next
 
-- [Manage Roles](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-roles)
+- [Manage Roles](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-roles)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/role-acls>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/role-acls>*
 
 ---

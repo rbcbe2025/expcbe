@@ -97,6 +97,6 @@ work:
 
 Check before deploying: `ls` in the app's container lists every folder, and `ls views` (and so on) lists its files.
 A file in the wrong container is not an error at upload time, only a blank part of the app at run time.
-[Create Container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/container-commands/create-container) and
-[Upload Objects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/object-commands/upload-objects) have the
+[Create Container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/container-commands/create-container) and
+[Upload Objects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/object-commands/upload-objects) have the
 commands.

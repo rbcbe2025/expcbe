@@ -2,7 +2,7 @@
 
 Short, complete snippets for common tasks, from the published Code Concepts section.
 
-32 topics from the published XIOS/3 documentation, generated on 2026-11-24. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+32 topics from the published XIOS/3 documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -49,53 +49,53 @@ Almost all concepts can be executed directly from this documentation by clicking
 
 The following links contain good information to support you alongside the concepts.
 
-- **[XML Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used. *(XML)*
+- **[XML Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used. *(XML)*
 
-- **[Using Aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)** — Aliases are powerful and flexible equivalents to variables that are more like a struct, class, or JSON. *(Variables)*
+- **[Using Aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)** — Aliases are powerful and flexible equivalents to variables that are more like a struct, class, or JSON. *(Variables)*
 
-- **[Using Xbinds](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/xbinds)** — Standardizing how XML based applications communicate, store, and describe its current state. *(Xbind)*
+- **[Using Xbinds](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/xbinds)** — Standardizing how XML based applications communicate, store, and describe its current state. *(Xbind)*
 
-- **[The App Manifest](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/application-package-manifest)** — The equivalent to the executable program in XIOS/3, defining views, processes, etc. *(Packaging)*
+- **[The App Manifest](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/application-package-manifest)** — The equivalent to the executable program in XIOS/3, defining views, processes, etc. *(Packaging)*
 
-- **[Visual Studio Code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code)** — How to use Microsoft VS Code for development in XIOS/3 *(VS Code)*
+- **[Visual Studio Code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code)** — How to use Microsoft VS Code for development in XIOS/3 *(VS Code)*
 
 #### List of Concepts
 
 This list will keep on growing, but you will find additional ideas in the Tutorials and within the reference manual for each UI component and process operation.
 
-- [Add a fake tab to a tabstrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/add-a-fake-tab-to-a-tabstrip): Add a tab that is not represented in the underlying data to tabstrip
-- [Ask user for input](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/ask-user-for-input): Show a confirm dialog that asks the user to input data
-- [Automatic bindings between data and components](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/automatic-bindings-between-data-and-components): Showing how data is automatically kept in sync when bound to a component.
-- [Binary decision](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/binary-decision): Show how to use a binary flag in a decision
-- [Bind a tabstrip to dynamic data](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-a-tabstrip-to-dynamic-data): Show tabs depending on underlying data model
-- [Bind from user selection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-from-user-selection): Shows how user interactions can create bindings between data and UI components.
-- [Bind UI components to an external API](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-ui-components-to-an-external-api): Showing how to bind an external API to a UI component and keep it updated.
-- [Button and Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/button-and-events): Handling events with a default button.
-- [Check if a container or object exists](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/check-if-a-container-or-object-exists): How to check if a container or object exist in the database.
-- [Count objects or elements](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/count-objects-or-elements): How to count objects and / or elements in the database.
-- [Create a RAM database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-a-ram-database): How to create and use a RAM database with a published container.
-- [Create containers in the database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-containers-in-the-database): How to create containers and sub-containers in the database.
-- [Create objects and XML documents](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-objects-and-xml-documents): How to create objects, e.g. XML documents, in the database.
-- [Create temporary objects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-temporary-objects): How to create temporary objects.
-- [Filter container result based on query](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/filter-container-result-based-on-query): Filter contents of a database result to bind reduced set to UI components.
-- [Drag and Drop](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/drag-and-drop): How to detect a drop of an item on an area of the UI.
-- [Live updated synthetic data](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/live-updated-synthetic-data): Make synthetic data update when the underlying data changes
-- [Localization: Language translation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/localization-language-translation): Add language localization to your applications.
-- [Moving objects between containers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/moving-objects-between-containers): How to move objects (files) between containers (folders).
-- [Panel with toolbar and buttonbox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/panel-with-toolbar-and-buttonbox): Example of page head for listing of items.
-- [Select a tab to bind a grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/select-a-tab-to-bind-a-grid): Change what is shown in the tab content, depending on the selected tab
-- [Set selection on a UI component](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/set-selection-on-a-ui-component): How user interactions can set selections in UI components.
-- [Show an alert dialog](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/show-an-alert-dialog): A customizable alert dialog, triggered by user interaction.
-- [Styling components with CSS](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/styling-components-with-css): How UI components can be styled using CSS.
-- [Translate a string to replace characters](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/translate-a-string-to-replace-characters): Demonstrates string manipulation.
-- [URL Query string](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/url-query-string): Passing parameters through the URL to a deployed application.
-- [Using temporary documents](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/using-temporary-documents): Demonstrates how to use temporary documents.
-- [Visualize the database with a tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-the-database-with-a-tree): How to visualize a database hierarchy using a tree.
-- [Visualize XML with a tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-xml-with-a-tree): How to visualize an XML hierarchy as a tree.
+- [Add a fake tab to a tabstrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/add-a-fake-tab-to-a-tabstrip): Add a tab that is not represented in the underlying data to tabstrip
+- [Ask user for input](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/ask-user-for-input): Show a confirm dialog that asks the user to input data
+- [Automatic bindings between data and components](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/automatic-bindings-between-data-and-components): Showing how data is automatically kept in sync when bound to a component.
+- [Binary decision](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/binary-decision): Show how to use a binary flag in a decision
+- [Bind a tabstrip to dynamic data](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-a-tabstrip-to-dynamic-data): Show tabs depending on underlying data model
+- [Bind from user selection](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-from-user-selection): Shows how user interactions can create bindings between data and UI components.
+- [Bind UI components to an external API](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-ui-components-to-an-external-api): Showing how to bind an external API to a UI component and keep it updated.
+- [Button and Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/button-and-events): Handling events with a default button.
+- [Check if a container or object exists](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/check-if-a-container-or-object-exists): How to check if a container or object exist in the database.
+- [Count objects or elements](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/count-objects-or-elements): How to count objects and / or elements in the database.
+- [Create a RAM database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-a-ram-database): How to create and use a RAM database with a published container.
+- [Create containers in the database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-containers-in-the-database): How to create containers and sub-containers in the database.
+- [Create objects and XML documents](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-objects-and-xml-documents): How to create objects, e.g. XML documents, in the database.
+- [Create temporary objects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-temporary-objects): How to create temporary objects.
+- [Filter container result based on query](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/filter-container-result-based-on-query): Filter contents of a database result to bind reduced set to UI components.
+- [Drag and Drop](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/drag-and-drop): How to detect a drop of an item on an area of the UI.
+- [Live updated synthetic data](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/live-updated-synthetic-data): Make synthetic data update when the underlying data changes
+- [Localization: Language translation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/localization-language-translation): Add language localization to your applications.
+- [Moving objects between containers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/moving-objects-between-containers): How to move objects (files) between containers (folders).
+- [Panel with toolbar and buttonbox](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/panel-with-toolbar-and-buttonbox): Example of page head for listing of items.
+- [Select a tab to bind a grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/select-a-tab-to-bind-a-grid): Change what is shown in the tab content, depending on the selected tab
+- [Set selection on a UI component](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/set-selection-on-a-ui-component): How user interactions can set selections in UI components.
+- [Show an alert dialog](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/show-an-alert-dialog): A customizable alert dialog, triggered by user interaction.
+- [Styling components with CSS](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/styling-components-with-css): How UI components can be styled using CSS.
+- [Translate a string to replace characters](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/translate-a-string-to-replace-characters): Demonstrates string manipulation.
+- [URL Query string](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/url-query-string): Passing parameters through the URL to a deployed application.
+- [Using temporary documents](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/using-temporary-documents): Demonstrates how to use temporary documents.
+- [Visualize the database with a tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-the-database-with-a-tree): How to visualize a database hierarchy using a tree.
+- [Visualize XML with a tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-xml-with-a-tree): How to visualize an XML hierarchy as a tree.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts>*
 
 ---
 
@@ -160,54 +160,54 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 #### Code Explanation
 
 **Line 4**
-The start of our [tabstrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component. This [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) will visualize the content of our `home://Settings` container with a "fake" tab at the beginning that shows the objects in our `home://` database. How this is visualized is defined on **line 13 - 15** in the `rule` for the `tabstrip`. Note that the `tabstrip` needs to have a [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel) element within it, and that any [rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) are put after closing the [`panel`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel).
+The start of our [tabstrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component. This [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) will visualize the content of our `home://Settings` container with a "fake" tab at the beginning that shows the objects in our `home://` database. How this is visualized is defined on **line 13 - 15** in the `rule` for the `tabstrip`. Note that the `tabstrip` needs to have a [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel) element within it, and that any [rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) are put after closing the [`panel`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel).
 
 **Line 6 - 10**
-We put a [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) within our [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip). This [`grid`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) will show one `row` for each `db:object` (object / file) corresponding to the selected tab, as can be seen in the `bindTab` `step` starting on **line 38**. Each `row` will have one `column` `match`ing the `@name` attribute for that `db:object` and showing it as-is using `display="."`.
+We put a [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) within our [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip). This [`grid`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) will show one `row` for each `db:object` (object / file) corresponding to the selected tab, as can be seen in the `bindTab` `step` starting on **line 38**. Each `row` will have one `column` `match`ing the `@name` attribute for that `db:object` and showing it as-is using `display="."`.
 
 **Line 13 - 15**
-This [rule](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) element is for the [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip), telling it to show one tab for each `db:container` entry to which it is bound on **line 33 - 35**.
+This [rule](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) element is for the [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip), telling it to show one tab for each `db:container` entry to which it is bound on **line 33 - 35**.
 
 **Line 21**
-This `trigger` initiates the `bindTab` `step` when a tab in the [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component `myTab` is `Select`:ed.
+This `trigger` initiates the `bindTab` `step` when a tab in the [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component `myTab` is `Select`:ed.
 
 **Line 23 - 26**
-Any `step` with `id="start"` will always run first, as soon as the process code is loaded. This `step` starts with creating an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) (variable) called `cfgData`, with the content of `home://Settings` as serialized XML. Using `model="newsilent"` for an `alias` will create a temporary document.
+Any `step` with `id="start"` will always run first, as soon as the process code is loaded. This `step` starts with creating an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) (variable) called `cfgData`, with the content of `home://Settings` as serialized XML. Using `model="newsilent"` for an `alias` will create a temporary document.
 
 **Line 28 - 32**
 The change `operation` is then used on `$cfgData` (notice the `$` since we are referring to an `alias`). We set `store` as a child to our `change` `operation`, with the `type="prepend"`. This means we want to add a new node at the start of the existing document, the child of `store`, i.e. `<db:container name="Fake" xlink:actuate="onRequest" xlink:href="home://"/>`.
 
 **Line 33 - 35**
-We then proceed to use the [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, binding our temporary document `$cfgData` to the `myTab` `component`. The `rule` on **line 13 - 15** ensures the right things and their names are displayed correctly.
+We then proceed to use the [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, binding our temporary document `$cfgData` to the `myTab` `component`. The `rule` on **line 13 - 15** ensures the right things and their names are displayed correctly.
 
 **Line 38 - 43**
-The `bindTab` `step` first creates an `alias` (variable) called `selectedTab` using the incoming event trigger `!`. Next we look at the `@xlink:href` attribute (the path in the database corresponding to the selected tab) of our incoming event trigger `!`, and `bind` that to our `tabGrid` [`grid`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid). In other words; by letting the grid know what container we are selecting from the tabstrip, and its path in the database, we can visualize the contents of that container in the grid.
+The `bindTab` `step` first creates an `alias` (variable) called `selectedTab` using the incoming event trigger `!`. Next we look at the `@xlink:href` attribute (the path in the database corresponding to the selected tab) of our incoming event trigger `!`, and `bind` that to our `tabGrid` [`grid`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid). In other words; by letting the grid know what container we are selecting from the tabstrip, and its path in the database, we can visualize the contents of that container in the grid.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)
-- [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel)
-- [tabstrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)
+- [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid)
+- [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel)
+- [tabstrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
 - change (store)
 
 **Other:**
 
-- [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
-- [rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
+- [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/add-a-fake-tab-to-a-tabstrip>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/add-a-fake-tab-to-a-tabstrip>*
 
 ---
 
 ## Ask user for input
 
-This concept shows how to use a ([confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm)) dialog to ask a user to enter something, in this case, their name. The texts in the buttons shown in the confirm dialog can be configured to say anything and the steps trigger additional steps in the application.
+This concept shows how to use a ([confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm)) dialog to ask a user to enter something, in this case, their name. The texts in the buttons shown in the confirm dialog can be configured to say anything and the steps trigger additional steps in the application.
 
 You can run the code directly here, and copy the parts you need for your application.
 
@@ -242,10 +242,10 @@ You can run the code directly here, and copy the parts you need for your applica
 Any `step` with `id="start"` runs first, as soon as the process code is loaded.
 
 **Line 4 - 11**
-The [confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm) `operation` with its `type` element set to `value="input"` opens up a dialog window with an [input](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/input) field and some custom information in the `title` and `message` elements. If the `ok` button is clicked we will proceed to the `showName` `step`, otherwise, the dialog window is closed if the `cancel` button is clicked.
+The [confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm) `operation` with its `type` element set to `value="input"` opens up a dialog window with an [input](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/input) field and some custom information in the `title` and `message` elements. If the `ok` button is clicked we will proceed to the `showName` `step`, otherwise, the dialog window is closed if the `cancel` button is clicked.
 
 **Line 14 - 16**
-The `showName` `step` runs a [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug) `operation` showing the value of the input field (the incoming event trigger `!`) as a string using `{!}`.
+The `showName` `step` runs a [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug) `operation` showing the value of the input field (the incoming event trigger `!`) as a string using `{!}`.
 
 > **Note:** This `debug` output appears in the built-in XIOS/3 debug window. If you want to see the browser's debug window, use *alert: plain* instead of *alert*. If you leave the text node empty the message will appear in the console of the browser's developer tools debugger.
 
@@ -253,16 +253,16 @@ The `showName` `step` runs a [debug](https://robinsbackend-robinsbackend-portalx
 
 **Process Operations:**
 
-- [confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm)
-- [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug)
+- [confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm)
+- [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/ask-user-for-input>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/ask-user-for-input>*
 
 ---
 
 ## Automatic bindings between data and components
 
-This concept shows how a UI component, in this case a [CheckBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/checkbox), can be [bound](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) to a document and thereby automatically react to any changes in that document. Changes in the component also update the bound document.
+This concept shows how a UI component, in this case a [CheckBox](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/checkbox), can be [bound](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) to a document and thereby automatically react to any changes in that document. Changes in the component also update the bound document.
 
 When you check the boxes notice how the code in the CodePad window changes.
 
@@ -306,28 +306,28 @@ You can run the code directly here, and copy the parts you need for your applica
 #### Code Explanation
 
 **Line 10 - 16**
-First we create a temporary document using an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) with the `model` set to `newsilent`. This temporary document consists of a single element, with a `checked` attribute that can be `true` or `false`.
-Next we [open](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/open) the CodePad with this temporary document.**These steps are only for demonstration; they do not affect the binding itself but show live how it affects the component and document.**
+First we create a temporary document using an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) with the `model` set to `newsilent`. This temporary document consists of a single element, with a `checked` attribute that can be `true` or `false`.
+Next we [open](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/open) the CodePad with this temporary document.**These steps are only for demonstration; they do not affect the binding itself but show live how it affects the component and document.**
 
 **Line 18 - 25**
-This is where we [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) our temporary document `$tmpDoc` to our `myCheckbox` components and use the `select` attribute to bind them to the `checked` attribute of our document.
+This is where we [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) our temporary document `$tmpDoc` to our `myCheckbox` components and use the `select` attribute to bind them to the `checked` attribute of our document.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [CheckBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/checkbox)
+- [CheckBox](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/checkbox)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
-- [open](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/open)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [open](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/open)
 
 **Other:**
 
-- [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/automatic-bindings-between-data-and-components>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/automatic-bindings-between-data-and-components>*
 
 ---
 
@@ -362,10 +362,10 @@ This conditionally changes the process flow based on a binary value.
 
 **Process Operations:**
 
-- [Aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
-- [decision](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/decision)
+- [Aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [decision](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/decision)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/binary-decision>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/binary-decision>*
 
 ---
 
@@ -410,31 +410,31 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 #### Code Explanation
 
 **Line 4 - 11**
-Our [tabstrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) contains a [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel), and within that a [label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/label).
-The [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component is controlled by a [rule](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules), stating that for each `match`:ing `db:container` node in the document bound to it (done on **line 18 - 20**) we create one tab ([`item`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/item)) showing the `@name` attribute from each `db:container` node as the `name` for that tab.
+Our [tabstrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) contains a [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel), and within that a [label](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/label).
+The [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component is controlled by a [rule](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules), stating that for each `match`:ing `db:container` node in the document bound to it (done on **line 18 - 20**) we create one tab ([`item`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/item)) showing the `@name` attribute from each `db:container` node as the `name` for that tab.
 
-> **Note:** The [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) needs to have a [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel) element within it, and that any [rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) are put after closing the [`panel`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel).
+> **Note:** The [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) needs to have a [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel) element within it, and that any [rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) are put after closing the [`panel`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel).
 
 **Line 17 - 21**
-Any `step` with `id="start"` runs first, as soon as the process code is loaded. In this case it runs a [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, binding the content of `tenant://Settings` to our `myTab` `component`. How the data is visualized in the component is then taken care of by the `rule` starting on **line 9**.
+Any `step` with `id="start"` runs first, as soon as the process code is loaded. In this case it runs a [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, binding the content of `tenant://Settings` to our `myTab` `component`. How the data is visualized in the component is then taken care of by the `rule` starting on **line 9**.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/label)
-- [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel)
-- [tabstrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)
+- [label](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/label)
+- [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel)
+- [tabstrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
 
 **Other:**
 
-- [rule](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
+- [rule](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-a-tabstrip-to-dynamic-data>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-a-tabstrip-to-dynamic-data>*
 
 ---
 
@@ -506,13 +506,13 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 #### Code Explanation
 
 **Line 5 - 8**
-Each `row` in our [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) will `match` one `db:object` in the document we bind it to. Each `row` will have one `column` showing the corresponding `db:object`'s name, using `match="@name"` (which will display that information due to `display="."`), and when each `db:object` was published using `match="@published"`. In this `display` attribute we use `translate()` to replace letter T with space at the end of the date and replace the Z at the end of the time of the `published` string value. Note that such a timestamp is represented in UTC, where Z is short for Zulu time.
+Each `row` in our [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) will `match` one `db:object` in the document we bind it to. Each `row` will have one `column` showing the corresponding `db:object`'s name, using `match="@name"` (which will display that information due to `display="."`), and when each `db:object` was published using `match="@published"`. In this `display` attribute we use `translate()` to replace letter T with space at the end of the date and replace the Z at the end of the time of the `published` string value. Note that such a timestamp is represented in UTC, where Z is short for Zulu time.
 
 **Line 20 - 30**
-This `step` triggered by the first `trigger` element opens a [confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm) dialog asking the user to enter which container to display in the grid. When the `OK` button is clicked in this dialog we run the step `bindGrid`, otherwise if the user clicks the cancel button we close the dialog. Note that all you need for this is `<cancel/>`.
+This `step` triggered by the first `trigger` element opens a [confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm) dialog asking the user to enter which container to display in the grid. When the `OK` button is clicked in this dialog we run the step `bindGrid`, otherwise if the user clicks the cancel button we close the dialog. Note that all you need for this is `<cancel/>`.
 
 **Line 32 - 38**
-This `step` triggered when the `ok` button is clicked in the dialog window. It first creates an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) with the incoming trigger value (!) serialized as a string in `{!}`. This essentially means that we take the value from the input field in the dialog and use that as a variable in this next step. We name this variable (alias) as `inputName` which we use as the path to bind to our grid in the [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, in its `value` attribute. Note that we put a `$` before the alias when we use it in context.
+This `step` triggered when the `ok` button is clicked in the dialog window. It first creates an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) with the incoming trigger value (!) serialized as a string in `{!}`. This essentially means that we take the value from the input field in the dialog and use that as a variable in this next step. We name this variable (alias) as `inputName` which we use as the path to bind to our grid in the [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, in its `value` attribute. Note that we put a `$` before the alias when we use it in context.
 
 **Line 40 - 46**
 This `step` is called from the previous step on **line 38**. The path that is now stored in `inputName` is displayed in the label field to the right of the button.
@@ -523,27 +523,27 @@ Click the button again and enter a new path.
 
 **UI Components:**
 
-- [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)
-- [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)
-- [label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/label)
+- [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button)
+- [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid)
+- [label](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/label)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
-- [callMethod](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callmethod)
-- [confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [callMethod](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/callmethod)
+- [confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm)
 
 **Other:**
 
-- [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-from-user-selection>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-from-user-selection>*
 
 ---
 
 ## Bind UI components to an external API
 
-This concept shows how to [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) a component, in this case a [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid), to data in an external API.
+This concept shows how to [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) a component, in this case a [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid), to data in an external API.
 
 You can run the code directly here, and copy the parts you need for your application.
 
@@ -588,29 +588,29 @@ You can run the code directly here, and copy the parts you need for your applica
 #### Code Explanation
 
 **Line 5 - 9**
-In our [`grid`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) we want to produce one row for each element in the bound document that matches every `station` in `metObsParameter` that has `active` = `true`. Then we want each row to show this station's `name`, `longitude`, and `latitude` using the `match` attribute for each. `display="."` means that we will show the value that comes from that node.
+In our [`grid`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) we want to produce one row for each element in the bound document that matches every `station` in `metObsParameter` that has `active` = `true`. Then we want each row to show this station's `name`, `longitude`, and `latitude` using the `match` attribute for each. `display="."` means that we will show the value that comes from that node.
 
 **Line 15**
 This `trigger` will be initiated once the entire application is loaded, using `event="Loaded"`, triggering the `bindAPI` `step`.
 
 **Line 17 - 23**
-Any `step` with `id="start"` will always run first, as soon as the process code is loaded. In this `step` we use the [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/channel) `operation` to set up a HTTPS protocol, stated in the `protocol` element, with `name` https and `title` HTTPS.
+Any `step` with `id="start"` will always run first, as soon as the process code is loaded. In this `step` we use the [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/channel) `operation` to set up a HTTPS protocol, stated in the `protocol` element, with `name` https and `title` HTTPS.
 
 **Line 26 - 28**
-Here we use the [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation` with the important `value` attribute pointing to our external API. This is the Swedish Weather Service's external API for listing weather stations and their data. The data in this API is bound to the `myGrid` `component`.
+Here we use the [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation` with the important `value` attribute pointing to our external API. This is the Swedish Weather Service's external API for listing weather stations and their data. The data in this API is bound to the `myGrid` `component`.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)
+- [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
-- [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/channel)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/channel)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-ui-components-to-an-external-api>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/bind-ui-components-to-an-external-api>*
 
 ---
 
@@ -708,7 +708,7 @@ Feel free to copy the parts you need for your application.
 #### Code Explanation
 
 **Line 6**
-The default [`button`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button) to get the `trigger event` if enter is pressed.
+The default [`button`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button) to get the `trigger event` if enter is pressed.
 
 **Line 15**
 The `trigger` declaration and what step to run then.
@@ -720,10 +720,10 @@ The `step` that will run when the event is triggered.
 
 **UI Components:**
 
-- [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)
-- [Triggers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers)
+- [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button)
+- [Triggers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/button-and-events>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/button-and-events>*
 
 ---
 
@@ -758,16 +758,16 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 Any `step` with `id="start"` will always run first, as soon as the process code is loaded.
 
 **Line 3 - 10**
-The [decision](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/decision) `operation` looks at `value="home://Concepts"` and if it `exists`, it will show a [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug) window stating this. `Otherwise`, it will show a debug window stating that the container does not exist.
+The [decision](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/decision) `operation` looks at `value="home://Concepts"` and if it `exists`, it will show a [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug) window stating this. `Otherwise`, it will show a debug window stating that the container does not exist.
 
 ### Used Building Blocks
 
 **Process Operations:**
 
-- [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug)
-- [decision](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/decision)
+- [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug)
+- [decision](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/decision)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/check-if-a-container-or-object-exists>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/check-if-a-container-or-object-exists>*
 
 ---
 
@@ -805,22 +805,22 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 Any `step` with `id="start"` will always run first, as soon as the process code is loaded.
 
 **Line 4 - 7**
-First we set two [aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases). The first (`catDoc`) is simply the path `home://Applications`. The second `alias` saves the amount of objects in `catDoc` as a fixed variable (alias) using `model="value"`. Counting the objects in `catDoc` (i.e. `home://Applications`) is done using `count()` where we query `$catDoc` looking for each `db:object` in the return `db:result`. Note the `#` after `$catDoc` that initiates the query. The number of objects is then presented using `operation` [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug).
+First we set two [aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases). The first (`catDoc`) is simply the path `home://Applications`. The second `alias` saves the amount of objects in `catDoc` as a fixed variable (alias) using `model="value"`. Counting the objects in `catDoc` (i.e. `home://Applications`) is done using `count()` where we query `$catDoc` looking for each `db:object` in the return `db:result`. Note the `#` after `$catDoc` that initiates the query. The number of objects is then presented using `operation` [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug).
 
 **Line 10 - 13**
-This is similar to the previous code but this time we first create an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) with the path to a document within a container, in this case `tenant://Ticket/Shopping Cart/myTicket.xml`. In the second `alias` we count the number of `message` nodes (under `ticket`) and save that as a fixed variable (alias) using `model="value"`. This value is then presented through `operation` [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug). Also here, note the `#` after `$ticketDoc`, which initiates the query.
+This is similar to the previous code but this time we first create an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) with the path to a document within a container, in this case `tenant://Ticket/Shopping Cart/myTicket.xml`. In the second `alias` we count the number of `message` nodes (under `ticket`) and save that as a fixed variable (alias) using `model="value"`. This value is then presented through `operation` [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug). Also here, note the `#` after `$ticketDoc`, which initiates the query.
 
 ### Used Building Blocks
 
 **Process Operations:**
 
-- [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug)
+- [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug)
 
 **Other:**
 
-- [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/count-objects-or-elements>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/count-objects-or-elements>*
 
 ---
 
@@ -868,7 +868,7 @@ In this case:
 
 Now we are able to use the mounted database like any other database (read-only) in our application. Searching is also supported on RAM databases. Accessing an object in the database looks like this: `my-mount://object.xml`
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-a-ram-database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-a-ram-database>*
 
 ---
 
@@ -898,7 +898,7 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 Any `step` with `id="start"` will always run first, as soon as the process code is loaded.
 
 **Line 3 - 5**
-Here we use the database `operation` in the `home://` database. The specific `database` `operation` is noted as the child element of `operation`, in this case [`create`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/create). We want to create a container (folder) so we set the `type` as `container` and give it the `name` `newContainer`. Note that the name of a created object or container can come from user interactions and other parts of the system as well using variables, called [aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases).
+Here we use the database `operation` in the `home://` database. The specific `database` `operation` is noted as the child element of `operation`, in this case [`create`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/create). We want to create a container (folder) so we set the `type` as `container` and give it the `name` `newContainer`. Note that the name of a created object or container can come from user interactions and other parts of the system as well using variables, called [aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases).
 
 ### Used Building Blocks
 
@@ -906,7 +906,7 @@ Here we use the database `operation` in the `home://` database. The specific `da
 
 - database (create)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-containers-in-the-database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-containers-in-the-database>*
 
 ---
 
@@ -953,28 +953,28 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 Any `step` with `id="start"` will always run first, as soon as the process code is loaded.
 
 **Line 3 - 11**
-This `operation` opens up a [confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm) dialog asking the user to enter the name of a new object (file). When the `ok` button is clicked in this dialog we run the step `createObject`, otherwise if the user clicks the cancel button we close the dialog. Note that all you need for this is `<cancel step="cancel" text="Cancel"/>`.
+This `operation` opens up a [confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm) dialog asking the user to enter the name of a new object (file). When the `ok` button is clicked in this dialog we run the step `createObject`, otherwise if the user clicks the cancel button we close the dialog. Note that all you need for this is `<cancel step="cancel" text="Cancel"/>`.
 
 **Line 15 - 17**
-This `step` is triggered when the `OK` button in the dialog window is clicked. It first creates an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) with the incoming trigger value `!`. This essentially means that we take the value from the input field in the dialog and use that as a variable in this next step. We name this variable (alias) as `objName` and proceed to use the database `operation` in the `home://` database. The specific `database` `operation` is noted as the child element of `operation`, in this case [`create`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/create). We want to create an object (file) so we set the `type` as `object` and name it after our alias (variable) `{$objName}.xml`. Note both that we put a `$` before the alias when we use it in context, and that we use {} to serialize it into a string. We also enable that the object can be renamed using `rename="true"`.
+This `step` is triggered when the `OK` button in the dialog window is clicked. It first creates an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) with the incoming trigger value `!`. This essentially means that we take the value from the input field in the dialog and use that as a variable in this next step. We name this variable (alias) as `objName` and proceed to use the database `operation` in the `home://` database. The specific `database` `operation` is noted as the child element of `operation`, in this case [`create`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/create). We want to create an object (file) so we set the `type` as `object` and name it after our alias (variable) `{$objName}.xml`. Note both that we put a `$` before the alias when we use it in context, and that we use {} to serialize it into a string. We also enable that the object can be renamed using `rename="true"`.
 
 **Line 18 - 20**
-When we create objects (files) we can specify the content of that object as a child to [`create`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/create), in a `content` element, in this case with the `type` set to `text/xml`. The actual content of the object (file) is then specified within the `content` element. In this case our object will only consist of one XML element `<myObj/>`. Note that it does not have any indentation, so that it starts to the left margin in the actual document.
+When we create objects (files) we can specify the content of that object as a child to [`create`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/create), in a `content` element, in this case with the `type` set to `text/xml`. The actual content of the object (file) is then specified within the `content` element. In this case our object will only consist of one XML element `<myObj/>`. Note that it does not have any indentation, so that it starts to the left margin in the actual document.
 
-> **Note:** If you run the command `xmlpad home://'theNameofYourFile'.xml` in the [CLI tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts) you will open it in the CodePad.
+> **Note:** If you run the command `xmlpad home://'theNameofYourFile'.xml` in the [CLI tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts) you will open it in the CodePad.
 
 ### Used Building Blocks
 
 **Process Operations:**
 
-- [confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm)
+- [confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm)
 - database (create)
 
 **Other:**
 
-- [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-objects-and-xml-documents>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-objects-and-xml-documents>*
 
 ---
 
@@ -1013,22 +1013,22 @@ You can run the code directly here, and copy the parts you need for your applica
 Any `step` with `id="start"` will always run first, as soon as the process code is loaded.
 
 **Line 3 - 12**
-Here we create a temporary document in an variable ([alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)) by using `model="newsilent"`. Our temporary document has a main [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list) element with [`item`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/item) nodes as children, and `text` nodes as children to each `item`.
+Here we create a temporary document in an variable ([alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)) by using `model="newsilent"`. Our temporary document has a main [`list`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/list) element with [`item`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/item) nodes as children, and `text` nodes as children to each `item`.
 
 **Line 14**
-Here we use the [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug) `operation` to show the temporary document.
+Here we use the [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug) `operation` to show the temporary document.
 
 ### Used Building Blocks
 
 **Process Operations:**
 
-- [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug)
+- [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug)
 
 **Other:**
 
-- [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-temporary-objects>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/create-temporary-objects>*
 
 ---
 
@@ -1072,15 +1072,15 @@ This concept shows how to create a window without decoration or titlebar, e.g. f
 **Line 3-8**
 The most important attribute for creating a window without decoration of titlebar is `look` set to `plain`. Alongside this `bgBlur="false"` creates a transparent border effect along with `mode="aqua"` and `look="graphite"` on **line 8**. `taskbar="false"` makes the window not show up in taskbar menus, while `mode="window"` states that this should not be the main application and `alwaysontop="true"` makes the window stay on top, with the highest Z-index.
 
-The rest of the code is just to visualize a label and a button to make it possible to close the window. It can also be closed using a timer, by running the `close` step through a [call](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/call) operation with a `timer` child element.
+The rest of the code is just to visualize a label and a button to make it possible to close the window. It can also be closed using a timer, by running the `close` step through a [call](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/call) operation with a `timer` child element.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [view](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view)
+- [view](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/decorationless-window>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/decorationless-window>*
 
 ---
 
@@ -1105,19 +1105,19 @@ Step to run when a Drop happened onto a filelist (or similar applicable componen
 **Line 2**
 Step to run when a Drop happened on a panel that is shown when no items exist.
 
-> **Note:** For a full example, see the Drag and Drop chapter of the [Kanban Tutorial](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/kanban-tutorial)
+> **Note:** For a full example, see the Drag and Drop chapter of the [Kanban Tutorial](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/kanban-tutorial)
 
 ### Used Building Blocks
 
 **Process language:**
 
-- [Triggers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers)
+- [Triggers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers)
 
 **Event:**
 
-- [Drop](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/drop)
+- [Drop](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/drop)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/drag-and-drop>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/drag-and-drop>*
 
 ---
 
@@ -1166,7 +1166,7 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 #### Code Explanation
 
 **Line 5 - 8**
-Each `row` in our [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) will `match` one `db:object` in the document we bind it to. (Done on **line 16 - 18**) Each `row` will have one `column` showing the corresponding `db:object`'s name, using `match="@name"` (which will display that information due to `display="."`), and another `column` for showing each `db:object`'s corresponding id, using `match="@id"`.
+Each `row` in our [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) will `match` one `db:object` in the document we bind it to. (Done on **line 16 - 18**) Each `row` will have one `column` showing the corresponding `db:object`'s name, using `match="@name"` (which will display that information due to `display="."`), and another `column` for showing each `db:object`'s corresponding id, using `match="@id"`.
 
 **Line 14**
 This `trigger` will be initiated once the entire application is loaded, using `event="Loaded"`, triggering the `init` `step`.
@@ -1174,19 +1174,19 @@ This `trigger` will be initiated once the entire application is loaded, using `e
 > **Note:** `init` is the name we recommend for a `step` you wish to run as soon as your application is loaded.
 
 **Line 16 - 18**
-Here we use the [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, to look at the content of its `value` attribute. In this concept we want the result only to contain containers or objects that match the criteria `[root = 'role']`, hence we apply a filter query on the container reference expression, i.e. `tenant://Groups[root = 'role']`, and then `bind` the result to our `rolesGrid` `component`.
+Here we use the [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, to look at the content of its `value` attribute. In this concept we want the result only to contain containers or objects that match the criteria `[root = 'role']`, hence we apply a filter query on the container reference expression, i.e. `tenant://Groups[root = 'role']`, and then `bind` the result to our `rolesGrid` `component`.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)
+- [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/filter-container-result-based-on-query>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/filter-container-result-based-on-query>*
 
 ---
 
@@ -1194,7 +1194,7 @@ Here we use the [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.
 
 This concept shows how a temporary object may be used to copy in real data from the database and then be altered to create a synthetic data set. The synthetic data set is then configured to listen to live data updates from the underlying data in the database. The synthetic data set is then recreated whenever the underlying data is changed.
 
-> **Note:** If the intention is to reduce the data set in the database result, it is much better to use [filter query](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/filter-container-result-based-on-query), which is built in functionality for synthetic data based on queries.
+> **Note:** If the intention is to reduce the data set in the database result, it is much better to use [filter query](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/filter-container-result-based-on-query), which is built in functionality for synthetic data based on queries.
 
 If logged in, you can run the code directly here. Feel free to copy the parts you need for your application.
 
@@ -1263,57 +1263,57 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 #### Code Explanation
 
 **Line 4**
-The start of our [tabstrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component. This [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) will visualize the content of our `home://Settings` container with a "fake" tab at the beginning showing the objects in our `tenant://Settings` container. How this is visualized is stated on **line 13 - 15** in the `rule` for the `tabstrip`. Note that the `tabstrip` needs to have a [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel) element within it, and that any [rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) are put after closing the [`panel`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel).
+The start of our [tabstrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component. This [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) will visualize the content of our `home://Settings` container with a "fake" tab at the beginning showing the objects in our `tenant://Settings` container. How this is visualized is stated on **line 13 - 15** in the `rule` for the `tabstrip`. Note that the `tabstrip` needs to have a [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel) element within it, and that any [rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) are put after closing the [`panel`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel).
 
 **Line 6 - 10**
-We put a [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) within our [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)s [`panel`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel). This [`grid`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) will show one `row` for each `db:object` (object / file) in corresponding to the selected tab, as can be seen in the `bindTab` `step` starting on **line 48**. Each `row` will have one `column` `match`:ing the `@name` attribute for that `db:object` and showing it as it is using `display="."`.
+We put a [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) within our [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)s [`panel`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel). This [`grid`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) will show one `row` for each `db:object` (object / file) in corresponding to the selected tab, as can be seen in the `bindTab` `step` starting on **line 48**. Each `row` will have one `column` `match`:ing the `@name` attribute for that `db:object` and showing it as it is using `display="."`.
 
 **Line 13 - 15**
-This [rule](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) element is for the [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip), telling it to show one tab for each `db:container` entry to which it is bound on **line 43 - 45**.
+This [rule](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) element is for the [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip), telling it to show one tab for each `db:container` entry to which it is bound on **line 43 - 45**.
 
 **Line 21**
-This `trigger` initiates the `bindTab` `step` when a tab in the [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component `myTab` is `Select`:ed.
+This `trigger` initiates the `bindTab` `step` when a tab in the [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component `myTab` is `Select`:ed.
 
 **Line 23 - 29**
 Any `step` with `id="start"` will always run first, as soon as the process code is loaded. This `step` first runs the database `operation` defined as `listen` by its child element. The `listen` instruction is used to listen to changes made in a container (folder) or an object (document). The object to listen to is defined in the `value` attribute, in this case the `tenant://Settings` container.
 The `event` attribute defines the event identifier to fire when the contents of `tenant://Settings` have changed, in this case `Append`, `Remove`, and `ReplaceText`.
 
 **Line 30**
-Finally in this step we use the [call](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/call) `operation` that will `call` on the `step` with `id` `syntheticTabs`.
+Finally in this step we use the [call](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/call) `operation` that will `call` on the `step` with `id` `syntheticTabs`.
 
 **Line 35 - 37**
-The `syntheticTabs` `step` starts with creating an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) (variable) called `cfgData`, with the content of `home://Settings` as serialized XML. Using `model="newsilent"` for an `alias` will create a temporary document.
+The `syntheticTabs` `step` starts with creating an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) (variable) called `cfgData`, with the content of `home://Settings` as serialized XML. Using `model="newsilent"` for an `alias` will create a temporary document.
 
 **Line 38 - 42**
 The change `operation` is then used on `$cfgData` (notice the `$` since we are referring to an `alias`). We set `store` as a child to our `change` `operation`, with the `type="prepend"`, and selecting the from the root in the document using `select="/db:result"`. This means we want to add a new node at the end of the selected document (`db:result`), and what is added is the child of `store`, i.e. `<db:container name="Fake" xlink:actuate="onRequest" xlink:href="home://"/>`.
 
 **Line 43 - 45**
-We then proceed to use the [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, binding our temporary document `$cfgData` to the `myTab` `component`. The `rule` on **line 13 - 15** will then make sure the correct items and their names are visualized properly.
+We then proceed to use the [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, binding our temporary document `$cfgData` to the `myTab` `component`. The `rule` on **line 13 - 15** will then make sure the correct items and their names are visualized properly.
 
 **Line 48 - 53**
-The `bindTab` `step` first creates an `alias` (variable) called `selectedTab` using the incoming event trigger `!`. Next we look at the `@xlink:href` attribute (the path in the database corresponding to the selected tab) of our incoming event trigger `!`, and `bind` that to our `tabGrid` [`grid`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid). In other words; by letting the grid know what container we are selecting from the tabstrip, and its path in the database, we can visualize the contents of that container in the grid.
+The `bindTab` `step` first creates an `alias` (variable) called `selectedTab` using the incoming event trigger `!`. Next we look at the `@xlink:href` attribute (the path in the database corresponding to the selected tab) of our incoming event trigger `!`, and `bind` that to our `tabGrid` [`grid`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid). In other words; by letting the grid know what container we are selecting from the tabstrip, and its path in the database, we can visualize the contents of that container in the grid.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)
-- [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel)
-- [tabstrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)
+- [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid)
+- [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel)
+- [tabstrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
-- [call](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/call)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [call](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/call)
 - change (store)
 - database (listen)
 
 **Other:**
 
-- [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
-- [rule](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
+- [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [rule](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/live-updated-synthetic-data>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/live-updated-synthetic-data>*
 
 ---
 
@@ -1358,7 +1358,7 @@ The chosen locale by the user is automatically applied to any opened application
 
 Localization is automatically applied by the system as long as; a) a locale file exists in the configured container for the language chosen by the currently logged in user, b) the localization namespace is defined, c) the attributes to be translated are prefixed with `l:`.
 
-It is also possible to do localization of strings within process documents, which is done using the expression language and the functions [get-label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/get-label) and [apply-locale](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/apply-locale). The most common function to use is `get-label` as it is often used within an `alias` or `callMethod` operation.
+It is also possible to do localization of strings within process documents, which is done using the expression language and the functions [get-label](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/functions/get-label) and [apply-locale](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/functions/apply-locale). The most common function to use is `get-label` as it is often used within an `alias` or `callMethod` operation.
 
 > **Note:** Always use translation keys in English that is the real name of what you want translated, this enables the system to at least output the word in English if the key is not available in a language translation file or the users specified language is not available.
 
@@ -1436,16 +1436,16 @@ The language code follows the [ISO 639-1](https://en.wikipedia.org/wiki/ISO_639-
 
 **Functions:**
 
-- [get-label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/get-label)
-- [apply-locale](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/apply-locale)
+- [get-label](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/functions/get-label)
+- [apply-locale](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/functions/apply-locale)
 
 **Other:**
 
-- [l namespace](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/dictionary/l-namespace)
-- [settings/locale](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure)
-- [Functions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/functions)
+- [l namespace](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/dictionary/l-namespace)
+- [settings/locale](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure)
+- [Functions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/functions)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/localization-language-translation>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/localization-language-translation>*
 
 ---
 
@@ -1483,7 +1483,7 @@ Here we use the database `operation` on an object specified in the `value` attri
 
 - database (move)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/moving-objects-between-containers>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/moving-objects-between-containers>*
 
 ---
 
@@ -1543,12 +1543,12 @@ The buttons making up the toolbar.
 
 **UI Components:**
 
-- [image](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/image)
-- [label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/label)
-- [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel)
-- [toolbar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar)
+- [image](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/image)
+- [label](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/label)
+- [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel)
+- [toolbar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/toolbar)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/panel-with-toolbar-and-buttonbox>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/panel-with-toolbar-and-buttonbox>*
 
 ---
 
@@ -1606,41 +1606,41 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 #### Code Explanation
 
 **Line 4**
-The start of our [tabstrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component. This [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) will visualize the content of our `home://Settings` container with a "fake" tab at the beginning showing the objects in our `tenant://Settings` container. How this is visualized is stated on **line 13 - 15** in the `rule` for the `tabstrip`. Note that the `tabstrip` needs to have a [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel) element within it, and that any [rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) are put after closing the [`panel`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel).
+The start of our [tabstrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component. This [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) will visualize the content of our `home://Settings` container with a "fake" tab at the beginning showing the objects in our `tenant://Settings` container. How this is visualized is stated on **line 13 - 15** in the `rule` for the `tabstrip`. Note that the `tabstrip` needs to have a [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel) element within it, and that any [rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) are put after closing the [`panel`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel).
 
 **Line 6 - 10**
-We put a [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) within our [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)s [`panel`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel). This [`grid`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) will show one `row` for each `db:object` (object / file) in corresponding to the selected tab, as can be seen in the `bindTab` `step` starting on **line 29**. Each `row` will have one `column` `match`:ing the `@name` attribute for that `db:object` and showing it as it is using `display="."`.
+We put a [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) within our [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)s [`panel`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel). This [`grid`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) will show one `row` for each `db:object` (object / file) in corresponding to the selected tab, as can be seen in the `bindTab` `step` starting on **line 29**. Each `row` will have one `column` `match`:ing the `@name` attribute for that `db:object` and showing it as it is using `display="."`.
 
 **Line 13 - 15**
-This [rule](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) element is for the [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip), telling it to show one tab for each `db:container` entry to which it is bound on **line 24 - 26**.
+This [rule](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) element is for the [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip), telling it to show one tab for each `db:container` entry to which it is bound on **line 24 - 26**.
 
 **Line 21**
-This `trigger` initiates the `bindTab` `step` when a tab in the [`tabstrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component `myTab` is `Select`:ed.
+This `trigger` initiates the `bindTab` `step` when a tab in the [`tabstrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip) component `myTab` is `Select`:ed.
 
 **Line 23 - 27**
-Any `step` with `id="start"` will always run first, as soon as the process code is loaded. This `step` runs a [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, binding the content of `tenant://Settings` to our `myTab` `component`.
+Any `step` with `id="start"` will always run first, as soon as the process code is loaded. This `step` runs a [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation`, binding the content of `tenant://Settings` to our `myTab` `component`.
 
 **Line 29 - 34**
-The `bindTab` `step` first creates an `alias` (variable) called `selectedTab` using the incoming event trigger `!`. Next we look at the `@xlink:href` attribute (the path in the database corresponding to the selected tab) of our incoming event trigger `!`, and `bind` that to our `tabGrid` [`grid`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid). In other words; by letting the grid know what container we are selecting from the tabstrip, and its path in the database, we can visualize the content of that container in the grid.
+The `bindTab` `step` first creates an `alias` (variable) called `selectedTab` using the incoming event trigger `!`. Next we look at the `@xlink:href` attribute (the path in the database corresponding to the selected tab) of our incoming event trigger `!`, and `bind` that to our `tabGrid` [`grid`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid). In other words; by letting the grid know what container we are selecting from the tabstrip, and its path in the database, we can visualize the content of that container in the grid.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)
-- [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel)
-- [tabstrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)
+- [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid)
+- [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel)
+- [tabstrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
 
 **Other:**
 
-- [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
-- [rule](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
+- [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [rule](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/select-a-tab-to-bind-a-grid>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/select-a-tab-to-bind-a-grid>*
 
 ---
 
@@ -1693,33 +1693,33 @@ If logged in, you can run the code directly here. Feel free to copy the parts yo
 #### Code Explanation
 
 **Line 5 - 8**
-Each `row` in our [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) will `match` one `db:object` in the document we bind it to. Each `row` will have one `column` showing the corresponding `db:object`'s name, using `match="@name"` (which will display that information due to `display="."`), and and when each `db:object` was published using `match="@publish"`. In this `display` attribute we use `translate()` to put spacing between the date and the time of the `published` value.
+Each `row` in our [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) will `match` one `db:object` in the document we bind it to. Each `row` will have one `column` showing the corresponding `db:object`'s name, using `match="@name"` (which will display that information due to `display="."`), and and when each `db:object` was published using `match="@publish"`. In this `display` attribute we use `translate()` to put spacing between the date and the time of the `published` value.
 
 **Line 19 - 23**
 Any `step` with `id="start"` will always run first, as soon as the process code is loaded. This `step` will bind the content of `home://Applications` to the `myFiles` `component`.
 
 **Line 25 - 31**
-This `step` is triggered when the `selectFirst` [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button) is selected, running the [setSelection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/setselection) `operation`. This will look up the `myFiles` component in the `view` `selection` and according to its child element [`item`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/item) `select` the first node (regardless of its name) in our `db:result` using `/*[1]`. This means selecting the first node when querying `home://Applications`.
+This `step` is triggered when the `selectFirst` [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button) is selected, running the [setSelection](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/setselection) `operation`. This will look up the `myFiles` component in the `view` `selection` and according to its child element [`item`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/item) `select` the first node (regardless of its name) in our `db:result` using `/*[1]`. This means selecting the first node when querying `home://Applications`.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)
-- [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)
+- [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button)
+- [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
-- [setSelection](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/setselection)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [setSelection](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/setselection)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/set-selection-on-a-ui-component>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/set-selection-on-a-ui-component>*
 
 ---
 
 ## Show an alert dialog
 
-This concept shows how a customizable alert ([confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm)) dialog can be triggered from a user interaction, in this case a [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button).
+This concept shows how a customizable alert ([confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm)) dialog can be triggered from a user interaction, in this case a [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button).
 
 You can run the code directly here, and copy the parts you need for your application.
 
@@ -1757,25 +1757,25 @@ You can run the code directly here, and copy the parts you need for your applica
 When the `alertBtn` `component` is `Select`:ed we run the `step` `alertDialog`.
 
 **Line 12 - 18**
-The [confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm) `operation` with its `type` element set to `value="message"` allows you to set a custom message in the `message` element. `modal` set as true will put this alert as a modal window, `title` allows you to set a custom title shown at the top of the dialog window, and `icon` allows you to set an icon for the dialog window. (Read more about XIOS/3's built in icons [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/icon-protocol).)
+The [confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm) `operation` with its `type` element set to `value="message"` allows you to set a custom message in the `message` element. `modal` set as true will put this alert as a modal window, `title` allows you to set a custom title shown at the top of the dialog window, and `icon` allows you to set an icon for the dialog window. (Read more about XIOS/3's built in icons [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/icon-protocol).)
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)
+- [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button)
 
 **Process Operations:**
 
-- [confirm](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/confirm)
+- [confirm](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/confirm)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/show-an-alert-dialog>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/show-an-alert-dialog>*
 
 ---
 
 ## Styling components with CSS
 
-This concept shows how to [style](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/style) the look of a component using CSS.
+This concept shows how to [style](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/style) the look of a component using CSS.
 
 You can run the code directly here, and copy the parts you need for your application.
 
@@ -1808,22 +1808,22 @@ You can run the code directly here, and copy the parts you need for your applica
 #### Code Explanation
 
 **Line 2 - 14**
-The [style](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/style) element is always put at the top of (and within) the [`view`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) element. Within `style` you use regular CSS to change the look of a component, by using `#` before the name of the component.
+The [style](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/style) element is always put at the top of (and within) the [`view`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) element. Within `style` you use regular CSS to change the look of a component, by using `#` before the name of the component.
 
 **Line 16 - 17**
-Here we insert two [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button) components, one that is styled and one that has default styling according to the theme of the application or view.
+Here we insert two [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button) components, one that is styled and one that has default styling according to the theme of the application or view.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)
+- [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button)
 
 **Other:**
 
-- [style](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/style)
+- [style](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/style)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/styling-components-with-css>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/styling-components-with-css>*
 
 ---
 
@@ -1831,9 +1831,9 @@ Here we insert two [button](https://robinsbackend-robinsbackend-portalx.cloudbac
 
 This concept shows how to transform data using XSL.
 
-> **Note:** The XSL file can be put anywhere in your project's folder structure, but we recommend putting it in `layout`. For a deployed application the `href` in the [`render`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/render) component would then point to e.g. `host://layout/myXSL.xsl`
+> **Note:** The XSL file can be put anywhere in your project's folder structure, but we recommend putting it in `layout`. For a deployed application the `href` in the [`render`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/render) component would then point to e.g. `host://layout/myXSL.xsl`
 
-> **Note:** For more information about how to use XSLT, please see the [XSLT Manual](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/xml/overview-xslt).
+> **Note:** For more information about how to use XSLT, please see the [XSLT Manual](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/xml/overview-xslt).
 
 #### Code Snippet
 
@@ -1879,10 +1879,10 @@ This concept shows how to transform data using XSL.
 #### Code Explanation
 
 **Line 2 - 19**
-This is our inlined XML document, put in an [`item`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/item) in the `resources` element. This is what we bind our [`render`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/render) to on **line 29 - 31**, but could also be a linked in document or an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases).
+This is our inlined XML document, put in an [`item`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/item) in the `resources` element. This is what we bind our [`render`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/render) to on **line 29 - 31**, but could also be a linked in document or an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases).
 
 **Line 23**
-The highlight of this concept is linking our XSL document to our [`render`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/render) component in the `href` attribute. For this concept it is a document within the XIOS/3 Help but could be linked from anywhere.
+The highlight of this concept is linking our XSL document to our [`render`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/render) component in the `href` attribute. For this concept it is a document within the XIOS/3 Help but could be linked from anywhere.
 
 > **Note:** The XSL document is provided below.
 
@@ -1925,9 +1925,9 @@ The highlight of this concept is linking our XSL document to our [`render`](http
 
 **Components:**
 
-- [render](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/render)
+- [render](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/render)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/transform-data-using-xsl>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/transform-data-using-xsl>*
 
 ---
 
@@ -1959,9 +1959,9 @@ The translation is displayed in a pop-up.
 
 **Functions:**
 
-- [translate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/functions/translate)
+- [translate](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/functions/translate)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/translate-a-string-to-replace-characters>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/translate-a-string-to-replace-characters>*
 
 ---
 
@@ -1993,9 +1993,9 @@ Select each `key` in the URL query string into an `alias`.
 
 **Other:**
 
-- [aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/url-query-string>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/url-query-string>*
 
 ---
 
@@ -2058,40 +2058,40 @@ You can run the code directly here, and copy the parts you need for your applica
 #### Code Explanation
 
 **Line 5 - 8**
-For each `row` in our [`grid`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid) we want to `match` (and show) each `item` node from our document, bound on **line 39 - 41**. For each `item` node we want to display its `name`, from each items name attribute, and its text in separate columns.
+For each `row` in our [`grid`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid) we want to `match` (and show) each `item` node from our document, bound on **line 39 - 41**. For each `item` node we want to display its `name`, from each items name attribute, and its text in separate columns.
 
 **Line 22 - 31**
-Creating a temporary document in an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) by using `model="newsilent"`. Our temporary document has a main [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list) element with [`item`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/item) nodes as children, and `text` nodes as children to each `item`.
+Creating a temporary document in an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) by using `model="newsilent"`. Our temporary document has a main [`list`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/list) element with [`item`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/item) nodes as children, and `text` nodes as children to each `item`.
 
 **Line 32 - 34**
-This [action](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/action) `operation` will make the `bindTemp` [`button`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button) visible.
+This [action](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/action) `operation` will make the `bindTemp` [`button`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button) visible.
 
 **Line 38 - 40**
-Here we use the [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation` to bind our `$tmpDoc` (from the top [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list) node, using `select="/list"`) to the `showDoc` `component`.
+Here we use the [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation` to bind our `$tmpDoc` (from the top [`list`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/list) node, using `select="/list"`) to the `showDoc` `component`.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)
-- [grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)
+- [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button)
+- [grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid)
 
 **Process Operations:**
 
-- [action](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/action)
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [action](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/action)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
 
 **Other:**
 
-- [aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/using-temporary-documents>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/using-temporary-documents>*
 
 ---
 
 ## Visualize the database with a tree
 
-This concept shows to [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) a [bush (tree)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/bush) component to a container hierarchy. If you are going to visualize XML documents (and not the database hierarchy) we advise you look at the [Visualize XML with a tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-xml-with-a-tree) concept. The bush component use lazy loading to only retrieve data from the database when the node in the tree is visited.
+This concept shows to [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) a [bush (tree)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/bush) component to a container hierarchy. If you are going to visualize XML documents (and not the database hierarchy) we advise you look at the [Visualize XML with a tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-xml-with-a-tree) concept. The bush component use lazy loading to only retrieve data from the database when the node in the tree is visited.
 
 If logged in, you can run the code directly here. Feel free to copy the parts you need for your application.
 
@@ -2134,29 +2134,29 @@ This `rule` will look at the result from our binding (done on **line 18 - 20**),
 This `rule` will look at the result from our binding (done on **line 18 - 20**), displaying every node matching `db:container` under `db:result` and display these with their given name using `{@name}`.
 
 **Line 17 - 21**
-Any `step` with `id="start"` will always run first, as soon as the process code is loaded. In this `step` we use the [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation` to bind the root of `tenant://` using `select="/"` to the `tenantBush` `component`.
+Any `step` with `id="start"` will always run first, as soon as the process code is loaded. In this `step` we use the [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation` to bind the root of `tenant://` using `select="/"` to the `tenantBush` `component`.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [bush](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/bush)
+- [bush](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/bush)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
 
 **Other:**
 
-- [rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
+- [rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-the-database-with-a-tree>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-the-database-with-a-tree>*
 
 ---
 
 ## Visualize XML with a tree
 
-This concept shows to [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) a [tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tree) component to a object hierarchy. If you are going to visualize more of an container hierarchy we advise you look at the [Visualize the database with a tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-the-database-with-a-tree) concept.
+This concept shows to [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) a [tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tree) component to a object hierarchy. If you are going to visualize more of an container hierarchy we advise you look at the [Visualize the database with a tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-the-database-with-a-tree) concept.
 
 You can run the code directly here, and copy the parts you need for your application.
 
@@ -2206,26 +2206,26 @@ These `rule` elements will look at the result from our binding (done on **line 2
 Any `step` with `id="start"` will always run first, as soon as the process code is loaded.
 
 **Line 15 - 24**
-Creating a temporary document in an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) by using `model="newsilent"`. Our temporary document has a main [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list) element with [`item`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/item) nodes as children, and `text` nodes as children to each `item`.
+Creating a temporary document in an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) by using `model="newsilent"`. Our temporary document has a main [`list`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/list) element with [`item`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/item) nodes as children, and `text` nodes as children to each `item`.
 
 **Line 25 - 27**
-Here we use the [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation` to bind our `$tmpDoc` (from the top [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list) node, using `select="/list"`) to the `myTree` `component`.
+Here we use the [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) `operation` to bind our `$tmpDoc` (from the top [`list`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/list) node, using `select="/list"`) to the `myTree` `component`.
 
 ### Used Building Blocks
 
 **UI Components:**
 
-- [tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tree)
+- [tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tree)
 
 **Process Operations:**
 
-- [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)
+- [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)
 
 **Other:**
 
-- [aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
-- [rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
+- [aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)
+- [rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-xml-with-a-tree>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/code-concepts/visualize-xml-with-a-tree>*
 
 ---

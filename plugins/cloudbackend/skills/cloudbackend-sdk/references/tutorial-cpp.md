@@ -2,7 +2,7 @@
 
 Installation, asynchronous programming, delegate structures and the three exercises.
 
-9 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+9 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -18,9 +18,9 @@ Installation, asynchronous programming, delegate structures and the three exerci
 
 ## Tutorial C++ SDK
 
-- [Exercise 1](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-1) section
-- [Exercise 2](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-2) section
-- [Exercise 3](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-3) section
+- [Exercise 1](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-1) section
+- [Exercise 2](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-2) section
+- [Exercise 3](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-3) section
 
 ### Tutorial objective
 
@@ -37,7 +37,7 @@ The classes available when writing programs using the CloudBackend SDK API.
 
 ### Containers and Objects
 
-The Database consists of [containers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container), [objects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object), [key/values](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/key-value) (meta-data), [streams](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/stream), [ACL](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl) which are all stored in a database belonging to either an [identity (account)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/account) or [group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/group). Click on the links above for more information.
+The Database consists of [containers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container), [objects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object), [key/values](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/key-value) (meta-data), [streams](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/stream), [ACL](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl) which are all stored in a database belonging to either an [identity (account)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/account) or [group](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/group). Click on the links above for more information.
 
 
 ### To use the Tutorial
@@ -48,9 +48,9 @@ The tutorial will focus on teaching 4 simple methods that are needed to get star
 
 The tutorial is structured in 3 exercises:
 
-- [login to your account](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-1)
-- [create a Container in the root container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-2)
-- [query the account and create an Object on the backend service](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-3).
+- [login to your account](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-1)
+- [create a Container in the root container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-2)
+- [query the account and create an Object on the backend service](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-3).
 
 At the end of this document there is a link to download the Tutorial source code.
 
@@ -64,7 +64,7 @@ Another way to remove your Container is to use the rmdir command in the CLI tool
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk>*
 
 ---
 
@@ -86,7 +86,7 @@ Working asynchronously means that the main thread may continue to work while the
 
 It is possible to mix both synchronous and asynchronous calls in the same program.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/asynchronous-programming>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/asynchronous-programming>*
 
 ---
 
@@ -720,7 +720,7 @@ sh compile.sh 1      # compile exercise 1
 sh run.sh 1          # run your compiled exercise 1  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-1>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-1>*
 
 ---
 
@@ -1255,7 +1255,7 @@ sh compile.sh 2      # compile exercise 2
 sh run.sh 2          # run your compiled exercise 2  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-2>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-2>*
 
 ---
 
@@ -2381,7 +2381,7 @@ sh compile.sh 3      # compile exercise 3
 sh run.sh 3          # run your compiled exercise 3  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-3>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/exercise-3>*
 
 ---
 
@@ -2412,7 +2412,7 @@ mkdir -p Tutorial                           # if not already created
 cd Tutorial                                 # put exercise files here
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/installation>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/installation>*
 
 ---
 
@@ -2533,7 +2533,7 @@ int main() {
 }   
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/logindelegate-structure>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/logindelegate-structure>*
 
 ---
 
@@ -2630,7 +2630,7 @@ if (queryDelegate->errorInfo) {
 ~~~   
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/querydelegate-structure>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/querydelegate-structure>*
 
 ---
 
@@ -2752,6 +2752,6 @@ case "$exe" in
 esac   
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/scripts>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk/scripts>*
 
 ---

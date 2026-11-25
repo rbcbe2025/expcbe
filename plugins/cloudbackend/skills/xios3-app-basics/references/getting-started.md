@@ -2,7 +2,7 @@
 
 Introduction, quick start, the structure of an application (manifest, view, process, data), development tools and packaging, from the published XIOS/3 manual.
 
-33 topics from the published XIOS/3 documentation, generated on 2026-11-24. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+33 topics from the published XIOS/3 documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -44,25 +44,25 @@ Introduction, quick start, the structure of an application (manifest, view, proc
 
 In this section, we will cover everything about XIOS/3 Application Development and it is divided into sections of relevance. The very foundation of Application Development in XIOS/3 is the fact that the applications are XML based and that they use the MVC design pattern, which means that an application consists of three parts:
 
-- Model - The [Data](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/data-model) layer, written in XML (similar to JSON)
-- View - The User Interface layer, written in [XIOS/3 View Markup](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/ui-view)
-- Controller - The Application Logic layer, written in [XIOS/3 Process Markup](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/process-control)
+- Model - The [Data](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/data-model) layer, written in XML (similar to JSON)
+- View - The User Interface layer, written in [XIOS/3 View Markup](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/ui-view)
+- Controller - The Application Logic layer, written in [XIOS/3 Process Markup](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/process-control)
 
 By being able to keep these three layers completely separate, the XIOS/3 MVC design pattern makes development more efficient while simplifying parallel development, enabling developer teams to work separately on the different layers of an application. Further, modularization is possible by using the W3C XLink standard to split application packages into several documents and it can also be used to separate a view into several sections with lazy loading. This makes applications load faster and reduces the number of conflicts when developers collaborate on an application.
 
 ### What this section covers
 
-This section covers the foundations of XIOS/3 Application Development by first introducing [the MVC design model](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/the-mvc-design), and giving an overview to the [structure](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure) of a XIOS/3 application.
+This section covers the foundations of XIOS/3 Application Development by first introducing [the MVC design model](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/the-mvc-design), and giving an overview to the [structure](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure) of a XIOS/3 application.
 
-For the sake of building applications the next section gives an introduction to the various [Development Tools](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools) available within and outside of the CloudBackend PaaS, such as the built-in [code editor](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad) and [debugger](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/debugger). There are also sections about how to use [Visual Studio Code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code) and [WebDav](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav).
+For the sake of building applications the next section gives an introduction to the various [Development Tools](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools) available within and outside of the CloudBackend PaaS, such as the built-in [code editor](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad) and [debugger](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/debugger). There are also sections about how to use [Visual Studio Code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code) and [WebDav](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav).
 
-This section after that gives an introduction to the virtual database, the [Data Virtualization Layer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer) and how it is used with the [CloudBackend Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database).
+This section after that gives an introduction to the virtual database, the [Data Virtualization Layer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer) and how it is used with the [CloudBackend Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database).
 
-Finally, there are sections about using the built-in [icon manager](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/icons-and-images) and how to [validate code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/validating-code).
+Finally, there are sections about using the built-in [icon manager](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/icons-and-images) and how to [validate code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/validating-code).
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development>*
 
 ---
 
@@ -72,18 +72,18 @@ This section of the documentation contains information about the various XIOS/3 
 
 ### Current Developer Support Tools
 
-The following developer tools can be used for e.g. setting up templated [Application Manifests](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/application-package-manifest), editing application code, debug apps in the CloudBackend PaaS. There are also ways to build XIOS/3 applications locally, which is presented in a separate [segment](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/local-development), even though some of these tools are presented here as well.
+The following developer tools can be used for e.g. setting up templated [Application Manifests](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/application-package-manifest), editing application code, debug apps in the CloudBackend PaaS. There are also ways to build XIOS/3 applications locally, which is presented in a separate [segment](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/local-development), even though some of these tools are presented here as well.
 
-- [Application Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard) - Used to quickly create apps from templates or basic Application Manifests
-- [Icon Browser](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/icon-browser) - Find and search all available icons in the included icon library
-- [XML Editor](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad) - Used to edit application code within the CloudBackend PaaS
-- [Debugger](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/debugger) - Used to debug running apps in the CloudBackend PaaS
-- [Visual Studio Code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code) - Explanation for how to use VS Code and add relevant extensions
-- [WebDav](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav) - Used to keep local objects in sync with the CloudBackend database.
+- [Application Wizard](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard) - Used to quickly create apps from templates or basic Application Manifests
+- [Icon Browser](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/icon-browser) - Find and search all available icons in the included icon library
+- [XML Editor](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad) - Used to edit application code within the CloudBackend PaaS
+- [Debugger](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/debugger) - Used to debug running apps in the CloudBackend PaaS
+- [Visual Studio Code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code) - Explanation for how to use VS Code and add relevant extensions
+- [WebDav](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav) - Used to keep local objects in sync with the CloudBackend database.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools>*
 
 ---
 
@@ -91,9 +91,9 @@ The following developer tools can be used for e.g. setting up templated [Applica
 
 The Application Wizard is a quick way to get started with your application development. The Wizard helps you initialize a new application structure within a project folder—a requirement if you intend to deploy the application as SaaS or make it available to external users.
 
-More information about the parts of a XIOS/3 application can be found in the [Application Structure](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure) section.
+More information about the parts of a XIOS/3 application can be found in the [Application Structure](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure) section.
 
-You can start the Application Wizard through [this link](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development), or by clicking `Create` in the Projects tab of the CloudBackend PaaS.
+You can start the Application Wizard through [this link](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development), or by clicking `Create` in the Projects tab of the CloudBackend PaaS.
 
 To create a new application, configure the following settings:
 
@@ -106,7 +106,7 @@ To create a new application, configure the following settings:
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard>*
 
 ---
 
@@ -121,7 +121,7 @@ Working with the CLI will feel natural to anyone who has ever used a command lin
 
 There are various commands you can use in the CLI. As shown in the screenshot above, by running the command `help` you will see a quick overview of available commands, where you can use `help -a` to list all available commands or `help [command name]` to get help about a specific command. Running the command `hlp` will open the entire help documentation for the CLI as a separate application.
 
-The CLI can also visualize similar information as the [System Manager](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/system-manager) by e.g. running the commands:
+The CLI can also visualize similar information as the [System Manager](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/system-manager) by e.g. running the commands:
 
 - `apps` - Shows all running application packages
 - `views` - Shows all running views
@@ -132,7 +132,7 @@ The CLI can also visualize similar information as the [System Manager](https://r
 #### Using the CLI to Inspect Applications
 
 The CLI can also be used to inspect applications, e.g. the selection of specific components, using the command `cat`.
-Here are some examples used in the [Kanban Tutorial](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/kanban-tutorial):
+Here are some examples used in the [Kanban Tutorial](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/kanban-tutorial):
 
 - `cat tenant://Kanban` - Returns the db:container for the *Kanban* Container in the *tenant* database
 - `cat #view#component` - Used for inspecting the state of any component, in any view, e.g. `cat #Kanban#boards` to show the state if the *boards* component in the view *Kanban*
@@ -142,7 +142,7 @@ The screenshot below shows the highlighted results when running the commands `ca
 
 > **Note:** Running the command `cat #Kanban` will return the XML for the *Kanban* view code.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/cli>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/cli>*
 
 ---
 
@@ -150,7 +150,7 @@ The screenshot below shows the highlighted results when running the commands `ca
 
 The XIOS/3 Debugger is a useful tool to get better insights into the application you are building. It is started by right-clicking the Title-bar in a running application and choosing *Debug*, or with an application running use Ctrl+Alt+D on Windows and Ctrl+Option+D on Mac. The Debugger can also be started through the System Manager application.
 
-The Debugger is used to debug the process code, showing the Trace, i.e. the various [Steps](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps) triggered by user interactions, to the left.
+The Debugger is used to debug the process code, showing the Trace, i.e. the various [Steps](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps) triggered by user interactions, to the left.
 If a Step is selected in the Trace list it will show the Incoming Event Trigger (!) for that step to the top right, with the following Executing Process Step below.
 
 A lot of useful information can be found in the Incoming Event Trigger (!), especially in the four parameters in the grey box. These are:
@@ -160,7 +160,7 @@ A lot of useful information can be found in the Incoming Event Trigger (!), espe
 - **Selection**: The Selection is based on what has visually been selected (in components that support it) giving an XPath pointing out this 0..n selection, relative to the Base path
 - **Value**: If there is any content in Value, the Event has been serialized into text, which makes the above three dimensional variable (Object, Base, and Selection) ignored
 
-The Debugger also has a tab for the active [Aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) in your current application, with an Evaluation of the currently selected Alias to Data Model below.
+The Debugger also has a tab for the active [Aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) in your current application, with an Evaluation of the currently selected Alias to Data Model below.
 
 
 ### Functionality of the Debugger
@@ -179,7 +179,7 @@ Gives you some information about the Debugger.
 Shows the Incoming Event Trigger (!) with its corresponding Object, Base, Selection and Value, where the Value is the Serialization of the Event Trigger, `{!}`.
 
 **Aliases**
-The Aliases tab shows a list of current [Aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) in the running application, with its corresponding Value, XPath and Datadoc. If an alias that can be evaluated is selected in the list it will show its XML in the segment below.
+The Aliases tab shows a list of current [Aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) in the running application, with its corresponding Value, XPath and Datadoc. If an alias that can be evaluated is selected in the list it will show its XML in the segment below.
 
 
 ### Common Mistakes When Developing
@@ -193,7 +193,7 @@ Another common issue is when you are using the listview or render components whe
 **Issue 3: Binding data to a component that is not valid**
 Before you bind data to a component it must be rendered by the system. For example you cannot bind data to a component that is hidden or inside a non-opened UI-XML, either not opened by the process document or not yet xlinked into the view.
 
-Do not bind data until the view has triggered the event [Loaded](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/loaded)
+Do not bind data until the view has triggered the event [Loaded](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/loaded)
 
 **Trigger listening to Loaded Event**
 
@@ -219,7 +219,7 @@ The solution is to make the browser ignore the namespace by using the following 
 
 `*[local-name() = 'object' and @name = 'hello.xml']`
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/debugger>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/debugger>*
 
 ---
 
@@ -227,17 +227,17 @@ The solution is to make the browser ignore the namespace by using the following 
 
 When collaboratively building applications in a team we recommend using Git as a distributed version control system to track and control source code.
 
-If you have a Git environment already set up you can use it to check out code to your local machine, preferably through [Visual Studio Code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code), and synchronize the source code of your application(s) with you `home` database in CloudBackend. This allows you to edit code in VS Code, synchronize it with the cloud, and test your applications live through CloudBackend. Any changes you make locally or in the cloud is then committed and pushed into the Git repository.
+If you have a Git environment already set up you can use it to check out code to your local machine, preferably through [Visual Studio Code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code), and synchronize the source code of your application(s) with you `home` database in CloudBackend. This allows you to edit code in VS Code, synchronize it with the cloud, and test your applications live through CloudBackend. Any changes you make locally or in the cloud is then committed and pushed into the Git repository.
 
 > **Tip:** Do not sync the git repository to the `tenant` database, use the private `home` database of a developer as a staging area before bringing it into the shared `tenant` database. From there it is then deployed.
 
 The idea is to use Git versioning on the local machine and then test the code through CloudBackend using the `home` database. Whenever a version is ready for deployment, it is first synced to the developers `home` database and from there it is deployed using the `tenant` database. This way of working allows each developer to have their own version of the application in their own account to develop on and test it live through the service similar to how Git is used with its local copy of the source code.
 
-This allows you to use Git to keep version control of code throughout a team of developers and use the latest version e.g. for [deployment](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment) after it has been verified and tested through one or several developers personal accounts.
+This allows you to use Git to keep version control of code throughout a team of developers and use the latest version e.g. for [deployment](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment) after it has been verified and tested through one or several developers personal accounts.
 
 > **Note:** It is possible to deploy directly from the `home` database, the application is then first automatically copied to the `tenant` database before it is deployed and externally made available.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/git>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/git>*
 
 ---
 
@@ -255,7 +255,7 @@ The Icon Browser allows you to browse and search for all icons available in the 
 - Objects
 - Other
 
-You can start the Icon Browser through [this link](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development), or by clicking `Icons...` in the Projects tab in the CloudBackend PaaS.
+You can start the Icon Browser through [this link](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development), or by clicking `Icons...` in the Projects tab in the CloudBackend PaaS.
 
 Several icon libraries with different sets of icons, but mapped to the same icon names are available and mapped to the built-in themes, which means that depending on theme you may get `SVG` vector icons or `PNG` pixelated bitmap icons. The use of the icon protocol syntax ensures that your application receives the right icon, regardless of which theme the application runs within.
 
@@ -267,7 +267,7 @@ The icon libraries are created by `https://iconexperience.com`, Copyright by INC
 
 Icons Reference
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/icon-browser>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/icon-browser>*
 
 ---
 
@@ -284,13 +284,13 @@ To create a new project folder, configure the following settings:
 
 > **Note:** **Recommendation:** Use `Home` projects for initial drafting and testing. Once an application is ready for wider use or SaaS deployment, a `Tenant` project is preferred.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/project-wizard>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/project-wizard>*
 
 ---
 
 ## System Manager
 
-The built-in System Manager application allows you to inspect running applications in the CloudBackend PaaS. To start the System Manager run the command `system` in the CLI, or click [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development).
+The built-in System Manager application allows you to inspect running applications in the CloudBackend PaaS. To start the System Manager run the command `system` in the CLI, or click [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development).
 
 
 #### The Application
@@ -298,8 +298,8 @@ The built-in System Manager application allows you to inspect running applicatio
 The System Manager consists of tabs to inspect the following things:
 
 - **Applications** - Shows information about currently running applications, including how many instances under #. 0 instances means that the application is closed but not *killed*
-- **Views** - Shows currently open application [views](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view). The number after the colon in Alias, e.g. :2, denotes which view if several views of the same application is open
-- **Processes** - Allows you to see which processes are running for opened applications. This tab also allows you to Restart, Kill or run the [Debugger](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/debugger) on the selected process
+- **Views** - Shows currently open application [views](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view). The number after the colon in Alias, e.g. :2, denotes which view if several views of the same application is open
+- **Processes** - Allows you to see which processes are running for opened applications. This tab also allows you to Restart, Kill or run the [Debugger](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/debugger) on the selected process
 - **Documents** - Displays the (temporary) documents used by opened applications
 - **WebShare** - Lists any WebShares created by the user
 - **Share** - Similar to a WebShare but only used internally between users of a CloudBackend database
@@ -307,13 +307,13 @@ The System Manager consists of tabs to inspect the following things:
 - **databases** - Shows any mounted databases such as databases, groups or (hard) databases. *home* and *tenant* are standard
 - **Channels** - Lists open channels. *cbe* is standard
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/system-manager>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/system-manager>*
 
 ---
 
 ## Using Visual Studio Code
 
-To facilitate local development using Microsoft Visual Studio Code™ we provide you with a `CloudBackend for VS Code extension`, for syncing files to CloudBackend and enabling live editing of apps, as well as [IntelliSense](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code/intellisense-code-completion) for code completion.
+To facilitate local development using Microsoft Visual Studio Code™ we provide you with a `CloudBackend for VS Code extension`, for syncing files to CloudBackend and enabling live editing of apps, as well as [IntelliSense](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code/intellisense-code-completion) for code completion.
 
 ### Extension CloudBackend for Visual Studio Code
 
@@ -410,7 +410,7 @@ With these steps in mind, to start working on an application see the `tenant://A
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code>*
 
 ---
 
@@ -462,7 +462,7 @@ At this point, if everything works correctly, by simply adding `xmlns="http://xi
 If IntelliSense isn't working, double check all the paths are correct in the files you edited, including the entry that you added to your `settings.xml`
 You can also look at `https://github.com/redhat-developer/vscode-xml/wiki/XMLValidation#xml-catalog-with-xsd` for additional details.
 
-Please note that adding the above xmlns entry will also work on `process` and [`view`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) elements when they reside in separate files.
+Please note that adding the above xmlns entry will also work on `process` and [`view`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) elements when they reside in separate files.
 
 If you want to add IntelliSense to a single application file, without doing the above setup, you can also do:
 
@@ -475,7 +475,7 @@ If you want to add IntelliSense to a single application file, without doing the 
 
 > **Note:** adjust the `xios/config/schemas/application.xsd` path (the `xsi:schemaLocation` attribute) to correctly point to 'application.xsd', relative to where your application is located.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code/intellisense-code-completion>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code/intellisense-code-completion>*
 
 ---
 
@@ -485,7 +485,7 @@ You can use WebDAV on Mac, Windows, and Linux to edit XIOS/3 files locally and k
 
 Many 3rd party applications and apps on mobile devices also support WebDAV. This means that you can access your files from within any app compatible with WebDAV. The Apple productivity suite for iPad; Pages, Numbers and Keynote all support WebDAV, enabling you to open, edit and save documents directly from within the apps to XIOS/3.
 
-In the screenshot below you can see how the file *webDAV.xml* is open both in [Visual Studio Code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code) and in the CloudBackend PaaS's XML Editor. Any changes made in Visual Studio Code will sync with what is running in the CloudBackend PaaS.
+In the screenshot below you can see how the file *webDAV.xml* is open both in [Visual Studio Code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code) and in the CloudBackend PaaS's XML Editor. Any changes made in Visual Studio Code will sync with what is running in the CloudBackend PaaS.
 
 
 ### Set-up WebDAV
@@ -527,7 +527,7 @@ Linux has built-in support for WebDAV.
 5. Set Folder to "username" (in lowercase) and click "Connect"
 6. Type in your XIOS/3 username (in lowercase) and password in the authentication dialog that appears and click "Connect"
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav>*
 
 ---
 
@@ -535,9 +535,9 @@ Linux has built-in support for WebDAV.
 
 To aid developers in their development of applications XIOS/3 has developed an XML editor, called CodePad, offering basic XML editing. The application will check if the document is well formed, display line numbers as well as search and replace functionality.
 
-You can read more about the CodePad in its [application documentation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/xml/xmlpad).
+You can read more about the CodePad in its [application documentation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/xml/xmlpad).
 
-- **[Start CodePad](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development)** — Launch the XIOS/3 CodePad *(XML Editor)*
+- **[Start CodePad](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development)** — Launch the XIOS/3 CodePad *(XML Editor)*
 
 #### The CodePad UI
 
@@ -592,9 +592,9 @@ The window consists of the following:
 - **Refine Search** - Additional option for searching
 - **Button Area** - Consist of the Find Next, Replace and Replace All buttons
 
-This application uses the [CodeEditor](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/codeeditor) component which allows anyone to make their own XML editor.
+This application uses the [CodeEditor](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/codeeditor) component which allows anyone to make their own XML editor.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad>*
 
 ---
 
@@ -636,7 +636,7 @@ If no protocol is given, the icons will be loaded from the base server (where th
 <image src="home://Documents/image.png" width="16" height="16"/>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/icons-and-images>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/icons-and-images>*
 
 ---
 
@@ -652,7 +652,7 @@ XIOS/3 also has intelligent user interface components that autonomously updates 
 3. Building blocks are declaratively bound to data and rules by the developer to set up the User Interface
 4. XIOS/3 automatically takes care of visualization, keeping both the User Interface and its data source updated
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/intelligent-data-bindings>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/intelligent-data-bindings>*
 
 ---
 
@@ -673,7 +673,7 @@ The three elements of the MVC design are always divided into different documents
 
 The XML syntax is very easy and logical. These XML restrictions apply to all XML languages, such as XML, XSLT, XHTML, UI markup and process markup. The following rules and restrictions apply to all XML languages.
 
-- **[XML Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink. *(XML Reference Manual)*
+- **[XML Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink. *(XML Reference Manual)*
 
 #### Summary
 
@@ -701,17 +701,17 @@ The last, rule which states that elements must not overlap each other, means tha
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure>*
 
 ---
 
 ## Application Package (Manifest)
 
-The Application Manifest is the equivalent to the executable program. It defines which [views](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/ui-view), [processes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/process-control), and sometimes also [data](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/data-model) that should be used by the application.
+The Application Manifest is the equivalent to the executable program. It defines which [views](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/ui-view), [processes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/process-control), and sometimes also [data](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/data-model) that should be used by the application.
 
-The manifest also defines the [icons](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/icons-and-images) for the application, its name, how many instances of the application that may be started and the about information.
+The manifest also defines the [icons](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/icons-and-images) for the application, its name, how many instances of the application that may be started and the about information.
 
-- **[Application Packaging](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging)** — More information about application packaging in XIOS/3. *(Shortcut)*
+- **[Application Packaging](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging)** — More information about application packaging in XIOS/3. *(Shortcut)*
 
 
 **Application XML basic structure**
@@ -728,9 +728,9 @@ The manifest also defines the [icons](https://robinsbackend-robinsbackend-portal
 </application>
 ```
 
-Please see the section about [Application Packaging](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging) for more information.
+Please see the section about [Application Packaging](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging) for more information.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/application-package-manifest>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/application-package-manifest>*
 
 ---
 
@@ -738,11 +738,11 @@ Please see the section about [Application Packaging](https://robinsbackend-robin
 
 The data XML has no restrictions on element structure except that it must be well-formed XML. The data XML can be structured in several documents; these can be static - or dynamically generated files requested from the server via the client-side web browser.
 
-- **[CloudBackend Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database)** — Shortcut to more info about the CloudBackend Database. *(Database)*
+- **[CloudBackend Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database)** — Shortcut to more info about the CloudBackend Database. *(Database)*
 
-- **[Data Virtualization](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer)** — Shortcut to more info about data virtualization in XIOS/3. *(Data Virtualization)*
+- **[Data Virtualization](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer)** — Shortcut to more info about data virtualization in XIOS/3. *(Data Virtualization)*
 
-- **[XML Documentation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/xml/xml-development)** — Shortcut to XML reference documentation. *(XML Reference)*
+- **[XML Documentation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/xml/xml-development)** — Shortcut to XML reference documentation. *(XML Reference)*
 
 **Data XML basic structure**
 
@@ -754,17 +754,17 @@ The data XML has no restrictions on element structure except that it must be wel
 </documentRootName>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/data-model>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/data-model>*
 
 ---
 
 ## Process (Control)
 
-The [process markup](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development) describes the application logic execution steps and the [panel element](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel) operations performing the actual programming actions for each step. The operations let you control the application; you could compare operations to functions in traditional programming languages.
+The [process markup](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development) describes the application logic execution steps and the [panel element](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel) operations performing the actual programming actions for each step. The operations let you control the application; you could compare operations to functions in traditional programming languages.
 
 This section will only cover the process markup language in brief. A more detailed explanation of element restrictions, required and optional attributes and any other related application logic programming can be found in the section on Process Development and in the Process Operations Reference Manual.
 
-- **[Process Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development)** — More information about process development in XIOS/3. *(Shortcut)*
+- **[Process Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development)** — More information about process development in XIOS/3. *(Shortcut)*
 
 **Basic XIOS/3 process structure in a process markup document**
 
@@ -788,7 +788,7 @@ The process markup must have a process root element. The element must specify th
 
 #### Trigger element
 
-At the top of the process markup, you will find trigger elements. A [trigger](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) is an event caused by user interface components invoked when the end-user interacts with the application, for example using the keyboard or mouse. A trigger can also be invoked by actions performed by the XIOS/3 system. Triggers initiate at a specific step and start executing operation.
+At the top of the process markup, you will find trigger elements. A [trigger](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) is an event caused by user interface components invoked when the end-user interacts with the application, for example using the keyboard or mouse. A trigger can also be invoked by actions performed by the XIOS/3 system. Triggers initiate at a specific step and start executing operation.
 
 The trigger elements have to specify:
 
@@ -799,7 +799,7 @@ The trigger elements have to specify:
 
 #### Step element
 
-Step elements follow the trigger elements. They provide instructions on what should occur when the [trigger](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) has been invoked. The step element may contain any amount of alias elements or operation elements. A step can continue executing operations in another step by specifying a goto attribute with the number of the next step as value. Movement to another step will take place when all operations in the first step have been executed.
+Step elements follow the trigger elements. They provide instructions on what should occur when the [trigger](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) has been invoked. The step element may contain any amount of alias elements or operation elements. A step can continue executing operations in another step by specifying a goto attribute with the number of the next step as value. Movement to another step will take place when all operations in the first step have been executed.
 
 The step elements have to specify:
 
@@ -808,23 +808,23 @@ The step elements have to specify:
 
 #### Alias element
 
-An [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) is a variable (global or local) in the process markup document and will exist as long as the process is running. The alias can hold text, numbers or a document reference. Using aliases for document references makes reuse of references efficient, because there is no need to type the entire path every time a document must be accessed. If you want to use a reference to an alias, put a $ sign before the alias name.
+An [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) is a variable (global or local) in the process markup document and will exist as long as the process is running. The alias can hold text, numbers or a document reference. Using aliases for document references makes reuse of references efficient, because there is no need to type the entire path every time a document must be accessed. If you want to use a reference to an alias, put a $ sign before the alias name.
 
 #### Operation element
 
 The operations are the actual programming logic and make the GUI come alive through end-user interactions. The process markup operations may remind you of method calls invoked on the components, symbolizing classes or objects in other programming languages.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/process-control>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/process-control>*
 
 ---
 
 ## UI (View)
 
-The [UI markup](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development) describes an application view structure containing layout elements and graphical components. All of these are elements in the UI markup, with names corresponding to the names of the respective application view or components.
+The [UI markup](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development) describes an application view structure containing layout elements and graphical components. All of these are elements in the UI markup, with names corresponding to the names of the respective application view or components.
 
 This section will only cover the UI markup language in brief. A more detailed explanation of element restrictions, required and optional attributes and other related application configuration can be found in the section on UI Development and in the Component Reference section.
 
-- **[UI Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development)** — More information about UI development in XIOS/3. *(Shortcut)*
+- **[UI Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development)** — More information about UI development in XIOS/3. *(Shortcut)*
 
 **Basic XIOS/3 application view structure in a UI markup document**
 
@@ -840,25 +840,25 @@ This section will only cover the UI markup language in brief. A more detailed ex
 
 #### View element
 
-The application view UI markup must have a [View](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) root element. The element must specify the name and version attributes. The name attribute must be a unique name identifier and the version attribute must specify the version of the UI components to be used.
+The application view UI markup must have a [View](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) root element. The element must specify the name and version attributes. The name attribute must be a unique name identifier and the version attribute must specify the version of the UI components to be used.
 
 #### Panel elements
 
-To describe the application view layout, a single top-level [panel element](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel) must be placed inside the view element. The container panel can contain any amount or structure of panel layout elements or component elements.
+To describe the application view layout, a single top-level [panel element](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel) must be placed inside the view element. The container panel can contain any amount or structure of panel layout elements or component elements.
 
-> **Note:** All UI components except [menubar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menubar) and [toolbar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar) are required to be within a [`panel`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel) element.
+> **Note:** All UI components except [menubar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menubar) and [toolbar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/toolbar) are required to be within a [`panel`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel) element.
 
 #### Component elements
 
-The component elements are the actual visual building blocks placed inside the view layout panels. They visualize the common components of almost any modern application, GUI library or internet related system. For example [list](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list), [tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tree), [menu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menu) and [toolbar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar) components are widely used in XIOS/3 applications.
+The component elements are the actual visual building blocks placed inside the view layout panels. They visualize the common components of almost any modern application, GUI library or internet related system. For example [list](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/list), [tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tree), [menu](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menu) and [toolbar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/toolbar) components are widely used in XIOS/3 applications.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/ui-view>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/ui-view>*
 
 ---
 
 ## The MVC Design
 
-XIOS/3 is designed according to the Model, [View](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view), Controller (MVC) design pattern. The user interface, the data and the logic of a component are defined in separate documents, all using XML. With the CloudBackend database, they can all be stored as separate objects.
+XIOS/3 is designed according to the Model, [View](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view), Controller (MVC) design pattern. The user interface, the data and the logic of a component are defined in separate documents, all using XML. With the CloudBackend database, they can all be stored as separate objects.
 
 The idea behind the MVC design is to separate data (the model) from the user interface (the view). An intermediate layer (the controller), is responsible for the logic and links together the data and the user interface. This design simplifies updating of the system. It also enables the use of, for example, one component's logic in another component or having multiple views of the same application.
 
@@ -869,7 +869,7 @@ The model is described in standard XML and is the data that gives the graphical 
 
 #### The view
 
-The [view](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) is described in XIOS/3 UI markup and presents the interface, creating an application view containing graphical components. Each component is described in XML as an element, similar to the way an HTML tag describes a graphical widget for a website.
+The [view](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) is described in XIOS/3 UI markup and presents the interface, creating an application view containing graphical components. Each component is described in XML as an element, similar to the way an HTML tag describes a graphical widget for a website.
 
 #### The controller
 
@@ -877,9 +877,9 @@ The controller is described in XIOS/3 process markup and is an abstract way of p
 
 The process markup consists of a number of steps, and typically execution starts on step 1. A step consists of operations changing application states, application user interactions or storing data to the server. Most steps are invoked by something called a trigger.
 
-A trigger is an [event](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model) caused by user interface components invoked when the end-user interacts with the application, for example using the keyboard or mouse. The XIOS/3 system sometimes invokes [system events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events) that can be connected to a trigger as event types.
+A trigger is an [event](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model) caused by user interface components invoked when the end-user interacts with the application, for example using the keyboard or mouse. The XIOS/3 system sometimes invokes [system events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events) that can be connected to a trigger as event types.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/the-mvc-design>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/the-mvc-design>*
 
 ---
 
@@ -901,24 +901,24 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocat
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://dev.xios3.com/schemas/process.xsd"
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/validating-code>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/validating-code>*
 
 ---
 
 ## Application Packaging
 
-Application Packages are XML documents that are used to create a virtual package, in the form of a [Application Manifest](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/application-package-manifest) document, for all documents and objects used in your application. This document will allow you to run multiple instances of your application and enjoy the advantages of application isolation.
+Application Packages are XML documents that are used to create a virtual package, in the form of a [Application Manifest](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/application-package-manifest) document, for all documents and objects used in your application. This document will allow you to run multiple instances of your application and enjoy the advantages of application isolation.
 
 The application document also allows for limiting the number of active application instances by a single end user.
 
-For small applications, with little code or very few documents, and development in the CloudBackend PaaS use [Inline Application Packaging](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package). When dealing with larger applications, or development in teams, use [Advanced Application Packaging](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/advanced-package). Both of these utilize application package documents. However, with Inline Application Packages all the code is written directly in one single document. When dealing with Advanced Application Packages you have an application document which only makes references to external view and process documents.
+For small applications, with little code or very few documents, and development in the CloudBackend PaaS use [Inline Application Packaging](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package). When dealing with larger applications, or development in teams, use [Advanced Application Packaging](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/advanced-package). Both of these utilize application package documents. However, with Inline Application Packages all the code is written directly in one single document. When dealing with Advanced Application Packages you have an application document which only makes references to external view and process documents.
 
 
 ### Storage
 
 Applications are primarily stored in `tenant://Applications` if you want to share your application with other users. If you have created an application for yourself, you can store it under `home://`.
 
-If you are building apps in the CloudBackend database and put them under `tenant://Applications` we recommend [Inline Application Packaging](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package), however you may choose to divide your application into separate documents using the following database structure as sub-containers to `tenant://Applications`:
+If you are building apps in the CloudBackend database and put them under `tenant://Applications` we recommend [Inline Application Packaging](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package), however you may choose to divide your application into separate documents using the following database structure as sub-containers to `tenant://Applications`:
 
 - views
 - processes
@@ -930,7 +930,7 @@ The root container should contain the application document. In the views and pro
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging>*
 
 ---
 
@@ -938,7 +938,7 @@ The root container should contain the application document. In the views and pro
 
 This is what an Advanced Application Package document might look like. It is used to link external documents into the `application manifest` using xlink and is preferred for larger teams and application projects where you would want to keep documents separate and/or use multiple view documents for the same application.
 
-For faster applications and development in the CloudBackend PaaS, we recommend using [Inline Packaging](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package).
+For faster applications and development in the CloudBackend PaaS, we recommend using [Inline Packaging](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package).
 
 **Application Package for HelloWorld**
 
@@ -999,15 +999,15 @@ The final two child elements will link to our only `view` document and our only 
 
 We will set the `process` to `onLoad` to ensure that it starts when the application starts. We will also set the `step` attribute to "start" which is our first step that will open the `view` document.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/advanced-package>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/advanced-package>*
 
 ---
 
 ## Inline Package
 
-This is an example of an inline application package. Here we define inline UI XML ([View](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view)) and Process XML, as well as inline CSS and XSLT. Inline packaging has very positive results as fewer requests are made to the server and the application (or widget) will load faster.
+This is an example of an inline application package. Here we define inline UI XML ([View](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view)) and Process XML, as well as inline CSS and XSLT. Inline packaging has very positive results as fewer requests are made to the server and the application (or widget) will load faster.
 
-You may also use [Advanced Packaging](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/advanced-package), which divides the functionality into different documents; which is more suitable for larger projects and developers working in teams with versioning systems like GIT or Subversion.
+You may also use [Advanced Packaging](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/advanced-package), which divides the functionality into different documents; which is more suitable for larger projects and developers working in teams with versioning systems like GIT or Subversion.
 
 **Process code for inline application package. Here we have placed UI XML, Process XML, XSLT and CSS into one single document.**
 
@@ -1080,7 +1080,7 @@ In the `about` element we write information regarding the application. The infor
 
 #### Line 15-28
 
-The application package document allows you to write inline data and XSLT by declaring them as resources. These can then be used by different UI XML documents, which are defined in the Application Package. The inline documents are the same as external documents, however they offer a great advantage when working with [Widgets](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget). Declaring XSLT and data documents inline will reduce the load time of your application, allowing it to start faster. Note that there are no xlink declarations on the `item` elements on the inline resources.
+The application package document allows you to write inline data and XSLT by declaring them as resources. These can then be used by different UI XML documents, which are defined in the Application Package. The inline documents are the same as external documents, however they offer a great advantage when working with [Widgets](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget). Declaring XSLT and data documents inline will reduce the load time of your application, allowing it to start faster. Note that there are no xlink declarations on the `item` elements on the inline resources.
 
 Our XSLT is very basic. First the root element, `xsl:stylesheet` and the `xsl` namespace declaration. On line 18, we then proceed to match any book element in the data that we bind, and to print the value in the name attribute of that element. Note that we are using the class attribute on the HTML div element when we are outputting the book element's title attribute. This is made possible by the inline CSS declared in the view document below.
 
@@ -1094,17 +1094,17 @@ Next is the inline CSS which we describe in the `style` element. Here we only de
 
 Here we define our process XML document, which consists of a `process` element with a `xlink:actuate` attribute for which the value should be set to `onLoad`. We will only use one step node-set where we will bind the data to the `render` component. The process name in line 46 should be the same as the application name in line 1. Note that the id attribute of the `step` element is set to `start`, because the application will always start by opening step with id `start` (unless otherwise defined) and not the first step by order.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package>*
 
 ---
 
 ## Overall Structure
 
-When building apps in the CloudBackend database we recommend writing the view and process code directly [inline](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package) inside the application document. This way of developing also has great advantages when writing small apps or widgets and will reduce the number of server requests and thus make your application load faster.
+When building apps in the CloudBackend database we recommend writing the view and process code directly [inline](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/inline-package) inside the application document. This way of developing also has great advantages when writing small apps or widgets and will reduce the number of server requests and thus make your application load faster.
 
 There are some fundamental elements required in a Application Manifest, shown in the *Minimal Application Template* code below along with a screenshot of how it appears in the CloudBackend PaaS.
 
-The *Minimal Application Template* can easily be created in the [Application Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard).
+The *Minimal Application Template* can easily be created in the [Application Wizard](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard).
 
 
 **The Application Manifest**
@@ -1212,7 +1212,7 @@ Contains information about from which database the application will be executed.
 
 #### Child Element: home
 
-Can contain the URL to the XIOS/3 container where the data objects of the application are stored. The value of this element is available as the system alias $home when defined. The result will be an [objects listing](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) of the container contents.
+Can contain the URL to the XIOS/3 container where the data objects of the application are stored. The value of this element is available as the system alias $home when defined. The result will be an [objects listing](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) of the container contents.
 
 "Open" and "Save As..." dialogs will start from this container, if nothing else is specified. The recommended locale location is `tenant://Application/Locale`
 
@@ -1319,21 +1319,21 @@ Note that when declaring the main process document the xlink:actuate should be s
 | `xlink:actuate` | enumeration | onRequest, onLoad | Controls when the link will be executed. |
 | `xlink:href` | URL |  | The URL of the license. |
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure>*
 
 ---
 
 ## Widget
 
-A **widget** is an application whose view is drawn without a window frame. Like any application it has a default menu, which can be adjusted. A widget can run **detached** from any anchor point, or be attached to a [WidgetPane](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/widgetpane). Once open, a widget stays open until it is closed.
+A **widget** is an application whose view is drawn without a window frame. Like any application it has a default menu, which can be adjusted. A widget can run **detached** from any anchor point, or be attached to a [WidgetPane](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/widgetpane). Once open, a widget stays open until it is closed.
 
-A widget can have more than one view. The most common case is a **sized** widget, which offers the same widget at different sizes, one view per size. All of a widget's views share a single process, so its context is kept as the size changes. The size is chosen from the widget menu. See [Kinds of Widgets](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/kinds-of-widgets).
+A widget can have more than one view. The most common case is a **sized** widget, which offers the same widget at different sizes, one view per size. All of a widget's views share a single process, so its context is kept as the size changes. The size is chosen from the widget menu. See [Kinds of Widgets](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/kinds-of-widgets).
 
-> **Note:** **Rule:** Every widget [`view`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) must set `mode="widget"`. A widget node requires `id`, `name`, and a `source`; everything else on the node is optional.
+> **Note:** **Rule:** Every widget [`view`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) must set `mode="widget"`. A widget node requires `id`, `name`, and a `source`; everything else on the node is optional.
 
 #### Widget data and lifecycle
 
-Every open widget is backed by an **XML node** that stores its position together with its settings. The running widget reads that data at `$widget#data`, and further setting nodes can be added under `$widget` as needed — a skin, for example, is stored there. See [The Widget Node](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/the-widget-node).
+Every open widget is backed by an **XML node** that stores its position together with its settings. The running widget reads that data at `$widget#data`, and further setting nodes can be added under `$widget` as needed — a skin, for example, is stored there. See [The Widget Node](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/the-widget-node).
 
 Because each open widget owns its own node, several widgets of the same application can be open at once, each keeping its own data. Free widgets are stored in `#SystemConfig`; widgets attached to a pane are stored in that pane's settings document.
 
@@ -1360,7 +1360,7 @@ When a widget is closed its node is removed, and its stored position and setting
 
 #### Advanced package Widget
 
-If the widget application has multiple files, `mode="widget"` are required in the application manifest where the view is linked. This is required for `formfactor` attributes in [sized widgets](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/kinds-of-widgets/sized-widgets) as well.
+If the widget application has multiple files, `mode="widget"` are required in the application manifest where the view is linked. This is required for `formfactor` attributes in [sized widgets](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/kinds-of-widgets/sized-widgets) as well.
 
 **Manifest: one view file for all sizes** *(fragment)*
 
@@ -1374,55 +1374,55 @@ If the widget application has multiple files, `mode="widget"` are required in th
 </application>
 ```
 
-- [The Widget Node](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/the-widget-node)
-- [Opening Widgets](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/opening-widgets)
-- [Kinds of Widgets](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/kinds-of-widgets)
-- [The Widget Menu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/the-widget-menu)
+- [The Widget Node](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/the-widget-node)
+- [Opening Widgets](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/opening-widgets)
+- [Kinds of Widgets](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/kinds-of-widgets)
+- [The Widget Menu](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget/the-widget-menu)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/widget>*
 
 ---
 
 ## Introduction to XIOS/3
 
-This section is dedicated to give you an [overview of the XIOS/3 Platform](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/what-is-xios-3%3F), starting with a high-level explanation of what XIOS/3 is and how to use it.
+This section is dedicated to give you an [overview of the XIOS/3 Platform](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/what-is-xios-3%3F), starting with a high-level explanation of what XIOS/3 is and how to use it.
 
 
-For trying XIOS/3 the fastest way to get started is by going through our [Quick Start](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/quick-start) section. This approach will introduce you to our [Application Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard) and built-in XML Editor [CodePad](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad), allowing you to create new or modify existing applications directly in the web UI.
+For trying XIOS/3 the fastest way to get started is by going through our [Quick Start](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/quick-start) section. This approach will introduce you to our [Application Wizard](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard) and built-in XML Editor [CodePad](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad), allowing you to create new or modify existing applications directly in the web UI.
 
-You may also utilize our [Visual Studio Code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code) extension to facilitate development, as well as use [WebDAV](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav) to sync your application documents directly into the CloudBackend Database.
+You may also utilize our [Visual Studio Code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code) extension to facilitate development, as well as use [WebDAV](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav) to sync your application documents directly into the CloudBackend Database.
 
-- **[Try it!](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/quick-start)** — Get started with developing, right in the CloudBackend PaaS. Learning by doing. *(Start developing now)*
+- **[Try it!](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/quick-start)** — Get started with developing, right in the CloudBackend PaaS. Learning by doing. *(Start developing now)*
 
-- **[What is XIOS/3?](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/what-is-xios-3%3F)** — An introduction and overview of XIOS/3. If you want to know more about the Platform. *(Introduction to XIOS/3)*
+- **[What is XIOS/3?](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/what-is-xios-3%3F)** — An introduction and overview of XIOS/3. If you want to know more about the Platform. *(Introduction to XIOS/3)*
 
 #### Advanced Alternative
 
-The other alternative, for more experienced XIOS/3 users and larger projects, is to develop locally on your computer, in your favorite development environment. This is explained in the [Local Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/local-development) section.
+The other alternative, for more experienced XIOS/3 users and larger projects, is to develop locally on your computer, in your favorite development environment. This is explained in the [Local Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/local-development) section.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3>*
 
 ---
 
 ## Quick Start
 
-This section will describe how to quickly get started with XIOS/3 in the [CloudBackend PaaS](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard) and build your first application. Explained below is everything you need to know about how your application documents are structured in the [CloudBackend PaaS](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard), how to create new, edit, and run applications within the CloudBackend PaaS, as well as how to upload and download application documents.
+This section will describe how to quickly get started with XIOS/3 in the [CloudBackend PaaS](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard) and build your first application. Explained below is everything you need to know about how your application documents are structured in the [CloudBackend PaaS](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard), how to create new, edit, and run applications within the CloudBackend PaaS, as well as how to upload and download application documents.
 
 ### Getting Started
 
-To quickly get started developing in the CloudBackend database, the easiest way is to go through our [Application Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard). If you are just getting to know XIOS/3 we recommend having a look at our [tutorials](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/tutorials). They will give you a great start to building your first XIOS/3 applications.
+To quickly get started developing in the CloudBackend database, the easiest way is to go through our [Application Wizard](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard). If you are just getting to know XIOS/3 we recommend having a look at our [tutorials](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/tutorials). They will give you a great start to building your first XIOS/3 applications.
 
 To get the most out of building apps directly in the CloudBackend PaaS, you will need a place to store your apps and data outside of your home database. So, if you have not done it already, we recommend you to set up a connection to our partner service CloudBackend, The Singularity Database in the cloud with a no-code backend fully integrated with XIOS/3.
 
-The efficiency in XIOS/3 development comes from using standardized and declarative Markup to describe and work with [User Interfaces](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/ui-view), [Application Logic](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/process-control), and [Data Models](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/structure/data-model). These are based on XML so we strongly recommend that you have some basic XML knowledge or the [XML Documentation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/xml/xml-development) close at hand.
+The efficiency in XIOS/3 development comes from using standardized and declarative Markup to describe and work with [User Interfaces](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/ui-view), [Application Logic](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/process-control), and [Data Models](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/structure/data-model). These are based on XML so we strongly recommend that you have some basic XML knowledge or the [XML Documentation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/xml/xml-development) close at hand.
 
-- **[Launch Application Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3)** — Quickly get started with development in the CloudBackend PaaS. *(Get Started)*
+- **[Launch Application Wizard](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3)** — Quickly get started with development in the CloudBackend PaaS. *(Get Started)*
 
-- **[XML Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/xml/xml-development)** — The reference section goes into depth of all aspects of XML, XPath, XLink, and XSLT, languages used throughout XIOS/3. *(XML)*
+- **[XML Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/xml/xml-development)** — The reference section goes into depth of all aspects of XML, XPath, XLink, and XSLT, languages used throughout XIOS/3. *(XML)*
 
 ### Building Applications in the CloudBackend PaaS
 
@@ -1436,11 +1436,11 @@ You can run applications directly in the CloudBackend database by double-clickin
 
 #### New Application
 
-By clicking the Create icon in the top menu you will launch the [Application Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard). The Wizard will allow you to quickly setup the relevant application documents and name your application.
+By clicking the Create icon in the top menu you will launch the [Application Wizard](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/application-wizard). The Wizard will allow you to quickly setup the relevant application documents and name your application.
 
 #### Edit Application
 
-By clicking Edit when you have selected an application document the built-in [XML Editor](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad) will start, allowing you to view and edit the document.
+By clicking Edit when you have selected an application document the built-in [XML Editor](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad) will start, allowing you to view and edit the document.
 
 If you have not selected any application document the CodePad will still launch, with an empty untitled document. Writing your XIOS/3 XML and saving the document in the Applications container under your Tenant will make it available in the Projects tab.
 
@@ -1450,7 +1450,7 @@ Clicking the Upload button in the menu will allow you to select an (XML) documen
 
 By having an application document selected and clicking Download you will download the object, making it accessible on your local device, e.g. to be edited in your local development environment.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/quick-start>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/quick-start>*
 
 ---
 
@@ -1460,19 +1460,19 @@ This section will introduce you to the CloudBackend database and its tabs seen i
 
 To make it easier to find what you are looking for we have separated the CloudBackend database into the following sections, and by clicking the links you can read more about them.
 
-- [Home](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/home)
-- [Account](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/account)
-- [Identities](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/identities)
-- [Applications](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/applications)
-- [Datatypes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/datatypes)
-- [Documentation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/documentation)
-- [Proxy](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/proxy)
-- [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/database-explorer)
-- [CLI](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/cli)
+- [Home](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/home)
+- [Account](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/account)
+- [Identities](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/identities)
+- [Applications](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/applications)
+- [Datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/datatypes)
+- [Documentation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/documentation)
+- [Proxy](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/proxy)
+- [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/database-explorer)
+- [CLI](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard/cli)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/the-dashboard>*
 
 ---
 
@@ -1499,30 +1499,30 @@ In essence, using XIOS/3 will result in solutions being built on a platform with
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/what-is-xios-3%3F>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/what-is-xios-3%3F>*
 
 ---
 
 ## Local Development
 
-This segment will introduce you to how to develop XIOS/3 applications locally on your machine with a downloaded version of XIOS/3, found [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/local-development/xios-3-on-local-machine). If you are looking for how to use [Visual Studio Code Extension](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code), with [IntelliSense Code Completion](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code/intellisense-code-completion), or [WebDAV](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav) you will find information about that through their respective links.
+This segment will introduce you to how to develop XIOS/3 applications locally on your machine with a downloaded version of XIOS/3, found [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/local-development/xios-3-on-local-machine). If you are looking for how to use [Visual Studio Code Extension](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code), with [IntelliSense Code Completion](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code/intellisense-code-completion), or [WebDAV](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav) you will find information about that through their respective links.
 
-- **[Install XIOS/3 Locally](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/local-development/xios-3-on-local-machine)** — Information about how to use XIOS/3 if you have a downloaded local version of the Platform. *(Local Machine)*
+- **[Install XIOS/3 Locally](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/local-development/xios-3-on-local-machine)** — Information about how to use XIOS/3 if you have a downloaded local version of the Platform. *(Local Machine)*
 
-- **[Visual Studio Code Extension](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code)** — Install and use our Visual Studio Code Extension to facilitate local development, including live updating of apps running in the browser. *(Using VS Code)*
+- **[Visual Studio Code Extension](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code)** — Install and use our Visual Studio Code Extension to facilitate local development, including live updating of apps running in the browser. *(Using VS Code)*
 
-- **[WebDAV Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav)** — Use WebDAV in your local development. *(WebDAV)*
+- **[WebDAV Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/webdav)** — Use WebDAV in your local development. *(WebDAV)*
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/local-development>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/local-development>*
 
 ---
 
 ## XIOS/3 on Local Machine
 
 > **Note:** This segment requires that you have a local version of XIOS/3.
-> If you do not have a local version, we recommend you to use XIOS/3 through the CloudBackend PaaS, described in our [Quick Start](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/quick-start) section.
+> If you do not have a local version, we recommend you to use XIOS/3 through the CloudBackend PaaS, described in our [Quick Start](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/introduction-to-xios-3/quick-start) section.
 
 In this section we will have a quick look at the XIOS/3 runtime and show how you can start it on your own computer. It is helpful if you already know how to start a webserver on your computer.
 
@@ -1567,6 +1567,6 @@ The cloud shell itself has a bit more verbose documentation available in the hel
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/local-development/xios-3-on-local-machine>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/local-development/xios-3-on-local-machine>*
 
 ---

@@ -2,7 +2,7 @@
 
 Installation, delegate structure and the exercises for iOS.
 
-8 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+8 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -17,9 +17,9 @@ Installation, delegate structure and the exercises for iOS.
 
 ## Tutorial Swift SDK
 
-- [Exercise 1](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-1) section
-- [Exercise 2](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-2) section
-- [Exercise 3](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-3) section
+- [Exercise 1](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-1) section
+- [Exercise 2](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-2) section
+- [Exercise 3](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-3) section
 
 ### Tutorial objective
 
@@ -36,7 +36,7 @@ The classes available when writing programs using the CloudBackend SDK API.
 
 ### Containers and Objects
 
-The Database consists of [containers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container), [objects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object), [key/values](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/key-value) (meta-data), [streams](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/stream), [ACL](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl) which are all stored in a database belonging to either an [identity (account)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/account) or [group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/group). Click on the links above for more information.
+The Database consists of [containers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container), [objects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object), [key/values](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/key-value) (meta-data), [streams](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/stream), [ACL](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl) which are all stored in a database belonging to either an [identity (account)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/account) or [group](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/group). Click on the links above for more information.
 
 
 ### To use the Tutorial
@@ -47,9 +47,9 @@ The tutorial will focus on teaching 4 simple methods that are needed to get star
 
 The tutorial is structured in 3 exercises:
 
-- [login to your account](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-1)
-- [create a Container in the root container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-2)
-- [query the account and create an Object on the backend service](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-3).
+- [login to your account](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-1)
+- [create a Container in the root container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-2)
+- [query the account and create an Object on the backend service](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-3).
 
 At the end of this document there is a link to download the Tutorial source code.
 
@@ -59,7 +59,7 @@ Many thanks to Forware AB for valuable contribution to the example code in this 
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk>*
 
 ---
 
@@ -76,7 +76,7 @@ Working asynchronously means that the main thread may continue to work while the
 
 We are working to also provide a Synchronous implementation of the SDK to make it easier to get started with smaller projects, where performance is not an issue. This SDK will be easier to use, but will freeze operations waiting for the cloud to respond. For a good user experience, it will always be more desirable to write asynchronously on top of the SDK. Please, check back in coming versions of this document.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/asynchronous-programming>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/asynchronous-programming>*
 
 ---
 
@@ -157,7 +157,7 @@ class Logic1: NSObject,
 
 As a last step you are now ready to press compile and run for Exercise 1.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-1>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-1>*
 
 ---
 
@@ -318,7 +318,7 @@ class Logic2: NSObject,
 
 As a last step you are now ready to press compile and run for Exercise 2.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-2>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-2>*
 
 ---
 
@@ -533,7 +533,7 @@ class Logic3: NSObject,
 
 As a last step you are now ready to press compile and run for Exercise 3.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-3>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-3>*
 
 ---
 
@@ -632,11 +632,11 @@ As a last step you are now ready to press compile and run for Exercise 3.
 
 ### Available Tutorials
 
-[Exercise 1](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-1)
-[Exercise 2](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-2)
-[Exercise 3](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-3)
+[Exercise 1](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-1)
+[Exercise 2](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-2)
+[Exercise 3](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/exercise-3)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/installation>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/installation>*
 
 ---
 
@@ -713,7 +713,7 @@ waitForRsp()
 ~~~
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/logindelegate-structure>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/logindelegate-structure>*
 
 ---
 
@@ -747,6 +747,6 @@ class YourApplication: NSObject, ..., QueryDelegatePtr {
 } 
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/querydelegate-structure>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk/querydelegate-structure>*
 
 ---

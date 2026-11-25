@@ -18,8 +18,8 @@ import { createInterface } from 'node:readline';
 import { rankTopics, searchWords } from './search-core.mjs';
 import { buildXios3Reference } from './xios3-reference.mjs';
 
-const PORTAL = (process.env.CBE_DOCS_PORTAL || 'https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud').replace(/\/$/, '');
-const VERSION = '2026.11.5';
+const PORTAL = (process.env.CBE_DOCS_PORTAL || 'https://robinsbackend-robinsbackend-portal.cloudbackend.cloud').replace(/\/$/, '');
+const VERSION = '2026.11.24';
 const PREFIX = { xios: 'xios3', cloudbackend: 'cloudbackend' };
 
 // ---- the published data, fetched once per session --------------------------------------------------------------

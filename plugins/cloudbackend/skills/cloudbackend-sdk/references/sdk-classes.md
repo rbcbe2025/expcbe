@@ -2,7 +2,7 @@
 
 The class-by-class SDK documentation (C++, Java, Swift share one object model), plus installation, references and security pages.
 
-107 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+107 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -170,7 +170,7 @@ Account holds useful information, see below.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/account>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/account>*
 
 ---
 
@@ -210,7 +210,7 @@ NSLog("logged as:  %@", cloudBackend.account().username());
 std::cout << "logged as: " << cloudBackend.account().username()) << std::endl; 
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/account/account-data>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/account/account-data>*
 
 ---
 
@@ -272,7 +272,7 @@ myRootContainer = cloudBackend.account().rootContainer();
 
 The call will give the top home root Container of this account.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/account/rootcontainer>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/account/rootcontainer>*
 
 ---
 
@@ -333,7 +333,7 @@ cid1 = myRootContainer.id();
 
 The call will give the numeric id of the top home root Container of this account.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/account/rootcontainerid>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/account/rootcontainerid>*
 
 ---
 
@@ -365,7 +365,7 @@ tenantTopContainerId = cloudBackend.Account().tenantContainerId();
 
 The call will give the numeric id of the tenant group top Container of this account.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/account/tenantcontainerid>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/account/tenantcontainerid>*
 
 ---
 
@@ -406,7 +406,7 @@ rootContainer.createObject(name, keyValues, delegate);
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container>*
 
 ---
 
@@ -414,9 +414,9 @@ rootContainer.createObject(name, keyValues, delegate);
 
 See the separate section containing information on how to limit access to data that is to be shared:
 
-- [Sharing](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/sharing)
+- [Sharing](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/sharing)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/acl>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/acl>*
 
 ---
 
@@ -437,7 +437,7 @@ Implement relevant calls in sub-classes of cbe::delegate:: and cbe::delegate::co
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object>*
 
 ---
 
@@ -536,7 +536,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onCreateObjectSuccess() will be called if call succeeds
 - onCreateObjectError() will be called if call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object/createobject-key-values>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object/createobject-key-values>*
 
 ---
 
@@ -610,7 +610,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **create** [name] command in the CLI tool will create a minimal object.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object/createobject>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object/createobject>*
 
 ---
 
@@ -684,7 +684,7 @@ The following callback is optional:
 
 The **upload** [name] command in the CLI tool will upload an Object to the cloud.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object/upload>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object/upload>*
 
 ---
 
@@ -771,7 +771,7 @@ The following callback is optional:
 
 - onChunkSent() will be called during the progress of the upload indicating how much has been done so far.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object/uploadbinary>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/adding-object/uploadbinary>*
 
 ---
 
@@ -788,7 +788,7 @@ The variants are:
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage>*
 
 ---
 
@@ -866,7 +866,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **mkdir** [container] command in the CLI tool will create a sub-container.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage/createcontainer>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage/createcontainer>*
 
 ---
 
@@ -944,7 +944,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **mv** [container] [destination] command in the CLI tool will move a container.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage/move>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage/move>*
 
 ---
 
@@ -1024,7 +1024,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **rmdir** [container] command in the CLI tool will delete a sub-container.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage/remove>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage/remove>*
 
 ---
 
@@ -1100,7 +1100,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **renamedir** [container] [new name] command in the CLI tool will change the name of a sub-container.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage/rename>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/manage/rename>*
 
 ---
 
@@ -1110,7 +1110,7 @@ See the separate section containing information on how to share data:
 
 - Sharing
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container/sharing>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container/sharing>*
 
 ---
 
@@ -1208,11 +1208,11 @@ cloudBackend.terminate();
 
 Example code is supplied with the SDK bundle, and gives a working example of how to get code and callbacks to work together.
 
-For a detailed walkthrough of how to get started using the CloudBackend SDK and example code, see the [SDK tutorials](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial).
+For a detailed walkthrough of how to get started using the CloudBackend SDK and example code, see the [SDK tutorials](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial).
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object>*
 
 ---
 
@@ -1223,7 +1223,7 @@ These are the main classes available when writing programs using the CloudBacken
 
 ##### For more information on:
 
-[CloudBackend (Core Object)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object) | Account | Container | Object | [Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object) | [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) | [Filter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter)
+[CloudBackend (Core Object)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object) | Account | Container | Object | [Item](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object) | [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) | [Filter](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter)
 
 ### Object
 
@@ -1236,7 +1236,7 @@ More details around the Group class.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes>*
 
 ---
 
@@ -1248,11 +1248,11 @@ From the CloudBackend core object; databases, groups, and more that the identity
 
 #### For more information see:
 
-[Container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes) [Object](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes) [Stream](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes) [Key/Value](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes)
+[Container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes) [Object](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes) [Stream](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes) [Key/Value](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods>*
 
 ---
 
@@ -1346,13 +1346,13 @@ Different callbacks are possible:
 - onRemoteContainerRenamed() — after a Container has been renamed
 - onContainerRestored() — after a Container has been restored after being deleted
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/addlistener>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/addlistener>*
 
 ---
 
 ## castContainer
 
-Copies an Item from a [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) to a Container. This is intended as a helper function.
+Copies an Item from a [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) to a Container. This is intended as a helper function.
 
 ### Declaration
 
@@ -1396,13 +1396,13 @@ cbe::Container myContainer =  cbe::CloudBackend::castContainer(item);
 
 The call will create a Container-based, casted copy of the Item.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/castcontainer>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/castcontainer>*
 
 ---
 
 ## castObject
 
-Copies an Item from a [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) into an Object. This is intended as a helper function.
+Copies an Item from a [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) into an Object. This is intended as a helper function.
 
 ### Declaration
 
@@ -1446,7 +1446,7 @@ cbe::Object myObject = cbe::CloudBackend::castObject(item);
 
 The call will create an Object-based, casted copy of the Item.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/castobject>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/castobject>*
 
 ---
 
@@ -1487,7 +1487,7 @@ std::cout << "SDK version: " << cloudBackend.version()) << std::endl;
 cloudBackend.terminate();
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/cloudbackend-data>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/cloudbackend-data>*
 
 ---
 
@@ -1632,7 +1632,7 @@ if (logInDelegate->errorInfo){
 }  
 ```
 
-The usage example above is an excerpt and it will need the code for the delegate to work. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes) section.
+The usage example above is an excerpt and it will need the code for the delegate to work. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/classes) section.
 
 See the SDK bundle with included example for a complete code set.
 
@@ -1647,7 +1647,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/login>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/login>*
 
 ---
 
@@ -1699,7 +1699,7 @@ cloudBackend.removeListener(myHandle);
 
 This call will remove the specified listener.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/removelistener>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/removelistener>*
 
 ---
 
@@ -1718,7 +1718,7 @@ Sequence diagram for a query [optional filter] using a delegate of the class cbe
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/sequence-diagram>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/sequence-diagram>*
 
 ---
 
@@ -1754,7 +1754,7 @@ The Synchronous API in version 2 is provided in two overloading variants that ei
 
 In the Asynchronous API the callback delegate thread needs to cater for both cases: success and error.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/synchronous-vs-asynchronous>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/synchronous-vs-asynchronous>*
 
 ---
 
@@ -1863,7 +1863,7 @@ if (queryDelegate->errorInfo) {
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter>*
 
 ---
 
@@ -1885,7 +1885,7 @@ The query above will be translated into the following query tree:
 (("black") AND_MAYBE ("dog" OR "cat")) AND_NOT ("cool" OR "hot dogs")  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter/composite-query>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter/composite-query>*
 
 ---
 
@@ -1930,7 +1930,7 @@ std::cout << "Fetching max: "   << filter1.getCount()
           << std::endl;  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter/filter-get-calls>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter/filter-get-calls>*
 
 ---
 
@@ -1968,7 +1968,7 @@ The key-word is case sensitive.
 - Price<100
 - Age>18
 
-See also [composite query](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter/composite-query) , [prefixed terms in a query](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter/prefixed-terms) and [Query Language](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/query-language)
+See also [composite query](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter/composite-query) , [prefixed terms in a query](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter/prefixed-terms) and [Query Language](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/query-language)
 
 #### Usage — example
 
@@ -2004,7 +2004,7 @@ filter1.setAscending(false);
 filter1.setQuery("title:Tax*");  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter/filter-set-calls>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter/filter-set-calls>*
 
 ---
 
@@ -2044,7 +2044,7 @@ The query above will correctly translate into the correct query tree:
 title:money AND title:dollar  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter/prefixed-terms>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter/prefixed-terms>*
 
 ---
 
@@ -2065,7 +2065,7 @@ The tenant data area is implemented as a group owned by the tenant administrator
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/group>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/group>*
 
 ---
 
@@ -2141,7 +2141,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **groups** command in the CLI tool will list all groups that the Identity has access to.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/group/listgroups>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/group/listgroups>*
 
 ---
 
@@ -2215,7 +2215,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **members** command in the CLI tool will list all members of a group.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/group/listmembers>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/group/listmembers>*
 
 ---
 
@@ -2223,12 +2223,12 @@ The **members** command in the CLI tool will list all members of a group.
 
 Videos for installing the CloudBackend Mobile & IoT SDK.
 
-- [iOS](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/install/ios)
-- [Linux](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/install/linux)
+- [iOS](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/install/ios)
+- [Linux](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/install/linux)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/install>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/install>*
 
 ---
 
@@ -2259,7 +2259,7 @@ Video below from an installation of the CloudBackend SDK on iOS.
 15. Drag and drop the bridging header from the header files directory.
 16. Finally, select a Run Destination and hit Command + B to build your project.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/install/ios>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/install/ios>*
 
 ---
 
@@ -2282,22 +2282,22 @@ Video below from an installation of the CloudBackend SDK on Ubuntu Linux.
 7. After the script ends, cd ..
 8. CloudBackend SDK is now installed locally.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/install/linux>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/install/linux>*
 
 ---
 
 ## Item
 
-Item class is the base-class for both [Container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/item/item-data) class and [Object](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/item/item-data) class. It contains data that can be found on both and allows them to be presented together in a [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) from a query() call.
+Item class is the base-class for both [Container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/item/item-data) class and [Object](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/item/item-data) class. It contains data that can be found on both and allows them to be presented together in a [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) from a query() call.
 
-The QueryResult returns a list consisting of Items matching the query. An Item can be checked whether it underneath is a Container or an Object. This Item can then be cast respectively into a Container by calling [castContainer()](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/castcontainer) or into an Object by calling [castObject()](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/castobject).
+The QueryResult returns a list consisting of Items matching the query. An Item can be checked whether it underneath is a Container or an Object. This Item can then be cast respectively into a Container by calling [castContainer()](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/castcontainer) or into an Object by calling [castObject()](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/castobject).
 
-See the [CloudBackend](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object) section for more information on castContainer and castObject.
-
-
+See the [CloudBackend](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object) section for more information on castContainer and castObject.
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/item>*
+
+
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/item>*
 
 ---
 
@@ -2354,7 +2354,7 @@ if (myItem.type() == cbe::ItemType::Object) {
 }   
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/item/item-data>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/item/item-data>*
 
 ---
 
@@ -2406,7 +2406,7 @@ The following calls are from the Container and Object classes.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/key-value>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/key-value>*
 
 ---
 
@@ -2511,7 +2511,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onCreateObjectSuccess() will be called if call succeeds
 - onCreateObjectError() will be called if call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/key-value/createobject-key-values>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/key-value/createobject-key-values>*
 
 ---
 
@@ -2584,7 +2584,7 @@ if(obj.keyValues().size() > 0) {
 }  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/key-value/keyvalues>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/key-value/keyvalues>*
 
 ---
 
@@ -2688,7 +2688,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onUpdateKeyValuesSuccess() will be called if call succeeds
 - onUpdateKeyValuesError() will be called if call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/key-value/updatekeyvalues>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/key-value/updatekeyvalues>*
 
 ---
 
@@ -2708,7 +2708,7 @@ Object requests that involve server communication will take an implementation of
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object>*
 
 ---
 
@@ -2716,9 +2716,9 @@ Object requests that involve server communication will take an implementation of
 
 See the separate section containing information on how to limit access to data that is to be shared:
 
-- [Sharing](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/sharing)
+- [Sharing](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/sharing)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/acl>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/acl>*
 
 ---
 
@@ -2734,7 +2734,7 @@ The variants are:
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manage>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manage>*
 
 ---
 
@@ -2813,7 +2813,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **mv** [object] [destination] command in the CLI tool will move an object.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manage/move>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manage/move>*
 
 ---
 
@@ -2890,7 +2890,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **rm** [object] command in the CLI tool will delete an object.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manage/remove>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manage/remove>*
 
 ---
 
@@ -2970,7 +2970,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **rename** [object] [new name] command in the CLI tool will change the name of an object.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manage/rename>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manage/rename>*
 
 ---
 
@@ -2985,7 +2985,7 @@ This describes how to use data in Objects.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating>*
 
 ---
 
@@ -3058,7 +3058,7 @@ The following callback is optional:
 
 The **download** [name] [path] command in the CLI tool will download an Object to the client.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/download>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/download>*
 
 ---
 
@@ -3137,7 +3137,7 @@ The following callback is optional:
 
 - onChunkReceived() will be called during the progress of the download indicating how much has been done so far.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/downloadbinary>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/downloadbinary>*
 
 ---
 
@@ -3213,7 +3213,7 @@ The following callback is optional:
 
 - onChunkReceived() will be called during the progress of the download indicating how much has been done so far.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/downloadstream>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/downloadstream>*
 
 ---
 
@@ -3317,7 +3317,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onUpdateKeyValuesSuccess() will be called if call succeeds
 - onUpdateKeyValuesError() will be called if call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/updatekeyvalues>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/updatekeyvalues>*
 
 ---
 
@@ -3388,7 +3388,7 @@ The following callback is optional:
 
 - onChunkSent() will be called during the progress of the upload indicating how much has been done so far.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/uploadstream>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/manipulating/uploadstream>*
 
 ---
 
@@ -3463,7 +3463,7 @@ Examples of **mime** values describing the content of an Object or a stream.
 | video/x-ms-wmv | Windows Media Video |
 | video/x-msvideo | AVI Video |
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/object-data>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/object-data>*
 
 ---
 
@@ -3473,7 +3473,7 @@ See the separate section containing information on how to share data:
 
 - Sharing
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/sharing>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/sharing>*
 
 ---
 
@@ -3490,12 +3490,12 @@ The variants are:
 - search with filter
 - search with tags
 
-The class [CloudBackend](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query-with-path) has alternative ways to query, including with path.
+The class [CloudBackend](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query-with-path) has alternative ways to query, including with path.
 
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-container>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-container>*
 
 ---
 
@@ -3503,7 +3503,7 @@ The class [CloudBackend](https://robinsbackend-robinsbackend-portalx.cloudbacken
 
 Call to get a filtered list of items in the container.
 
-See the [Filter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter) and [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [Filter](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter) and [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 ### Declaration
 
@@ -3581,7 +3581,7 @@ The different possible callbacks are:
 - onQuerySuccess() — after a query was successfully made
 - onQueryError() — if a query fails, e.g. the Container is not read accessible.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query-with-filter>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query-with-filter>*
 
 ---
 
@@ -4012,7 +4012,7 @@ airports.query(filter1, delegate).join(planes,
                                        airports);  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query-with-join>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query-with-join>*
 
 ---
 
@@ -4020,7 +4020,7 @@ airports.query(filter1, delegate).join(planes,
 
 Call to get a list of items in the Container indicated by a path string starting from this Container and down in the hierarchical tree e.g., `/documents/pictures/pic.jpg` or `/documents/pictures/`
 
-See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 ### Declaration
 
@@ -4099,9 +4099,9 @@ The different possible callbacks are:
 
 In the callback onQuerySuccess() a pointer to QueryResult is supplied. It gives a collection of items that can be processed.
 
-See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query-with-path>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query-with-path>*
 
 ---
 
@@ -4109,7 +4109,7 @@ See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cl
 
 Call to get a list of items stored in this container.
 
-See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 ### Declaration
 
@@ -4204,9 +4204,9 @@ The different possible callbacks are:
 - onQuerySuccess() — after a query was successfully made
 - onQueryError() — if a query fails, e.g. the Container is not read accessible.
 
-See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/query>*
 
 ---
 
@@ -4214,7 +4214,7 @@ See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cl
 
 Call to get a filtered list of items in the container and its sub-containers in the hierarchy.
 
-See the [Filter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter) and [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [Filter](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter) and [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 ### Declaration
 
@@ -4292,7 +4292,7 @@ The different possible callbacks are:
 - onQuerySuccess() — after a query was successfully made
 - onQueryError() — if a query fails, e.g. the Container is not read accessible.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/search-with-filter>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/search-with-filter>*
 
 ---
 
@@ -4300,7 +4300,7 @@ The different possible callbacks are:
 
 Call to get a list of items in the container and its sub-containers in the hierarchy.
 
-See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 ### Declaration
 
@@ -4376,7 +4376,7 @@ The different possible callbacks are:
 - onQuerySuccess() — after a query was successfully made
 - onQueryError() — if a query fails, e.g. the Container is not read accessible.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/search-with-tag>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-container/search-with-tag>*
 
 ---
 
@@ -4397,7 +4397,7 @@ The variants are:
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database>*
 
 ---
 
@@ -4405,7 +4405,7 @@ The variants are:
 
 Call to get a list of items in the container.
 
-See the [Filter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter) and [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [Filter](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter) and [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 ### Declaration
 
@@ -4483,7 +4483,7 @@ if (queryDelegate->errorInfo) {
 }   
 ```
 
-The usage example above is an excerpt and for it to work it will also need the code for the delegate. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path) section.
+The usage example above is an excerpt and for it to work it will also need the code for the delegate. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path) section.
 
 ### Result
 
@@ -4496,13 +4496,13 @@ The different possible callbacks are:
 
 In the callback onQuerySuccess() a pointer to QueryResult is supplied. It gives a collection of items that can be processed.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-filter>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-filter>*
 
 ---
 
 ## query with path
 
-See the [QueryResult (Resultset)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (Resultset)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 Call to get a list of items in the container indicated by a path string. e.g., `/documents/pictures/pic.jpg` or `/documents/pictures/`
 
@@ -4596,9 +4596,9 @@ The different possible callbacks are:
 
 In the callback onQuerySuccess() a pointer to QueryResult is supplied. It gives a collection of items that can be processed.
 
-See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path>*
 
 ---
 
@@ -4606,7 +4606,7 @@ See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cl
 
 This is a call to get a list of items in the container. It is intended to be used as a shortcut when the developer knows which Container they want to access. To access the root Container the developer should use the account().
 
-See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 ### Declaration
 
@@ -4685,7 +4685,7 @@ if (queryDelegate->errorInfo) {
 }   
 ```
 
-The usage example above is an excerpt and for it to work it will also need the code for the delegate. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path) section.
+The usage example above is an excerpt and for it to work it will also need the code for the delegate. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path) section.
 
 ### Result
 
@@ -4698,9 +4698,9 @@ The different possible callbacks are:
 
 In the callback onQuerySuccess() a pointer to QueryResult is supplied. It gives a collection of items that can be processed.
 
-See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query>*
 
 ---
 
@@ -4708,7 +4708,7 @@ See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cl
 
 Call to get a list of items in the container and its sub-containers in the hierarchy.
 
-See the [Filter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter) and [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [Filter](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter) and [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 ### Declaration
 
@@ -4780,7 +4780,7 @@ if (queryDelegate->errorInfo) {
 }   
 ```
 
-The usage example above is an excerpt and for it to work it will also need the code for the delegate. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path) section.
+The usage example above is an excerpt and for it to work it will also need the code for the delegate. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path) section.
 
 ### Result
 
@@ -4793,7 +4793,7 @@ The different possible callbacks are:
 
 In the callback onQuerySuccess() a pointer to QueryResult is supplied. It gives a collection of items that can be processed.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/search-with-filter>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/search-with-filter>*
 
 ---
 
@@ -4801,7 +4801,7 @@ In the callback onQuerySuccess() a pointer to QueryResult is supplied. It gives 
 
 Call to get a list of items in the container and its sub-containers in the hierarchy.
 
-See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
+See the [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section for more information.
 
 ### Declaration
 
@@ -4871,7 +4871,7 @@ if (queryDelegate->errorInfo) {
 }   
 ```
 
-The usage example above is an excerpt and for it to work it will also need the code for the delegate. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path) section.
+The usage example above is an excerpt and for it to work it will also need the code for the delegate. A more complete example can be found in the [Tutorial C++ Library](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/query-with-path) section.
 
 ### Result
 
@@ -4884,17 +4884,17 @@ The different possible callbacks are:
 
 In the callback onQuerySuccess() a pointer to QueryResult is supplied. It gives a collection of items that can be processed.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/search-with-tag>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database/search-with-tag>*
 
 ---
 
 ## Querying
 
-- [Database queries](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/query-database) section
-- [Container queries](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter) section
-- [Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter) overview section
-- [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section
-- [Filter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter) section
+- [Database queries](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/query-database) section
+- [Container queries](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter) section
+- [Item](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter) overview section
+- [QueryResult (ResultSet)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset) section
+- [Filter](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter) section
 
 Searches and queries using either the CloudBackend class or the Container class, depending on what is known.
 
@@ -4924,7 +4924,7 @@ For more details see the query subsections below.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/querying>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/querying>*
 
 ---
 
@@ -4932,7 +4932,7 @@ For more details see the query subsections below.
 
 A QueryResult contains a list (a.k.a. ResultSet) of items as an answer to a database query.
 
-The simplest query is the one for contents of a container. This query can have Items which is a union of Objects and Containers. For information on how to use the returned Items, see the [Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset/getitemssnapshot) section.
+The simplest query is the one for contents of a container. This query can have Items which is a union of Objects and Containers. For information on how to use the returned Items, see the [Item](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset/getitemssnapshot) section.
 
 Key/Values (a.k.a. metadata) are matching pairs of data attached to an Object e.g.,
 
@@ -4943,15 +4943,15 @@ Key/Values (a.k.a. metadata) are matching pairs of data attached to an Object e.
 - Price<17
 - Age>25
 
-More complex queries can be performed on individual containers or the entire account and require the objects to match user-defined criteria from object names to meta data. More complex queries require passing in a filter with information on what you want to query for. See the [Filter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter) section.
+More complex queries can be performed on individual containers or the entire account and require the objects to match user-defined criteria from object names to meta data. More complex queries require passing in a filter with information on what you want to query for. See the [Filter](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter) section.
 
-By adding a Listener to a container, the service will monitor and keep track of changes made in the container. See the CloudBackend section [addListener](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/addlistener) part.
+By adding a Listener to a container, the service will monitor and keep track of changes made in the container. See the CloudBackend section [addListener](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/core-object/methods/addlistener) part.
 
 For further information on advanced queries see the QUERY user guide document.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset>*
 
 ---
 
@@ -4959,14 +4959,14 @@ For further information on advanced queries see the QUERY user guide document.
 
 Allow users to bypass cached data when pulling data stored on other users accounts, as notifications are currently not implemented for this and it will not update automatically.
 
-> **Note:** Consult [filter documentation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/filter) for more filtering options.
+> **Note:** Consult [filter documentation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/filter) for more filtering options.
 
 | Attribute | Type | Values | Description |
 |---|---|---|---|
 | `cbe::Filter::setbyPassCache()` |  |  | Bypass cache to fetch from server instead. |
 | `cbe::Filter::getbyPassCache()` |  |  | Check if cache was used or not. |
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset/bypasscache>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset/bypasscache>*
 
 ---
 
@@ -5048,7 +5048,7 @@ if (queryDelegate->errorInfo) {
 }   
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset/getitemssnapshot>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset/getitemssnapshot>*
 
 ---
 
@@ -5083,7 +5083,7 @@ NSLog("loaded: %l of %l", qR.itemsLoaded(), qR.totalCount());
 std::cout << "loaded: " << qR.itemsLoaded() << " of " << qR.totalCount() << std::endl;   
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset/queryresult-data>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/queryresult-resultset/queryresult-data>*
 
 ---
 
@@ -5099,14 +5099,14 @@ SDK Mobile, IoT & Cloud
 
 For SDK download information and complete developer reference documents see
 
-- [Java](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references/java)
-- [Swift](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references/swift)
-- [C++](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references/c%2B%2B)
-- [XIOS/3 Web UI](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references/xios-3)
+- [Java](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references/java)
+- [Swift](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references/swift)
+- [C++](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references/c%2B%2B)
+- [XIOS/3 Web UI](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references/xios-3)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references>*
 
 ---
 
@@ -5134,7 +5134,7 @@ The reference documentation below allows you to browse code to see the classes, 
 
 - [API C++ (Doxygen)](https://cloudbackend.com/docs/cpp1/) — older version 1.4
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references/c%2B%2B>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references/c%2B%2B>*
 
 ---
 
@@ -5158,7 +5158,7 @@ The reference documentation below allows you to browse code to see the classes, 
 
 - [API Java (Javadoc)](https://cloudbackend.com/docs/java1/) — older version 1.4
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references/java>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references/java>*
 
 ---
 
@@ -5176,7 +5176,7 @@ The reference documentation below allows you to browse code to see the classes, 
 
 - [API Swift (XCode docs)](https://cloudbackend.com/docs/swift/) — code documentation of the SDK library Swift
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references/swift>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references/swift>*
 
 ---
 
@@ -5186,13 +5186,13 @@ The reference documentation below allows you to browse code to see the classes, 
 
 Login to the CloudBackend System [UI](https://db.cloudbackend.com/).
 
-Development can be done inside the Web UI via the menu option [Projects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references) with the `icon://box_new?theme=sparse` Create and `icon://box_edit?theme=sparse` Edit buttons.
+Development can be done inside the Web UI via the menu option [Projects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references) with the `icon://box_new?theme=sparse` Create and `icon://box_edit?theme=sparse` Edit buttons.
 
 #### CloudBackend Extension for Visual Studio Code
 
 To get access to the extension, please download the latest release from their Marketplace.
 
-See also more information in the chapter about [using Visual Studio Code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-development/development-tools/using-visual-studio-code).
+See also more information in the chapter about [using Visual Studio Code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/application-development/development-tools/using-visual-studio-code).
 
 #### Documentation
 
@@ -5202,7 +5202,7 @@ This documentation is available online in the Web UI documentation
 
 [XIOS/3](https://xios3.com/) — Web-based SDK for CloudBackend that makes it easy to build rich user interfaces. It is an entire device Edge Application Platform that also helps with executing the application within the browser, in addition to caching and managing the data from CloudBackend. You can find the entire XIOS/3 documentation in the Help section above under SDK Web UI (XIOS/3).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/references/xios-3>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/references/xios-3>*
 
 ---
 
@@ -5214,11 +5214,11 @@ The tenant account administrator can then create and administer sub-accounts for
 
 A how-to guide is available via the References section at the end of this book.
 
-- [Account](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/account) describes the account class.
+- [Account](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/account) describes the account class.
 
 ### See also: Sharing
 
-A separate section containing information on how to limit access to data that is to be shared: [Sharing](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/security/sharing)
+A separate section containing information on how to limit access to data that is to be shared: [Sharing](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/security/sharing)
 
 - Groups e.g. tenant
 - Publishing & Subscribing
@@ -5227,7 +5227,7 @@ A separate section containing information on how to limit access to data that is
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/security>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/security>*
 
 ---
 
@@ -5237,7 +5237,7 @@ See the separate section containing information on how to share data:
 
 - Sharing
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/security/sharing>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/security/sharing>*
 
 ---
 
@@ -5249,25 +5249,25 @@ Sharing can be done with both Objects and containers.
 
 There are some fundamentally different ways to sharing data with others:
 
-- [Group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/group) has its own top Container where the members can share Objects and sub-containers among them.
+- [Group](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/group) has its own top Container where the members can share Objects and sub-containers among them.
 
   This includes the tenant database.
 
-- [Publish & Subscribe](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe) Objects and containers
+- [Publish & Subscribe](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe) Objects and containers
 
   This is done to any user. Publications can be open or by invitation. Subscriptions can be free or password protected.
 
-- [Share](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares) Objects and containers
+- [Share](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares) Objects and containers
 
   This can be done with individual access rights on both a user and group level.
 
-- [ACL](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl)
+- [ACL](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl)
 
   Access Control List for a group, Container and object. It is also required for an item that in a share.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing>*
 
 ---
 
@@ -5340,7 +5340,7 @@ It may also be used to change the acl; see **help acl**
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl>*
 
 ---
 
@@ -5449,7 +5449,7 @@ The **acl** [container] command in the CLI tool will list the ACL:s of a contain
 
 The **acl** [object] command in the CLI tool will list the ACL:s of an object.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl/getacl>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl/getacl>*
 
 ---
 
@@ -5576,7 +5576,7 @@ The **acl** [object] [+ | -][modes] -u [identity] command in the CLI tool will c
 
 For more details, see **help acl**
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl/setacl>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl/setacl>*
 
 ---
 
@@ -5654,7 +5654,7 @@ Information about a subscription followed.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe>*
 
 ---
 
@@ -5700,7 +5700,7 @@ publications = cloudBackend.publishManager().getPublished();
 
 The call will return an Items vector.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/getpublished>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/getpublished>*
 
 ---
 
@@ -5761,7 +5761,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onGetSubscriptionsSuccess() will be called if the call succeeds
 - onGetSubscriptionsError() will be called if the call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/getsubscriptions>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/getsubscriptions>*
 
 ---
 
@@ -5814,7 +5814,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onPublishSuccess() will be called if the call succeeds
 - onPublishError() will be called if the call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/publish>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/publish>*
 
 ---
 
@@ -5877,7 +5877,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onSubscribeSuccess() will be called if the call succeeds
 - onSubscribeError() will be called if the call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/subscribe>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/subscribe>*
 
 ---
 
@@ -5942,7 +5942,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onUnPublishSuccess() will be called if the call succeeds
 - onUnPublishError() will be called if the call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/unpublish>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/unpublish>*
 
 ---
 
@@ -6007,7 +6007,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onUnSubscribeSuccess() will be called if the call succeeds
 - onUnSubscribeError() will be called if the call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/unsubscribe>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/publish-subscribe/unsubscribe>*
 
 ---
 
@@ -6056,7 +6056,7 @@ The **shares** command in the CLI tool will list the received available shares.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares>*
 
 ---
 
@@ -6118,7 +6118,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onListSharesSuccess() will be called if the call succeeds
 - onListSharesError() will be called if the call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares/listavailableshares>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares/listavailableshares>*
 
 ---
 
@@ -6180,7 +6180,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onListSharesSuccess() will be called if the call succeeds
 - onListSharesError() will be called if the call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares/listmyshares>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares/listmyshares>*
 
 ---
 
@@ -6192,7 +6192,7 @@ This method is available both for Containers and Objects.
 
 This provides the user the ability to access what has been shared to them via the listAvailableShares() call.
 
-> **Note:** [ACL](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl) should have been set prior to calling this method to define what permission a user will have e.g. to view, change and/or delete this piece of shared information.
+> **Note:** [ACL](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl) should have been set prior to calling this method to define what permission a user will have e.g. to view, change and/or delete this piece of shared information.
 
 ### Declaration
 
@@ -6267,7 +6267,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 The **share** [flags] [container] command in the CLI tool will share a container.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares/share>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares/share>*
 
 ---
 
@@ -6347,7 +6347,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 - onUnShareSuccess() will be called if the call succeeds
 - onUnShareError() will be called if the call fails
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares/unshare>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/shares/unshare>*
 
 ---
 
@@ -6360,7 +6360,7 @@ An example where multiple streams on an Object would make sense is for an e-mail
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/stream>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/stream>*
 
 ---
 
@@ -6436,7 +6436,7 @@ The following callback is optional:
 
 - onChunkReceived() will be called during the progress of the download, indicating how much has been done so far.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/stream/downloadstream>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/stream/downloadstream>*
 
 ---
 
@@ -6513,7 +6513,7 @@ One of two callbacks are possible, hence both callbacks should be implemented to
 
 See streams() for how to access the list.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/stream/getstreams>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/stream/getstreams>*
 
 ---
 
@@ -6574,7 +6574,7 @@ cbe::Streams myStreams;
 myStreams = myObject.getStream(); 
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/stream/streams>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/stream/streams>*
 
 ---
 
@@ -6651,7 +6651,7 @@ The following callback is optional:
 
 - onChunkSent() will be called during the progress of the upload, indicating how much has been done so far.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/stream/uploadstream>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/stream/uploadstream>*
 
 ---
 
@@ -6659,22 +6659,22 @@ The following callback is optional:
 
 Please find tutorials for using the CloudBackend Mobile & IoT SDK here:
 
-- [Tutorial C++ SDK](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk) section
-- [Tutorial Java SDK](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk) section
-- [Tutorial Swift SDK](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk) section
+- [Tutorial C++ SDK](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk) section
+- [Tutorial Java SDK](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk) section
+- [Tutorial Swift SDK](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk) section
 
 The main overview books are available via the drop-down menu. For the tutorials on the browser environment use the drop down-menu and choose: SDK Web UI (XIOS/3) then click on Tutorials in that book.
 
 ### Tutorials --- specific document
 
-- **[C++ SDK](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk)** — The compiled C++ library SDK for Linux x86. *(C++)*
+- **[C++ SDK](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-c-sdk)** — The compiled C++ library SDK for Linux x86. *(C++)*
 
-- **[Java and Android SDK](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk)** — The compiled Java library SDK for mobile and Linux x86. *(Java & Android)*
+- **[Java and Android SDK](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk)** — The compiled Java library SDK for mobile and Linux x86. *(Java & Android)*
 
-- **[iOS Swift SDK](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk)** — The compiled Swift library SDK for iOS devices. *(Swift)*
+- **[iOS Swift SDK](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-swift-sdk)** — The compiled Swift library SDK for iOS devices. *(Swift)*
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial>*
 
 ---

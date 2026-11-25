@@ -2,7 +2,7 @@
 
 Views, panel layouts, components, attributes, events, actions, methods, rules and look and feel.
 
-23 topics from the published XIOS/3 documentation, generated on 2026-11-24. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+23 topics from the published XIOS/3 documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -32,17 +32,17 @@ Views, panel layouts, components, attributes, events, actions, methods, rules an
 
 ## UI Development
 
-In this section we will cover how to build application UIs, called [views](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views), address fundamental UI [layout concepts](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts) and how visual components are put together and [styled](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events) in XIOS/3. Below the shortcut boxes there is also a high-level overview of the architecture.
+In this section we will cover how to build application UIs, called [views](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views), address fundamental UI [layout concepts](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts) and how visual components are put together and [styled](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events) in XIOS/3. Below the shortcut boxes there is also a high-level overview of the architecture.
 
-- **[Views Intro](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views)** — Introduction to XIOS/3 views. *(Shortcut)*
+- **[Views Intro](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views)** — Introduction to XIOS/3 views. *(Shortcut)*
 
-- **[Components Intro](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components)** — Introduction to using XIOS/3 components. *(Shortcut)*
+- **[Components Intro](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components)** — Introduction to using XIOS/3 components. *(Shortcut)*
 
-- **[Design Intro](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel)** — Introduction to customizing look and feel of XIOS/3 components. *(Shortcut)*
+- **[Design Intro](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel)** — Introduction to customizing look and feel of XIOS/3 components. *(Shortcut)*
 
 ### Overview
 
-UI markup is the visual part of XIOS/3 Application Development. When considering the [MVC design pattern](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/the-mvc-design), UI markup equals the view. The image below illustrates the relation between the User Interface of an application and how user interactions (called [events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events)) goes into the [process (logic)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development) part of XIOS/3, activating [triggers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers), which in turn activates one or several [step(s)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps) that calls and executes [operations](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/operation).
+UI markup is the visual part of XIOS/3 Application Development. When considering the [MVC design pattern](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/the-mvc-design), UI markup equals the view. The image below illustrates the relation between the User Interface of an application and how user interactions (called [events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events)) goes into the [process (logic)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development) part of XIOS/3, activating [triggers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers), which in turn activates one or several [step(s)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps) that calls and executes [operations](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/operation).
 
 
 Not only user interactions affect the UI in XIOS/3. Things happening on the server backend may also affect the UI, as well as changes to the UI automatically affecting the server backend.
@@ -50,19 +50,19 @@ Not only user interactions affect the UI in XIOS/3. Things happening on the serv
 
 ### What this section covers
 
-This part of the documentation will cover all parts of UI Development. The [component attributes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes) section will explain everything you need to know about attributes and how they affect components. Here we also cover the concept of required and optional attributes as well as what type of [attribute values](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes/attribute-values) are possible to set.
+This part of the documentation will cover all parts of UI Development. The [component attributes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes) section will explain everything you need to know about attributes and how they affect components. Here we also cover the concept of required and optional attributes as well as what type of [attribute values](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes/attribute-values) are possible to set.
 
-UI markup also gives the developer a possibility to change components states by using [component actions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions). Which are executed inside the [application logic (Process XML)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes). There is also the possibility to [apply methods](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/methods) on components and that is also covered in this section. By using methods and actions you can change how the end user interacts with the GUI environment.
+UI markup also gives the developer a possibility to change components states by using [component actions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions). Which are executed inside the [application logic (Process XML)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes). There is also the possibility to [apply methods](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/methods) on components and that is also covered in this section. By using methods and actions you can change how the end user interacts with the GUI environment.
 
-As the main part of UI markup the components are the center of attention in this section. The section page [Component Types](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/types) explains the types of components that exist.
+As the main part of UI markup the components are the center of attention in this section. The section page [Component Types](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/types) explains the types of components that exist.
 
-We will also cover [Rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) and explain how these can be used to dynamically alter components depending on what data is bound to the component.
+We will also cover [Rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) and explain how these can be used to dynamically alter components depending on what data is bound to the component.
 
 This part of the documentation is often updated so remember to come back to see available attributes, events, methods and actions. This is always kept up to date.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development>*
 
 ---
 
@@ -191,7 +191,7 @@ Resolution:
 
 The locale feature in XIOS/3 allows you to easily translate components by using translation keys. You can define global directories in the settings and local directories in a view, and the system will resolve the keys in the order specified. This makes it easy to manage translations across different views and applications.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/locale>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/locale>*
 
 ---
 
@@ -199,13 +199,13 @@ The locale feature in XIOS/3 allows you to easily translate components by using 
 
 In UI markup you as a developer are able to make use of CSS (Cascading Style Sheets) to override the current style that apply to components using the style attribute which is available on all components. CSS is written by using the notation key:value; repeatedly.
 
-In XSLT driven components, such as the [ListView](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/listview) or [Render](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/render) you are able to use CSS classes. These can be created inside an external CSS file which is included in your applications view file, using the style element. There is also support for inline CSS which means that you can write your CSS directly in the view file. If you have a small application or a widget with some CSS it is recommended that you use inline CSS since it reduces the number of requests made to the server, making your application load faster. Have this in mind when creating widgets since they often are loaded on system boot up.
+In XSLT driven components, such as the [ListView](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/listview) or [Render](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/render) you are able to use CSS classes. These can be created inside an external CSS file which is included in your applications view file, using the style element. There is also support for inline CSS which means that you can write your CSS directly in the view file. If you have a small application or a widget with some CSS it is recommended that you use inline CSS since it reduces the number of requests made to the server, making your application load faster. Have this in mind when creating widgets since they often are loaded on system boot up.
 
 If an href attribute is not supplied the inline CSS will be used. If, however, an href attribute is supplied there, inline CSS will be ignored and the external CSS will be used instead.
 
 For those that are not familiar with CSS classes they are applied on HTML elements (in XSLT files) using a class attribute.
 
-You can also adapt the style and layout to different screen sizes by defining separate [view files](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) for each device (e.g. phone, tablet, etc.). This allows for custom UIs for different devices, screen sizes and orientation.
+You can also adapt the style and layout to different screen sizes by defining separate [view files](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) for each device (e.g. phone, tablet, etc.). This allows for custom UIs for different devices, screen sizes and orientation.
 
 ### Attributes
 
@@ -244,7 +244,7 @@ You can also adapt the style and layout to different screen sizes by defining se
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel>*
 
 ---
 
@@ -278,7 +278,7 @@ An icon URL is constructed by the protocol prefix `icon://` followed by optional
 
 `icon://client_network?theme=marble&size=32&overlay=sign_forbidden&opos=c&osize=0.9&ocolor=red`
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/icon-protocol>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/icon-protocol>*
 
 ---
 
@@ -413,7 +413,7 @@ See more information on CSS syntax in the [W3schools HTML tutorial](https://www.
 </view>  
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/style>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/style>*
 
 ---
 
@@ -479,9 +479,9 @@ Set `tokens="true"` on the `theme` element, add a `tokens` block (the child elem
 
 #### Look is the legacy path
 
-`look` and tokens are not two equally-weighted options. A look is a hand-authored, per-component CSS block someone has to write against that component's own class names and box model, and keep in step with every other look the same component already has - real, ongoing work that needs the component's CSS source in hand. It exists because components built before tokens ([`Button`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button), [`Grid`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid), [`Panel`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel), [`TabStrip`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip), [`ComboBox`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/combobox), and most of the rest of the classic set) each already ship several such CSS blocks - marble, fabric, aqua and so on - one per look name. Making one of those token-aware means adding a further `-token` block that mirrors the existing ones structurally but reads `var(--xios-*, <legacy literal>)` in place of hardcoded values, so `look="token"` has something to select.
+`look` and tokens are not two equally-weighted options. A look is a hand-authored, per-component CSS block someone has to write against that component's own class names and box model, and keep in step with every other look the same component already has - real, ongoing work that needs the component's CSS source in hand. It exists because components built before tokens ([`Button`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button), [`Grid`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid), [`Panel`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel), [`TabStrip`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip), [`ComboBox`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/combobox), and most of the rest of the classic set) each already ship several such CSS blocks - marble, fabric, aqua and so on - one per look name. Making one of those token-aware means adding a further `-token` block that mirrors the existing ones structurally but reads `var(--xios-*, <legacy literal>)` in place of hardcoded values, so `look="token"` has something to select.
 
-A component written (or rewritten) since tokens landed skips that whole mechanism: it has exactly one stylesheet, full stop, and that stylesheet reads the token contract unconditionally from its base selector down, with a literal fallback standing in for pre-token themes. [`List`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list) is the reference example - every rule in its CSS is `var(--xios-color-surface, #fff)`-shaped from the outermost selector on down, there is no marble/fabric/aqua variant to keep in sync, and `List`'s own `look` attribute is documented as present only for markup compatibility - **"not read by list itself."** No theme has to opt this component in with `look="token"`; there is nothing to opt into. This is the target architecture, not a variant of it: `look`-gated token variants are the bridge for existing components, and plain always-on tokens are where a component ends up once it no longer needs that bridge.
+A component written (or rewritten) since tokens landed skips that whole mechanism: it has exactly one stylesheet, full stop, and that stylesheet reads the token contract unconditionally from its base selector down, with a literal fallback standing in for pre-token themes. [`List`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/list) is the reference example - every rule in its CSS is `var(--xios-color-surface, #fff)`-shaped from the outermost selector on down, there is no marble/fabric/aqua variant to keep in sync, and `List`'s own `look` attribute is documented as present only for markup compatibility - **"not read by list itself."** No theme has to opt this component in with `look="token"`; there is nothing to opt into. This is the target architecture, not a variant of it: `look`-gated token variants are the bridge for existing components, and plain always-on tokens are where a component ends up once it no longer needs that bridge.
 
 Color roles work differently: they're authored as ordinary named colors under `colors`, the same section every classic theme already has. The catch is that a fixed set of role names is **reserved** - a theme that hasn't opted in with `tokens="true"` is not allowed to define any of them, and gets a build-time error if it tries. The reserved roles are:
 
@@ -615,125 +615,125 @@ A theme only needs to author the tokens and colors it actually wants to change -
 
 Theme Studio (the app for building token themes visually) ships a small library of named **personalities** - curated bundles of type tokens (weight, tracking, case, line-height, and a few OpenType features) you can apply as one flat merge into a theme's own `tokens` block. A personality is an authoring convenience, not a separate runtime concept - the theme engine itself has no notion of "personality," it only ever reads whatever ended up in `tokens`, however it got there.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/theme>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel/theme>*
 
 ---
 
 ## Using Components
 
-This section covers everything related to components. First the [types of components](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/types) that are available, followed by a section explaining how [attributes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes) are used and what values they can have. We then move on to list all available [events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [actions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions) and [methods](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/methods) that can be used on components or that emitted by components.
+This section covers everything related to components. First the [types of components](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/types) that are available, followed by a section explaining how [attributes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes) are used and what values they can have. We then move on to list all available [events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [actions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions) and [methods](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/methods) that can be used on components or that emitted by components.
 
-Here we also have a section entitled ["Look and Feel"](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel) which covers the usage of CSS within XSLT files. We do not cover what CSS is or how that language is used, but instead how to use it when developing XIOS/3 applications. The definition of [rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) and which components that can utilize them is also covered here.
+Here we also have a section entitled ["Look and Feel"](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel) which covers the usage of CSS within XSLT files. We do not cover what CSS is or how that language is used, but instead how to use it when developing XIOS/3 applications. The definition of [rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules) and which components that can utilize them is also covered here.
 
 A complete component reference is also featured which in great detail lists all attributes, available methods and events and much more.
 
 #### Available Components
 
-- **[Accordion](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/accordion)** — A list of expandable headers.
+- **[Accordion](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/accordion)** — A list of expandable headers.
 
 
-- **[Breadcrumbs](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/breadcrumbs)** — Contextual navigation showing user position in a hierarchy.
+- **[Breadcrumbs](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/breadcrumbs)** — Contextual navigation showing user position in a hierarchy.
 
 
-- **[Bush](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/bush)** — A tree component with expandable branches.
+- **[Bush](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/bush)** — A tree component with expandable branches.
 
 
-- **[Button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button)** — Button used to initiate actions.
+- **[Button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button)** — Button used to initiate actions.
 
 
-- **[ButtonBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/buttonbox)** — A button looking box with text and/or icon.
+- **[ButtonBox](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/buttonbox)** — A button looking box with text and/or icon.
 
 
-- **[Calendar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/calendar)** — Calendar component for week or month navigation.
+- **[Calendar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/calendar)** — Calendar component for week or month navigation.
 
 
-- **[CheckBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/checkbox)** — Used for selection of singular or multiple options.
+- **[CheckBox](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/checkbox)** — Used for selection of singular or multiple options.
 
 
-- **[Clock](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/clock)** — Component showing analog or digital clock.
+- **[Clock](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/clock)** — Component showing analog or digital clock.
 
 
-- **[CodeEditor](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/codeeditor)** — Code editor component.
+- **[CodeEditor](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/codeeditor)** — Code editor component.
 
 
-- **[Color](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/color)** — A color picker component.
+- **[Color](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/color)** — A color picker component.
 
 
-- **[ComboBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/combobox)** — A dropdown menu for selection of items.
+- **[ComboBox](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/combobox)** — A dropdown menu for selection of items.
 
 
-- **[Container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/container)** — A layout component that dynamically creates repeatable content.
+- **[Container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/container)** — A layout component that dynamically creates repeatable content.
 
 
-- **[Date](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/date)** — Date picker component.
+- **[Date](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/date)** — Date picker component.
 
 
-- **[Form](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/form)** — Component used for creating forms.
+- **[Form](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/form)** — Component used for creating forms.
 
 
-- **[Grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid)** — Component used for presenting data in cell format.
+- **[Grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid)** — Component used for presenting data in cell format.
 
 
-- **[Group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/group)** — Used for grouping several components and let them share behavior.
+- **[Group](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/group)** — Used for grouping several components and let them share behavior.
 
 
-- **[IconList](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/iconlist)** — Component used for visualizing lists with icons and text labels describing the icon.
+- **[IconList](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/iconlist)** — Component used for visualizing lists with icons and text labels describing the icon.
 
 
-- **[Image](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/image)** — Component used to visualize images or icons.
+- **[Image](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/image)** — Component used to visualize images or icons.
 
 
-- **[Input](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/input)** — A single line input field.
+- **[Input](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/input)** — A single line input field.
 
 
-- **[Label](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/label)** — Component defining a text label.
+- **[Label](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/label)** — Component defining a text label.
 
 
-- **[List](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/list)** — List component displaying item entries populated by data.
+- **[List](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/list)** — List component displaying item entries populated by data.
 
 
-- **[Map](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/map)** — An interactive map component.
+- **[Map](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/map)** — An interactive map component.
 
 
-- **[Menu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menu)** — Used to define a menu with items.
+- **[Menu](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menu)** — Used to define a menu with items.
 
 
-- **[MenuBar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menubar)** — Defines a menubar filled with menu component elements.
+- **[MenuBar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menubar)** — Defines a menubar filled with menu component elements.
 
 
-- **[Panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel)** — Layout element used as fundamental building block containing other components.
+- **[Panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel)** — Layout element used as fundamental building block containing other components.
 
 
-- **[Radio](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/radio)** — A clickable circle with optional text used for selections.
+- **[Radio](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/radio)** — A clickable circle with optional text used for selections.
 
 
-- **[RichText](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/richtext)** — Component used for text input and formatting.
+- **[RichText](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/richtext)** — Component used for text input and formatting.
 
 
-- **[Slider](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/slider)** — Component for choosing a limited amount of values by dragging a slider across a bar.
+- **[Slider](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/slider)** — Component for choosing a limited amount of values by dragging a slider across a bar.
 
 
-- **[TabStrip](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)** — Component for handling and showing content in separate tabs.
+- **[TabStrip](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tabstrip)** — Component for handling and showing content in separate tabs.
 
 
-- **[TextArea](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/textarea)** — Component used for displaying and editing text over several lines.
+- **[TextArea](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/textarea)** — Component used for displaying and editing text over several lines.
 
 
-- **[ToolBar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar)** — A container component for aligning content to the border of application windows.
+- **[ToolBar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/toolbar)** — A container component for aligning content to the border of application windows.
 
 
-- **[Tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tree)** — Component used to display data in a classic tree structure.
+- **[Tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tree)** — Component used to display data in a classic tree structure.
 
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components>*
 
 ---
 
 ## Actions
 
-A component state can be changed through something called an action. A component action is executed from any process markup logic by calling to the operation named [action](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/action).
+A component state can be changed through something called an action. A component action is executed from any process markup logic by calling to the operation named [action](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/action).
 
 This section will present the concept of actions in brief to give the reader an understanding of what the actions should be used for. For a more detailed explanation of how to use and execute actions, please read the document Process Development and the Process Development manual.
 
@@ -745,7 +745,7 @@ A full list of available Actions can be found in the Reference Section, under Ac
 
 The action types that follow are behaviors that change a state and sometimes the look and feel of a component. They play a key role in how the components behave and interact with the end-user.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions>*
 
 ---
 
@@ -759,7 +759,7 @@ The component-specific attributes are described in section Component Reference, 
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes>*
 
 ---
 
@@ -829,7 +829,7 @@ A CSS value defines CSS (Cascading Style Sheet) properties. The syntax of the CS
 
 `font-family:arial, verdana; font-size:11px; font-weight:bold;`
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes/attribute-values>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes/attribute-values>*
 
 ---
 
@@ -839,7 +839,7 @@ The common attributes are component attributes that are managed by XIOS/3 direct
 
 ### name
 
-The most important common attribute is the name attribute, which is required on every component you want to interact with from the [process markup language](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development). It is required when you [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) data to the component, when you perform [actions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions) and [methods](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/methods) on it. You also need it to subscribe to [events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events) from the component.
+The most important common attribute is the name attribute, which is required on every component you want to interact with from the [process markup language](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development). It is required when you [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) data to the component, when you perform [actions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions) and [methods](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/methods) on it. You also need it to subscribe to [events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events) from the component.
 
 | Attribute | Type | Values | Description |
 |---|---|---|---|
@@ -941,13 +941,13 @@ Indicate that dragging the component may be used to drag the window of the view 
 |---|---|---|---|
 | `windowdrag` | boolean | true, false | Can component be used to drag the window. |
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes/common-attributes>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/attributes/common-attributes>*
 
 ---
 
 ## Events
 
-A component end user interaction triggers something called an [event](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model). A component event is a signal thrown to the application process markup trigger. The trigger will perform execution of the application logic for that specific signal, when the event occurs and the signal is thrown.
+A component end user interaction triggers something called an [event](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model). A component event is a signal thrown to the application process markup trigger. The trigger will perform execution of the application logic for that specific signal, when the event occurs and the signal is thrown.
 
 This section will present events in brief to give the reader an understanding of what the events should be used for. For a more detailed explanation of how to use events please read the documents Process Development and Process Development manual.
 
@@ -961,25 +961,25 @@ The event types that follow below are event listeners waiting for end-user inter
 
 The following Events are the most common in XIOS/3 development:
 
-- [ContextMenu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/contextmenu)
-- [DoubleClick](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/doubleclick)
-- [Drop](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/drop)
-- [Enter](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/enter)
-- [Loaded](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/loaded)
-- [Release](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/release)
-- [Select](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/select)
+- [ContextMenu](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/contextmenu)
+- [DoubleClick](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/doubleclick)
+- [Drop](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/drop)
+- [Enter](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/enter)
+- [Loaded](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/loaded)
+- [Release](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/release)
+- [Select](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/select)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events>*
 
 ---
 
 ## Methods
 
-This is a reference section about all available component methods that can be used in [process markup language](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development).
+This is a reference section about all available component methods that can be used in [process markup language](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development).
 
-Please note that in XIOS/3 we advise you to only use Methods as a last resort, as many things are better handled by [Actions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions).
+Please note that in XIOS/3 we advise you to only use Methods as a last resort, as many things are better handled by [Actions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/actions).
 
-There are two ways of using methods, the [callMethod](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callmethod) operation or by appending .methodName() on an [Expression](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
+There are two ways of using methods, the [callMethod](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/callmethod) operation or by appending .methodName() on an [Expression](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
 
 Methods can be used to send information or to receive/extract information.
 
@@ -991,15 +991,15 @@ As mentioned above, there are two ways of using methods. Some methods are availa
 
 #### Using callMethod
 
-The [callMethod operation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callmethod) allows you to send parameters to a component.
+The [callMethod operation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/callmethod) allows you to send parameters to a component.
 
-To see an example of such an operation, [click here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callmethod).
+To see an example of such an operation, [click here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/callmethod).
 
 #### Appending .methodName()
 
-When using [Expressions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions) you can also use methods.
+When using [Expressions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions) you can also use methods.
 
-This method, executed on a [listview](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/listview) component called `lvPlaylist` might look like this `#view#lvPlaylist.getParam('item')`.
+This method, executed on a [listview](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/listview) component called `lvPlaylist` might look like this `#view#lvPlaylist.getParam('item')`.
 
 ### Method types
 
@@ -1007,17 +1007,17 @@ Methods can be used to either sending information to a component or extracting i
 
 In this reference section all available methods are listed, as well as on information on which components they apply.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/methods>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/methods>*
 
 ---
 
 ## Rules
 
-The rule element is used to define how a data driven component should interpret the bound data. Every component uses their own rules but have rule element and match attribute in common with each other. The matching is done by using [XPath](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/xml/overview-xpath) to match bound data
+The rule element is used to define how a data driven component should interpret the bound data. Every component uses their own rules but have rule element and match attribute in common with each other. The matching is done by using [XPath](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/xml/overview-xpath) to match bound data
 
 **Note:** The match attribute requires XPath expressions, not to be confused with the similar XIOS/3 expressions, which cannot be used here. XPath is a limited sub-set of XIOS/3 expressions.
 
-Note that some components actually require rule elements in order to display the data, such as the [Tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tree) component.
+Note that some components actually require rule elements in order to display the data, such as the [Tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tree) component.
 
 Since rules are handled by the components themselves the data is left unaltered thus several component can show the same data is several different ways and changes in one are propagated to all the components and displayed accordingly.
 
@@ -1025,7 +1025,7 @@ Since rules are handled by the components themselves the data is left unaltered 
 
 #### Applies To:
 
-[Clock](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/clock), [ComboBox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/combobox), [Container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/container), [DataItem](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/dataitem), [Form](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/form), [Grid](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/grid), [Tree](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/tree)
+[Clock](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/clock), [ComboBox](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/combobox), [Container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/container), [DataItem](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/dataitem), [Form](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/form), [Grid](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/grid), [Tree](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/tree)
 
 ### Example:
 
@@ -1063,7 +1063,7 @@ Since rules are handled by the components themselves the data is left unaltered 
 </components>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules>*
 
 ---
 
@@ -1071,7 +1071,7 @@ Since rules are handled by the components themselves the data is left unaltered 
 
 The UI markup language is based on components that are written as XML elements, with attributes and child elements to control them. There are two basic element types which the UI markup consists of; the High Level Element and the Child Element.
 
-High Level Elements do not require any special type of parent component except for the mandatory [Panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel) component. The reason for this is that the XIOS/3 rendering engine requires a Panel to be the only direct child element of the root element [view](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view). Child Element components are components that require a specific parent component other than the Panel element, an example of child element component is the [DataItem](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/dataitem) which requires [Menu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menu) as a parent element.
+High Level Elements do not require any special type of parent component except for the mandatory [Panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel) component. The reason for this is that the XIOS/3 rendering engine requires a Panel to be the only direct child element of the root element [view](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view). Child Element components are components that require a specific parent component other than the Panel element, an example of child element component is the [DataItem](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/dataitem) which requires [Menu](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menu) as a parent element.
 
 There are also several component types. These categorize the main purpose of the component and/or functionality. Some components are categorized as two or more of the types.
 
@@ -1085,7 +1085,7 @@ Components that offer easy interaction to end users. These components normally d
 
 #### Data Driven Components
 
-Components that need XML data to be [bound](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) to them to be able to function. Data driven components are the strength of XIOS/3, since you can bind components to data or each other (and if data is available share it). The data itself can come from either XIOS/3 or any web service on the web that generates XML.
+Components that need XML data to be [bound](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) to them to be able to function. Data driven components are the strength of XIOS/3, since you can bind components to data or each other (and if data is available share it). The data itself can come from either XIOS/3 or any web service on the web that generates XML.
 
 #### Menu Components
 
@@ -1097,27 +1097,27 @@ Components that need XSLT files in order to function. These components also requ
 
 #### Wrapper Components (Container Components)
 
-Components that contain other components, either for layout purposes or for markup purpose to allow the system to handle child element component is a certain way using [Rules](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules), for instance.
+Components that contain other components, either for layout purposes or for markup purpose to allow the system to handle child element component is a certain way using [Rules](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/rules), for instance.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/types>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/types>*
 
 ---
 
 ## Views
 
-The `view` element is the root element for all view documents (UI markup files) that represents the **V** in the `MVC (Model View Controller)` design pattern. When referring to a view we often think about the main application UI, but in XIOS/3 it may also be dialogs or widgets. With a few exceptions, every `view` needs to have its visual components within a [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel) element.
+The `view` element is the root element for all view documents (UI markup files) that represents the **V** in the `MVC (Model View Controller)` design pattern. When referring to a view we often think about the main application UI, but in XIOS/3 it may also be dialogs or widgets. With a few exceptions, every `view` needs to have its visual components within a [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel) element.
 
-The `view` element may also contain menus, such as [toolbars](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/toolbars), [menubars](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/menubars), and context (right-click) menus outside the first `panel` element, alongside [styling](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel) of components which can be done using a `style` element.
+The `view` element may also contain menus, such as [toolbars](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/toolbars), [menubars](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/menubars), and context (right-click) menus outside the first `panel` element, alongside [styling](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/look-and-feel) of components which can be done using a `style` element.
 
 > **Note:** Views can not be nested, but it is possible to have multiple views next to or on top of each other.
 
-> **Note:** All visual components in XIOS/3, except [menus](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menu), [menubars](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menubar), and [toolbars](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar) have to be within a [panel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel).
+> **Note:** All visual components in XIOS/3, except [menus](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menu), [menubars](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menubar), and [toolbars](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/toolbar) have to be within a [panel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel).
 
-- **[Layout Panels](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts)** — Introduction to application layout using panels. *(Shortcut)*
+- **[Layout Panels](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts)** — Introduction to application layout using panels. *(Shortcut)*
 
-- **[Menubars](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/menubars)** — Introduction to menubars. *(Shortcut)*
+- **[Menubars](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/menubars)** — Introduction to menubars. *(Shortcut)*
 
-- **[Toolbars](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/toolbars)** — Introduction to toolbars. *(Shortcut)*
+- **[Toolbars](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/toolbars)** — Introduction to toolbars. *(Shortcut)*
 
 ### Syntax and Examples
 
@@ -1184,17 +1184,17 @@ The `view` element may also contain menus, such as [toolbars](https://robinsback
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views>*
 
 ---
 
 ## Menubars
 
-The [menubar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menubar) is a menu component that can be placed outside the wrapping panel.
+The [menubar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menubar) is a menu component that can be placed outside the wrapping panel.
 
 #### Usage
 
-Menubars can be placed at the top, bottom, right or left of the main content. Unlike the [toolbar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar), this component is only text based and can only contain [menu](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menu) components.
+Menubars can be placed at the top, bottom, right or left of the main content. Unlike the [toolbar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/toolbar), this component is only text based and can only contain [menu](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menu) components.
 
 
 ### Syntax and Examples
@@ -1224,7 +1224,7 @@ The following example shows the basics of a menubar, including a submenu.
 </view>
 ```
 
-The following example shows a more advanced example of a menubar, similar to what is used in the [CodePad](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad) editor.
+The following example shows a more advanced example of a menubar, similar to what is used in the [CodePad](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/xmlpad) editor.
 
 **Menubar Example (Advanced)** *(tested, runnable)*
 
@@ -1274,7 +1274,7 @@ The following example shows a more advanced example of a menubar, similar to wha
 </view>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/menubars>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/menubars>*
 
 ---
 
@@ -1284,13 +1284,13 @@ Layout is one of the most important areas of XIOS/3 Application Development. It 
 
 ### Application Layout
 
-Every UI markup file has a root element called [view](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) in which all the UI markup is stored. Inside this view element all immediately visible component code must be wrapped in a [Panel component](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/panel), or a component serving the same role. Exceptions are the non-freely positioned [MenuBar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/menubar) and [ToolBar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar) with their respective children, and elements not directly locked to the application window, like context menus.
+Every UI markup file has a root element called [view](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) in which all the UI markup is stored. Inside this view element all immediately visible component code must be wrapped in a [Panel component](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/panel), or a component serving the same role. Exceptions are the non-freely positioned [MenuBar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/menubar) and [ToolBar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/toolbar) with their respective children, and elements not directly locked to the application window, like context menus.
 
 The main purpose of the Panel component is to act as a container of other components. This means that it is used to form complex layouts. Panels can be placed inside each other to form desired layouts.
 
 **Basic Layouts**
 
-You can find a selection of basic layout examples in the [columns](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/columns-layout), [mixed](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/mixed-layout), and [rows](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/rows-layout) sections below.
+You can find a selection of basic layout examples in the [columns](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/columns-layout), [mixed](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/mixed-layout), and [rows](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/rows-layout) sections below.
 
 **Basic Component Layouts**
 
@@ -1298,7 +1298,7 @@ Almost all components that can be placed inside a panel (see Parent Element for 
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts>*
 
 ---
 
@@ -1389,7 +1389,7 @@ Using the columns layout type all the components will be placed next to each oth
 </application>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/columns-layout>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/columns-layout>*
 
 ---
 
@@ -1479,7 +1479,7 @@ Examples of layouts mixing rows and columns panel types.
 </application>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/mixed-layout>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/mixed-layout>*
 
 ---
 
@@ -1553,17 +1553,17 @@ Using the rows layout type all the components will be placed on individual rows 
 </application>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/rows-layout>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/panel-layouts/rows-layout>*
 
 ---
 
 ## Toolbars
 
-The [toolbar](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/toolbar) is a menu component that can be placed outside the wrapping panel.
+The [toolbar](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/toolbar) is a menu component that can be placed outside the wrapping panel.
 
 #### Usage
 
-Toolbars can be placed at the top, bottom, right or left of the main content. It can also be floatable. This menu type can use graphics and contain other components such as [combobox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/combobox), as [buttonbox](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/buttonbox), and [input](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/input).
+Toolbars can be placed at the top, bottom, right or left of the main content. It can also be floatable. This menu type can use graphics and contain other components such as [combobox](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/combobox), as [buttonbox](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/buttonbox), and [input](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/input).
 
 
 ### Syntax and Examples
@@ -1589,7 +1589,7 @@ This example work on the fly and does not need to be bound to data to work.
 </view>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/toolbars>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/toolbars>*
 
 ---
 
@@ -1659,6 +1659,6 @@ Custom queries are evaluated as-is and the result is dynamic. If the screen size
 - Use custom media queries for advanced scenarios only, and clearly document their purpose.
 - Avoid overlapping view conditions that may result in multiple views being shown simultaneously.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/views/viewports>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/views/viewports>*
 
 ---

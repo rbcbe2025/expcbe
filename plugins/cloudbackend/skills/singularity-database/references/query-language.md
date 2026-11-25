@@ -2,7 +2,7 @@
 
 The search grammar shared by REST POST /query, the SDK Filter class and XIOS/3 searches.
 
-2 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+2 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -89,17 +89,17 @@ When the database does not find any objects matching the search criteria it will
 
 #### Next
 
-- [Query Language](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/query-language)
+- [Query Language](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/query-language)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/cloudbackend-database/searching-the-database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/cloudbackend-database/searching-the-database>*
 
 ---
 
 ## Query Language
 
-The supported query language is a powerful way to do queries in the [CloudBackend Singularity Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity). It allows querying across ranges, dates, key/value data, and object meta-data. It also makes it possible to include logical operations in queries and is the equivalent of SQL for CloudBackend.
+The supported query language is a powerful way to do queries in the [CloudBackend Singularity Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity). It allows querying across ranges, dates, key/value data, and object meta-data. It also makes it possible to include logical operations in queries and is the equivalent of SQL for CloudBackend.
 
 The query language can be used through the CLI in the CloudBackend database together with XIOS/3, or with Filters in the CloudBackend SDK for Mobile & IoT.
 
@@ -367,6 +367,6 @@ These parameters are used to optimize, paginate, sort, or add special handling t
 
 ### Topics
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/query-language>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/query-language>*
 
 ---

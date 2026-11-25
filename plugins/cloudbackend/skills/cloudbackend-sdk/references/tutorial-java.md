@@ -2,7 +2,7 @@
 
 Installation, asynchronous programming, delegate structures and the three exercises.
 
-9 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+9 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -18,9 +18,9 @@ Installation, asynchronous programming, delegate structures and the three exerci
 
 ## Tutorial Java SDK
 
-- [Exercise 1](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-1) section
-- [Exercise 2](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-2) section
-- [Exercise 3](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-3) section
+- [Exercise 1](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-1) section
+- [Exercise 2](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-2) section
+- [Exercise 3](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-3) section
 
 ### Tutorial objective
 
@@ -37,7 +37,7 @@ The classes available when writing programs using the CloudBackend SDK API.
 
 ### Containers and Objects
 
-The Database consists of [containers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/container), [objects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object), [key/values](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/key-value) (meta-data), [streams](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/stream), [ACL](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl) which are all stored in a database belonging to either an [identity (account)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/account) or [group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/group). Click on the links above for more information.
+The Database consists of [containers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/container), [objects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object), [key/values](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/key-value) (meta-data), [streams](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/stream), [ACL](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/sharing/acl) which are all stored in a database belonging to either an [identity (account)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/account) or [group](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/group). Click on the links above for more information.
 
 
 ### To use the Tutorial
@@ -48,9 +48,9 @@ The tutorial will focus on teaching 4 simple methods that are needed to get star
 
 The tutorial is structured in 3 exercises:
 
-- [login to your account](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-1)
-- [create a Container in the root container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-2)
-- [query the account and create an Object on the backend service](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-3).
+- [login to your account](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-1)
+- [create a Container in the root container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-2)
+- [query the account and create an Object on the backend service](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-3).
 
 At the end of this document there is a link to download the Tutorial source code.
 
@@ -60,7 +60,7 @@ Many thanks to Forware AB for valuable contribution to the example code in this 
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk>*
 
 ---
 
@@ -75,7 +75,7 @@ Working asynchronously means that the main thread may continue to work while the
 
 We are working to also provide a Synchronous implementation of the SDK to make it easier to get started with smaller projects, where performance is not an issue. This SDK will be easier to use, but will freeze operations waiting for the cloud to respond. For a good user experience, it will always be more desirable to write asynchronously on top of the SDK. Please, check back in coming versions of this document.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/asynchronous-programming>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/asynchronous-programming>*
 
 ---
 
@@ -153,7 +153,7 @@ sh compile.sh
 sh run.sh    
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-1>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-1>*
 
 ---
 
@@ -252,7 +252,7 @@ sh compile.sh
 sh run.sh    
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-2>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-2>*
 
 ---
 
@@ -353,7 +353,7 @@ sh compile.sh
 sh run.sh    
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-3>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/exercise-3>*
 
 ---
 
@@ -384,7 +384,7 @@ mkdir -p Tutorial                           # if not already created
 cd Tutorial                                 # put exercise files here 
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/installation>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/installation>*
 
 ---
 
@@ -485,7 +485,7 @@ The writing ~~~ indicates that something needs to be added in its place.
 ~~~    
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/logindelegate-structure>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/logindelegate-structure>*
 
 ---
 
@@ -584,7 +584,7 @@ public com.cbe.getObjects getItems(com.cbe.Container parentContainer) {
 }          
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/querydelegate-structure>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/querydelegate-structure>*
 
 ---
 
@@ -638,6 +638,6 @@ run.sh
 java -Djava.library.path=../../lib/ -cp 'classes:../../lib/com.cbe.jar' Tutorial    
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/scripts>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/tutorial-java-sdk/scripts>*
 
 ---

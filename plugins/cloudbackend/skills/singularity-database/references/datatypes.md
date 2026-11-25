@@ -2,7 +2,7 @@
 
 Defining datatypes (schemas): the XML format, key/value extraction and indexing, and how a datatype attached to a container turns it into a table.
 
-17 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+17 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -28,24 +28,24 @@ Defining datatypes (schemas): the XML format, key/value extraction and indexing,
 
 This topic is split into 16 parts, listed in reading order.
 
-1. [Understanding the XML format of a datatype](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/01-understanding-the-xml-format-of-a-datatype) · ~520 tokens
-2. [Minimal structure of the datatype document](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/02-minimal-structure-of-the-datatype-document) · ~413 tokens
-3. [Element: type](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/03-element-type) · ~570 tokens
-4. [Element: action](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/04-element-action) · ~340 tokens
-5. [Element: description](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/05-element-description) · ~55 tokens
-6. [Element: edit](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/06-element-edit) · ~272 tokens
-7. [Element: ext](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/07-element-ext) · ~73 tokens
-8. [Element: icon](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/08-element-icon) · ~91 tokens
-9. [Element: index](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/09-element-index) · ~585 tokens
-10. [Element: list](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/10-element-list) · ~869 tokens
-11. [Element: listviews](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/11-element-listviews) · ~163 tokens
-12. [Element: mime](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/12-element-mime) · ~71 tokens
-13. [Element: open](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/13-element-open) · ~317 tokens
-14. [Element: preview](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/14-element-preview) · ~87 tokens
-15. [Element: search](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/15-element-search) · ~121 tokens
-16. [Element: template](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/16-element-template) · ~165 tokens
+1. [Understanding the XML format of a datatype](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/01-understanding-the-xml-format-of-a-datatype) · ~520 tokens
+2. [Minimal structure of the datatype document](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/02-minimal-structure-of-the-datatype-document) · ~413 tokens
+3. [Element: type](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/03-element-type) · ~570 tokens
+4. [Element: action](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/04-element-action) · ~340 tokens
+5. [Element: description](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/05-element-description) · ~55 tokens
+6. [Element: edit](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/06-element-edit) · ~272 tokens
+7. [Element: ext](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/07-element-ext) · ~73 tokens
+8. [Element: icon](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/08-element-icon) · ~91 tokens
+9. [Element: index](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/09-element-index) · ~585 tokens
+10. [Element: list](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/10-element-list) · ~869 tokens
+11. [Element: listviews](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/11-element-listviews) · ~163 tokens
+12. [Element: mime](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/12-element-mime) · ~71 tokens
+13. [Element: open](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/13-element-open) · ~317 tokens
+14. [Element: preview](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/14-element-preview) · ~87 tokens
+15. [Element: search](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/15-element-search) · ~121 tokens
+16. [Element: template](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/16-element-template) · ~165 tokens
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format>*
 
 ---
 
@@ -75,9 +75,9 @@ Matching and **meta-data extraction** related to datatypes are performed both on
 
 Editing datatypes in XML is only recommended for advanced users and people familiar with XML. A comprehensive manual for XML is available within the database documentation by clicking the box below.
 
-- **[XML Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used by CloudBackend. *(XML)*
+- **[XML Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used by CloudBackend. *(XML)*
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/01-understanding-the-xml-format-of-a-datatype>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/01-understanding-the-xml-format-of-a-datatype>*
 
 ---
 
@@ -101,7 +101,7 @@ The above datatype has a few problems, it will conflict with other datatypes tha
 
 > **Tip:** The more specific the datatype describes the object it is supposed to match, the better the database will be to match the right object with the datatype.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/02-minimal-structure-of-the-datatype-document>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/02-minimal-structure-of-the-datatype-document>*
 
 ---
 
@@ -139,13 +139,13 @@ The following list of elements are allowed to be **child** elements of the `type
 
 Each of these available elements will be described in the following sections.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/03-element-type>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/03-element-type>*
 
 ---
 
 ## Element: action
 
-The [`action`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/action) element may be used an unlimited number of times as a child element. It defines actions available in the right click context menu of `Database Explorer` to work with an object that match the datatype.
+The [`action`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/action) element may be used an unlimited number of times as a child element. It defines actions available in the right click context menu of `Database Explorer` to work with an object that match the datatype.
 
 #### Element Attributes
 
@@ -168,7 +168,7 @@ None.
 <action text="Forward" icon="icon://mail_forward" mode="forward">apps/productivity/mail/compose.xml</action>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/04-element-action>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/04-element-action>*
 
 ---
 
@@ -190,7 +190,7 @@ None.
 <description>Contact Card</description>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/05-element-description>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/05-element-description>*
 
 ---
 
@@ -216,7 +216,7 @@ None, but the content of the element is the path to the application to invoke fo
 <edit id="xios3.codepad" icon="icon://xml_editor" name="CodePad">xios/apps/codepad/codepad.xml</edit>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/06-element-edit>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/06-element-edit>*
 
 ---
 
@@ -239,7 +239,7 @@ None.
 <ext>xslt</ext>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/07-element-ext>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/07-element-ext>*
 
 ---
 
@@ -261,7 +261,7 @@ None.
 <icon>icon://document_xsl</icon>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/08-element-icon>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/08-element-icon>*
 
 ---
 
@@ -297,15 +297,15 @@ There is also the possibility to use XML elements as child nodes to the `key` el
 </index>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/09-element-index>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/09-element-index>*
 
 ---
 
 ## Element: list
 
-The [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/components/list) element defines how objects belonging to the datatype should be rendered in `Database Explorer` when its view is set to **custom**. This makes it possible to have the database display for instance invoice objects in a container in a way that makes the database look more like an invoicing software than a database.
+The [`list`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/components/list) element defines how objects belonging to the datatype should be rendered in `Database Explorer` when its view is set to **custom**. This makes it possible to have the database display for instance invoice objects in a container in a way that makes the database look more like an invoicing software than a database.
 
-Do not use [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/components/list) element in combination with the [`listview`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/components/listview) element, as only one way to render listings may be used for the datatype.
+Do not use [`list`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/components/list) element in combination with the [`listview`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/components/listview) element, as only one way to render listings may be used for the datatype.
 
 #### Element Attributes
 
@@ -321,7 +321,7 @@ Do not use [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.clo
 
 #### Child Elements
 
-The [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/components/list) element is complex and allow several types of child element, of which some in turn have the ability to have child elements. The three examples below illustrates how it can be used.
+The [`list`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/components/list) element is complex and allow several types of child element, of which some in turn have the ability to have child elements. The three examples below illustrates how it can be used.
 
 The header child elements `h1`, `h2`, `h3`, and `h4` control text display items for different layouts rendering a list of objects of the given datatype. One UI component particularly makes use of this feature, please see `filelist` for more information. Please note that all available layouts for the `filelist` component will not make use of all headers, some may only use h1 and h2, while others use h1, h2, and h3. The use of h4 is uncommon.
 
@@ -364,13 +364,13 @@ The header child elements `h1`, `h2`, `h3`, and `h4` control text display items 
 </list>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/10-element-list>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/10-element-list>*
 
 ---
 
 ## Element: listviews
 
-Path to custom listview XSL documents used to render a container with objects only belonging to this datatype and with its schema set to this datatype. Do not use `listviews` in combination with the [`list`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/components/list) element, as only one way to render listings may be used for the datatype.
+Path to custom listview XSL documents used to render a container with objects only belonging to this datatype and with its schema set to this datatype. Do not use `listviews` in combination with the [`list`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/components/list) element, as only one way to render listings may be used for the datatype.
 
 #### Element Attributes
 
@@ -378,7 +378,7 @@ None.
 
 #### Child Elements
 
-The `listviews` element is a container element holding [`listview`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/components/listview) child elements that have a text value pointing to the XSL.
+The `listviews` element is a container element holding [`listview`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/components/listview) child elements that have a text value pointing to the XSL.
 
 **Example**
 
@@ -388,7 +388,7 @@ The `listviews` element is a container element holding [`listview`](https://robi
 </listviews>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/11-element-listviews>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/11-element-listviews>*
 
 ---
 
@@ -410,7 +410,7 @@ None.
 <mime>image/x-png</mime>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/12-element-mime>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/12-element-mime>*
 
 ---
 
@@ -437,7 +437,7 @@ None, but the content of the element is the path to the application to invoke fo
 <open icon="icon://document_zoom_in" name="Notepad">xios/apps/system/viewer.xml</open>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/13-element-open>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/13-element-open>*
 
 ---
 
@@ -459,7 +459,7 @@ None.
 <preview>xios/apps/system/layout/treeview.xsl</preview>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/14-element-preview>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/14-element-preview>*
 
 ---
 
@@ -489,7 +489,7 @@ This example requires the following key to be defined, `<key name="author" xpath
 <search>author</search>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/15-element-search>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/15-element-search>*
 
 ---
 
@@ -515,8 +515,8 @@ XML datatypes will resolve expressions, allowing for data to be populated from e
 
 #### Next
 
-- [Deployments](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments)
+- [Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/16-element-template>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format/16-element-template>*
 
 ---

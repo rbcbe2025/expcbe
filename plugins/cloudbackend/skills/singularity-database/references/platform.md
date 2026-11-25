@@ -2,7 +2,7 @@
 
 What an administrator sees and does in the CloudBackend PaaS console: identities, groups, datatypes, the database explorer, clients, deployments, statistics. Top-level pages only; the step-by-step pages for users and roles, price plans, the CRM, datatypes and operations are in their own reference files.
 
-17 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+17 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -31,23 +31,23 @@ Introduction to the left side black menu in the graphical user interface of the 
 There are also examples of how to use the UI, and some comparisons on how to do the equivalent via the CLI vs. in a programs process code with links to the corresponding documentation.
 
 
-- [Home](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/home) - your landing page
-- [Account](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/account) information
+- [Home](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/home) - your landing page
+- [Account](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/account) information
 
-- [Projects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/projects) creation and configuration
-- [Deployments](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments) management
-- [Datatypes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes) classification
-- [Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer) Explorer
-- [Proxy](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy) configuration
-- [Webhooks](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks) definition
+- [Projects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/projects) creation and configuration
+- [Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments) management
+- [Datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes) classification
+- [Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer) Explorer
+- [Proxy](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy) configuration
+- [Webhooks](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks) definition
 
-- [Identities](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities) management
-- [Feedback Support](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support) ticketing system
-- [Statistics](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/statistics) overview
-- [Clients](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/clients) terminals
-- [CLI](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/cli) - Command Line Interface
+- [Identities](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities) management
+- [Feedback Support](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support) ticketing system
+- [Statistics](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/statistics) overview
+- [Clients](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/clients) terminals
+- [CLI](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/cli) - Command Line Interface
 
-- [Documentation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation) manuals and references
+- [Documentation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation) manuals and references
 
 #### More
 
@@ -56,7 +56,7 @@ Please note that additional documentation about the SDKs, CLI and more can be fo
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview>*
 
 ---
 
@@ -67,7 +67,7 @@ Displays information about the currently logged in identity of the tenant. This 
 
 The Database block shows space used and fullness for each database.
 
-Please note the URL for **WebDAV**, which is a unique link for every account to be used on a local computer to mount the CloudBackend database as a local hard drive. More information is available under the section [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer) in this documentation.
+Please note the URL for **WebDAV**, which is a unique link for every account to be used on a local computer to mount the CloudBackend database as a local hard drive. More information is available under the section [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer) in this documentation.
 
 With the account page you can also find the important link to use as a customized login for the tenant identities (located at the bottom of the page). This is a required link to be used by any identity that needs to login to the database.
 
@@ -86,7 +86,7 @@ Through the Account section, you can see all databases that you have access to. 
 
 > **Tip:** Select a database to get further information about it to the right, double click on a database to explore it in the Database Explorer section.
 
-The roles displayed underneath the available databases, tells you which role privileges you have been assigned. Roles give most commonly access to containers and objects within a database, but some roles also give administrative control over the tenant or a sub-group. Each group has its own roles, including the tenant. It is much more convenient to use roles to assign `ACLs` for a container or object, than giving a single identity the permissions. Learn more about identities and the creation of roles under the [Identities](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities) section.
+The roles displayed underneath the available databases, tells you which role privileges you have been assigned. Roles give most commonly access to containers and objects within a database, but some roles also give administrative control over the tenant or a sub-group. Each group has its own roles, including the tenant. It is much more convenient to use roles to assign `ACLs` for a container or object, than giving a single identity the permissions. Learn more about identities and the creation of roles under the [Identities](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities) section.
 
 ### Change Password
 
@@ -94,7 +94,7 @@ Click on the change password button to receive a *Password recovery* e-mail, tha
 
 ### Upgrade Account
 
-With this **early access** release of CloudBackend, the ability to purchase different subscriptions is not available. Everyone have a free account with no upgrades available. This will become available during the next couple of months. Check out the *News* section to see when it becomes available. If urgent for your project and you need more space, then please contact CloudBackend through [Support](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support) section.
+With this **early access** release of CloudBackend, the ability to purchase different subscriptions is not available. Everyone have a free account with no upgrades available. This will become available during the next couple of months. Check out the *News* section to see when it becomes available. If urgent for your project and you need more space, then please contact CloudBackend through [Support](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support) section.
 
 ### CLI Commands
 
@@ -111,8 +111,8 @@ whoami
 
 For more information see:
 
-- [cat](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/object-commands/print-object)
-- [Who am I](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/identity-commands/who-am-i)
+- [cat](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/object-commands/print-object)
+- [Who am I](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/identity-commands/who-am-i)
 
 ### Process Development Information
 
@@ -128,13 +128,13 @@ Example using account information.
 
 For more information see:
 
-- [login](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/login)
+- [login](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/login)
 
 #### Next
 
-- [CRM](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm)
+- [CRM](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/account>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/account>*
 
 ---
 
@@ -145,9 +145,9 @@ Most of the functionality available visually is available as text commands in th
 
 Please reference the separate CLI documentation found below.
 
-- **[CLI](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface)** — Test and verification tool to make it easy to see what you have stored in the database. Used for debugging while building apps. *(Web UI)*
+- **[CLI](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface)** — Test and verification tool to make it easy to see what you have stored in the database. Used for debugging while building apps. *(Web UI)*
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/cli>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/cli>*
 
 ---
 
@@ -203,15 +203,15 @@ For more information see:
 
 #### Next
 
-- [Datatypes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes)
+- [Datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/clients>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/clients>*
 
 ---
 
 ## CRM
 
-The [CRM tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity) of the Singularity Database is a customer relationship management application. The built-in CRM is designed to simplify and automate the contact with the users of a service or application built on the database.
+The [CRM tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity) of the Singularity Database is a customer relationship management application. The built-in CRM is designed to simplify and automate the contact with the users of a service or application built on the database.
 
 The CRM allows a tenant to create different mails, such as welcome mails, reminders, and campaigns, that are tied to various rules coming from user interactions, such as users signing up, being inactive or canceling their account. The sub sections below will address the different parts of the CRM, which are accessed through the tabs *Mail*, *Rules*, *Templates*, and *Settings* at the top.
 
@@ -235,14 +235,14 @@ The Mail Editor is a regular XML editor that allows for inspecting and editing t
 
 Rules are used for tying together an e-mail with specific user events. The Rules tab of the CRM consists of the main grid, listing the various rules, and to the top right buttons for deployment, creating, deleting and renaming rules, as well as a Help button linking to this section.
 
-When a rule is created, or selected in the grid, the options for editing a rule will appear as in the sub section [Create Rule](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-rule). From the menus, left to right, a mail is selected for the rule, followed by which user event that should trigger the mail.
+When a rule is created, or selected in the grid, the options for editing a rule will appear as in the sub section [Create Rule](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-rule). From the menus, left to right, a mail is selected for the rule, followed by which user event that should trigger the mail.
 
 ### Templates Overview
 
 
 The Templates tab is used to overview and manage various mail templates, i.e. the way a mail should be styled. This tab consists of a grid showing the available templates and buttons to the top right for creating, uploading, downloading, and deleting templates, as well as a Help button linking to this section.
 
-The template which is selected in the grid will be opened in an below editor view. The templates are written in XSLT but the end user only have to think about the html part of this xslt. For more advanced users more details on completely customizing your e-mail through xsl/xslt will be handled in the section: [Create Template](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-template).
+The template which is selected in the grid will be opened in an below editor view. The templates are written in XSLT but the end user only have to think about the html part of this xslt. For more advanced users more details on completely customizing your e-mail through xsl/xslt will be handled in the section: [Create Template](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-template).
 
 ### Settings Overview
 
@@ -253,11 +253,11 @@ At the bottom right there is a button for saving any changes. This is needed to 
 
 #### Next
 
-- [Getting started](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/getting-started)
+- [Getting started](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/getting-started)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm>*
 
 ---
 
@@ -276,21 +276,21 @@ Select an object or container and select `Properties` in the toolbar to inspect 
 You can upload new objects to a container by clicking Upload or New Object in the toolbar. Upload and download to a container can also be done using WebDAV (see below). New containers can also be created. Please note that a container unlike a table in a traditional database, may have sub-containers. Containers may also have ACLs that restrict access to the container for identities.
 
 
-> **Tip:** Read more of how you setup the database and design its data model in this documentation under *Get to know*, [Concepts](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts) and [Designing the data model](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/designing-the-data-model).
+> **Tip:** Read more of how you setup the database and design its data model in this documentation under *Get to know*, [Concepts](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts) and [Designing the data model](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/designing-the-data-model).
 
 #### Next
 
-- [published](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer/de-published)
+- [published](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer/de-published)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer>*
 
 ---
 
 ## Datatypes
 
-Datatypes allow you to customize what indexed key data to automatically extract from objects you store in the database. It also defines an objects displayed icon and default actions for the object like; [`open`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/open), `edit`, `preview`, and how the item may be displayed in some user interface components.
+Datatypes allow you to customize what indexed key data to automatically extract from objects you store in the database. It also defines an objects displayed icon and default actions for the object like; [`open`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/open), `edit`, `preview`, and how the item may be displayed in some user interface components.
 
 Having `indexed key/values` is key to be able to search for information in a container by just querying the container (instead of having to open every object and peak inside). This both affects performance and the convenience of writing code, thus designing the data model to allow efficient generation of automatically extracted key/values is very important.
 
@@ -363,8 +363,8 @@ ls
 
 For more information see:
 
-- [View a Datatype](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/database-commands/view-datatype)
-- [List registered datatypes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/database-commands/datatypes)
+- [View a Datatype](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/database-commands/view-datatype)
+- [List registered datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/database-commands/datatypes)
 
 ### Process Development Information
 
@@ -395,28 +395,28 @@ Example for creating a Datatype in the process language.
 
 For more information see:
 
-- [Function datatype](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/functions/datatype)
-- [Tutorial example datatype](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/tutorials/notice-tutorial)
+- [Function datatype](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/functions/datatype)
+- [Tutorial example datatype](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/tutorials/notice-tutorial)
 
 #### Further reading for developers
 
 There is more information about using datatypes in the below SDK documentation under `CloudBackend Database -> Managing Datatypes`. Here advanced information is available about datatypes that only affect a single user, making it possible to have different datatypes available depending who is logged in. These datatypes will not affect database extraction, for it to happen, the datatype needs to be stored in `tenant://Settings/Datatypes` and thereby available for all users of the tenant.
 
-The entire XML document format for datatypes is further explained here: [XML format](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format). Editing the native XML will open up all available features of datatypes.
+The entire XML document format for datatypes is further explained here: [XML format](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format). Editing the native XML will open up all available features of datatypes.
 
 The XML documentation contains related information for advanced developers.
 
 - **SDK Web UI** — For developing web applications in Javascript and HTML with database connection. See code examples and tutorials. *(Javascript and HTML)*
 
-- **[XML Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used by CloudBackend. *(XML)*
+- **[XML Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used by CloudBackend. *(XML)*
 
 #### Next
 
-- [XML format](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format)
+- [XML format](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes/xml-format)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes>*
 
 ---
 
@@ -443,9 +443,9 @@ https://[tenant]-[username]-[deployment_name].cloudbackend.cloud
 https://[tenant]-[groupId]-[deployment_name].cloudbackend.cloud
 ```
 
-- **[How Deployment Works](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment)** — More information about how to deploy XIOS/3 applications can be found in the XIOS/3 documentation, here. *(XIOS/3 Documentation)*
+- **[How Deployment Works](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment)** — More information about how to deploy XIOS/3 applications can be found in the XIOS/3 documentation, here. *(XIOS/3 Documentation)*
 
-- **[Deployment Tutorials](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/tutorials/tutorials/application-deployment)** — A practical tutorial for how to deploy your project can be found here. *(Learn to Deploy)*
+- **[Deployment Tutorials](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/tutorials/tutorials/application-deployment)** — A practical tutorial for how to deploy your project can be found here. *(Learn to Deploy)*
 
 #### User sign-up
 
@@ -461,7 +461,7 @@ Published application must follow copyright laws and not publish any content sto
 
 ### Tutorials
 
-- **[Deployment Tutorials](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/tutorials/tutorials/application-deployment)** — A practical tutorial for how to deploy your project can be found here. *(Learn to Deploy)*
+- **[Deployment Tutorials](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/tutorials/tutorials/application-deployment)** — A practical tutorial for how to deploy your project can be found here. *(Learn to Deploy)*
 
 ### CLI Commands
 
@@ -500,9 +500,9 @@ published -g/-t
 
 For more information see:
 
-- [Publish Container/Object](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/sharing-commands/publish-container)
-- [Unpublish Container/Object](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/sharing-commands/unpublish-container)
-- [Published Containers/Object](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/sharing-commands/published-container)
+- [Publish Container/Object](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/sharing-commands/publish-container)
+- [Unpublish Container/Object](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/sharing-commands/unpublish-container)
+- [Published Containers/Object](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/sharing-commands/published-container)
 
 ### Process Development Information
 
@@ -523,9 +523,9 @@ For more information see:
 
 #### Next
 
-- [Documentation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation)
+- [Documentation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments>*
 
 ---
 
@@ -576,11 +576,11 @@ hlp
 
 #### Next
 
-- [AI](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation/ai)
+- [AI](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation/ai)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation>*
 
 ---
 
@@ -590,15 +590,15 @@ Home is your landing page for CloudBackend, allowing you to select what you want
 
 The CloudBackend Database enables you to quickly launch your next project on a secure and scalable virtual database, the CloudBackend Singularity Database, where multiple identities can communicate and selectively share data in the cloud, while at the same time keep important data private. Our SDKs for Web, Mobile, and IoT then allows for rapid app development with ready-made connections to The Singularity Database.
 
-- **[Start Introduction Guide](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity)** — Have a look at our introduction to setting up your database, query your database, and build applications. *(Get Started)*
+- **[Start Introduction Guide](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity)** — Have a look at our introduction to setting up your database, query your database, and build applications. *(Get Started)*
 
-- **[Launch Application Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity)** — Quickly get started with application development right here in the database. *(Get Started)*
+- **[Launch Application Wizard](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity)** — Quickly get started with application development right here in the database. *(Get Started)*
 
 #### Next
 
-- [Account](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/account)
+- [Account](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/account)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/home>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/home>*
 
 ---
 
@@ -631,7 +631,7 @@ roles
 
 For more information see:
 
-- [Identity Commands](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/identity-commands)
+- [Identity Commands](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/identity-commands)
 
 ### Process Development Information
 
@@ -647,15 +647,15 @@ Example searching for group members.
 
 #### Next
 
-- [Create Identity](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-identity)
-- [Create Role](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-role)
-- [Role ACLs](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/role-acls)
-- [Manage Roles](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-roles)
-- [Remove Role](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-role)
+- [Create Identity](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-identity)
+- [Create Role](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-role)
+- [Role ACLs](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/role-acls)
+- [Manage Roles](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/manage-roles)
+- [Remove Role](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/remove-role)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities>*
 
 ---
 
@@ -665,7 +665,7 @@ The Price Plans section allows the tenant owner to define and manage price plans
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/priceplans>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/priceplans>*
 
 ---
 
@@ -677,9 +677,9 @@ The database supports the ability to create, upload and run custom applications.
 
 Applications are developed using the web development SDK for CloudBackend made by XIOS/3. The full development documentation for XIOS/3 is found as a separate manual in the link below. To quickly get started, first create a project and then use the Application Wizard.
 
-- **[Launch Project Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity)** — Get started with application development by making a project folder. *(Get Started)*
+- **[Launch Project Wizard](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity)** — Get started with application development by making a project folder. *(Get Started)*
 
-- **[Launch Application Wizard](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity)** — Quickly get started with application development inside an existing Project. *(Get Started)*
+- **[Launch Application Wizard](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity)** — Quickly get started with application development inside an existing Project. *(Get Started)*
 
 - **SDK Web UI** — For developing web applications in Javascript and HTML with database connection. See code examples and tutorials. *(Javascript and HTML)*
 
@@ -698,7 +698,7 @@ load applist.xml
 
 For more information see:
 
-- [Load Application](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/development-commands/load-application)
+- [Load Application](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface/development-commands/load-application)
 
 ### Process Development Information
 
@@ -712,13 +712,13 @@ Example running an application from a project directory:
 
 For more information see:
 
-- [open](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/open)
+- [open](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/open)
 
 #### Next
 
-- [Clients](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/clients)
+- [Clients](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/clients)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/projects>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/projects>*
 
 ---
 
@@ -761,22 +761,22 @@ To call a proxy from your process, use the `channel` operation. The channel bind
 
 > **Tip:** Channels let you treat external APIs like native services within CloudBackend processes. The `adapter` defines how to map the response format (e.g. JSON, XML) into usable process data.
 
-The example above shows a minimal proxy and its use with a channel. However, the `proxy` definition also supports many additional elements such as `method`, `http-data`, `http-params`, and advanced header/variable handling. A complete list of all options is described in the [XML format](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format).
+The example above shows a minimal proxy and its use with a channel. However, the `proxy` definition also supports many additional elements such as `method`, `http-data`, `http-params`, and advanced header/variable handling. A complete list of all options is described in the [XML format](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format).
 
 The XML documentation contains related information for advanced developers.
 
 - **SDK Web UI** — For developing web applications in Javascript and HTML with database connection. See code examples and tutorials. *(Javascript and HTML)*
 
-- **[XML Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used by CloudBackend. *(XML)*
+- **[XML Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used by CloudBackend. *(XML)*
 
 #### Next
 
-- [Proxy Setup (Web UI)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/web-ui)
-- [XML format](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format)
+- [Proxy Setup (Web UI)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/web-ui)
+- [XML format](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy>*
 
 ---
 
@@ -789,9 +789,9 @@ At the top there is a switch for turning on simulated demo data.
 
 #### Next
 
-- [Projects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/projects)
+- [Projects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/projects)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/statistics>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/statistics>*
 
 ---
 
@@ -819,13 +819,13 @@ By adding multiple categories it will be easier to sort and divide the tickets b
 
 #### Next
 
-- [Owner](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/owner)
-- [Member](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/member)
-- [Administrator](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/administrator)
+- [Owner](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/owner)
+- [Member](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/member)
+- [Administrator](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/administrator)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support>*
 
 ---
 
@@ -893,7 +893,7 @@ When triggered, a webhook will store the received POST request in the container 
 
 > **Tip:** By formatting the incoming data as an XML object to match a defined `Datatype`, the CloudBackend service will extract the meta data keys.
 
-For more information on this, see the [Datatypes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes) section.
+For more information on this, see the [Datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes) section.
 
 #### Calling a webhook from an external service
 
@@ -1008,7 +1008,7 @@ The incoming XML payload will be stored in the container and object defined by t
 #### Verify that the new feed has arrived, using the cli
 
 
-> **Tip:** The [Notice Tutorial - e5](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/tutorials/notice-tutorial/webhook) under exercise 5 provides further practical training on Webhook usage with instant displaying of the incoming data feed.
+> **Tip:** The [Notice Tutorial - e5](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/tutorials/notice-tutorial/webhook) under exercise 5 provides further practical training on Webhook usage with instant displaying of the incoming data feed.
 
 #### Advanced: Edit right click option
 
@@ -1018,10 +1018,10 @@ The webhook is stored as XML in your tenant database under `tenant://Settings/We
 
 #### Next
 
-- [XML format](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks/xml-format) of the webhook definition object.
+- [XML format](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks/xml-format) of the webhook definition object.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks>*
 
 ---

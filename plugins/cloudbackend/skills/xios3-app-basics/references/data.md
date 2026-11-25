@@ -2,7 +2,7 @@
 
 Channels and mounting, datatypes, object properties, managing objects, containers, groups and datatypes from process markup, key/values and searching. The query language is in singularity-database references/query-language.md.
 
-21 topics from the published XIOS/3 documentation, generated on 2026-11-24. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+21 topics from the published XIOS/3 documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -33,13 +33,13 @@ Channels and mounting, datatypes, object properties, managing objects, container
 This section of the documentation contains information about using the CloudBackend Singularity Database that is available through the Data Virtualization Layer and the CloudBackend channel communicator.
 
 
-In the chapter [Overall Structure](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/overall-structure) we explain how the Data Virtualization Layer works and what it consists of.
+In the chapter [Overall Structure](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/overall-structure) we explain how the Data Virtualization Layer works and what it consists of.
 
-Managing the Data Virtualization Layer using process markup to handle [Objects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects), [Containers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-containers) and [Groups](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-groups) is covered extensively with several examples provided. There is also a section about managing [Datatypes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes), used to associate certain objects to certain applications or data models. The final chapter covers how to perform [searches](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database) in the Data Virtualization Layer.
+Managing the Data Virtualization Layer using process markup to handle [Objects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects), [Containers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-containers) and [Groups](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-groups) is covered extensively with several examples provided. There is also a section about managing [Datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes), used to associate certain objects to certain applications or data models. The final chapter covers how to perform [searches](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database) in the Data Virtualization Layer.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database>*
 
 ---
 
@@ -63,15 +63,15 @@ All uploaded objects are available for download. This is done by accessing the o
 
 - `https://api.cloudbackend.com/v1/documents/container_id/object_id/stream_id`
 
-All documents have [meta data elements](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) describing their URL, as well as `container_id`, `object_id`, and `stream_id`.
+All documents have [meta data elements](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) describing their URL, as well as `container_id`, `object_id`, and `stream_id`.
 
 > **Note:** for downloading to work the user must be logged in to the CloudBackend account that has the object. This means that you can not forward this link to other people so that they can download it. Also that there currently is no bandwidth limitations, although CloudBackend reserves the right to impose such limitations when deemed to be necessary.
 
 ### Account Actions
 
-Under the tutorials in [User Action Tutorials](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/useractions-tutorial) you can read about how to create users, reset passwords and delete users.
+Under the tutorials in [User Action Tutorials](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/useractions-tutorial) you can read about how to create users, reset passwords and delete users.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/account>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/account>*
 
 ---
 
@@ -85,14 +85,14 @@ CloudBackend has added its own UI default skin, which is specified as `theme="cl
 
 ### Program editor
 
-Development can be done inside the UI via the menu option [Applications](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database) with the `icon://box_new?theme=sparse` Create and `icon://box_edit?theme=sparse` Edit buttons.
+Development can be done inside the UI via the menu option [Applications](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database) with the `icon://box_new?theme=sparse` Create and `icon://box_edit?theme=sparse` Edit buttons.
 
 ### Visual Studio Code™
 
 The extension `CloudBackend for Visual Studio Code` UI coding will provide IntelliSense type code validation for local development with download-upload synchronization with the cloud database for instant code testing.
 
 
-See also more information in the chapter about [using Visual Studio Code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code).
+See also more information in the chapter about [using Visual Studio Code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/development-tools/using-visual-studio-code).
 
 ### Testing application code
 
@@ -102,9 +102,9 @@ After any code updates start the retesting by first doing a browser `Empty Cache
 
 ### Verifying data
 
-Check the data architecture and the data content using the [Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database) and the [CLI](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database) tools.
+Check the data architecture and the data content using the [Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database) and the [CLI](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database) tools.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/developer-environment>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/developer-environment>*
 
 ---
 
@@ -118,7 +118,7 @@ To inspect a `database` open the CLI application and type in the following:
 
 > **Note:** All *mounted* `groups` also have a `database`. This database is accessible to all group members. Use ACLs to control who may see its sub-containers.
 
-> **Warning:** The CloudBackend item `container` described here is not the same thing as the XIOS UI *component* [container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/container).
+> **Warning:** The CloudBackend item `container` described here is not the same thing as the XIOS UI *component* [container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/container).
 
 ### home://
 
@@ -126,7 +126,7 @@ In the `database` document, there is only one root element, the `db:result` elem
 
 Each `db:container` element has an `id` attribute, which is set by the database as a unique ID when the object is created and a `name` attribute which is given to the element when the `db:container` is created.
 
-This result, containers, and objects utilizes the [db namespace](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/dictionary/db-namespace) and therefore such a namespace declaration must be in any document that handles data from the database.
+This result, containers, and objects utilizes the [db namespace](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/dictionary/db-namespace) and therefore such a namespace declaration must be in any document that handles data from the database.
 
 | Attribute | Type | Values | Description |
 |---|---|---|---|
@@ -162,7 +162,7 @@ The following characters are forbidden to use in container names:
 
 - ? / \ ( ) # * : [ ] | % & " ' ! { }
 
-We use the [database operation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/database) on the data in the alias `containerPath` to create one `db:container` within the database root. The name of the new container will be `My New Container` just as we defined it in the alias `containerName`.
+We use the [database operation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/database) on the data in the alias `containerPath` to create one `db:container` within the database root. The name of the new container will be `My New Container` just as we defined it in the alias `containerName`.
 
 **Creating a new container** *(tested, fragment)*
 
@@ -239,17 +239,17 @@ Copying containers is done using the database operation or Database Explorer.
 
 ### Searching containers
 
-The process markup language allows you to search containers by making queries to the database. You can only search in one container at a time. To learn how to make searches in containers read the "[Searching the Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database)" chapter. If you need to search multiple containers, use the Action URL `search()`, please see the reference manual for more information.
+The process markup language allows you to search containers by making queries to the database. You can only search in one container at a time. To learn how to make searches in containers read the "[Searching the Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database)" chapter. If you need to search multiple containers, use the Action URL `search()`, please see the reference manual for more information.
 
 ### Publishing containers
 
-Publishing containers is a powerful way to provide different data to an application or share data between entities. This can be static data with local editing options, fully editable and readable data and receiving only data. These can be created through the [database explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database), via cli commands publish and unpublish or through the publish instruction.
+Publishing containers is a powerful way to provide different data to an application or share data between entities. This can be static data with local editing options, fully editable and readable data and receiving only data. These can be created through the [database explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database), via cli commands publish and unpublish or through the publish instruction.
 
 Using the database explorer simply right-click on the container you want to publish then choose "Publish...", this opens a dialog with options for visibility and access rights as well as what you want to name this publication and a password field. A password is required for any published container with more than read-access.
 
 Once created it can be accessed by mounting with the mount instruction.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-containers>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-containers>*
 
 ---
 
@@ -263,11 +263,11 @@ The easy way to create a datatype is to use the `Datatype` section in CloudBacke
 
 More information about datatypes and the XML document format of it can be found the CloudBackend Datatypes section help.
 
-We add a `type` element consisting of the two required attributes and two optional attribute, `namespace` and `element`. You can read about their purpose in the "[Datatype Association](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/datatype-association)" section.
+We add a `type` element consisting of the two required attributes and two optional attribute, `namespace` and `element`. You can read about their purpose in the "[Datatype Association](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/datatype-association)" section.
 
 We append a `description` child element that is used as a longer description of the datatype and can be used for tool-tips. The `open`, `edit` and `preview` elements are used to define which application should be used to open an object associated with the datatype, which should be used to edit the object (for XML documents the XMLpad editor might be a good choice) and which XSL transformer should be used to preview the object.
 
-The `icon` element contains a URL to the icon, either a SVG using the `icon://` protocol or a png image in 32x32 pixels resolution. Read more about this in the [Existing Datatypes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/existing-datatypes) section. The `listview` element is used to define additional keywords which might be used to display different listviews depending of the content of this element in Database Explorer.
+The `icon` element contains a URL to the icon, either a SVG using the `icon://` protocol or a png image in 32x32 pixels resolution. Read more about this in the [Existing Datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/existing-datatypes) section. The `listview` element is used to define additional keywords which might be used to display different listviews depending of the content of this element in Database Explorer.
 
 **Adding a new datatype** *(tested)*
 
@@ -288,11 +288,11 @@ The `icon` element contains a URL to the icon, either a SVG using the `icon://` 
 
 ### Editing datatypes
 
-Using the datatype created above we can again use the [change operation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/change) to replace the `text()` node of the `icon` element with a new icon. So instead of `document_xml.png` it will be `document_text.png`.
+Using the datatype created above we can again use the [change operation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/change) to replace the `text()` node of the `icon` element with a new icon. So instead of `document_xml.png` it will be `document_text.png`.
 
 > **Note:** Note that the Database Explorer might need to be reloaded for the change to take effect.
 
-This is because XSLT documents are not updated unless using the [updateRedraw method](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/methods/updateredraw).
+This is because XSLT documents are not updated unless using the [updateRedraw method](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/methods/updateredraw).
 
 **Changing datatype icon** *(tested)*
 
@@ -306,7 +306,7 @@ This is because XSLT documents are not updated unless using the [updateRedraw me
 
 ### Deleting datatypes
 
-Deleting datatypes is a matter of deleting the object from `tenant://Settings/Datatypes`, or for identities, the node-set from the `#Settings` XML document using the [change operation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/change).
+Deleting datatypes is a matter of deleting the object from `tenant://Settings/Datatypes`, or for identities, the node-set from the `#Settings` XML document using the [change operation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/change).
 
 **Deleting the datatype** *(tested)*
 
@@ -318,13 +318,13 @@ Deleting datatypes is a matter of deleting the object from `tenant://Settings/Da
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes>*
 
 ---
 
 ## Performing Actions
 
-Actions can be performed on objects which are handled by [operation open](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/open). Information regarding which application should be used to perform a specific action on an object is set in the `settings.xml` object.
+Actions can be performed on objects which are handled by [operation open](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/open). Information regarding which application should be used to perform a specific action on an object is set in the `settings.xml` object.
 
 All datatypes can be either `opened`, `edited` or `previewed`. Due to the fact that XML documents can be defined in many different ways, these actions can be used to sort them out and open different applications depending on the associated datatype.
 
@@ -340,7 +340,7 @@ This option refers to which application should handle the editing process of the
 
 This action is also optional and is used as a third option to open an object by only getting a preview of it. The preview element points to a XSL document that performs the preview transformation of the object.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes/performing-actions>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes/performing-actions>*
 
 ---
 
@@ -664,7 +664,7 @@ Every group administrator can create a `profile.xml` document that can be placed
 </groupDescription>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-groups>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-groups>*
 
 ---
 
@@ -680,7 +680,7 @@ The following characters are forbidden to use in object names:
 
 ### Creating objects
 
-Objects are created by appending an `db:object` element to an [db:container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/dictionary/atom-namespace). The result is retrieved when making a container listing or query in a specific container. To append the XML data we must use the [change operation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/change).
+Objects are created by appending an `db:object` element to an [db:container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/dictionary/atom-namespace). The result is retrieved when making a container listing or query in a specific container. To append the XML data we must use the [change operation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/change).
 
 #### Creating an object
 
@@ -725,7 +725,7 @@ Objects are created by appending an `db:object` element to an [db:container](htt
 </operation>
 ```
 
-The above process markup code will use the [database operation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/database) to save a document named `MyNewDocument.xml` in the `home://Documents/` container.
+The above process markup code will use the [database operation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/database) to save a document named `MyNewDocument.xml` in the `home://Documents/` container.
 
 Using this operation you can easily create an object, set the content, set the permissions rights and set the meta data. In the `author` element which corresponds to the `@author` attribute we populate the child element's `name`, `email` and `uri` which will then be available as `@name`, `email` and `@xlink:href` as *meta data*. The same is true for the `summary` element which will be available as `summary` in the meta data.
 
@@ -776,7 +776,7 @@ Keys that should not be searchable through the database (to save space), should 
 
 Developers can create and store their own meta data elements using `db:object` child key/value elements, `key`. There are limitations to what the key/value can be named, as we only accept valid XML element names as key names. In addition, any element name used in the atom namespace is not allowed.
 
-A list of reserved element names using the atom-namespace can be found in the [atom namespace](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/dictionary/atom-namespace) dictionary entry.
+A list of reserved element names using the atom-namespace can be found in the [atom namespace](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/dictionary/atom-namespace) dictionary entry.
 
 The CLI has a command named `meta` that lists all meta data entries of an object. In the example below we will list all meta data of the `Wallpapers.xml` object.
 
@@ -828,7 +828,7 @@ The code above is returned when using an URL similar to one in the debug operati
 </operation>
 ```
 
-As mentioned earlier, only meta data elements stored under a `db:object` is indexed and searchable, unless the attribute `index="false"` is used. This means that the default behavior is indexed. For the example above you will be able to search for `@name`, `@author` and `keywords`. To understand how searches are made read the "[Searching the Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database)" chapter.
+As mentioned earlier, only meta data elements stored under a `db:object` is indexed and searchable, unless the attribute `index="false"` is used. This means that the default behavior is indexed. For the example above you will be able to search for `@name`, `@author` and `keywords`. To understand how searches are made read the "[Searching the Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database)" chapter.
 
 The `developer` with `index="false"` will not be indexed and you will not be able to search for that information. You can however use it when it is available in `db:object`.
 
@@ -838,7 +838,7 @@ The name of the object created will be `DocTestFile.xml` and it will be created 
 
 CloudBackend allows for XML documents to be attached to other documents as streams. This is accomplished by adding information to the meta XML of the object which the attachments will be a part of.
 
-Because the meta data is available as XML data we use the [change](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/change) operation to append our attachment. In the value attribute we provide the meta data of the object that we want to append the attachment to. This is done by adding one additional forward slash (/) to the object path.
+Because the meta data is available as XML data we use the [change](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/change) operation to append our attachment. In the value attribute we provide the meta data of the object that we want to append the attachment to. This is done by adding one additional forward slash (/) to the object path.
 
 All attachments of the object will be available in the attachments element as document elements. The `id` attribute is a positive integer, which means that the value must be a number higher than 0. Because the id 1 is already in use, the attachment id can thus be 2 or higher.
 
@@ -917,7 +917,7 @@ If you try to rename the object to a name which already exists a system dialog n
 </operation>
 ```
 
-The example above makes a search query to the database for an object named `DocTestFile.xml` that should be located inside `home://Documents/`. It will return an `db:container` XML document. To better understand search queries, read the [Searching the Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database) chapter.
+The example above makes a search query to the database for an object named `DocTestFile.xml` that should be located inside `home://Documents/`. It will return an `db:container` XML document. To better understand search queries, read the [Searching the Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database) chapter.
 
 The feed returned will only contain one `db:object` since there can only be one object that is named `DocTextFile.xml`. We proceed to select the `@name` in the only `db:object` and replace it with our new `@name` containing the text `AnotherName.xml` which will be the new name of our object.
 
@@ -965,7 +965,7 @@ Note that this will both copy and paste the object in the same container. To wor
 
 ### Uploading objects (files)
 
-Uploading of an object is done by using the [database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/database) operation.
+Uploading of an object is done by using the [database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/database) operation.
 
 **This will open a dialog window that will enable the user to upload an object in the Documents container** *(tested)*
 
@@ -975,29 +975,29 @@ Uploading of an object is done by using the [database](https://robinsbackend-rob
 </operation>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects>*
 
 ---
 
 ## Overall Structure
 
-The CloudBackend Database, which through XIOS/3 is exposed as a [Data Virtualization Layer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer) consisting of databases, containers, and objects. It utilizes XML for its data model and communication. Every container query result is returned as an `db:result` which is similar to a database result set, or an `RSS feed` that websites use to syndicate news on websites. In the application Database Explorer this `db:result` can be visualized in several different ways.
+The CloudBackend Database, which through XIOS/3 is exposed as a [Data Virtualization Layer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer) consisting of databases, containers, and objects. It utilizes XML for its data model and communication. Every container query result is returned as an `db:result` which is similar to a database result set, or an `RSS feed` that websites use to syndicate news on websites. In the application Database Explorer this `db:result` can be visualized in several different ways.
 
 In this section, we will more closely explain how the different components of the virtual data layer function.
 
 #### Objects
 
-All objects are stored in the database that the CloudBackend protocol module connects to. Upload is possible via either the Database Explorer, CLI, WebDAV, or by using an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) (model open).
+All objects are stored in the database that the CloudBackend protocol module connects to. Upload is possible via either the Database Explorer, CLI, WebDAV, or by using an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) (model open).
 
 In container listings and search queries each object is presented as an db:object in an db:container. In this db:object element you are provided with the location of the object, MIME-type and other object specific information.
 
-To learn more about how to use db:result, read the [Managing Objects](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) chapter. Information about how search queries work can be found in the [Searching the Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database) chapter.
+To learn more about how to use db:result, read the [Managing Objects](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) chapter. Information about how search queries work can be found in the [Searching the Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database) chapter.
 
 #### Containers
 
 All containers are virtual and the entire object structure is stored in the container-root object. It is this object that is used to render the container structure in applications such as the Database Explorer.
 
-In CloudBackend containers use the [db: namespace](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/dictionary/db-namespace). This means that this namespace must be declared in any document that is used to modify object structure or display it.
+In CloudBackend containers use the [db: namespace](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/dictionary/db-namespace). This means that this namespace must be declared in any document that is used to modify object structure or display it.
 
 #### Shortcuts
 
@@ -1011,17 +1011,17 @@ The final slash is very important as it indicates if it is an object or a contai
 
 The shortcut functionality works by adding an `db:object` to the `settings.xml` file.
 
-> **Note:** that the [db: namespace](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/dictionary/db-namespace) is used.
+> **Note:** that the [db: namespace](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/dictionary/db-namespace) is used.
 
 #### Groups and Tenant
 
 Groups are a special feature in CloudBackend where a group is represented with a separate database, in which documents can be shared within that group.
 
-A [tenant](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/tenant) is also a type of group, but it is the main shared database for a tenant that all its end-users can access.
+A [tenant](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/tenant) is also a type of group, but it is the main shared database for a tenant that all its end-users can access.
 
-More information about creating and managing groups can be found in the [Managing Groups](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-groups) chapter of this section.
+More information about creating and managing groups can be found in the [Managing Groups](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-groups) chapter of this section.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/overall-structure>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/overall-structure>*
 
 ---
 
@@ -1105,11 +1105,11 @@ When the database does not find any objects matching the search criteria it will
 
 #### Next
 
-- [Query Language](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/query-language)
+- [Query Language](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/query-language)
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/searching-the-database>*
 
 ---
 
@@ -1119,7 +1119,7 @@ The CloudBackend offers object and container permission handling for local objec
 
 ### Group permissions
 
-Each group can have three general permission levels (customized roles are covered in the [Managing groups section](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-groups)). The general roles are `Owner`, `Administrator` and `Member` which all have predefined access rights in the group.
+Each group can have three general permission levels (customized roles are covered in the [Managing groups section](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-groups)). The general roles are `Owner`, `Administrator` and `Member` which all have predefined access rights in the group.
 
 The owner is a superuser that has full rights across the system. The owner is usually the creator of the group and is also the only user that can promote and demote users to become `administrators`. These have more access rights than normal users in the group. The Administrator role is created automatically when the group is created.
 
@@ -1139,7 +1139,7 @@ In cases where multiple ACL's are overlapping for a user, the sum of applicable 
 
 ### Additional
 
-Objects created in CloudBackend can handle basic read, write and delete permissions. This can be done by modifying the meta data of the object in question. These permissions can also be changed using [process markup](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development).
+Objects created in CloudBackend can handle basic read, write and delete permissions. This can be done by modifying the meta data of the object in question. These permissions can also be changed using [process markup](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development).
 
 ### Combinations
 
@@ -1216,7 +1216,7 @@ Objects created in it will inherit the ACL of that container.
 
 This gives the container `tenant://userinfo/Lisa/` where that user can create and update multiple data objects.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/system-permissions>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/system-permissions>*
 
 ---
 
@@ -1242,11 +1242,11 @@ All uploaded objects are available for download. This is done by accessing the o
 
 - `https://api.cloudbackend.com/v1/documents/container_id/object_id/stream_id`
 
-All objects have [meta data elements](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) describing their URL, as well as `container_id`, `object_id`, and `stream_id`.
+All objects have [meta data elements](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) describing their URL, as well as `container_id`, `object_id`, and `stream_id`.
 
 > **Note:** Note that for downloading to work the user must be logged in to the CloudBackend account that has the object. This means that you cannot forward this link to other people so that they can download it. Also that there currently is no bandwidth limitations, although CloudBackend reserves the right to impose such limitations when it is deemed to be necessary.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/tenant>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/tenant>*
 
 ---
 
@@ -1318,7 +1318,7 @@ Key/Value can be used to filter when selecting data.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/using-key---value-pairs>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/using-key---value-pairs>*
 
 ---
 
@@ -1336,13 +1336,13 @@ The data virtualization layer is made available by a `communicator` through a mo
 
 After reading this section you should have basic understanding of how datatypes in XIOS/3 work and how to associate datatypes while also knowing that there are existing datatypes and where they are located.
 
-We will also provide you with an overlook of [object properties](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/object-properties), intended to educate the reader of available object properties set by the system such as when the object was created. Again, this is intended to give the reader an introduction to the data virtualization layer and does not offer any code examples. These can instead be located in the "[CloudBackend Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database)" section.
+We will also provide you with an overlook of [object properties](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/object-properties), intended to educate the reader of available object properties set by the system such as when the object was created. Again, this is intended to give the reader an introduction to the data virtualization layer and does not offer any code examples. These can instead be located in the "[CloudBackend Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database)" section.
 
-This section also introduces the three different actions that can be performed on objects: `open`, `edit` and `preview`. These can be found in the "[Performing Actions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes/performing-actions)" section.
+This section also introduces the three different actions that can be performed on objects: `open`, `edit` and `preview`. These can be found in the "[Performing Actions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes/performing-actions)" section.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer>*
 
 ---
 
@@ -1401,7 +1401,7 @@ If the XML schema has been defined for the XML document type, it then might be a
 
 Please see the CloudBackend Database section.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/datatype-association>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/datatype-association>*
 
 ---
 
@@ -1409,7 +1409,7 @@ Please see the CloudBackend Database section.
 
 In XIOS/3 some object types are predefined. These are stored in `#TypeManager` document, in `tenant://Settings/Datatypes`, and as `type` elements in every user's `settings.xml` document. The information stored in this element is used to set how the specific object type should be identified and which XIOS/3 actions should be performed on the object when executed in a certain way, which application should be used to edit the object and which should be used to open it.
 
-To learn more about XIOS/3 actions read the [Performing Actions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes/performing-actions) section.
+To learn more about XIOS/3 actions read the [Performing Actions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-datatypes/performing-actions) section.
 
 While all users have access to generic XIOS/3 and standard object types every user can add more object types by manipulating `settings.xml` or by using the `Control Panel` application to change the object. The "Datatypes" section can be found in the "System" tab of the Control Panel.
 
@@ -1441,17 +1441,17 @@ This attribute is made to contain the root element of the document in order to b
 
 The `namespace` attribute is used as a primary identifier for object type association for XML documents. It allows for the creation of unique text/xml object types. This means that there can be almost an infinite number of different XML document types defined.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/existing-datatypes>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/existing-datatypes>*
 
 ---
 
 ## Introduction
 
-A common problem when developing software based on the common MVC (Model, [View](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view), Controller) paradigm is that Models tend to become highly dependent on the structure of the underlying Data Source and protocols used for communicating with them. To resolve this problem, an abstraction of a Data Model's underlying Data Sources is required. The invention described here, provides means for automating and standardizing the interaction between Data Models and Data Sources.
+A common problem when developing software based on the common MVC (Model, [View](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view), Controller) paradigm is that Models tend to become highly dependent on the structure of the underlying Data Source and protocols used for communicating with them. To resolve this problem, an abstraction of a Data Model's underlying Data Sources is required. The invention described here, provides means for automating and standardizing the interaction between Data Models and Data Sources.
 
 ### The Problem
 
-The `Model`, `View`, `Controller` (or MVC) is a development pattern introduced as a way to organize code where user interface description (`[View](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view)`) and data concerns (`Model`) are kept separate and where updates to one of the components won't necessarily require updates to the other. Introducing an intermediate component, the `Controller`, which handles application logic and decouples the view and the data, does this.
+The `Model`, `View`, `Controller` (or MVC) is a development pattern introduced as a way to organize code where user interface description (`[View](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view)`) and data concerns (`Model`) are kept separate and where updates to one of the components won't necessarily require updates to the other. Introducing an intermediate component, the `Controller`, which handles application logic and decouples the view and the data, does this.
 
 A common problem today is how to effectively manage underlying data sources. The picture below serves to illustrate the problem. In this picture, a programmer is creating two pieces of software using the MVC design pattern. Each application has its own `Data Model`, providing the data structures needed in order to fulfill the software's objectives. In this example, the programmer is forced to explicitly provide code (Data Handler 1-6) for interpreting the information that is communicated back and forth between the Model and its underlying data source on the Server.
 
@@ -1485,15 +1485,15 @@ From the models, the Communicator API channels are accessed with the `name` of t
 - `mychannel://container/document.xml` or
 - `tenant://Applications/myApp.xml`
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/introduction>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/introduction>*
 
 ---
 
 ## Mounting a Database
 
-Please see the reference section the process operation, `database`, and its [mount](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer) command. You can also find information on how to mount a channel and database using the CLI. Please visit the CLI manual for information about the mount command.
+Please see the reference section the process operation, `database`, and its [mount](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer) command. You can also find information on how to mount a channel and database using the CLI. Please visit the CLI manual for information about the mount command.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/mounting-a-database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/mounting-a-database>*
 
 ---
 
@@ -1501,7 +1501,7 @@ Please see the reference section the process operation, `database`, and its [mou
 
 All objects have their meta data exposed through the virtual `.meta` document in the database. In the database, the actual object is treated as a directory in which the `.meta` document can be found. For example the object `public.xml` has its meta data document readable at `public.xml/.meta`. The contents of the meta data document is conforming to the CloudBackend database format with the `db:` namespace.
 
-The properties below are available as attributes in the [meta data XML listing](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) of an object.
+The properties below are available as attributes in the [meta data XML listing](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/cloudbackend-database/managing-objects) of an object.
 
 ### Created
 
@@ -1511,7 +1511,7 @@ The creation time of an object is available in the `published` attribute of the 
 
 The time of last modification is available in the `updated` attribute of the meta data document. The text content will be a timestamp in the format of `YYYY-MM-DDThh:mm:ssZ`, e.g. `2023-01-17T13:25:57Z`.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/object-properties>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/object-properties>*
 
 ---
 
@@ -1546,7 +1546,7 @@ The .cookies document contains the cookies associated with the current browser p
 </cookies>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/the-host-protocol>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/the-host-protocol>*
 
 ---
 
@@ -1554,6 +1554,6 @@ The .cookies document contains the cookies associated with the current browser p
 
 The xios protocol is a protocol to access XIOS/3 resources. These may reside on a different webserver than the main page is loaded from, or spread on multiple servers. System applications and component dependencies are loaded over this protocol.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/the-xios-protocol>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/data-virtualization-layer/the-xios-protocol>*
 
 ---

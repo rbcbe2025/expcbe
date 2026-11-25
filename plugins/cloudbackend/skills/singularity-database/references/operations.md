@@ -2,7 +2,7 @@
 
 The console pages a tenant uses after launch: the support ticket desk (owner, member and administrator views), the API proxy, and the database explorer's WebDAV and restore features.
 
-9 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+9 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -58,9 +58,9 @@ It is also possible to publish single objects individually.
 
 #### Next
 
-- [WebDAV](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer/de-webdav)
+- [WebDAV](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer/de-webdav)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer/de-published>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer/de-published>*
 
 ---
 
@@ -76,14 +76,14 @@ Connect the CloudBackend database to your local computers filesystem using **Web
 
 When prompted by WebDAV, enter your username and password. The reason why `{tenant-name}` is needed in front of WebDAV for identities, is that they login through the tenant and thereby need to specify which tenant on CloudBackend they are logging in to. This has to do with that identity accounts are owned and managed by the tenant, and not by CloudBackend. The same username may exist under multiple tenants.
 
-WebDAV will give a simplified view of your database that is compatible with your local computers filesystem, this means that the only stream you will be able to see through WebDAV for an object is the first stream, you will not be able to see or change ACLs or access meta-data for containers. It is however, a very convenient way to ingest or access data with. Please note that versioning of objects is not supported through WebDAV. Any XML objects uploaded through WebDAV will run through the datatype system for automatic key/value meta-data extraction if you have defined matching [datatypes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes).
+WebDAV will give a simplified view of your database that is compatible with your local computers filesystem, this means that the only stream you will be able to see through WebDAV for an object is the first stream, you will not be able to see or change ACLs or access meta-data for containers. It is however, a very convenient way to ingest or access data with. Please note that versioning of objects is not supported through WebDAV. Any XML objects uploaded through WebDAV will run through the datatype system for automatic key/value meta-data extraction if you have defined matching [datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes).
 
 
 #### Next
 
-- [CLI](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/cli)
+- [CLI](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/cli)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer/de-webdav>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer/de-webdav>*
 
 ---
 
@@ -118,9 +118,9 @@ The AI will keep track of the user's previous prompts and the assistants answers
 
 #### Next
 
-- [Feedback / Support](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support)
+- [Feedback / Support](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation/ai>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/documentation/ai>*
 
 ---
 
@@ -134,7 +134,7 @@ To create a proxy:
 
 1. Navigate to `Settings → Proxy` in your tenant.
 2. Click `Create` to open the `Quick Proxy Setup` dialog.
-3. Enter a `Proxy Name`. This becomes both the `name` and `service` attribute in the proxy XML and is used when referencing the proxy from a [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/channel).
+3. Enter a `Proxy Name`. This becomes both the `name` and `service` attribute in the proxy XML and is used when referencing the proxy from a [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/channel).
 4. Enter the `API Domain`. This must include the protocol (for example, `https://api.example.com`). It corresponds to the `http-domain` element in the XML.
 5. Choose how the API key should be sent using the `Authorization method`. You can either send the key as an HTTP header or as a query parameter.
 
@@ -180,14 +180,14 @@ The generated proxy contains an `http-params` element referencing the secret:
 
 > **Note:** **Security:** In both cases, the actual API key is never stored in plain text inside the proxy XML. It is saved in the `keyring` and referenced using `${myproxy_key}`.
 
-After clicking `Create`, the proxy is saved under `tenant://Settings/Proxy` and can immediately be used in a [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/channel) operation.
+After clicking `Create`, the proxy is saved under `tenant://Settings/Proxy` and can immediately be used in a [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/channel) operation.
 
 
 #### Configuring Access Control (ACL)
 
-After defining the proxy settings, you must configure who is allowed to use the proxy. Access is controlled through an [Access Control List (ACL)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl).
+After defining the proxy settings, you must configure who is allowed to use the proxy. Access is controlled through an [Access Control List (ACL)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl).
 
-The ACL determines which users or roles are permitted to execute the proxy via a [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/channel) operation. Only the listed users or roles will be able to call the proxy - unless public access is explicitly enabled.
+The ACL determines which users or roles are permitted to execute the proxy via a [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/channel) operation. Only the listed users or roles will be able to call the proxy - unless public access is explicitly enabled.
 
 #### Adding users or roles
 
@@ -204,7 +204,7 @@ It is recommended to grant access through roles rather than individual users. Th
 
 #### Sending request body data (POST / PUT)
 
-When calling APIs that require a request body (for example POST or PUT requests), the proxy must define an `http-data` element in the [XML format](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format). In many integrations, the body content is dynamic and provided at runtime from the calling [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/channel).
+When calling APIs that require a request body (for example POST or PUT requests), the proxy must define an `http-data` element in the [XML format](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format). In many integrations, the body content is dynamic and provided at runtime from the calling [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/channel).
 
 To allow dynamic request bodies, the `http-data` element must have its `allow-override` attribute set to `true`. This enables the process to override the static value defined in the proxy.
 
@@ -232,13 +232,13 @@ The actual body content can then be supplied dynamically from the calling `chann
 
 #### Further reading
 
-See also the Proxy tutorial example [Chatbot Tutorial](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/tutorials/chatbot-tutorial).
+See also the Proxy tutorial example [Chatbot Tutorial](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/tutorials/chatbot-tutorial).
 
 #### Next
 
-- [XML format](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format)
+- [XML format](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/web-ui>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/web-ui>*
 
 ---
 
@@ -392,9 +392,9 @@ Non-secret dynamic values that can be referenced elsewhere in the proxy using `$
 
 #### Next
 
-- [Webhooks](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks)
+- [Webhooks](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy/xml-format>*
 
 ---
 
@@ -415,9 +415,9 @@ Right-click on a ticket to Manage it. There you can change status of the ticket,
 
 #### Next
 
-- [Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer)
+- [Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/administrator>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/administrator>*
 
 ---
 
@@ -472,9 +472,9 @@ Exit button will close the view without any changes to the ticket.
 
 #### Next
 
-- [Administrator](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/administrator)
+- [Administrator](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/administrator)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/member>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/member>*
 
 ---
 
@@ -502,9 +502,9 @@ At the right half of the screen: Input a new Subsection name and press Add.
 
 #### Next
 
-- [Member](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/member)
+- [Member](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/member)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/owner>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/support/owner>*
 
 ---
 
@@ -573,12 +573,12 @@ The XML documentation contains related information for advanced developers.
 
 ### Further reading
 
-- **[XML Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT and XLink that are used by CloudBackend. *(XML)*
+- **[XML Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT and XLink that are used by CloudBackend. *(XML)*
 
 #### Next
 
-- [Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer)
+- [Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks/xml-format>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks/xml-format>*
 
 ---

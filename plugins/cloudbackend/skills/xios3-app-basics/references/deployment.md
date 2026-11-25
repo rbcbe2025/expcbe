@@ -2,7 +2,7 @@
 
 Deploying an application on CloudBackend PaaS and elsewhere: the deploy wizard, pipelines and stages, the login application, users, any web server, Android.
 
-7 topics from the published XIOS/3 documentation, generated on 2026-11-24. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+7 topics from the published XIOS/3 documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -18,15 +18,15 @@ Deploying an application on CloudBackend PaaS and elsewhere: the deploy wizard, 
 
 This section will go through everything necessary regarding deploying a XIOS/3 application: from doing the actual deployment in the web UI and moving it forward through the deployment pipeline, to adding and editing a login page and allowing for external user creation.
 
-We will go through the basics below, and you may read more about each step in their own sections. You may also try it practically in our [deploy tutorial](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/tutorials/application-deployment).
+We will go through the basics below, and you may read more about each step in their own sections. You may also try it practically in our [deploy tutorial](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/tutorials/application-deployment).
 
-> **Note:** **Custom domain DNS:** to connect your own domain to a deployment, point its DNS (an `A` record) to `83.140.241.4`. The certificate and domain binding steps are covered in the [Managing Deployments](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/managing-deployments) section.
+> **Note:** **Custom domain DNS:** to connect your own domain to a deployment, point its DNS (an `A` record) to `83.140.241.4`. The certificate and domain binding steps are covered in the [Managing Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/managing-deployments) section.
 
 > **Note:** This is the quickest way to deploy an application using CloudBackend. You may of course deploy your XIOS/3 application on any backend or webserver of your choice.
 
 #### Deploying an Application
 
-Any application containing the required parts of an [application manifest](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure) can quickly be deployed from within the Projects tab; just select the application package you wish to deploy and select `icon://share` `Deploy` in the top toolbar, or use the context menu.
+Any application containing the required parts of an [application manifest](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure) can quickly be deployed from within the Projects tab; just select the application package you wish to deploy and select `icon://share` `Deploy` in the top toolbar, or use the context menu.
 
 
 This will open the `Deploy Wizard`, where you set the name of your deployment. The name is used both internally and as the host name in the deployment's access URL, so it may only contain lowercase letters and digits; it is prefilled from the name of your project. The wizard only deploys from the `home` and `tenant` drives, and the application manifest in the container must be named `index.xml` (the wizard offers to rename it for you if it is not). A deployment always uses the latest available XIOS/3 release.
@@ -35,13 +35,13 @@ When you click `Deploy` the wizard validates the name and the application files,
 
 Which stage the card starts in follows from the drive you deploy from, and is not a choice in the wizard: a project on your `home` drive becomes a **private** `Development` deployment, a project on the `tenant` drive becomes a **public** `Shared` deployment. In both cases the project container itself is published, so the deployment is served straight out of `home://Applications` or `tenant://Applications` in the CloudBackend database. Only the `Staging` and `Production` snapshots get containers of their own, under `tenant://Deployments`.
 
-More information about managing deployments can be found [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/managing-deployments).
+More information about managing deployments can be found [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/managing-deployments).
 
 > **Note:** Anything inside the deployed container will be externally accessible, e.g. visible and downloadable. Editing, removing, or replacing objects in the deployed container will change the deployed application, if the deployment URL is reloaded in the browser.
 
 #### Adding Login Screen
 
-To enable you to quickly deploy a fully functional application you may also add a customizable login screen to show before your application is launched. The login screen is not part of the Deploy Wizard. You add and customize it afterwards with the `Login Configurator`, opened from the `Configure Login Page...` button in the properties panel of the Deployments tab. That button is available for a deployment in the `Staging` stage, and the configuration you save there is carried forward when the deployment is promoted to `Production`. You can also add a login screen manually by editing your application manifest before deploying. Explained below and [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application).
+To enable you to quickly deploy a fully functional application you may also add a customizable login screen to show before your application is launched. The login screen is not part of the Deploy Wizard. You add and customize it afterwards with the `Login Configurator`, opened from the `Configure Login Page...` button in the properties panel of the Deployments tab. That button is available for a deployment in the `Staging` stage, and the configuration you save there is carried forward when the deployment is promoted to `Production`. You can also add a login screen manually by editing your application manifest before deploying. Explained below and [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application).
 
 Clients are used to distinguish between different user bases or application areas, for instance web, mobile or IoT solutions, and give you statistics about your users per client. Deployments made through the Web UI are registered against your tenant's *Web* client, which is created for you the first time it is needed. The client type can be changed in the properties dialog in the Clients tab. Read more about Clients here.
 
@@ -50,29 +50,29 @@ Clients are used to distinguish between different user bases or application area
 You may also customize your login screen already in the application manifest before deploying. This requires four simple steps:
 
 1. Declare the `xlink` namespace in the `application` tag using: `xmlns:xlink="http://www.w3.org/1999/xlink"`
-2. Add `xlink:actuate="onRequest"` in both your application's `process` and [`view`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) elements
+2. Add `xlink:actuate="onRequest"` in both your application's `process` and [`view`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) elements
 3. Add this `process` element before your application's main `process` element: `<process xlink:actuate="onLoad" xlink:href="xios://apps/login.xml"/>`
-4. Add a [`login`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/login) element within your application manifest, as this is where you will make the most basic settings for your login.
+4. Add a [`login`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/login) element within your application manifest, as this is where you will make the most basic settings for your login.
 
-Step four can be omitted if you just want a default login screen. More information about customizing your login screen can be found [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application).
+Step four can be omitted if you just want a default login screen. More information about customizing your login screen can be found [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application).
 
 #### User Creation and Management
 
 To enable external users to be created, including password recovery for these, from the login screen you first need to set up the CRM module of CloudBackend. More information about how this is done can be found here.
 
-To enable user creation and password recovery you just add [`create`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/create) and `reset` elements within your [`login`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/login) element in the application manifest. The text you write in this element will be the text shown for each link on the login page.
+To enable user creation and password recovery you just add [`create`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/create) and `reset` elements within your [`login`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/login) element in the application manifest. The text you write in this element will be the text shown for each link on the login page.
 
-More information about user creation and management can be found [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/creating-and-managing-users).
+More information about user creation and management can be found [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/creating-and-managing-users).
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment>*
 
 ---
 
 ## Creating and Managing Users
 
-In order for your external users to create accounts on your application, and for them to reset / recover any forgotten passwords, you just add [`create`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/create) and `reset` elements within your [`login`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/login) element in the application manifest. Adding one or both of these elements will show the corresponding link on the login page, omitting one or both will not show that link. The text you write within the element will be the text shown on the login page, for example `<create>Create User</create>` will enable user creation and show the text *Create User* for the link on the login page.
+In order for your external users to create accounts on your application, and for them to reset / recover any forgotten passwords, you just add [`create`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/create) and `reset` elements within your [`login`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/login) element in the application manifest. Adding one or both of these elements will show the corresponding link on the login page, omitting one or both will not show that link. The text you write within the element will be the text shown on the login page, for example `<create>Create User</create>` will enable user creation and show the text *Create User* for the link on the login page.
 
 > **Note:** To enable external users to be created, including password recovery for these, from the login screen you first need to set up your CRM module of CloudBackend. More information about how this is done can be found here.
 
@@ -82,7 +82,7 @@ When an external user wants to create an account using the Create Users applicat
 
 #### Managing Users
 
-Users created through the Create Users application will appear in the [Identities tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment). This is also where you will do most of the user management.
+Users created through the Create Users application will appear in the [Identities tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment). This is also where you will do most of the user management.
 
 #### Password Recovery
 
@@ -90,9 +90,9 @@ Users created through the Create Users application will appear in the [Identitie
 
 Built into the service is also ways for users to recover and reset lost passwords. Clicking the link for password reset (if enabled) on the login page of your application will open a dialog for the user to enter their username, after which an email with a link to reset the password will be sent to the email tied to that user.
 
-To enable password recovery just add the `reset` element within your [`login`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/login) element in the application manifest. The text you write within the element will be the text shown on the login page, for example `<reset>Forgot password?</reset>` will enable password reset and show the text *Forgot password?* for the link on the login page. If this element is omitted, there will be no password reset link in the login page UI.
+To enable password recovery just add the `reset` element within your [`login`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/login) element in the application manifest. The text you write within the element will be the text shown on the login page, for example `<reset>Forgot password?</reset>` will enable password reset and show the text *Forgot password?* for the link on the login page. If this element is omitted, there will be no password reset link in the login page UI.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/creating-and-managing-users>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/creating-and-managing-users>*
 
 ---
 
@@ -104,7 +104,7 @@ After deploying an application, your users can access it using the provided url 
 
 To get started with this tutorial, we need a few things.
 
-1. Firstly, we need a deployed application (located in `home://Applications` or `tenant://Deployments`). You can follow the [deploy tutorial](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/tutorials/application-deployment) tutorial to get one.
+1. Firstly, we need a deployed application (located in `home://Applications` or `tenant://Deployments`). You can follow the [deploy tutorial](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/tutorials/application-deployment) tutorial to get one.
 2. Then, we need an IDE for creating the android application. You can get Android Studio [here](https://developer.android.com/studio).
 
 For more information about how to install Android Studio, you can follow Google's tutorial on it [here](https://developer.android.com/codelabs/basic-android-kotlin-compose-install-android-studio#0). For the tutorial, Android Studio Panda 1 Patch 1 (Released February 13, 2026) was used on Windows 11.
@@ -325,7 +325,7 @@ You can now test this by creating an emulated android device which you can read 
 
 When done with the app and deployment, you can follow [this](https://developer.android.com/studio/publish) tutorial by Google to publish it.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/deploying-on-android>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/deploying-on-android>*
 
 ---
 
@@ -406,7 +406,7 @@ var boot = {
 </html>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/deploying-on-any-webserver>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/deploying-on-any-webserver>*
 
 ---
 
@@ -424,7 +424,7 @@ After deploying an application, your users can access it using the provided url 
 
 To get started with this tutorial, we need a few things.
 
-1. Firstly, we need a deployed application (located in `home://Applications` or `tenant://Deployments`). You can follow the [deploy tutorial](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/tutorials/application-deployment) tutorial to get one.
+1. Firstly, we need a deployed application (located in `home://Applications` or `tenant://Deployments`). You can follow the [deploy tutorial](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/tutorials/application-deployment) tutorial to get one.
 2. For making iOS applications you are required to have a MacBook as they are the only ones to be able to build for the Apple ecosystem.
 3. Then, we need an IDE for creating the iOS application. You can get Xcode [here](https://apps.apple.com/us/app/xcode/id497799835?mt=12).
 
@@ -554,26 +554,26 @@ The image below shows a currency converting app running on the emulated iPhone 1
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/deploying-on-ios>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/deploying-on-ios>*
 
 ---
 
 ## Login Application
 
-When deploying an application from the [Projects tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment) you have the option to add a login screen to your application. This will automatically add the necessary resources to your application manifest, and the elements can be edited in the [Deployments tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment) for a selected deployment. If you wish to edit the elements directly in the application manifest this can easily be done by following the steps below.
+When deploying an application from the [Projects tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment) you have the option to add a login screen to your application. This will automatically add the necessary resources to your application manifest, and the elements can be edited in the [Deployments tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment) for a selected deployment. If you wish to edit the elements directly in the application manifest this can easily be done by following the steps below.
 
 If you wish to customize the login screen directly in your application manifest you need to do these four simple steps:
 
 1. Declare the `xlink` namespace in the `application` tag using: `xmlns:xlink="http://www.w3.org/1999/xlink"`
-2. Add `xlink:actuate="onRequest"` in both your application's `process` and [`view`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) elements
+2. Add `xlink:actuate="onRequest"` in both your application's `process` and [`view`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) elements
 3. Add this `process` element before your application's main `process` element: `<process xlink:actuate="onLoad" xlink:href="xios://apps/login.xml"/>`
-4. Add a [`login`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/login) element within your application manifest, as this is where you will make the most basic settings for your login.
+4. Add a [`login`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/login) element within your application manifest, as this is where you will make the most basic settings for your login.
 
-The first three steps are quite straight-forward. Below we will address how to easily customize your login page using settings in a [`login`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/login) element in your application manifest, as well as how to customize it even further by editing the login application itself (only recommended for experienced XIOS/3 users).
+The first three steps are quite straight-forward. Below we will address how to easily customize your login page using settings in a [`login`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/login) element in your application manifest, as well as how to customize it even further by editing the login application itself (only recommended for experienced XIOS/3 users).
 
 #### Login Settings
 
-To quickly customize the most visible parts of the login screen you just have to make adjustments to the [`login`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/login) element in your application manifest. This includes setting your own logo, background image or color, texts, and whether or not to allow user creation and password recovery. Below is an example of how this `login` element can look, so you can copy it into your own code, with an explanation of each element below the code.
+To quickly customize the most visible parts of the login screen you just have to make adjustments to the [`login`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/login) element in your application manifest. This includes setting your own logo, background image or color, texts, and whether or not to allow user creation and password recovery. Below is an example of how this `login` element can look, so you can copy it into your own code, with an explanation of each element below the code.
 
 **Login Settings Element**
 
@@ -597,7 +597,7 @@ Explanation:
 - `title`: The main title on the login screen. Often the title of the application, or company name.
 - `description`: The text shown below the title, such as description of the application or a prompt to the user.
 - `copyright`: Copyright text shown at the bottom of the login page.
-- [`create`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/create): Sets text shown for opening the Create User application. If this element is omitted a link to opening Create User application will not show.
+- [`create`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/create): Sets text shown for opening the Create User application. If this element is omitted a link to opening Create User application will not show.
 - `reset`: Sets text shown for opening the Reset Password application. If this element is omitted a link to opening Reset Password application will not show.
 - `client`: Sets which of your defined Clients this deployment will use for gathering metrics. This will not be visible on the login screen.
 
@@ -610,22 +610,22 @@ An image of the login screen with this example code can be seen below.
 
 For experienced XIOS/3 users there is also the possibility to customize the entire login application, done by editing the login.xml view and process code within XIOS/3.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application>*
 
 ---
 
 ## Managing Deployments
 
-Any application containing the required parts of an [application manifest](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure) can quickly be deployed from within the [Projects tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment); just select the application package in `home` or `tenant` that you wish to deploy and select `icon://share` `Deploy` in the top toolbar, or use the context menu.
+Any application containing the required parts of an [application manifest](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure) can quickly be deployed from within the [Projects tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment); just select the application package in `home` or `tenant` that you wish to deploy and select `icon://share` `Deploy` in the top toolbar, or use the context menu.
 
-The `Deploy Wizard` lets you set your deployment's name, which may only contain lowercase letters and digits because it also becomes the host name of the deployment's access URL. When you finish the wizard, your application is published into the pipeline. Deploying from your own `home` drive gives a private **development** deployment served from that drive; deploying from the `tenant` drive gives a public **shared** deployment. From there you move it forward through the deployment pipeline in the [Deployments tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment). A login screen is not part of the wizard; it is configured afterwards from the properties panel, as described under **Customizing Login Screen** below.
+The `Deploy Wizard` lets you set your deployment's name, which may only contain lowercase letters and digits because it also becomes the host name of the deployment's access URL. When you finish the wizard, your application is published into the pipeline. Deploying from your own `home` drive gives a private **development** deployment served from that drive; deploying from the `tenant` drive gives a public **shared** deployment. From there you move it forward through the deployment pipeline in the [Deployments tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment). A login screen is not part of the wizard; it is configured afterwards from the properties panel, as described under **Customizing Login Screen** below.
 
 #### The Deployment Pipeline
 
 
-In the [Deployments tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment) each project is shown as a **pipeline board** with five columns that follow the life cycle of a deployment, from left to right: `My Projects`, `Development`, `Shared Projects`, `Staging` and `Production`. A header above the boards names the five stages and counts how many deployments you currently have in each of them. Every deployment is a **card**. You advance a card by dragging it into the next column, by right-clicking it and choosing the matching `Promote` action, or by pressing the `Promote to <stage>` button in the properties panel. The board only accepts a card into a column when that stage's requirements are met, so an invalid drop is rejected. A card can only ever be moved forward one step at a time, with the exception of `Shared`, from which a card can be moved to either `Staging` or `Production`.
+In the [Deployments tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment) each project is shown as a **pipeline board** with five columns that follow the life cycle of a deployment, from left to right: `My Projects`, `Development`, `Shared Projects`, `Staging` and `Production`. A header above the boards names the five stages and counts how many deployments you currently have in each of them. Every deployment is a **card**. You advance a card by dragging it into the next column, by right-clicking it and choosing the matching `Promote` action, or by pressing the `Promote to <stage>` button in the properties panel. The board only accepts a card into a column when that stage's requirements are met, so an invalid drop is rejected. A card can only ever be moved forward one step at a time, with the exception of `Shared`, from which a card can be moved to either `Staging` or `Production`.
 
-Each board is labelled with its project name and icon, and carries the client it belongs to (normally `Web`) in the footer under the `Production` column, next to a `Login` marker that appears once a login screen has been configured for that client. Until you have deployed anything the tab shows no boards at all, only a note that deployments appear here after you deploy an application, and a link into the [Projects tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment).
+Each board is labelled with its project name and icon, and carries the client it belongs to (normally `Web`) in the footer under the `Production` column, next to a `Login` marker that appears once a login screen has been configured for that client. Until you have deployed anything the tab shows no boards at all, only a note that deployments appear here after you deploy an application, and a link into the [Projects tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment).
 
 Two properties on each card decide whether it may advance. Both are set from the card's right-click menu:
 
@@ -635,7 +635,7 @@ Two properties on each card decide whether it may advance. Both are set from the
 #### Stages and What Each One Requires
 
 - **My Projects**: the starting point of the pipeline, showing the source application a deployment is made from. To avoid clutter for users with many projects, this column does **not** list every application in your `home://Applications`. A card only appears for a project that already has a deployment **and** that you own (its source living in your `home://Applications`).
-  *How to enter:* nothing is promoted into this column. A project first enters the pipeline when you deploy it with the `Deploy Wizard` from the [Projects tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment).
+  *How to enter:* nothing is promoted into this column. A project first enters the pipeline when you deploy it with the `Deploy Wizard` from the [Projects tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment).
   *Next step:* drag the card into `Development` to create a development deployment from the current source. The `Deploy Wizard` already places a card in the stage that follows from the drive you deployed from, so use this mainly when you do not have a development deployment yet, for example when your only card for that project is a `Shared` one deployed from the tenant drive.
 - **Development**: your private working deployment, served from your `home` drive so you can keep iterating on it. Because it is served straight from your live source, any change you make to the application is reflected on its access URL instantly. Just reload the deployment URL to see it.
   *Private vs. public:* a development deployment is **private** by default, so only you can see it, and no other tenant member sees its pipeline or its access URL. Setting it to **public** (with `Make Public`) lets other tenant members see the pipeline, which also exposes its access URL to them, and is required before you can promote it to `Shared`. Making it private again only hides the pipeline. It does **not** revoke access to the deployment itself, so anyone who saved the access URL while it was public can still reach it.
@@ -667,8 +667,8 @@ In the `Staging` and `Production` columns you can attach a custom domain to a de
 
 A card's right-click menu also offers a few navigation and management actions:
 
-- `Go to Project`: opens the project's source in the [Projects tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment).
-- `Go to Deployment`: opens the container the card is deployed from in the [Database tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment) (Database Explorer).
+- `Go to Project`: opens the project's source in the [Projects tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment).
+- `Go to Deployment`: opens the container the card is deployed from in the [Database tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment) (Database Explorer).
 - `Delete Deployment`: removes the deployment from the pipeline and unpublishes it. Your project files are not touched, so the source container and everything in it stays in the database.
 
 > **Note:** deleting the **last** deployment of a project goes further, and the confirmation dialog warns you about it: the pipeline itself is removed, and with it every `Staging` and `Production` snapshot container that project has under `tenant://Deployments`. Your project in `home://Applications` or `tenant://Applications` is still left alone.
@@ -677,7 +677,7 @@ The version shown on a card comes from the deployed application's manifest. For 
 
 #### The Properties Panel
 
-You can easily manage your deployed applications from the [Deployments tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment). Clicking a card opens the `Properties` panel to the right of the boards; the `Properties` button in the toolbar hides and shows it again, and the `Help` button next to it opens the documentation for the section. Clicking empty board space clears the selection. The panel holds:
+You can easily manage your deployed applications from the [Deployments tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment). Clicking a card opens the `Properties` panel to the right of the boards; the `Properties` button in the toolbar hides and shows it again, and the `Help` button next to it opens the documentation for the section. Clicking empty board space clears the selection. The panel holds:
 
 - the project's name and icon, the date the card was last `Updated`, its `Version`, and its test `Status` as a badge.
 - a `Promote to <stage>` button for each stage the card can advance to.
@@ -709,16 +709,16 @@ A `Development` deployment uses the home pattern with your user name, a `Shared`
 
 #### Customizing Login Screen
 
-The image below shows the configurator for customizing a deployment's login screen. Open it with `Configure Login Page...` in the properties panel of a `Staging` deployment. Any values already set in the application manifest will be visible here, and can be edited. An explanation to each element can be found [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application). Any fields that are left empty or erased will not show in the deployment's login screen, and changes only take effect when you press `Save`.
+The image below shows the configurator for customizing a deployment's login screen. Open it with `Configure Login Page...` in the properties panel of a `Staging` deployment. Any values already set in the application manifest will be visible here, and can be edited. An explanation to each element can be found [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application). Any fields that are left empty or erased will not show in the deployment's login screen, and changes only take effect when you press `Save`.
 
 The configuration you save is kept on the project's pipeline, per client, as well as in the deployed application's manifest. That is what lets it survive a promotion: when the staging card is promoted to `Production` a fresh copy of the application is made, and the saved login configuration is written into it again, so you do not have to set the login screen up a second time.
 
-Clients are used to distinguish between different user bases or application areas, for instance web, mobile or IoT solutions, and give you statistics about your users per client. Deployments made through the Web UI are registered against your tenant's *Web* client, which is created for you the first time it is needed. The client type can be changed in the properties dialog in the [Clients tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment). Read more about Clients here.
+Clients are used to distinguish between different user bases or application areas, for instance web, mobile or IoT solutions, and give you statistics about your users per client. Deployments made through the Web UI are registered against your tenant's *Web* client, which is created for you the first time it is needed. The client type can be changed in the properties dialog in the [Clients tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment). Read more about Clients here.
 
 
 The background can be set as a URL to an externally accessible image, or the name (with file ending) of an image uploaded into the selected Deployment's container, or a `#000000` to `#ffffff` color. (Setting two colors separated by a comma (,) will create a bottom-up gradient between the first and second color.) The Logo can be set as a URL to an externally accessible image, or the name (with file ending) of an image uploaded into the selected Deployment's container.
 
-The `Background Dark / Light` setting tells the login screen whether your background is dark or light so it can choose a readable font color. It maps to the `dark` attribute of the `background` element (see the [Login Application](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application) section); if you are unsure, leaving it lets XIOS/3 try to detect the right font color automatically.
+The `Background Dark / Light` setting tells the login screen whether your background is dark or light so it can choose a readable font color. It maps to the `dark` attribute of the `background` element (see the [Login Application](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/login-application) section); if you are unsure, leaving it lets XIOS/3 try to detect the right font color automatically.
 
 For a colour you can also use the colour picker next to the `Background` field instead of typing a hex code. To use an image that lives in the deployment's own container, click the folder icon next to `Logo URL` or `Background`; it opens a file picker on that container and fills the field in with the image you choose.
 
@@ -730,10 +730,10 @@ To see a preview of the deployment's login screen you can click on the `Preview`
 
 #### Viewing Deployments in the Database
 
-As mentioned, deployed applications will also appear in the [Database tab](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment) of CloudBackend. A `Development` deployment is your project itself under `home://Applications`, a `Shared` deployment is the tenant copy under `tenant://Applications`, and each `Staging` or `Production` snapshot has its own timestamped container under `tenant://Deployments`. The `Go to Deployment` action on a card takes you straight to the right one. Navigating to the container for a specific deployment will allow you to see the objects for that deployment. This means that you can edit, replace, or remove the application, and any changes will affect that deployment itself. You will also be able to see and edit the properties of a deployed object using the Database Explorer's Properties dialog, as seen in the image below.
+As mentioned, deployed applications will also appear in the [Database tab](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment) of CloudBackend. A `Development` deployment is your project itself under `home://Applications`, a `Shared` deployment is the tenant copy under `tenant://Applications`, and each `Staging` or `Production` snapshot has its own timestamped container under `tenant://Deployments`. The `Go to Deployment` action on a card takes you straight to the right one. Navigating to the container for a specific deployment will allow you to see the objects for that deployment. This means that you can edit, replace, or remove the application, and any changes will affect that deployment itself. You will also be able to see and edit the properties of a deployed object using the Database Explorer's Properties dialog, as seen in the image below.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-deployment/managing-deployments>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-deployment/managing-deployments>*
 
 ---

@@ -2,7 +2,7 @@
 
 Selling subscriptions from a tenant: configuring the payment destination, account types, creating and editing price plans, publishing them to signed-out visitors, starting a checkout from an application, and where purchase confirmations land.
 
-2 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+2 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -134,9 +134,9 @@ After a user completes a payment, it may take a few minutes before PayPal notifi
 
 #### Next
 
-- [Statistics](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/statistics)
+- [Statistics](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/statistics)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/priceplans/priceplans-in-your-application>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/priceplans/priceplans-in-your-application>*
 
 ---
 
@@ -187,6 +187,6 @@ To edit an existing price plan, simply select the card representing the plan you
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/priceplans/priceplans>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/priceplans/priceplans>*
 
 ---

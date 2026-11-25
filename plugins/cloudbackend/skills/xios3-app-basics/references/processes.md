@@ -2,7 +2,7 @@
 
 The process document: triggers, steps, operations, aliases, expressions, the event model, and writing process code in JavaScript.
 
-30 topics from the published XIOS/3 documentation, generated on 2026-11-24. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+30 topics from the published XIOS/3 documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -41,7 +41,7 @@ The process document: triggers, steps, operations, aliases, expressions, the eve
 
 In this section we will cover everything about Process Development and is divided in to sections of relevance.
 
-Process markup is the logic part of XIOS/3 Application Development. When considering the [MVC design pattern](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development/the-mvc-design), process markup equals to the Control. The image below illustrates the relation between the [User Interface](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development) of an application and how user interactions (called [events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events)) activates [triggers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers), which in turn activates one or several [step(s)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps) that calls and executes [operations](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/operation).
+Process markup is the logic part of XIOS/3 Application Development. When considering the [MVC design pattern](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development/the-mvc-design), process markup equals to the Control. The image below illustrates the relation between the [User Interface](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development) of an application and how user interactions (called [events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events)) activates [triggers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers), which in turn activates one or several [step(s)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps) that calls and executes [operations](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/operation).
 
 
 Not only user interactions affect the UI in XIOS/3. Things happening on the server backend may also affect the UI, as well as changes to the UI automatically affecting the server backend.
@@ -49,35 +49,35 @@ Not only user interactions affect the UI in XIOS/3. Things happening on the serv
 
 ### What this section covers
 
-This part of the documentation covers the cornerstones and the construction of the process markup language. First the root element, [process](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/process), and how to use it. We then explain how [trigger elements](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) work, what their purpose is and how events are captured.
+This part of the documentation covers the cornerstones and the construction of the process markup language. First the root element, [process](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/process), and how to use it. We then explain how [trigger elements](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) work, what their purpose is and how events are captured.
 
-There is also a section explaining what [Steps](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps) are, how to use them and how they should be interpreted. [Operations](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/operation) are children of Steps, and the central building block of application logic, making this an important section to understand.
+There is also a section explaining what [Steps](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps) are, how to use them and how they should be interpreted. [Operations](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/operation) are children of Steps, and the central building block of application logic, making this an important section to understand.
 
-Next is an extensive section about [Aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases), which are XIOS/3 equivalents of variables. We explain what they are, how they are used as well as what other purposes they can be used for. The Alias section contains two chapters; [Alias Types](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases/alias-types) and [System Aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases/system-aliases).
+Next is an extensive section about [Aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases), which are XIOS/3 equivalents of variables. We explain what they are, how they are used as well as what other purposes they can be used for. The Alias section contains two chapters; [Alias Types](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases/alias-types) and [System Aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases/system-aliases).
 
-The Event Model, which is the foundation of end user interactivity with components as well as with the XIOS/3 system. The section provides you with examples of binding components to each other as well as how to work with [triggers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) and selections. In this section is also an event section which provides information abou [View](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) and System events.
+The Event Model, which is the foundation of end user interactivity with components as well as with the XIOS/3 system. The section provides you with examples of binding components to each other as well as how to work with [triggers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) and selections. In this section is also an event section which provides information abou [View](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) and System events.
 
-When trying to understand application logic, our section on [Expressions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions) is very important. It contains key information about how components can interact and also includes examples.
+When trying to understand application logic, our section on [Expressions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions) is very important. It contains key information about how components can interact and also includes examples.
 
-- **[Triggers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers)** — Event listeners used to set up event catchers. Will execute a specified Step and all its Operations when activated. *(Process Logic)*
+- **[Triggers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers)** — Event listeners used to set up event catchers. Will execute a specified Step and all its Operations when activated. *(Process Logic)*
 
-- **[Steps](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps)** — "Logic clusters" in XIOS/3, containing one or several Operations. Activated through a Trigger. *(Process Logic)*
+- **[Steps](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps)** — "Logic clusters" in XIOS/3, containing one or several Operations. Activated through a Trigger. *(Process Logic)*
 
-- **[Operations](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/operation)** — Children of Steps, and the central building block of application logic, performing actions on one or several UI components. *(Process Logic)*
+- **[Operations](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/operation)** — Children of Steps, and the central building block of application logic, performing actions on one or several UI components. *(Process Logic)*
 
-- **[Aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)** — The powerful and flexible equivalent to variables. It's a reference to a value or XML node set, defined using Expressions. *(Process Logic)*
+- **[Aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases)** — The powerful and flexible equivalent to variables. It's a reference to a value or XML node set, defined using Expressions. *(Process Logic)*
 
-- **[Process As JavaScript](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/javascript)** — Write the process code in JavaScript. *(Process Logic)*
+- **[Process As JavaScript](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/javascript)** — Write the process code in JavaScript. *(Process Logic)*
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development>*
 
 ---
 
 ## Aliases
 
-Aliases are powerful and flexible equivalents to variables that are more like a struct, class, or JSON, i.e. four-dimensional, and are used in the process markup language. It is a reference to a value or an XML node set, defined using [expressions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
+Aliases are powerful and flexible equivalents to variables that are more like a struct, class, or JSON, i.e. four-dimensional, and are used in the process markup language. It is a reference to a value or an XML node set, defined using [expressions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
 
 #### The dimensions of aliases
 
@@ -102,13 +102,13 @@ With aliases you can store strings, integers, paths and XML data. They are globa
 
 Aliases are also used to open documents from the database and can be used to create new XML node sets.
 
-An `alias` is an *Event Object* that is either a document or a string value. If it is a document then if would consists of three parts; `Object`, `Base`, and `Selection`. (see Event Object in [Event Model](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model) section).
+An `alias` is an *Event Object* that is either a document or a string value. If it is a document then if would consists of three parts; `Object`, `Base`, and `Selection`. (see Event Object in [Event Model](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model) section).
 
 #### Alias in process markup
 
 The `alias` element in process markup has three attributes. Here the `name` attribute defines the name of the `alias`, which is used when calling it in the code. An `alias` is available using a dollar sign `$` followed by its name, i.e. the value of the `name` attribute. Keep in mind that aliases can be overwritten by defining them again using another `value`.
 
-When using the `alias` to store information, something must be provided in the `value` attribute, or through the `child elements` of the `alias` in the case that the `model` attribute is set to `define`. Besides supporting integers and strings, `alias` can also support XML data which is provided using [Expressions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
+When using the `alias` to store information, something must be provided in the `value` attribute, or through the `child elements` of the `alias` in the case that the `model` attribute is set to `define`. Besides supporting integers and strings, `alias` can also support XML data which is provided using [Expressions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
 
 The `model` attribute defines how the system should interpret your `alias`. If it is a value (integer or string) or if it contains XML data. Here you should note that if the alias contains XML data and the `model` is set to `value`, the data will be serialized in to a string and omit all elements, leaving only the text() nodes. As we mentioned earlier, alias can use `global` or `local` scope. This might induce the need to make local scope aliases in to global, which is done by setting `model="global"`.
 
@@ -256,7 +256,7 @@ Using the `model="define"` you can define the base and selection of the data.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases>*
 
 ---
 
@@ -333,7 +333,7 @@ The code below will hold XML data that is temporarily stored in the trigger. The
 <alias name="CompanyName" value="{#view1#component1}" model="value"/>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases/alias-types>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases/alias-types>*
 
 ---
 
@@ -404,7 +404,7 @@ Note that an application can limit the number of instances that can be active an
 
 The `$package` alias will contain the XML of the application document. Note however that when you are using this alias that you must use relative path and never absolute path.
 
-Using this alias you can open views and process documents by adding an [expression](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions) after the variable.
+Using this alias you can open views and process documents by adding an [expression](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions) after the variable.
 
 ```xml
 <operation name="debug" value="$package">alert</operation>
@@ -414,7 +414,7 @@ Example: [XML DATA]
 
 ### home
 
-The `$home` alias is available when using application packages and when the home element has been defined in the settings element of the [application document](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure).
+The `$home` alias is available when using application packages and when the home element has been defined in the settings element of the [application document](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-packaging/overall-structure).
 
 ```xml
 <operation name="debug" value="$home">alert</operation>
@@ -422,7 +422,7 @@ The `$home` alias is available when using application packages and when the home
 
 Example [XML DATA in the form of a database result of the container]
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases/system-aliases>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases/system-aliases>*
 
 ---
 
@@ -445,7 +445,7 @@ In the XPath we find the `Base` to which the component is bound. The `Selection`
 
 | Name | Type | Value | Description |
 |---|---|---|---|
-| **Type** | enumeration | [Component Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [System Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events), [View Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events) | The type of event made |
+| **Type** | enumeration | [Component Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [System Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events), [View Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events) | The type of event made |
 | **Object** (dataDoc) | string | path | A URL to the data model (XML data document) |
 | **Base** (XPath) | string | match | The XPath base path of the bound data |
 | **Selection** | string | match | The xpath selection in the XML document, starting from the basepath |
@@ -453,7 +453,7 @@ In the XPath we find the `Base` to which the component is bound. The `Selection`
 
 #### Event Types
 
-There are three different types of events; [Component Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [System Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events) and [View Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events). They differentiate by what created them. In the end they are all made by user interaction, however they are made by different parts of XIOS/3.
+There are three different types of events; [Component Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [System Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events) and [View Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events). They differentiate by what created them. In the end they are all made by user interaction, however they are made by different parts of XIOS/3.
 
 Component Events are made from when the user interacts with a component, like a `button`. It will (when selected) create an `Event Object` with the type `Select`.
 
@@ -463,11 +463,11 @@ View Events are specific to views and are basically shortcut events such as `CTR
 
 ### Event Capturing
 
-See [trigger element section](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers).
+See [trigger element section](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers).
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model>*
 
 ---
 
@@ -475,7 +475,7 @@ See [trigger element section](https://robinsbackend-robinsbackend-portalx.cloudb
 
 ### Binding components to other components
 
-When [binding](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) one component to another you create an event object, that doesn't contain any event type. The real advantage of binding data like this is that changes made to the XML document will be updated directly in both components when making a change to the data with either component.
+When [binding](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) one component to another you create an event object, that doesn't contain any event type. The real advantage of binding data like this is that changes made to the XML document will be updated directly in both components when making a change to the data with either component.
 
 ```xml
 <?xml version="1.0"?>
@@ -492,7 +492,7 @@ When [binding](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xi
 
 In the example below we first bind the `stations.xml` document to a grid component called `gridMusic`. We then set up an event listener that will listen for the `Select` event made in the grid component. This is made when the user selects a value in the grid.
 
-The first step will populate the grid component with radio stations (using the [bind operation](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind)). We bind the data from the root; which is radio.
+The first step will populate the grid component with radio stations (using the [bind operation](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind)). We bind the data from the root; which is radio.
 
 The second step will be executed by the event listener. When a selection is made in the grid, a single station node will be selected. In step 101 we bind the event object selection to our other two components. The description attribute is bound to the input field and the entire station element is bound to the listview.
 
@@ -530,17 +530,17 @@ The second step will be executed by the event listener. When a selection is made
 </process>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/component-events>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/component-events>*
 
 ---
 
 ## System Events
 
-System Events are events made by the XIOS/3 system. These can also be captured by the Process markup [event listeners](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model).
+System Events are events made by the XIOS/3 system. These can also be captured by the Process markup [event listeners](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model).
 
 These events do not require any component or view attributes when defining them in an event listener. It does, however, need a communicator attribute to define which part of XIOS/3 throws the event.
 
-The standard communicator is CBE (CloudBackend). You can however make you own communicator using the [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/channel) operation. Groups can also be communicators; when applications are stored in the groups database.
+The standard communicator is CBE (CloudBackend). You can however make you own communicator using the [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/channel) operation. Groups can also be communicators; when applications are stored in the groups database.
 
 When a new container is created by the database, the system will throw a `NewFolder` event.
 
@@ -568,7 +568,7 @@ When a new container is created by the database, the system will throw a `NewFol
 </process>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events>*
 
 ---
 
@@ -681,7 +681,7 @@ Although it’s possible to specify explicit key combos (e.g. Ctrl+S), the recom
 | Reformat | Ctrl+Shift+I | Meta+Shift+I |
 | GoToLine | Ctrl+G | Meta+G |
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events>*
 
 ---
 
@@ -690,13 +690,13 @@ Although it’s possible to specify explicit key combos (e.g. Ctrl+S), the recom
 There are a couple of ways you can work directly with JavaScript in the XML process code.
 You can call JavaScript functions as if they were steps in the XML code, or you can replace the whole process XML code with JavaScript.
 
-Read [JavaScript as Steps](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/js-steps).
-Read [JavaScript as process code](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/js-process).
-Read [Custom operations in JavaScript](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/custom-ops).
+Read [JavaScript as Steps](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/js-steps).
+Read [JavaScript as process code](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/js-process).
+Read [Custom operations in JavaScript](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/custom-ops).
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/javascript>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/javascript>*
 
 ---
 
@@ -778,7 +778,7 @@ Note that all custom operations are not required to reside in the same JavaScrip
 The custom operation is called just like any standard library operation.
 In this example we pass `World` to the custom operation `logger`, which would then log `Hello, World, 0` to the dev console.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/custom-ops>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/custom-ops>*
 
 ---
 
@@ -832,10 +832,10 @@ The parameters for registering a trigger are:
 `this`: A reference to the class instance.
 `this.onclick`: The function to invoke when the event is triggered.
 
-You can read more about triggers [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers).
+You can read more about triggers [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers).
 
 **Line 14: Functions**
-The class functions correspond to [steps](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps) in the XML version of process code. Just like steps, they can be invoked either by an event/trigger or from another function.
+The class functions correspond to [steps](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps) in the XML version of process code. Just like steps, they can be invoked either by an event/trigger or from another function.
 If the function has been registered as a trigger event handler, an `event` object is passed to the function.
 
 Note that in the example above, the class methods are defined as arrow functions to ensure that the `this` object is correctly bound to the class instance, without the need for manual binding.
@@ -866,7 +866,7 @@ The script tag has two attributes:
 `class`: Specifies the name of the class to instantiate from the module. This attribute is required only when referencing a named export. For default exports it can be omitted.
 `href`: Specifies the path to the JavaScript file. It can be either a relative path (a path relative to the XML application file) or an absolute XIOS/3 URI, as shown in the example.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/js-process>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/js-process>*
 
 ---
 
@@ -942,21 +942,21 @@ Call the exported methods as you would normally call a step defined in the proce
 Note that JavaScript methods may also return a Promise.
 In these cases, process execution resumes only after the Promise has settled.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/js-steps>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/javascript/js-steps>*
 
 ---
 
 ## Operation
 
-Operations are building blocks of the application logic. They define what will happen when the end user clicks on a specific component (together with the [trigger](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) element and the [step](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps) element). Operations are logical command that will perform actions on one or several [UI components](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components).
+Operations are building blocks of the application logic. They define what will happen when the end user clicks on a specific component (together with the [trigger](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers) element and the [step](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps) element). Operations are logical command that will perform actions on one or several [UI components](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components).
 
 - **List of Operations** — A complete list of available process operations is found here. *(Shortcut)*
 
 #### Usage
 
-Operation is a child element of the [step element](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps) and will therefore be executed once that step is executed by the system. Hence, all operations must be placed inside a [step element](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps).
+Operation is a child element of the [step element](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps) and will therefore be executed once that step is executed by the system. Hence, all operations must be placed inside a [step element](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps).
 
-In this section we explain the attributes of operations as well as a complete operation reference. The type of operation (name) and on what component or view it should be executed (value) are provided as attributes. For things to make sense we need to separate the meaning of operations and the operation element in this documentation. While there is only one operation element there are several different types of operations (such as [call](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/call), [bind](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/bind) or [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug)). You define the option to use in the name attribute of the operation element.
+In this section we explain the attributes of operations as well as a complete operation reference. The type of operation (name) and on what component or view it should be executed (value) are provided as attributes. For things to make sense we need to separate the meaning of operations and the operation element in this documentation. While there is only one operation element there are several different types of operations (such as [call](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/call), [bind](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/bind) or [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug)). You define the option to use in the name attribute of the operation element.
 
 The value attribute which can be found on most operations will always evaluate the value placed in it, whether it is an alias, an expression or a string.
 
@@ -973,7 +973,7 @@ There is no specific syntax for operation element because different operations c
 | `name` | string | Any string value | The operation to use |
 | `value` | string | string or expression | The data on which the operation should be performed. This value will always be evaluated |
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/operation>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/operation>*
 
 ---
 
@@ -983,7 +983,7 @@ The process element is the root element for all process documents (process marku
 
 #### Usage
 
-This element has no required attributes, but the name attribute is highly recommended. The name must be unique as it is used as an identifier and two processes with the same name can't be active at the same time. If not set it will default to a generated value. The version attribute defines which *process* markup language version is used and defaults to "1.0". Like with the [View](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/view) there are author and description attributes, in this case used only for internal purposes.
+This element has no required attributes, but the name attribute is highly recommended. The name must be unique as it is used as an identifier and two processes with the same name can't be active at the same time. If not set it will default to a generated value. The version attribute defines which *process* markup language version is used and defaults to "1.0". Like with the [View](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/view) there are author and description attributes, in this case used only for internal purposes.
 
 ### Attributes
 
@@ -997,22 +997,22 @@ This element has no required attributes, but the name attribute is highly recomm
 | `step` | string | Any string value | start | What step to run immediately after load. Defaults to "start". |
 | `version` | enumeration | 1.0 |  | Document version (personal use) |
 
-It's also possible to write the process code in [JavaScript](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/javascript), instead of XML markup.
+It's also possible to write the process code in [JavaScript](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/javascript), instead of XML markup.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/process>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/process>*
 
 ---
 
 ## Steps
 
-Steps are an important part of [XIOS/3 Application Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/application-development). They act as logic clusters since they can contain several operations.
+Steps are an important part of [XIOS/3 Application Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/application-development). They act as logic clusters since they can contain several operations.
 
 > **Note:** There are some simple rules and guidelines when it comes to steps.
 > **1)** Each `step` `id` must be unique in a process markup document.
 > **2)** If present, a `step` `id` called `"start"` will run as soon as the process code is loaded.
-> **3)** Another `step` can be triggered using operations such as [call](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/call) or [decision](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/decision).
+> **3)** Another `step` can be triggered using operations such as [call](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/call) or [decision](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/decision).
 > **4)** Catch errors using the optional attribute to call a conditional `step`. It is convenient to combine this with the success attribute and a step for what should happen next.
-> **5)** A `step` is called when a defined event [triggers](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers). It is common to define a trigger for the [Loaded](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/loaded) event, which will run as soon as the application view is loaded and the components in it can be referenced, or the [Opened](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/opened) event, when a view has opened and the UI is ready.
+> **5)** A `step` is called when a defined event [triggers](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers). It is common to define a trigger for the [Loaded](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/loaded) event, which will run as soon as the application view is loaded and the components in it can be referenced, or the [Opened](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/opened) event, when a view has opened and the UI is ready.
 > **6)** Each `step` should focus on a single action or concept to keep instructions clear and easy to follow
 
 ### Attributes
@@ -1072,11 +1072,11 @@ Our automatic start step element should have the id value start. When opening pr
 
 #### Line 3
 
-This line contains the declaration of an [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) element. In this form it works like a string variable.
+This line contains the declaration of an [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) element. In this form it works like a string variable.
 
 #### Line 4
 
-Here is a [call](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/call) operation. This means that it will start another step, in this case a step called `config`.
+Here is a [call](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/call) operation. This means that it will start another step, in this case a step called `config`.
 
 #### Line 7
 
@@ -1084,7 +1084,7 @@ This step is only triggered by the call from line 4. If it encounters an error i
 
 #### Line 8
 
-This operation is [open](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/open), which will open our view document with the path that is defined in alias fileName in line 3. The curly brackets {} causes its content to first be evaluated. The $-sign indicates that it is a name of an alias.
+This operation is [open](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/open), which will open our view document with the path that is defined in alias fileName in line 3. The curly brackets {} causes its content to first be evaluated. The $-sign indicates that it is a name of an alias.
 
 #### Line 11
 
@@ -1092,7 +1092,7 @@ This step is only run if an error has occurred in step `config`.
 
 #### Line 12
 
-This line will show an alert (JavaScript style) and include the message in value="" using the [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug) operation.
+This line will show an alert (JavaScript style) and include the message in value="" using the [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug) operation.
 
 #### Line 15
 
@@ -1100,20 +1100,20 @@ This step is only run if step `config` was successful.
 
 #### Line 16
 
-This line will make an output in the browser developer console and include the message in value="" using the [debug](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/debug) operation.
+This line will make an output in the browser developer console and include the message in value="" using the [debug](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/debug) operation.
 Here it acts as a placeholder and can be replaced with the code for what is to happen next.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps>*
 
 ---
 
 ## Triggers
 
-Triggers are event listeners used to set up a event catcher; so when interaction is made in the view document (UI markup), for example a [Select](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/events/select) Event from a [button](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/components/button), these listeners will be activated and then execute a specified [Step](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/steps) and all [Operations](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/operation) inside that Step. Triggers, Steps, and Operations are child elements of the [Process](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/process) element.
+Triggers are event listeners used to set up a event catcher; so when interaction is made in the view document (UI markup), for example a [Select](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/events/select) Event from a [button](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/components/button), these listeners will be activated and then execute a specified [Step](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/steps) and all [Operations](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/operation) inside that Step. Triggers, Steps, and Operations are child elements of the [Process](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/process) element.
 
 The Trigger is however also a data carrier (or more correctly a data pointer), that might contain information about the selection made in the UI. The Trigger-data is available by using the ! (exclamation mark) character and is XML-formatted.
 
-Events can be made by the user in the form of [component events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), which are made when the user interacts with components. Users can also induce so called [view events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events) by using keyboard shortcuts while having he application selected. There are also [system events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events) which are made by the XIOS/3 system and are not application specific.
+Events can be made by the user in the form of [component events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), which are made when the user interacts with components. Users can also induce so called [view events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events) by using keyboard shortcuts while having he application selected. There are also [system events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events) which are made by the XIOS/3 system and are not application specific.
 
 
 ### Attributes
@@ -1122,7 +1122,7 @@ Events can be made by the user in the form of [component events](https://robinsb
 
 | Attribute | Type | Values | Description |
 |---|---|---|---|
-| `event` | string | Predefined event from component | Name of the event to listen for from the lists of [Component Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [System Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events), [View Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events) |
+| `event` | string | Predefined event from component | Name of the event to listen for from the lists of [Component Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [System Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events), [View Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events) |
 | `step` | string | Any string value | Step id to execute |
 
 **Optional attributes**
@@ -1135,7 +1135,7 @@ Events can be made by the user in the form of [component events](https://robinsb
 
 ### Available Events
 
-[Component Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [System Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events), [View Events](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events)
+[Component Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/events), [System Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/system-events), [View Events](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/event-model/view-events)
 
 ### Syntax and Examples
 
@@ -1162,7 +1162,7 @@ Events can be made by the user in the form of [component events](https://robinsb
 
 #### Related Topics
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/triggers>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/triggers>*
 
 ---
 
@@ -1265,7 +1265,7 @@ As you can see only a text value would be available compared to XML data when we
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions>*
 
 ---
 
@@ -1316,7 +1316,7 @@ Working with data models in XIOS/3 is a very powerful tool and can together with
 </operation>
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/binding-data-models>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/binding-data-models>*
 
 ---
 
@@ -1338,7 +1338,7 @@ In the above example, a recursive expression is used to dynamically fetch the na
 
 Method calls may not be combined with xpath expression evaluation.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/calling-methods>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/calling-methods>*
 
 ---
 
@@ -1354,7 +1354,7 @@ All events in processes stem from triggers, the following table shows how to use
 | `<trigger application="Sale2023" event="Close" step="8"/>` | Here the trigger is connected directly to an application and it listens to the close event. The trigger will be the application and the XML document representing the application. |
 | `<trigger communicator="xios" event="Login" step="3"/>` | This trigger listens directly to the communication channel xios. The trigger will consist of the document containing settings for the channel. |
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/event-propagation>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/event-propagation>*
 
 ---
 
@@ -1403,7 +1403,7 @@ Events traveling through XIOS/3 may get transformed on their way. It is therefor
 | `$date` | The date variable is a predefined variable that always expands into the current date. |
 | `$time` | The time variable is a predefined variable that always expands into the current time. |
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/examples>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/examples>*
 
 ---
 
@@ -1424,7 +1424,7 @@ Compared to traditional links on the Internet, the expression allows us to make 
 
 Another example could be `http://www.site.com/book.xml#/book/chapter[2]/paragraph[3]`, pointing to the third *paragraph* child of the second element *chapter* from the root element *book* in the XML document *book.xml*.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/fetching-data>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/fetching-data>*
 
 ---
 
@@ -1438,7 +1438,7 @@ The expression language contains many functions to be used within and applied on
 
 The examples above show the use of three different functions; `count()`, `local-name()`, and `xml()`.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/functions>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/functions>*
 
 ---
 
@@ -1486,7 +1486,7 @@ The second example shows rounding of a decimal number, e.g., rounded amount with
 <alias name="rounded2decimals" value="{substring({={{$decimals} + 0.005}}, 'endString:.', 'endOffset:3')}"/> 
 ```
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/maths>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/maths>*
 
 ---
 
@@ -1510,7 +1510,7 @@ The above example shows the trigger expressions, which gets evaluated by default
 
 XIOS/3 only communicates with two types of data; **Xbind** events and string values. All expressions will always result in one of the two. Xbind events in turn consists of an object, a base, and a selection model.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/processes>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/processes>*
 
 ---
 
@@ -1522,7 +1522,7 @@ Expressions may also be recursive, for example `#{InnerExpression}#Comp`, will f
 
 Recursive expressions work with the braces as with parenthesis in mathematics, the inner braces are evaluated first to become in data to the outer expressions.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/recursive-expressions>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/recursive-expressions>*
 
 ---
 
@@ -1538,9 +1538,9 @@ Expression can also be aggregated to form a string when combined with other text
 - Example 2: Name: Documents ID: 200.
 - Example 3: Name: Pictures ID: 202.
 
-> **Note** Please find the source data for example 1-3 [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
+> **Note** Please find the source data for example 1-3 [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/serializing>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/serializing>*
 
 ---
 
@@ -1548,7 +1548,7 @@ Expression can also be aggregated to form a string when combined with other text
 
 Triggers are a special type of aliases (variables) set by the system and not possible to change the value of using the `alias` element in the process language. The special character assigned to triggers is made on purpose, similar to how *this* is available inside JavaScript functions, the `!` trigger contains the incoming event and context for the current executing `step` in the process language.
 
-The contents of the trigger is only guaranteed for the *direct* child elements of the `step` process instruction. Process operations located inside other process operations like [`foreach`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/foreach) or [`decision`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/decision) will have a new event context set in the `!` trigger alias, since we **are** in fact operating in a new context.
+The contents of the trigger is only guaranteed for the *direct* child elements of the `step` process instruction. Process operations located inside other process operations like [`foreach`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/foreach) or [`decision`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/decision) will have a new event context set in the `!` trigger alias, since we **are** in fact operating in a new context.
 
 If you need to use the trigger further down in the process code or at a hierarchical depth, you can store the trigger in an alias with any name like the following example:
 
@@ -1565,7 +1565,7 @@ With triggers (context data) we use the exclamation mark `!` to obtain the data 
 
 - Example: Pictures
 
-> **Note** Please find the source data for the example here: [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
+> **Note** Please find the source data for the example here: [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
 
 ### More Trigger Expressions
 
@@ -1581,7 +1581,7 @@ All the expressions below require that the *process step* they are used within w
 
 Trigger expressions evaluates like all other expression to either a reference to an event, an object (XML document) and an XPath selection, or to a serialized string. Depending on the type of trigger, different operations on the trigger `!` (contextual) operator may be possible.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/triggers-events>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/triggers-events>*
 
 ---
 
@@ -1600,9 +1600,9 @@ Here we assume that the variable `$treeData` contains the same information as `#
 - Example 1: [none] (name attribute does not exist)
 - Example 2: Documents
 
-> **Note** Please find the source data for example 1-3 [here](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
+> **Note** Please find the source data for example 1-3 [here](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/variables>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/variables>*
 
 ---
 
@@ -1660,6 +1660,6 @@ In general, there are infinite number of applications of Xbinds. The following i
 - **Could be used for messaging busses, event busses**
   Xbinds could be used as an interface between different parts of an XML based system. For example, a graphical component described in XML can bind to another component by just transferring its Xbind, which in turn will also transfer that components state.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/xbinds>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/using-expressions/xbinds>*
 
 ---

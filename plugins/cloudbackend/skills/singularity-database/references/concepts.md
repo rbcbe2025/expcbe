@@ -2,7 +2,7 @@
 
 The building blocks of the Singularity database as published in the CloudBackend documentation: what each one is, how it relates to the others, and how to get started.
 
-26 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+26 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -35,19 +35,19 @@ The building blocks of the Singularity database as published in the CloudBackend
 
 ## The Singularity
 
-- **[CloudBackend Operations Platform](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview)** — The tools within the Singularity Database to manage the owner account, configure the database, import data, query and view data, and more. *(Data Modeling & Managing Data)*
+- **[CloudBackend Operations Platform](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview)** — The tools within the Singularity Database to manage the owner account, configure the database, import data, query and view data, and more. *(Data Modeling & Managing Data)*
 
 - **SDK Mobile, IoT & Cloud** — SDK library for Mobile & IoT development with cloud database connection from local programs, with code examples and tutorials. *(C++, Java, Android and iOS)*
 
 - **SDK Web UI** — For developing web applications in Javascript and HTML with database connection. See code examples and tutorials. *(Javascript and HTML)*
 
-- **[Code Concepts](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/code-concepts)** — See common concepts when building web applications with small useful code snippets. *(Javascript and HTML)*
+- **[Code Concepts](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/code-concepts)** — See common concepts when building web applications with small useful code snippets. *(Javascript and HTML)*
 
-- **[CLI](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface)** — Test and verification tool to make it easy to see what you have stored in the database. Used for debugging while building apps. *(Test verification tool)*
+- **[CLI](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/cli/command-line-interface)** — Test and verification tool to make it easy to see what you have stored in the database. Used for debugging while building apps. *(Test verification tool)*
 
-- **[Help Authoring](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/guides/authoring-help)** — Learn how to author help documentation compatible with the built-in help system. *(Help)*
+- **[Help Authoring](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/authoring-help)** — Learn how to author help documentation compatible with the built-in help system. *(Help)*
 
-- **[XML Development](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used by CloudBackend. *(XML)*
+- **[XML Development](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/xml/xml-development)** — Documentation for all XML related technologies like XML, XPath, XSLT, and XLink that are used by CloudBackend. *(XML)*
 
 ### Author and Copyright
 
@@ -60,7 +60,7 @@ for an Accelerated User Experience and Data Mobility — Data in motion & Data a
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity>*
 
 ---
 
@@ -111,11 +111,11 @@ The documentation is divided in to sections of relevance. Find the main section 
 
 #### Getting started with CloudBackend development
 
-To get access to our Software Development kit (SDK), please see the guide [Getting started](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started).
+To get access to our Software Development kit (SDK), please see the guide [Getting started](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started).
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know>*
 
 ---
 
@@ -173,7 +173,7 @@ See the Java implementation, Android uses the same SDK.
 
 This is the SDK for your iOS applications written in the Swift language.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/choosing-the-right-sdk>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/choosing-the-right-sdk>*
 
 ---
 
@@ -185,24 +185,24 @@ Below are some specific terms that are fundamental for the Singularity Database.
 
 For an easy overview these terms are listed as separate sections accessible through the menu to the left or through the links below.
 
-- [Tenant](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/tenant): The entity that owns all databases and identities.
-- [Group](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/group): A collection of members with its own database.
-- [Role](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/role): An access right that can be given to an identity, container, or object.
-- [Identity](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/identity): Members of the tenant, which can be an user, end-user, IoT sensor, or backend API.
-- [Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/database): Keeps a collection of containers and/or objects.
-- [Container](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/container): A collection of containers and/or objects.
-- [Object](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/object): Similar to a row in a table, keeps key/value data and streams.
-- [Item](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/item): Name used to denote both a container or object in a database result.
-- [ACL](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl): Access Control List that governs permissions in the database.
-- [Stream](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/stream): Binary or document based stream that make up an object.
-- [Key/Value](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/key-value): Meta-data for objects or containers.
-- [Datatype (Schema)](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/datatype): Controls the behavior of objects or defines schema for containers.
-- [Sharing](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/sharing): Share containers or objects with other identities.
-- [Publish and Subscribe](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/publish-and-subscribe): Publish or subscribe to contents outside the database.
+- [Tenant](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/tenant): The entity that owns all databases and identities.
+- [Group](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/group): A collection of members with its own database.
+- [Role](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/role): An access right that can be given to an identity, container, or object.
+- [Identity](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/identity): Members of the tenant, which can be an user, end-user, IoT sensor, or backend API.
+- [Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/database): Keeps a collection of containers and/or objects.
+- [Container](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/container): A collection of containers and/or objects.
+- [Object](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/object): Similar to a row in a table, keeps key/value data and streams.
+- [Item](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/item): Name used to denote both a container or object in a database result.
+- [ACL](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl): Access Control List that governs permissions in the database.
+- [Stream](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/stream): Binary or document based stream that make up an object.
+- [Key/Value](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/key-value): Meta-data for objects or containers.
+- [Datatype (Schema)](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/datatype): Controls the behavior of objects or defines schema for containers.
+- [Sharing](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/sharing): Share containers or objects with other identities.
+- [Publish and Subscribe](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/publish-and-subscribe): Publish or subscribe to contents outside the database.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts>*
 
 ---
 
@@ -236,9 +236,9 @@ Give the tenant group no access. The Administrator group should have full access
 
 Give the user read and write permission on that container. Objects created in it will inherit the acl of that container.
 
-See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
+See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/acl>*
 
 ---
 
@@ -254,9 +254,9 @@ Each container can either be generic to accept any type of objects or tied to a 
 
 Security is defined by its ACL, and the permission can be adjusted for which identities, roles or groups may access it.
 
-See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
+See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/container>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/container>*
 
 ---
 
@@ -280,9 +280,9 @@ Each database has a quota that defines the usable storage size.
 
 Security is defined by its ACL, and the permission can be adjusted for which identities, roles or groups may access it.
 
-See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
+See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/database>*
 
 ---
 
@@ -300,9 +300,9 @@ Objects are defined as belonging to a specific datatype by its mime-type, root e
 
 Use of your own datatypes requires that they are stored in the `tenant://Settings/Datatypes` container.
 
-See also the CloudBackend Operations Platform section on [Datatypes](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes).
+See also the CloudBackend Operations Platform section on [Datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/datatype>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/datatype>*
 
 ---
 
@@ -318,9 +318,9 @@ Each group has an owner and meta-data describing the group. Gaining access to a 
 
 > **Tip:** Identities can assume a new alias (optional) within each group they join, which will then become how they then will be known to other members of the group.
 
-See also the CloudBackend Operations Platform section on [Identities](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities).
+See also the CloudBackend Operations Platform section on [Identities](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/group>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/group>*
 
 ---
 
@@ -338,9 +338,9 @@ The number of identities is limited by the price plan being subscribed to by the
 
 Each identity can be associated to a price plan in the subscription system that give access to a specific quota for the database or other features that the identity will have access to.
 
-See also the CloudBackend Operations Platform section on [Identities](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities).
+See also the CloudBackend Operations Platform section on [Identities](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/identity>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/identity>*
 
 ---
 
@@ -348,9 +348,9 @@ See also the CloudBackend Operations Platform section on [Identities](https://ro
 
 Item is a common word to describe what is held in a container, i.e. sub-containers and objects.
 
-See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
+See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/item>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/item>*
 
 ---
 
@@ -368,9 +368,9 @@ Key/values are commonly used to store sensor reading and IoT data as it makes mo
 
 When using containers like a table, the key/values of objects stored in it will become like the columns in the table. It is preferable to define a datatype with these key/values and set the datatype as a schema for the container (similar to defining the schema and columns for a relational table).
 
-See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
+See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/key-value>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/key-value>*
 
 ---
 
@@ -385,9 +385,9 @@ The object can have zero or multiple BLOBs (streams), with each stream up to 2GB
 Security is defined by its ACL, and the permission can be adjusted for which identities, roles or groups may access it.
 
 
-See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
+See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/object>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/object>*
 
 ---
 
@@ -403,9 +403,9 @@ Publishing will override any ACL defined for the container or object and will be
 
 > **Note:** Access create, receive or update can not be set in combination with visibility public.
 
-See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
+See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/publish-and-subscribe>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/publish-and-subscribe>*
 
 ---
 
@@ -424,9 +424,9 @@ If needed separate roles can also be created for others, e.g., testers, support 
 > **Note:** End users will normally not be assigned to any role, but will use a dedicated deployed application.
 > End users without a role will not be able to login to the developer environment.
 
-See also the CloudBackend Operations Platform section on [Identities](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities).
+See also the CloudBackend Operations Platform section on [Identities](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/role>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/role>*
 
 ---
 
@@ -434,9 +434,9 @@ See also the CloudBackend Operations Platform section on [Identities](https://ro
 
 Objects or containers belonging to an identity or group may be shared with other Identities, Roles, or Groups as defined in the ACL.
 
-See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
+See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/sharing>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/sharing>*
 
 ---
 
@@ -456,9 +456,9 @@ If an object is shared, deleted, renamed, or moved to another container, all str
 
 E.g., an e-mail message would be an object that can consist of a body message as the first stream and the attachments would be the following following streams.
 
-See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
+See also the CloudBackend Operations Platform section on [Database Explorer](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/database-explorer).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/stream>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/stream>*
 
 ---
 
@@ -476,7 +476,7 @@ The admin is also able to see statistics and inspect shared data for the tenant 
 
 `icon://policeman` Additional roles may be configured for other purposes and applied to users or managers.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/tenant>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/tenant>*
 
 ---
 
@@ -491,9 +491,9 @@ Data can be common textual format e.g., xml, txt, svg, json, csv etc.; as well a
 
 Those data can then be used by your developed apps.
 
-See also the CloudBackend Operations Platform section on [Webhooks](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks).
+See also the CloudBackend Operations Platform section on [Webhooks](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/webhooks).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/webhook>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/concepts/webhook>*
 
 ---
 
@@ -519,11 +519,11 @@ It is easy to inspect your databases, see examples below:
 
 ### Graphical interface
 
-[Database](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity) Explorer. tool in the left panel. Click on `home` then `tenant`.
+[Database](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity) Explorer. tool in the left panel. Click on `home` then `tenant`.
 
 ### Command line interface
 
-[CLI](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity) Command Line Interface tool in the left panel.
+[CLI](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity) Command Line Interface tool in the left panel.
 
 **Type commands**
 
@@ -554,7 +554,7 @@ rm mytempdata.xml
 
 Click on Documentation in the left menu to learn more.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/default-databases>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/default-databases>*
 
 ---
 
@@ -583,7 +583,7 @@ The following primitives are available to work with when modeling:
 
 The database allows monitoring of data consumption by group and users, as well as setting quotas for identities and groups. It is possible to define roles for the tenant account and for any of the groups created.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/designing-the-data-model>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/designing-the-data-model>*
 
 ---
 
@@ -600,7 +600,7 @@ To facilitate working with CloudBackend we provide several tools:
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started>*
 
 ---
 
@@ -624,7 +624,7 @@ Log in with username and password.
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started/onboarding>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started/onboarding>*
 
 ---
 
@@ -657,7 +657,7 @@ The Database Explorer, which is part of the database, is a visual tool to query 
 
 For more information, please see the Documentation drop down menu at the top, here documentation for all parts of the system is available.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started/singularity-database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started/singularity-database>*
 
 ---
 
@@ -679,7 +679,7 @@ It contains packages for Ubuntu Linux on x86 development environments. These inc
 
 More information in the [SDK releases on GitHub](https://github.com/CloudBackend/SDK_Ubuntu/releases).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started/the-sdks>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/getting-started/the-sdks>*
 
 ---
 
@@ -711,7 +711,7 @@ The hierarchy of a Graph database is implemented as Containers and Sub-Container
 
 #### Key/Value database
 
-Key/Value database has features often used in IoT solutions. The meta-data feature can be used to hold Key/Value pairs. When uploading a Stream, the defined datatypes will recognize many of the common meta-types and allow for automatic key/value extraction to be used as meta-data for the stream. Any data that you want to be able to search quickly and have returned in query results should be stored as key/value data, this can for instance be to/from/subject for an e-mail, name of a contact card, invoice number, amount and due date of invoices etc. See the [Object](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object) section [object data](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/object-data) part for a list of mime-types supported.
+Key/Value database has features often used in IoT solutions. The meta-data feature can be used to hold Key/Value pairs. When uploading a Stream, the defined datatypes will recognize many of the common meta-types and allow for automatic key/value extraction to be used as meta-data for the stream. Any data that you want to be able to search quickly and have returned in query results should be stored as key/value data, this can for instance be to/from/subject for an e-mail, name of a contact card, invoice number, amount and due date of invoices etc. See the [Object](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object) section [object data](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/object-data) part for a list of mime-types supported.
 
 #### Object store
 
@@ -723,7 +723,7 @@ CloudBackend's combination of hierarchical containers and JSON/XML documents as 
 
 #### Stream database
 
-The service supports streaming of binary objects represented by data streams that are attached to an object. E.g. one e-mail is represented as an object with meta-data of to/from/cc/subject as key/values, the text body of the e-mail is stored stream 0, and images and files in attachments as stream 1..n. Each stream of the object will have its own size, mime-type etc. Another example is an image, which is represented as an object with stream 0 being original image binary and stream 1, 2, 3 being thumbnails of different resolutions. Moving an object between different containers means that all streams and key/value data follows the moved object with a single operation. When uploading the first Stream, the database will recognize any mime-type or datatype defined in the datatypes configured and if applicable, automatic meta-data extraction into key/values will happen. Automatic meta-data extraction based on datatype will only happen for the first stream, subsequent streams will not overwrite the key/values. Mime-types will be stored as-is for each stream, even if not defined in a specific datatype, these mime-types are stored in the stream objects and not in the key/value meta-data. See the [Object](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object) section [object data](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/sdk/object/object-data) part for a list of mime-types supported.
+The service supports streaming of binary objects represented by data streams that are attached to an object. E.g. one e-mail is represented as an object with meta-data of to/from/cc/subject as key/values, the text body of the e-mail is stored stream 0, and images and files in attachments as stream 1..n. Each stream of the object will have its own size, mime-type etc. Another example is an image, which is represented as an object with stream 0 being original image binary and stream 1, 2, 3 being thumbnails of different resolutions. Moving an object between different containers means that all streams and key/value data follows the moved object with a single operation. When uploading the first Stream, the database will recognize any mime-type or datatype defined in the datatypes configured and if applicable, automatic meta-data extraction into key/values will happen. Automatic meta-data extraction based on datatype will only happen for the first stream, subsequent streams will not overwrite the key/values. Mime-types will be stored as-is for each stream, even if not defined in a specific datatype, these mime-types are stored in the stream objects and not in the key/value meta-data. See the [Object](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object) section [object data](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/sdk/object/object-data) part for a list of mime-types supported.
 
 #### Identity database
 
@@ -733,6 +733,6 @@ The Identity and Group features of CloudBackend is used to authenticate all acce
 
 Databases belonging to an identity or group may be used as virtual hard drives. The containers and objects may be used as folders and documents in the hard drive file system. ACL may be used as permissions on documents, and the properties of documents may be translated into meta-data (key/value) data. This allows one or all of an identity databases to be used as a file system and groups to be used as shared network drives among identities (file servers).
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/what-kind-of-database>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/get-to-know/what-kind-of-database>*
 
 ---

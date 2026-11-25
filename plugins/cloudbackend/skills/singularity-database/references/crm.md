@@ -2,7 +2,7 @@
 
 The built-in CRM sends the e-mails a deployed application's users get: verification and welcome mails, reminders, account deletion. Setting it up (Owner only, relay host), mails, rules, templates, settings and deploying them.
 
-6 topics from the published CloudBackend documentation, generated on 2026-11-07. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+6 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -39,9 +39,9 @@ Once some or all are filled out save the settings file via the save button and c
 
 #### Next
 
-- [Deploy Emails](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/deploy-emails)
+- [Deploy Emails](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/deploy-emails)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/add-settings>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/add-settings>*
 
 ---
 
@@ -192,9 +192,9 @@ In the next chapter a walk through of Rules and how to create / match them with 
 
 #### Next
 
-- [Create Rule](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-rule)
+- [Create Rule](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-rule)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-mail>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-mail>*
 
 ---
 
@@ -254,24 +254,24 @@ Defines what event / api triggers the associated mail.
 The following event types are possible to choose from and corresponding apis or criteria that triggers the event.
 
 - `signup` - Triggered by createUser
-- `share` - Triggered by [invite](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/database)
+- `share` - Triggered by [invite](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/database)
 - `renew` - Triggered by upcoming due date on subscription renewal.
 - `subscription` - Triggered by buying subscription. Notifies the end user the subscription started
 - `invoice` - Triggered by invoice option as payment option for subscription. Due date of invoice determine when its sent out.
-- `changePassword` - Triggered by [changePassword](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/tenant)
-- `cancel` - Triggered by [cancelSubscription](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/tenant)
+- `changePassword` - Triggered by [changePassword](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/tenant)
+- `cancel` - Triggered by [cancelSubscription](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/tenant)
 - `deleteUser` - Triggered by deleteUser type set to requestdelete
 - `mfa_change` - Triggered by POST action to cbeapi://users/{user_id}/mfa. Changing MFA status for an account.
 - `mfa_login` - Triggered by login
-- `sendVerificationCode` - Triggered by [sendVerificationCode](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/tenant)
-- `inviteAssociate` - Triggered by [inviteAssociate](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/operations/tenant)
+- `sendVerificationCode` - Triggered by [sendVerificationCode](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/tenant)
+- `inviteAssociate` - Triggered by [inviteAssociate](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/operations/tenant)
 - `invoice_reminder` - Triggered by due date of invoice.
 
 #### Next
 
-- [Create Template](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-template)
+- [Create Template](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-template)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-rule>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-rule>*
 
 ---
 
@@ -530,13 +530,13 @@ The following is the xml data that the main.xslt reads before sending out the e-
 </event>
 ```
 
-In the system what is marked as {$variable} in the xml above is substituted for actual data values in this final form. you can use all {$} variables and not have to create any translations for it in your custom xslt. However regarding [`button`](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/reference/components/button), `info`, `h1`, `p`, etc you need to make your own xslt translations with templates for the e-mail to understand how to format it.
+In the system what is marked as {$variable} in the xml above is substituted for actual data values in this final form. you can use all {$} variables and not have to create any translations for it in your custom xslt. However regarding [`button`](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/reference/components/button), `info`, `h1`, `p`, etc you need to make your own xslt translations with templates for the e-mail to understand how to format it.
 
 #### Next
 
-- [Add Banners and Settings](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/add-settings)
+- [Add Banners and Settings](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/add-settings)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-template>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-template>*
 
 ---
 
@@ -645,9 +645,9 @@ When done you will now have e-mails and rules in place for events in the system.
 
 #### Next
 
-- [Identities](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities)
+- [Identities](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/deploy-emails>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/deploy-emails>*
 
 ---
 
@@ -678,8 +678,8 @@ Now you have added all settings to be able to deploy. Once you have deploy e-mai
 
 #### Next
 
-- [Create Email](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-mail)
+- [Create Email](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/create-mail)
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/getting-started>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm/getting-started>*
 
 ---

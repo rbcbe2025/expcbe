@@ -2,7 +2,7 @@
 
 The proxy guide (configuration and process code) and the chatbot tutorial's proxy and process pages. references/ai-and-integrations-via-proxy.md builds on these; the code concept for binding a component to an external API is in xios3-app-basics references/recipes.md.
 
-5 topics from the published XIOS/3 documentation, generated on 2026-11-24. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+5 topics from the published XIOS/3 documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -18,7 +18,7 @@ In this section we will describe how to setup and use an API proxy. Specifically
 
 
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/proxy>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/proxy>*
 
 ---
 
@@ -58,7 +58,7 @@ To add any secrets they have to be passed as an xml-structure similar to the fol
 
 These secret tokens are saved securely on the server and not visible to any user once set. They can be overwritten at any time by the owner/admin of the current tenant. To use them in your proxy simply write `${MY_SECRET_TOKEN}` where otherwise the token would be placed.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/proxy/configuration>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/proxy/configuration>*
 
 ---
 
@@ -89,7 +89,7 @@ In the example above proxy_name would be whatever name you've given your proxy, 
 
 Here we simply call the api with the name we gave it when creating the channel. Depending on how it was configured in the initial proxy-file we can also pass override parameters in the body-element.
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/proxy/process-code>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/proxy/process-code>*
 
 ---
 
@@ -97,7 +97,7 @@ Here we simply call the api with the name we gave it when creating the channel. 
 
 ### The process code
 
-In this section we will learn how to create an AI agent using the [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/channel) and [callService](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callservice) operations. And how to display the conversation using [aliases](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases). We will be using the Mistral [conversation API](https://docs.mistral.ai/agents/agents). For the best performance with your agent it's recommended to upload documents which the agent can access, and to use the [Documents API](https://docs.mistral.ai/agents/tools/built-in/document_library), which is a variation of the [conversation API.](https://docs.mistral.ai/agents/agents) How this is done varies by API provider and falls outside the scope of this tutorial. In this tutorial we will simply look at connecting to and chatting to an agent, but be aware that this exists and is the best way of setting up a chatbot agent for your specific need.
+In this section we will learn how to create an AI agent using the [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/channel) and [callService](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/callservice) operations. And how to display the conversation using [aliases](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases). We will be using the Mistral [conversation API](https://docs.mistral.ai/agents/agents). For the best performance with your agent it's recommended to upload documents which the agent can access, and to use the [Documents API](https://docs.mistral.ai/agents/tools/built-in/document_library), which is a variation of the [conversation API.](https://docs.mistral.ai/agents/agents) How this is done varies by API provider and falls outside the scope of this tutorial. In this tutorial we will simply look at connecting to and chatting to an agent, but be aware that this exists and is the best way of setting up a chatbot agent for your specific need.
 
 The things that our process code need to do are the following:
 
@@ -153,11 +153,11 @@ The things that our process code need to do are the following:
   </proccess>
 ```
 
-The first step for our process is setting up a [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/channel). This allows us to use the proxy we defined earlier, with our secret API key. We use this channel on in our [callService](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callservice) operation, which allows us to make direct API calls to a specific endpoint.
+The first step for our process is setting up a [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/channel). This allows us to use the proxy we defined earlier, with our secret API key. We use this channel on in our [callService](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/callservice) operation, which allows us to make direct API calls to a specific endpoint.
 
-There are several important points to take of note of in the [callService](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callservice) operation. Declaring the body of our request to be of type `json` will automatically set the content type headers to json, allowing us to avoid explicitly declaring them. We also explicitly declare the method of the request and set it to *POST*, so that the proxy knows what method to use to send the request to the endpoint. Finally we also declare the variable in which the response will be received in the `document` tag. The response from our endpoint looks something like this, where the `id` of the response is the identifier of our new chatbot agent.
+There are several important points to take of note of in the [callService](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/callservice) operation. Declaring the body of our request to be of type `json` will automatically set the content type headers to json, allowing us to avoid explicitly declaring them. We also explicitly declare the method of the request and set it to *POST*, so that the proxy knows what method to use to send the request to the endpoint. Finally we also declare the variable in which the response will be received in the `document` tag. The response from our endpoint looks something like this, where the `id` of the response is the identifier of our new chatbot agent.
 
-Finally we declare the `conversationDoc` [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) that will be used to display our questions and responses in the view. We've declared an initial message to show the user as they enter the chat.
+Finally we declare the `conversationDoc` [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) that will be used to display our questions and responses in the view. We've declared an initial message to show the user as they enter the chat.
 
 **Mistral API response**
 
@@ -195,7 +195,7 @@ Finally we declare the `conversationDoc` [alias](https://robinsbackend-robinsbac
 
 The Mistral conversations API has separate endpoints for starting and continuing conversations. This code will create a conversation if one does not already exists and pass in the `agentId` variable we created in the `init` step. We capture the response from the AI by xpathing to the content and storing it in our `aiResponse` variable, the response will be appended to the chat in a later step.
 
-An important thing to take note of here is the `eval` attribute on the `<body>` tags. This allows us to escape and evaluate XIOS/3 aliases inside the JSON string, between "(% %)" markers. The [callService](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callservice) is a complex operation and this tutorial does not cover all of its use cases.
+An important thing to take note of here is the `eval` attribute on the `<body>` tags. This allows us to escape and evaluate XIOS/3 aliases inside the JSON string, between "(% %)" markers. The [callService](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/callservice) is a complex operation and this tutorial does not cover all of its use cases.
 
 **Process code to open and continue a conversation**
 
@@ -246,7 +246,7 @@ An important thing to take note of here is the `eval` attribute on the `<body>` 
 
 #### Handling the response
 
-The following code is the full code for handling messaging with our chatbot. It will disable and re-enable the chat as we wait for responses. It will also append the messages and responses to the `conversationDoc` [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases).
+The following code is the full code for handling messaging with our chatbot. It will disable and re-enable the chat as we wait for responses. It will also append the messages and responses to the `conversationDoc` [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases).
 
 **Full conversation handling code**
 
@@ -330,7 +330,7 @@ The following code is the full code for handling messaging with our chatbot. It 
 
 #### Resetting our conversation
 
-To reset the conversation we must reset the `conversationId` [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) to force a new conversation when we send a message. We must also reset the `conversationDoc` [alias](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) so that the message history in the view is reset.
+To reset the conversation we must reset the `conversationId` [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) to force a new conversation when we send a message. We must also reset the `conversationDoc` [alias](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/process-development/aliases) so that the message history in the view is reset.
 
 **Resetting the conversation**
 
@@ -347,18 +347,18 @@ To reset the conversation we must reset the `conversationId` [alias](https://rob
 </step>
 ```
 
-[Next](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/chatbot-tutorial/complete) we will look at the complete code.
+[Next](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/chatbot-tutorial/complete) we will look at the complete code.
 
 Version: 2026-02-12
 Author: Pontus Grandin
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/chatbot-tutorial/process>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/chatbot-tutorial/process>*
 
 ---
 
 ## Setting up a proxy
 
-In this tutorial we will learn how to set up an AI chatbot, which could be used for answering questions about products or provided services. Just like in the [User Actions](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/useractions-tutorial) tutorial we will be creating an [application component](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/types), which are components that are practically applications in their own right. In this tutorial we will learn how to set up an AI chatbot using [Mistral's free API tier](https://docs.mistral.ai/getting-started/quickstarts/studio/activate-and-generate-api-key), but this process should be similar for other API providers.
+In this tutorial we will learn how to set up an AI chatbot, which could be used for answering questions about products or provided services. Just like in the [User Actions](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/useractions-tutorial) tutorial we will be creating an [application component](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/guides/ui-development/using-components/types), which are components that are practically applications in their own right. In this tutorial we will learn how to set up an AI chatbot using [Mistral's free API tier](https://docs.mistral.ai/getting-started/quickstarts/studio/activate-and-generate-api-key), but this process should be similar for other API providers.
 
 ### Configuring the proxy
 
@@ -409,7 +409,7 @@ Once we press finish the proxy should appear on the proxy page, and the proxy sh
 
 #### Final proxy configuration
 
-To finish our setup we want to add two more headers and allow users to send data using the POST and PUT HTTP methods. To achieve this we will add two `<http-header>` elements where we want to set the `Content-Type` and `Accept` headers to `application/json`. This will allow all requests routed through the proxy to pass along these headers to the endpoint. This allows us to omit these headers when we later call the endpoints using the [callService](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/callservice) operation.
+To finish our setup we want to add two more headers and allow users to send data using the POST and PUT HTTP methods. To achieve this we will add two `<http-header>` elements where we want to set the `Content-Type` and `Accept` headers to `application/json`. This will allow all requests routed through the proxy to pass along these headers to the endpoint. This allows us to omit these headers when we later call the endpoints using the [callService](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/callservice) operation.
 
 Finally to allow our users to send dynamic data through POST and PUT requests we need to create a `<http-data>` element with the `allow-override` attribute set to `true`. Our final proxy should look something like this.
 
@@ -426,11 +426,11 @@ Finally to allow our users to send dynamic data through POST and PUT requests we
 </proxy>
 ```
 
-In the [next](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/chatbot-tutorial/view) part of the tutorial will look at using the proxy we have made with the [channel](https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/reference/operations/channel) operation, and creating view code for the chat.
+In the [next](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/chatbot-tutorial/view) part of the tutorial will look at using the proxy we have made with the [channel](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/reference/operations/channel) operation, and creating view code for the chat.
 
 Version: 2026-02-11
 Author: Pontus Grandin
 
-*Source: <https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/xios3/docs/tutorials/chatbot-tutorial/proxy>*
+*Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/xios3/docs/tutorials/chatbot-tutorial/proxy>*
 
 ---
