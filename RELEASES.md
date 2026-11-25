@@ -3,7 +3,8 @@
 One row per release, appended by `scripts/release.sh` (stage i). The version is
 `plugins/cloudbackend/.claude-plugin/plugin.json`; the tag is `v<version>`; the marketplace, the update index and the
 zip are copied into the hub's `public/public/plugin/`, which the developer portal serves at
-`https://robinsbackend-robinsbackend-portalx.cloudbackend.cloud/plugin/` (older zips stay there), and `main` with its
+`https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/plugin/` (older zips stay there; the portal's share
+before 2026-11-25, portalx, was lost on CloudBackend's side, so its marketplace address no longer answers), and `main` with its
 tags is pushed to the `mirror` remote, the GitHub repository `rbcbe2025/expcbe` the marketplace reads (public since the
 evening of 2026-11-04).
 
