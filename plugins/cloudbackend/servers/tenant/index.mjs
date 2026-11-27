@@ -935,7 +935,7 @@ export const TOOLS = {
 
 // ---- MCP over stdio ---------------------------------------------------------------------------------------------------
 
-const INSTRUCTIONS = 'The plugin\'s own route to a CloudBackend PaaS account, for when the deploy connector cannot sign in. tenant_signin gives the user a sign-in page on this computer: the password goes from their browser to CloudBackend and never through the conversation; never ask for it. Then upload_project (a local package folder, linted first), deploy (Development) and verify_deployment (served bytes). enable_deploy_connector creates the account\'s sign-in realm: an account change only the owner may make, so ask first.';
+const INSTRUCTIONS = 'The plugin\'s route to a CloudBackend PaaS account; CloudBackend\'s own deploy connector is optional and added by hand. tenant_signin gives the user a sign-in page on this computer: the password goes from their browser to CloudBackend and never through the conversation; never ask for it. Then upload_project (a local package folder, linted first), deploy (Development) and verify_deployment (served bytes). enable_deploy_connector creates the account\'s sign-in realm: an account change only the owner may make, so ask first.';
 const send = (msg) => process.stdout.write(JSON.stringify({ jsonrpc: '2.0', ...msg }) + '\n');
 export async function handle(req) {
   const { id, method, params = {} } = req;
