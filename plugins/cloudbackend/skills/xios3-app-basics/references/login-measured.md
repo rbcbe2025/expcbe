@@ -52,4 +52,4 @@ Not measured yet:
   signed-in user is still to come.
 
 - **Sign-up and reset on a tenant without the CRM.** The flows send e-mail through the tenant's CRM. Keep both links,
-  and set up the CRM before Production (cloudbackend-saas-launch, step 4).
+  and set up the CRM before Live (cloudbackend-saas-launch, step 4).

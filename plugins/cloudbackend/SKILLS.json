@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-25",
+  "generated": "2026-11-28",
   "skills": [
     {
       "name": "cloudbackend-rest-api",
@@ -10,10 +10,10 @@
     },
     {
       "name": "cloudbackend-saas-launch",
-      "version": "2026.11.25",
-      "content_hash": "7441cdf69fe9d2ff",
-      "sha256": "a0f544adc6594bfec96f139b688e7e528fb93cc52795c5f3b65e416f188c142a",
-      "files": 16
+      "version": "2026.11.28.2",
+      "content_hash": "0a3853a15d4e1d56",
+      "sha256": "c49c2109b4d75947283d04a338014d508dc7e96e04fe4bd3e462c46924720869",
+      "files": 17
     },
     {
       "name": "cloudbackend-sdk",
@@ -24,17 +24,17 @@
     },
     {
       "name": "singularity-database",
-      "version": "2026.11.25",
-      "content_hash": "5c7f91ee3d121b99",
-      "sha256": "764d4e2eb8c7a9fe487af2570028b086246b342f51d452099ff21373a6cb596b",
+      "version": "2026.11.27",
+      "content_hash": "17752ed009b620ba",
+      "sha256": "c41a752d0cd2e5da89fabd6af07af8d5181ed859ca0832379c2d53c7d547a444",
       "files": 10
     },
     {
       "name": "xios3-app-basics",
-      "version": "2026.11.25",
-      "content_hash": "225e1c2f15a761b6",
-      "sha256": "92a83b2effa6cac5d2746289b886c03231ba3cd8c33bd1161d03d51a11c6566e",
-      "files": 38
+      "version": "2026.11.28",
+      "content_hash": "084e0fec8f7af954",
+      "sha256": "434c9af6e2617e1e707e8ec63dd64fbd94feed486fa774b161f989b6554190fc",
+      "files": 39
     }
   ]
 }

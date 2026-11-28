@@ -13,7 +13,7 @@ rules for pushing files by hand. Routes and their order: `build-phases.md` (W0).
 | `tenant_status` | Signed in or not, identity and role, whether CloudBackend still accepts the session, whether the realm exists; `wait_seconds` waits for an open page | `signed_in`, `role`, `deploy_connector` |
 | `list_projects` | The folders under `home://Applications/` and `tenant://Applications/`, and the identity's webshares with what each serves and its stage | which address already serves what |
 | `upload_project` | Copies the local package folder (`path`, the one holding `index.xml`) to `home://Applications/<project_name>/`; lints it with profile `build` first and uploads nothing while an error stands; binaries included; dot-files and `node_modules` left out. **Replaces by path; deletes nothing.** | `uploaded`, `lint`, `on_the_tenant_not_in_the_folder` |
-| `deploy` | Writes the boot page `index.html` and `.types.xml` into the project, creates the webshare or reuses the one that already serves this project, adds or updates its own Development card in the console's pipeline record, never replacing it (one it cannot read, or that changes meanwhile, is left as it is), returns `https://<tenant>-<identity>-<name>.cloudbackend.cloud`. Development only; refuses an address that serves another project | `url`, `share` (created or reused), `pipeline` |
+| `deploy` | Writes the boot page `index.html` and `.types.xml` into the project, creates the webshare or reuses the one that already serves this project, adds or updates its own card in the console's pipeline record (the tenant-wide Deployments board shows it under Private Preview), never replacing it (one it cannot read, or that changes meanwhile, is left as it is), returns `https://<tenant>-<identity>-<name>.cloudbackend.cloud`. That card only; refuses an address that serves another project | `url`, `share` (created or reused), `pipeline` |
 | `verify_deployment` | Fetches the served files anonymously and compares their bytes with the local folder (`path`) or the stored copy; names the boot page when it answered instead; reads the login gate from the pipeline record and the served manifest | `verdict`, `index_xml_match`, `mismatches` with `served_is_fallback_page`, `share.bound`, `login_gate.verdict`, `slug_bound_to` |
 | `enable_deploy_connector` | Creates the account's sign-in realm (owner or administrator only) | `realm`: created or already exists |
 | `tenant_signout` | Ends the session at CloudBackend and deletes it from the computer | `signed_out` |
@@ -21,8 +21,8 @@ rules for pushing files by hand. Routes and their order: `build-phases.md` (W0).
 The session lives in a file only the user can read and is never in a tool result; a 401 deletes it, and
 `tenant_signin` starts a new one.
 
-Where the sign-in page opens, and never over SSH: `build-phases.md`, W0. Promotion beyond Development is a console
-step on every route.
+Where the sign-in page opens, and never over SSH: `build-phases.md`, W0. Test, Live and a domain are console
+steps on every route.
 
 ## Facts a tool cannot hide
 
@@ -41,20 +41,20 @@ step on every route.
   is taken for good, so deploy under a new name (`<name>v2`) and point the domain at it.
 - **The pipeline record.** One per project: `tenant://Settings/Pipelines/<project>/<project>_pipeline`. A
   record elsewhere is not listed on the Deployments page though the share works. The console's boards save
-  their cached copy whenever they draw: close them before a deploy, which edits only its own Development
-  card. Shared, Staging and Production stay console steps; promotion to Staging copies the project to
-  `tenant://Deployments/<project>_<YYYYMMDDHHMMSS>`.
+  their cached copy whenever they draw: close them before a deploy, which edits only its own card.
+  Test and Live stay console steps; each **Test as** freezes a copy (in a project,
+  `p<project id>://Deployments/Code/<version>_<YYYYMMDDHHMMSS>`) and gives it a new address.
 - **A deployed container is public.** Everything in it is readable at the address before the login
   screen; `references/project-layout.md` says what may be there.
-- **The gate can drop.** The login gate is the pipeline record's login configuration plus a stamp in the
-  served manifest. A redeploy, or a promotion done by a script, can serve the app without it for minutes
+- **The gate can drop.** The login gate is the `<login>` stamp in the served manifest (the 2026-11 board keeps no
+  login configuration of its own). A redeploy, or a promotion done by a script, can serve the app without it for minutes
   (measured once: about two). Verify after every change that touches the deployment, not once.
 
 ## The console route and the REST rules
 
 On the console route files reach the tenant through the console's Upload Files dialog (CLI `upload`, after `cd` into the
 app's container; it replaces by file name), the VS Code / Cursor extension, or your own REST calls with
-the cloudbackend-rest-api skill. For sub-folders, "Folders first" in `references/deployment-pipeline.md`:
+the cloudbackend-rest-api skill. For sub-folders, "Folders first" in xios3-app-basics `references/console-upload.md`:
 create the containers before their files, each folder into its own container.
 
 Rules that cost a push cycle each when learned the hard way (REST):

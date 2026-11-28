@@ -35,9 +35,9 @@ references. Dates are given because the console changes.
 - An identity without a role that opens the console's address is refused with "Unfortunately your role
   does not have permission to use this tool". That is by design (end users have no role), but the wording
   reads as a product fault to a customer: never give a customer the console's address.
-- The same wording met the first other identity at a **Private** Development deployment's address; it
-  passed after Make Public, but a session collision (next point) was under way at the same time, so the
-  cause is not settled. Make Public before any second-identity test either way.
+- The same wording met the first other identity at a **Private** Development deployment's address on the
+  earlier board (2026-10-07). The board measured 2026-11-27 has no Make Public: a **Private Preview** lets only
+  its owner sign in, so a second-identity test needs the version in **Test**.
 - **One session per browser profile** across every `*.cloudbackend.com` and `*.cloudbackend.cloud` host.
   Signing in as a test identity in a normal tab replaced the console's session. Test identities belong in a
   private window.

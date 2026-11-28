@@ -98,7 +98,7 @@ free v1 | invoice | price plans at launch step 6
 
 ## Template: `docs/README.md`
 
-Sections: What it is · Run it (the Development address; a private window for test identities) · Structure
+Sections: What it is · Run it (the deploy's address; a private window for test identities) · Structure
 (the tree above, one line per folder) · Deploy (lint, upload, deploy, verify; the console steps for
 promotion) · Where the context file is · Version (the `<about version>`).
 

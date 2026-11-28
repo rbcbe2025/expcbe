@@ -2,7 +2,7 @@
 
 The hand-written end-to-end guide from the CloudBackend documentation hub: the order of work for a first paid web application on CloudBackend PaaS, with a check for each step and the items the product has not settled yet. Its links point at the published manual. Read the Pre-flight section and the current step's section, not the whole file.
 
-1 topics from the published CloudBackend documentation, generated on 2026-11-25. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
+1 topics from the published CloudBackend documentation, generated on 2026-11-28. Each ends with its public source link; prefer the link when a detail matters, this file is a snapshot.
 
 ## Contents
 
@@ -12,7 +12,7 @@ The hand-written end-to-end guide from the CloudBackend documentation hub: the o
 
 The end-to-end path for a developer building their first paid web application on CloudBackend PaaS: create the tenant, model the data, build a XIOS/3 application, give it a branded login screen, let users sign up, organise them into teams and roles, sell subscriptions through price plans, and deploy to a custom domain. Each step says what to do, the rule that is easiest to get wrong, how to check that it worked, and which published page has the detail. The published manual covers every step, but spread over the Singularity database manual, the console pages and the XIOS/3 deployment guide; this page puts them in order.
 
-Written 2026-10-06 against the documentation in this corpus and the live sign-up form at db.cloudbackend.com. Where a feature is announced but not released, it says so. Revised 2026-10-07 after the first launch that followed it end to end, on an early-access tenant: the pre-flight, the branches for a tenant that has no CRM or Price plans section, the rules marked *measured* and the deployment timeline in step 7 come from that run, not from the manual.
+Written 2026-10-06 against the documentation in this corpus and the live sign-up form at db.cloudbackend.com. Where a feature is announced but not released, it says so. Revised 2026-10-07 after the first launch that followed it end to end, on an early-access tenant: the pre-flight, the branches for a tenant that has no CRM or Price plans section, the rules marked *measured* and the deployment timeline in step 7 come from that run, not from the manual. Revised 2026-11-27 for the console's five-lane Deployments board (My Code, Private Preview, Project, Test, Live), measured on a throwaway project through two releases: step 7 and where step 3's login is set.
 
 ### Before you start: the tenant
 
@@ -31,7 +31,7 @@ Then, following [Onboarding](https://robinsbackend-robinsbackend-portal.cloudbac
 2. Create a **Developer** identity for building and testing, so test data lands in its database and not in the administrator's. Only Owner and Administrator exist as roles from the start, and an identity without a role cannot sign in to the console, so first create a role such as *Developer* (Identities › Manage Roles › Create…), give it at least read on Identities and Roles ([Role ACLs](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/role-acls)), and assign it to the identity.
 3. Identities with a role sign in at `https://{tenant}.db.cloudbackend.com`; the Owner signs in at db.cloudbackend.com.
 
-The tenant name also appears in every deployment address: `https://{tenant}-{username}-{deployment}.cloudbackend.cloud` for a private development deployment and `https://{tenant}-{groupId}-{deployment}.cloudbackend.cloud` for shared ones ([Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments)).
+The tenant name also begins every deployment address: `https://{tenant}-{username}-….cloudbackend.cloud` for your own Private Preview, and `https://{tenant}-{project id}-{32 hex}.cloudbackend.cloud` for each version in Test and Live, a new one per version (step 7, measured 2026-11-27; the manual's [Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments) page still describes the earlier board).
 
 **Check it worked:** the Account section shows the tenant and your roles; the Identities section lists the Administrator and Developer identities, and the Developer identity can sign in at `https://{tenant}.db.cloudbackend.com`.
 
@@ -106,12 +106,12 @@ In the manifest:
 
 The xios3-app-basics skill's design kit writes this element from the app's design, with a dark grid page like the CloudBackend PaaS sign-in (`login-bg.svg`) and a text-mark logo (`designkit.py app --login`), and checks it (`designkit.py login`).
 
-Without editing the manifest, open **Configure Login Page…** on a Staging card in the Deployments section. The configuration is kept per client and written into the Production copy when the card is promoted ([Managing Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/managing-deployments)). Tick **Show EULA on user creation** there, and fill in both the create and the reset texts.
+Without editing the manifest, open the app in the project's **Development** tab and choose **Add login screen...** (**Edit login screen...** once there is one). Its **Configure Login** form (Branding, Sign In, Sign Up, Password Reset, Verify) writes this same element into the app's `index.xml` when you save; nothing is kept on a deployment card. Tick **Show EULA on user creation** there, and fill in both the create and the reset texts.
 
-Measured 2026-10-07:
+Measured 2026-11-27 on the console's Deployments board:
 
-- The manifest's `<login>` renders a working screen on every deployment, but the console counts a login screen as **Configured** only after the Staging card's configurator has saved. Do both: the manifest for development, the configurator at step 7.
-- In the configurator, only a full `https://` URL to the logo works: its own folder pick writes a path (`external/logo.svg`) that resolves to nothing, and a `data:` URL breaks its form. Every host before Staging is replaced on promotion (step 7), so the durable values are the Staging card's host, which Production keeps, or your own domain.
+- The login is part of the app's code. Set it in Development **before Test as** (step 7): each version in Test and Live keeps the login it was frozen with, and the Live card's **Login:** row reads it from that version's `index.xml` (Configured or Not Configured). No deployment card has a login action any more.
+- Keep the logo a file next to `index.xml` (below): it resolves against the app, so it follows each version to its new address. A logo given as an address on a Test or Live host breaks when that version leaves Live; if you type an `https://` address into the form, use your own domain. On 2026-10-07 the earlier configurator's folder pick wrote a path (`external/logo.svg`) that resolved to nothing and a `data:` URL broke its form; the 2026-11 form was not re-measured for either.
 
 Measured 2026-11-05 on a Development deployment:
 
@@ -119,10 +119,10 @@ Measured 2026-11-05 on a Development deployment:
 - **Create an account** opens the sign-up page (names, e-mail, username, a password of at least 16 characters, repeated), and **Forgot your password?** opens the reset page; `button`, `buttonColor`, `linkColor` and `createPrompt` take effect.
 - The card is 470 px wide, so on a phone narrower than that it runs off the screen. The boot page that the CloudBackend plugin's tenant server writes fits it to the screen on all three pages (measured at 375 px); a deployment made with the console's Deploy Wizard keeps the overflow. The responsive card itself is the login application's to fix; it has been reported.
 - Without a published `Tenant` container, the login's lookup of the tenant's licence text answers 404 in the browser console; the screen works.
-- On a tenant without the CRM, the sign-up and reset flows may not finish (seen on 2026-10-07 with the earlier login application, not measured again). Keep both links on every app, a team tool included, set up the CRM before Production (step 4), and until then create customer accounts yourself (4b).
+- On a tenant without the CRM, the sign-up and reset flows may not finish (seen on 2026-10-07 with the earlier login application, not measured again). Keep both links on every app, a team tool included, set up the CRM before Live (step 4), and until then create customer accounts yourself (4b).
 - Collect the brand assets now: the logo file (SVG, uploaded next to `index.xml`), the title, the description and the copyright holder.
 
-**Check it worked:** the deployment's login shows the three ways in (Log in, Forgot your password?, Create an account) and each opens its page; the configurator's Preview shows your logo and colours, and the deployment's properties panel says a login screen is configured.
+**Check it worked:** the deployment's login shows the three ways in (Log in, Forgot your password?, Create an account) and each opens its page with your logo and colours; the app's `index.xml` in Development carries the `<login>` element, and once a version is in Live its card's **Login:** row says Configured.
 
 ### 4. Let users sign up
 
@@ -141,7 +141,7 @@ People who sign up belong to your tenant and are your legal responsibility; the 
 This changes how accounts are made, not the login screen: the app keeps all three ways in (step 3). Until the CRM exists in your console, the sign-up and recovery flows may not finish, because their mail cannot go out, and the in-application `createUser` needs a captcha token the manual does not document. Onboard each customer by hand and write the steps down as a runbook in the project, so the second customer costs five minutes:
 
 1. **Identities › Create**: username (lowercase letters and digits are safe), the customer's e-mail, a first password. Assign **no role**.
-2. Send the customer the **Production address** from step 7 and nothing else. The console address must never reach a customer: a role-less identity that opens it is refused with "Unfortunately your role does not have permission to use this tool", and a customer who reads that assumes your product is broken.
+2. Send the customer **your domain** from step 7 and nothing else (without a domain, the Live address, with a word that it changes at every release). The console address must never reach a customer: a role-less identity that opens it is refused with "Unfortunately your role does not have permission to use this tool", and a customer who reads that assumes your product is broken.
 3. Ask them to change the password at first sign-in. If the Forgot your password? flow does not finish before the CRM exists, an Administrator resets the password in Identities.
 4. Keep a customer register in the project (identity, e-mail, plan, start date, invoice reference) and a log of every time you look at a customer's data with their consent. Add offboarding: remove the identity, which removes their `home://` data.
 
@@ -206,30 +206,31 @@ Sell the first subscriptions outside the platform: a price and interval agreed i
 
 ### 7. Deploy and go live
 
-([Application Deployment](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment), [Managing Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/managing-deployments), [tutorial](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/tutorials/tutorials/application-deployment))
+([Application Deployment](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment), [Managing Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/managing-deployments), [tutorial](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/tutorials/tutorials/application-deployment); they describe the earlier board)
 
-1. In Projects, select the application and choose **Deploy**. The deployment name may contain lowercase letters and digits only, because it becomes part of the host name.
-2. From the `home` drive you get a private **Development** deployment served live from your source. Make it public and promote it to **Shared** to work on it with your team.
-3. Test it, choose **Mark Verified**, and promote it to **Staging**, a snapshot that later edits do not change. Configure the login page here.
-4. Verify again and promote to **Production**. **Connect Domain** requests a Let's Encrypt certificate; point the domain's `A` record at `83.140.241.4`.
+A project's **Deployments** tab has five lanes: **My Code** and **Private Preview** (yours alone), **Project** (the code in Development), **Test** (up to three frozen versions) and **Live** (up to two, what your users see).
+
+1. In the project's **Development** tab, run **Validate**, and the plugin's `lint_project` where it is connected: the board checks nothing, and there is no Deploy Anyway. Set the login now (step 3).
+2. To try it privately: Project › **Copy to My Code**, then My Code › **Private Preview**, at `https://{tenant}-{username}-….cloudbackend.cloud`. The plugin's tenant server deploys there too, a Private Preview card on the tenant-wide board.
+3. Project › **Test as 1.1** freezes version 1.1 at an address of its own. Test it as a customer would, then **Mark as Verified**.
+4. **Make Live** (answer **Go live?**), then **Connect Domain**: the domain's `A` record points at `83.140.241.4`, with no other A or AAAA records, and the console requests the certificate.
 
 Everything in a deployed container is publicly readable. Keep secrets out of it.
 
-The same pipeline as it was measured on 2026-10-07, with what each click does to the address:
+Measured 2026-11-27 on a throwaway project through two releases:
 
 | Click | What happens | Address afterwards |
 | --- | --- | --- |
-| Projects › **Deploy** | The wizard verifies the package. Expect two complaints it is right to ignore with **Deploy Anyway**: `'process' does not allow attribute 'version'` (so leave `version` off `<process>`) and `'proxy' is not a valid child of 'operation'` for the documented proxy channel. It adds `index.html`, a `.types.xml` and an `external/` folder to the deployed copy. The card is **Private**. | `https://{tenant}-{username}-{deployment}.cloudbackend.cloud` |
-| Right-click the card › **Make Public** | Do this before any test as a customer. On the measured run the first sign-in by another identity at the Development address was refused with the role-permission wording and passed after Make Public, but a browser-session collision (below) was happening at the same time, so which of the two caused the refusal is not settled. | unchanged |
-| **Promote to Shared** | The card **moves**: the Development column empties and the Development host answers 404 within seconds. | `https://{tenant}-{groupId}-{deployment}.cloudbackend.cloud` |
-| **Mark Verified**, **Promote to Staging** | Moves again; the Shared host dies. The snapshot's host carries the promotion time. | `https://{tenant}-{groupId}-{deployment}_{timestamp}.cloudbackend.cloud` |
-| Staging card › **Configure Login Page…** | Set the logo to `https://` + the Staging host + `/logo.svg` (step 3), check the texts and the EULA box, save. The properties panel now says Login: Configured. | unchanged |
-| **Mark Verified**, **Promote to Production** | Moves; **the host stays the same**. This is the first address that survives, so it is the one customers get. | unchanged |
-| **Connect Domain** | Your own address, independent of releases. | your domain |
+| Project › **Test as 1.1** | About ten seconds of "Building the version…"; Project becomes 1.2, a frozen 1.1 appears under it, Test gets 1.1, **Unchecked** | a new `https://{tenant}-{project id}-{32 hex}.cloudbackend.cloud` |
+| Test › **Mark as Verified** | The badge is the test status, not proof that the address answers | unchanged |
+| Test › **Make Live** | **Go live?** warns about a version not marked as tested; the card moves to Live | **unchanged** |
+| A changed file, **Test as 1.2**, **Make Live** | Live holds 1.2 and 1.1, each serving its own code; unchanged code is refused ("Move Failed") | 1.2 gets **its own new address** |
+| **Connect Domain** | Asks for the domain, then the `A` record, then requests the certificate; not completed on the measured run | your domain |
+| Live › **Remove from Live** | Unpublished; its frozen code stays under Project | **404** within seconds |
 
-Nothing before Staging is an address to give anyone, and a later release promotes a new timestamped snapshot, so connect a domain before customers bookmark the host, or plan to tell them the new address with each release. Write the customer a one-line address card: the Production address (or your domain), the username, and not the console.
+Every release has a new address and a Live address dies with its version, so the address to give customers is your domain. Connect it before anyone bookmarks a host, and move it to a new version with **Move Domain Here** on that version's Live card (not measured). The customer's address card: your domain (without one, the Live address, which changes at every release), the username, and not the console.
 
-**Check it worked:** the access URL in the properties panel opens the login screen with your logo; a role-less test identity, in a private window, signs in there and reaches the application; after the DNS change, your own domain does too, over HTTPS.
+**Check it worked:** after each move, the card's address serves the version's `index.xml` (`verify_deployment`, or open it yourself; any path answers 200, so a status code proves nothing); the Live address opens the login screen with your logo; a role-less test identity, in a private window, signs in there; after the DNS change, your own domain does too, over HTTPS.
 
 ### 8. After launch
 
@@ -252,9 +253,9 @@ Nothing before Staging is an address to give anyone, and a later release promote
 | CRM and Price plans on early-access tenants | Neither section existed in the console of an early-access tenant on 2026-10-07; both are documented in full. Steps 4b and 6b are the substitutes until they appear. | [CRM](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/crm), [Price plans](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/priceplans) |
 | Filtering on custom datatype keys | Custom keys showed *Indexed: NO* after upload and a filter on them was not applied, while extraction ran only from the CLI. The manual names a schema lock without saying where it is. Prove indexing with a control query before an application relies on it. | [Datatypes](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/datatypes) |
 | Who the proxy's `user id: 0` row admits | A proxy ACL row for user id 0 with Read is what let role-less identities call the proxy. Whether that means any signed-in identity or anyone at all, and so what the AI spend is exposed to, is not documented. | [Proxy](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/proxy) |
-| The Production address across releases | Staging → Production kept the host on the first release. Whether a second release replaces the Production address or keeps it was not measured. Connect a domain first. | [Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments) |
+| A domain across releases | On 2026-11-27 each release got a new address, so the domain is the only lasting one. Connect Domain was not completed and Move Domain Here not tried; the board's code says the domain moves to the Live version you pick. Try it on a second release before customers depend on it. | [Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/deployments) |
 | In-application sign-up without the CRM | `createUser` needs a captcha `token`; its source is not documented, so the console's Identities › Create is the only onboarding door on a tenant without the CRM. | [Create Identity](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/database/the-singularity/database-overview/identities/create-identity) |
-| The EULA box in the configurator | Read as unchecked after Save on 2026-10-07; whether it stuck is unknown. Check the Production login screen. | [Managing Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/managing-deployments) |
+| The EULA box in the configurator | Read as unchecked after Save on 2026-10-07; whether it stuck is unknown. Check the Live login screen. | [Managing Deployments](https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/guides/application-deployment/managing-deployments) |
 
 ### Checking the whole path
 
@@ -264,11 +265,11 @@ Nothing before Staging is an address to give anyone, and a later release promote
 | Pre-flight | The launch context says whether CRM and Price plans exist, how files reach the tenant, and that customer tests run in a private window. |
 | Data model | Every shared container has a datatype and an ACL granted to roles or groups; any key the application filters on passed the control query. |
 | Application | `index.xml` opens from Projects and the bound list follows changes in the database; the design brief and mood board are in the project and the user said yes to the direction; every write the application makes is read back from the stored document. |
-| Login screen | The configurator's Preview shows your brand; the properties panel says a login is configured. |
+| Login screen | The app's `index.xml` has the `<login>` element with all three ways in, set in Development before **Test as**; the Live card's **Login:** row says Configured. |
 | Sign-up | A test sign-up receives the verification mail and becomes an identity with no role, **or** (CRM absent) a hand-created role-less identity signs in at the deployment and is refused at the console, and the runbook and register exist. |
 | Teams and roles | A test user in one customer group cannot see another group's data, or, for individual customers, a role-less identity sees only its own data. Tested in a private window. |
 | Price plans | A test purchase writes a record to `/System/Purchases/`, **or** (Price plans absent) the first customer has a written price and an invoice reference in the register. |
-| Deploy | Production answers on your domain over HTTPS and shows the login screen with your logo; a test identity signs in there; no pre-Production address was given to anyone. |
+| Deploy | Your domain answers over HTTPS with the Live version and its login screen with your logo; a test identity signs in there; no address from the board was given to a customer. |
 
 *Source: <https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/cloudbackend/docs/authored/saas-launch-path>*
 

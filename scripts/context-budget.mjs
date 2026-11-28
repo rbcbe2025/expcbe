@@ -13,7 +13,10 @@ import {PLUGIN_DIR, fail} from './lib.mjs';
 
 // buildRunTokens: the plan of 2026-11-07 aimed at 22,000 (from ~57,000); the merge and the reference splits reached
 // ~27,900, the rest being per-phase material a full run reads. The limit holds what was reached; lower it as it drops.
-const LIMITS = {alwaysTokens: 800, skillBytes: 16384, descriptionChars: 500, buildRunTokens: 28000};
+// Raised to 28,700 on 2026-11-28 (Robin's choice): the Deployments board measured 2026-11-27 rewrote
+// deployment-pipeline.md (+4,500 bytes); moving its console-upload sections out and tightening launch-path step 7
+// took back 3,000, and the rest (~28,600) is the new board's click path, which a run needs.
+const LIMITS = {alwaysTokens: 800, skillBytes: 16384, descriptionChars: 500, buildRunTokens: 28700};
 const RUN = [   // [skill, file, section heading or null]: a typical build-and-deploy run, phase by phase
   ['cloudbackend-saas-launch', 'SKILL.md'], ['xios3-app-basics', 'SKILL.md'],
   ['cloudbackend-saas-launch', 'references/build-phases.md'],

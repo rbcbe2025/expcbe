@@ -22,8 +22,8 @@ section and the current step's, not the whole file.
 | Tenant, identities | singularity-database | `users-and-roles.md` |
 | Pre-flight | this skill | launch-path "Pre-flight": is there **CRM** and **Price plans** in the console's left menu? |
 | 1 Data model | singularity-database | `datatypes.md`, `measured-on-a-tenant.md` |
-| 2 Application, and the Development half of 7 | this skill: W0–W9 below | `references/build-phases.md`; xios3-app-basics (markup, design kit) |
-| 3 Login screen | xios3-app-basics | `references/login.md`; `references/deployment-pipeline.md` for the logo rule |
+| 2 Application, and the first deploy of 7 | this skill: W0–W9 below | `references/build-phases.md`; xios3-app-basics (markup, design kit) |
+| 3 Login screen | xios3-app-basics | `references/login.md`; set in Development, before Test |
 | 4 Sign-up and e-mail | singularity-database | `crm.md`; no CRM: launch-path step 4b |
 | 5 Teams and roles | singularity-database | `users-and-roles.md` |
 | 6 Price plans, PayPal checkout | singularity-database | `price-plans.md` (console, `purchase` markup); none: step 6b |
@@ -75,7 +75,7 @@ decision with its reason, ending "reply to change any of these; otherwise I go o
 - channels: none, unless the idea needs an integration or an AI call (then which, through a proxy)
 - SEO/GEO and analytics: public surface or behind login; `llms.txt`; analytics none or an endpoint
 - identities `<tenant>admin` and `<tenant>dev`; the deployment name (the app's, in lowercase letters and digits, not
-  beginning with `xios`); runtime pinned; Development first
+  beginning with `xios`); runtime pinned; a preview first
 - benchmark: measured on this app plus the reference baseline; the React twin off
 - prices, the domain and a logo file: decided at their own steps
 
@@ -90,16 +90,16 @@ action, even for a one-line question. Where the check is read-only and a route i
 | The user asks | The answer says, every time |
 | --- | --- |
 | Is it live? / deploy it and tell me | live only from `verify_deployment`'s `index_xml_match`; **a 200 proves nothing**: every webshare path answers 200 with the boot page; the gate verdict; what was not checked |
-| Is it secure now? (the login shows my logo) | the `login_gate` verdict from a fresh `verify_deployment`; **a themed login page is not access control, and private visibility is not authentication**; the gate is the pipeline's login configuration plus the login stamp in the served manifest; the user tests as a **role-less identity in a private window**; re-verify after every redeploy |
-| Promote it, connect my domain | console steps, no tool: W8's click path, the logo as a full `https://` address on the Staging host, the `A` record `83.140.241.4`; `verify_deployment` after each promotion; **customers get the Production address or the domain, never the console's** |
+| Is it secure now? (the login shows my logo) | the `login_gate` verdict from a fresh `verify_deployment`; **a themed login page is not access control, and private visibility is not authentication**; the gate is the login stamp in the served manifest (`manifest-only` passes); the user tests as a **role-less identity in a private window**; re-verify after every redeploy |
+| Promote it, connect my domain | console steps, no tool: W8's click path, the `A` record `83.140.241.4`; `verify_deployment` after each move; **customers get the domain: every release has a new address** |
 | A 409 on a seed: delete `data/`? | no: the seed was kept on purpose and may hold real records; carry on with `verify_deployment` and report it |
 | Lighthouse high, app feels slow | the score is flattered (LCP measures the boot page); **Speed Index** is the honest number; record **route, preset, profile and date**; fixes: icon font to SVG (G15), the boot script deferred with preloads, a minimum page height, a frame title; SEO 63 is the host's robots rule for an `xios` prefix (G18) |
 | Verify it, no browser here | `verify_deployment` now; the probes handed over in the same reply (URLs, expected state, a fresh private window); the user's pass/fail recorded as **user-run**; W5 stays open |
 | Add AI, here is my key | the key is exposed: revoke it, a new one with a spend limit, never quoting any part of it; no call from view JavaScript (G11, G12): a console proxy pinned to domain, path and headers, behind an ACL (every admitted identity's calls bill the tenant, with no subscription check), and a `callService` step; free text **JSON-escaped** in the body; write the cost line into `docs/spec.md` |
 | Write the benchmark report | a Source on every row, in the file **and the reply's copy**; tokens and cost "not available on this client" where the client shows none; the portal rebuilt from React cited as reference; the React twin **opt-in, not built**; no multiplier; "no build step" a property, not a speed claim |
-| Lint findings | per finding: the rule id, the rule's reason in its own words (G05: the tenant flattens `<select>`), the fix; the ship rules too (G10 hex colours), due before Production; nothing uploaded while an error stands |
+| Lint findings | per finding: the rule id, the rule's reason in its own words (G05: the tenant flattens `<select>`), the fix; the ship rules too (G10 hex colours), due before Live; nothing uploaded while an error stands |
 
-## Build phases: step 2 and the Development half of step 7
+## Build phases: step 2 and the first deploy of step 7
 
 Keep the order; deploy a throwaway at W4 as soon as the first list binds. `references/build-phases.md` has each
 phase's work and question; open it at W0.
@@ -110,11 +110,11 @@ phase's work and question; open it at W0.
 | W1 Spec | `docs/spec.md` (`references/project-layout.md`): v1 vs v2, screens, records, roles and ACLs, channels each with a cost line, SEO/GEO, probes | user yes |
 | W2 Design | xios3-app-basics design kit: brief, mood board, token theme, phone and desktop | the direction confirmed |
 | W3 Data | launch-path step 1 (singularity-database) | its check |
-| W4 Build | the kit's first version, then views and processes (sub-agents or in order); `lint_project` profile `build` before **every** upload; `upload_project`, `deploy` (Development) | lint 0 errors; `W4 build — lint …; upload N files ok; deploy dev <url> <UTC>` |
+| W4 Build | the kit's first version, then views and processes (sub-agents or in order); `lint_project` profile `build` before **every** upload; `upload_project`, `deploy` (Private Preview) | lint 0 errors; `W4 build — lint …; upload N files ok; deploy dev <url> <UTC>` |
 | W5 Verify | `verify_deployment`; UI probes (`references/verification-checklist.md`); write-backs read back; Lighthouse or "not run" | `index_xml_match` true; probes pass |
 | W6 Harden | `references/security-legal-checklist.md`, the login gate re-verified, `references/seo-geo-on-a-webshare.md`, `lint_project` profile `ship` | lint ship 0 errors |
 | W7 Document | README, manual (a section per screen), `docs/api.md`, probes dated | the three exist |
-| W8 Ship | the console click path (xios3-app-basics `deployment-pipeline.md`): Make Public → Shared → Mark Verified → Staging → Configure Login Page → Mark Verified → Production → Connect Domain (`A` 83.140.241.4); `verify_deployment` after **each** promotion | Production verified; the customer's address card |
+| W8 Ship | the console click path (xios3-app-basics `deployment-pipeline.md`): Project › Test as → Mark as Verified → Make Live → Connect Domain (`A` 83.140.241.4); `verify_deployment` after **each** move | Live verified; the domain on the address card |
 | W9 Report | `benchmark_project` and `references/benchmark-method.md`, `references/benchmark-baseline.md` cited | every row has a Source |
 
 **Sub-agents** (Claude Code): `xios3-view-author` and `xios3-process-author` in parallel on separate files at W4,
@@ -134,8 +134,8 @@ it and do not use it; never quote any part of it, not even a prefix ("the key yo
 
 Identities are the user's: you never create one or sign in as one, so a "sign in as a test user" check is theirs,
 in a **private window** (signing in as the test identity in the console's browser signs the console out). Each
-browser action that changes the tenant gets its own yes at the time (an upload that replaces a file, Deploy, Make
-Public, each promotion, an ACL or proxy edit), and **Deploy Anyway** a fresh one. `enable_deploy_connector`
+browser action that changes the tenant gets its own yes at the time (an upload that replaces a file, Deploy, each
+move on the Deployments board, an ACL or proxy edit). `enable_deploy_connector`
 changes the account: ask the owner first. Reading needs no yes.
 
 ## Working method
@@ -150,7 +150,7 @@ changes the account: ask the owner first. Reading needs no yes.
 
 Clients: Claude Code and Cowork run every step with the plugin's servers (sub-agents in Claude Code; the desktop app's
 built-in browser opens the sign-in page); in Claude Desktop chat and claude.ai files go up through the console's
-Projects section with the user's help and probes are the user's checklist. An account whose owner created its sign-in
+Projects section with the user's help (`references/console-projects.md`) and probes are the user's checklist. An account whose owner created its sign-in
 realm may add CloudBackend's deploy connector (`references/deploy-connector.md`).
 
 ## Mistakes this path exists to prevent
@@ -174,8 +174,8 @@ realm may add CloudBackend's deploy connector (`references/deploy-connector.md`)
 
 ## Version
 
-cloudbackend-saas-launch 2026.11.25, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
+cloudbackend-saas-launch 2026.11.28.2, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
 
-A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-saas-launch` than 2026.11.25, tell the user once, in one sentence, without interrupting the task.
+A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/skills/index.json; when it lists a newer `cloudbackend-saas-launch` than 2026.11.28.2, tell the user once, in one sentence, without interrupting the task.
 
-Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.25&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch the first time the skill is used in a session.
+Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fcloudbackend-saas-launch%2F2026.11.28.2&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fcloudbackend-saas-launch the first time the skill is used in a session.

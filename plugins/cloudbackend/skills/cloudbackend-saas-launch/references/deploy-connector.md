@@ -21,14 +21,15 @@ The server's own tool list wins over this table, which was written on 2026-11-04
 | --- | --- | --- |
 | `list_projects` | Lists the projects on `home` and `tenant` and marks which have an `index.xml` (deployable) | W0's proof that the connector and the tenant answer |
 | `list_project_files`, `read_project_file` | Every file with path and size; one text file | The read-back after a write; what is really stored |
-| `list_deployments` | The pipeline records: stage, URL, last history entry | Which stage each card is at before you promise anything |
+| `list_deployments` | The pipeline records: stage, URL, last history entry. Stages are the record's names: `development` is the board's Private Preview, `shared` Project, `staging` Test, `production` Live | Which lane each card is in before you promise anything |
 | `lint_project` | The tenant grammar over the stored project (the build connector lints files you have not uploaded yet) | `errors` block; `warnings` go into the evidence line |
 | `upload_project` | Writes the files into `<drive>://Applications/<name>/`, creates the sub-containers, re-lists to check each file landed, then validates against the schemas. Text only; 500 files, 2 MB each, 8 MB in all. **Replaces by path.** | `uploaded`, `validation`; a 409 on a file under `data/` (below) |
 | `verify_deployment` | Fetches the served files and compares them by checksum with the stored project; reads the pipeline record and the served manifest for the login gate; checks `llms.txt`; says which drive the share is bound to | `index_xml_match`, `mismatches` (with `served_is_fallback_page`), `login_gate.verdict`, `slug_bound_to` |
 
 What the connector does **not** do, and where it is done instead: the deployment itself (the tenant server's
 `deploy` from the local folder, or the console's Deploy Wizard); and, all in the **console** with the click path in
-xios3-app-basics `references/deployment-pipeline.md`, promotion to Staging and Production (frozen snapshots), the
-login configurator, Make Public, Mark Verified, Connect Domain, binary uploads, a diff of local against stored.
+xios3-app-basics `references/deployment-pipeline.md`, Test as and Make Live (frozen versions, each at its own
+address), Mark as Verified, Connect Domain, the login (Development › Add login screen...), binary uploads, a diff of
+local against stored.
 
 To add it in Claude Code once the realm exists: `claude mcp add --transport http cloudbackend-deploy https://mcp.cloudbackend.com/mcp/<tenant>`; elsewhere, a custom connector with that address.

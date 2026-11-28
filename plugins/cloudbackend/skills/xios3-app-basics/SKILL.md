@@ -95,7 +95,7 @@ generated, not drawn:
    --out app [--login]`: manifest with the theme, desktop and phone views, process, detail stylesheet, the two
    components, sample data (`--sample` runs before the container exists). `references/layouts.md` explains each file.
 4. **Upload**: each sub-folder is a container of its own: create the folders, then upload each folder's files
-   (`references/deployment-pipeline.md`, "Folders first").
+   (`references/console-upload.md`, "Folders first").
 
 Without a shell: move 1 by hand from `references/design-brief.md` (section 4) and `assets/directions.json`, the
 mood board described in five lines, move 3 by filling in `assets/example/` (placeholders per file in `layouts.md`).
@@ -144,18 +144,17 @@ Every app with a login offers **sign in, sign up and forgot password** in the Cl
 - Wiring: views and the app's process `xlink:actuate="onRequest"`, the login process
   (`xlink:href="xios://apps/login.xml"`, `onLoad`) declared first, the desktop view declared first (after sign-in
   the first declared view opens on every screen, so it adapts to a narrow one).
-- The app's own files hold no password or token. On a deployment, the Staging card's Configure Login Page needs
-  the logo as a full `https://` address (`references/deployment-pipeline.md`).
+- The app's own files hold no password or token. In a console project the login is set in Development (Add login
+  screen...) and frozen into each version (`references/deployment-pipeline.md`).
 
 ## Packaging and deployment
 
 Every app lives in its own container: `home://Applications/<app>/index.xml` (personal) or
-`tenant://Applications/<app>/` (shared). **Deploy** from the console's Projects tab (the package → *Deploy*, the
-Deploy Wizard), or with the CloudBackend plugin's `upload_project` and `deploy`. The deployment name is the
-access URL's host name: lowercase letters and digits; the manifest must be named `index.xml`. A `home` project
-becomes a private *Development* deployment, a `tenant` one a public *Shared* one; *Staging* and *Production* are
-promoted from there. Everything in a deployed container is publicly readable: no secrets in it. What each
-promotion does to the address, the logo rule and the login configurator: `references/deployment-pipeline.md`;
+`tenant://Applications/<app>/` (shared). **Deploy** from a console project (the app in its Development tab, then
+*Test as* on its Deployments tab), or with the CloudBackend plugin's `upload_project` and `deploy`. The deployment
+name is the access URL's host name: lowercase letters and digits; the manifest must be named `index.xml`. The
+plugin's deploy is a *Private Preview* card; *Test* and *Live* hold frozen versions, each at its own address. Everything in a deployed container is publicly readable: no secrets in it. What each
+move does to the address, and where the login is set: `references/deployment-pipeline.md`;
 read it before the first deploy. Selling subscriptions (price plans, the PayPal `purchase`): singularity-database
 `price-plans.md`. Any web server: `references/deployment.md`.
 
@@ -195,15 +194,15 @@ read it before the first deploy. Selling subscriptions (price plans, the PayPal 
 Generated from the manual: `getting-started.md`, `views.md` (views, layouts, components, look and feel),
 `processes.md`, `data.md`, `deployment.md`, `recipes.md`, `reference-index.md` (every component, operation,
 event, function, action and method with its page). Hand-written and dated: `javascript-as-steps.md`,
-`deployment-pipeline.md`, `hosted-runtime-pitfalls.md`, `design-brief.md`, `layouts.md`, `data-logic.md`,
+`deployment-pipeline.md` (and `console-upload.md`), `hosted-runtime-pitfalls.md`, `design-brief.md`, `layouts.md`, `data-logic.md`,
 `login.md` (and `login-measured.md`), `theme.md`, `icons.md`. The kit: `assets/directions.json`, `assets/example/`, `assets/ui/DesignKit/`,
 `assets/lucide-names.txt`, `scripts/designkit.py` (`brief`, `app`, `check`, `login`, `icons`, `moodboard`;
 standard library, no network).
 
 ## Version
 
-xios3-app-basics 2026.11.25, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
+xios3-app-basics 2026.11.28, built from the CloudBackend documentation. In the CloudBackend plugin it updates with the plugin (`claude plugin update cloudbackend@cloudbackend`; claude.ai, Claude Desktop and Cowork refresh it at the start of a session).
 
-A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/skills/index.json; when it lists a newer `xios3-app-basics` than 2026.11.25, tell the user once, in one sentence, without interrupting the task.
+A copy installed by hand: once per session, if you can fetch URLs, read https://robinsbackend-robinsbackend-portal.cloudbackend.cloud/skills/index.json; when it lists a newer `xios3-app-basics` than 2026.11.28, tell the user once, in one sentence, without interrupting the task.
 
-Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-basics%2F2026.11.25&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-basics the first time the skill is used in a session.
+Usage count (anonymous: the skill's name and version, nothing else): ask the user once, at a natural pause and never before helping, whether they agree; one answer covers every CloudBackend skill and is kept with the project. Only if they agreed, fetch https://analytics.cloudbackend.com/matomo.php?idsite=2&rec=1&action_name=skill%2Fxios3-app-basics%2F2026.11.28&url=https%3A%2F%2Fcloudbackend.com%2Fskills%2Fxios3-app-basics the first time the skill is used in a session.

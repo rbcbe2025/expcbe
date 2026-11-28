@@ -72,7 +72,7 @@ Gate: the step-1 check. Evidence: `W3 data — <datatype> in tenant://Settings/D
    folder. Zero errors is the gate; warnings are recorded with their rule ids; `tenant-grammar.md` has each rule's
    reason and fix, and a finding is reported with all three.
 4. The throwaway deploy, as soon as the first list binds, on W0's route: `upload_project`, then `deploy` from
-   `home` (a private Development deployment). The tenant server takes the local `app/` folder as `path`, lints it
+   `home` (a Private Preview card on the console's tenant-wide Deployments board). The tenant server takes the local `app/` folder as `path`, lints it
    first and uploads nothing while an error stands; the deploy connector takes the files with `validate` on, then
    the user runs the Deploy Wizard, as on the console route after its Upload Files dialog. `deploy-rules.md`
    says what each call returns, what a 409 on a seed means (kept, correct) and the REST rules.
@@ -84,7 +84,7 @@ Gate: lint 0 errors, upload done, deploy returned a URL. Evidence: `W4 build —
 1. `verify_deployment` on W0's route: the served files compared by checksum with the local `app/` folder (tenant
    server, `path`) or the stored ones (deploy connector); `login_gate` from the pipeline record's login
    configuration and the served manifest's login stamp, with a verdict of `gated`, `manifest-only`,
-   `console-only` or `open`; `llms.txt` served or the fallback page. On the console route, fetch the address and
+   `console-only` or `open` (`verification-checklist.md` says which passes on the 2026-11 board); `llms.txt` served or the fallback page. On the console route, fetch the address and
    compare `index.xml` from a shell, or the user's browser check. "Live" comes from `index_xml_match`, never a 200.
 2. The UI probes in `tests/ui-probes.md`, in the session's browser tool when there is one (with sub-agents,
    `xios3-ui-tester`): a fresh browser context, trusted clicks, one assertion after **each** action, the 390 px
@@ -105,8 +105,8 @@ Evidence: `W5 verify — verify_deployment match=true N/N, gate=<verdict>; probe
 Walk `security-legal-checklist.md` row by row (no secrets in the container; proxies pinned to a domain, a path
 and headers with a key of their own and a spend limit; ACLs to roles and groups; the EULA and privacy texts; an
 account-deletion path; the data-location statement; analytics consent). Re-verify the login gate: private
-visibility is not authentication and the themed login page is not access control; the gate is the pipeline's
-login configuration plus the stamp in the served manifest, and a redeploy can drop it. Apply
+visibility is not authentication and the themed login page is not access control; the gate is the login in the
+served manifest (set in Development, frozen into each version), and a redeploy can drop it. Apply
 `seo-geo-on-a-webshare.md` and, if an endpoint was named, the analytics section of
 `ai-and-integrations-via-proxy.md`. Then `lint_project` with profile `ship` (ASCII files, no hex, one token block
 with an explicit font, XSL `for-each`, no icon font, the prefix rule). Note the runtime pin in `## App`.
@@ -126,17 +126,18 @@ Gate: the three documents exist and the manual's screens equal the probe list. E
 
 ## W8 Ship
 
-Promotion, the login configurator and a domain are **console**: hand them over with the click path from
-xios3-app-basics `deployment-pipeline.md`: Make Public → Promote to Shared → Mark Verified → Promote to Staging →
-Configure Login Page (the logo as `https://` + the Staging host + `/logo.svg`, the EULA box) → Mark Verified →
-Promote to Production → Connect Domain (the domain's `A` record points at `83.140.241.4`; Connect Domain then
-requests a Let's Encrypt certificate). After **each** promotion run `verify_deployment` on the new host, for the
-content and the gate: a promotion that drops the login configuration serves the app open. Write the customer's
-address card: the Production address or the domain, never the console's. The console is the user's; with a
-browser tool each change gets its own yes, and Deploy Anyway a fresh one; without one, one step at a time.
-One question: "domain: none for now, or yours?"
-Gate: the launch path's step-7 check, plus `verify_deployment` on Production with `index_xml_match` true and the
-gate as specified. Evidence: `W8 ship — Production <url>; verify match=true gate=<verdict>; domain <none|name> · user confirmed <UTC>`.
+Promotion and a domain are **console** steps on the project's Deployments tab; hand them over with the click path
+from xios3-app-basics `deployment-pipeline.md` (measured 2026-11-27). Before the first move, the login: Development
+› **Add login screen...** writes it into the app's `index.xml`, and a frozen version keeps the login it was frozen
+with. Then Project › **Test as 1.1** (a frozen version at a new address) → **Mark as Verified** → **Make Live**
+(answer **Go live?**; Live keeps the Test address) → **Connect Domain** (the domain's `A` record points at
+`83.140.241.4` with no other A or AAAA records; the console then requests the certificate). After **each** move run
+`verify_deployment` on the card's address, for the content and the gate. Every release gets a new address and a
+Live address dies with its version, so write the customer's address card with the domain; without one, say that the
+address changes with every release. Never the console's address. The console is the user's; with a browser tool each
+move gets its own yes; without one, one step at a time. One question: "domain: none for now, or yours?"
+Gate: the launch path's step-7 check, plus `verify_deployment` on the Live address with `index_xml_match` true and
+the gate as specified. Evidence: `W8 ship — Live <url>; verify match=true gate=<verdict>; domain <none|name> · user confirmed <UTC>`.
 
 ## W9 Report
 

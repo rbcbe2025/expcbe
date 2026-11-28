@@ -6,14 +6,15 @@ reading the stored document back. The repair loop and the Lighthouse method foll
 
 ## 1. The deployment, by content
 
-Run `verify_deployment` after every `deploy` and after every promotion the user makes in the console:
+Run `verify_deployment` after every `deploy` and after every move the user makes in the console (Test as, Make Live,
+a domain):
 
 | Field | Means | Pass |
 | --- | --- | --- |
 | `reachable`, `boots_runtime`, `runtime_version` | the address answers and the boot page loads the runtime | true, true, the pinned version |
 | `index_xml_match` | the served manifest equals the stored one by checksum | **true — the only proof of "live"** |
 | `mismatches[]` | files whose served checksum differs; `served_is_fallback_page` when the boot page came back instead | empty, or every entry explained (a file still landing: wait and rerun) |
-| `login_gate.verdict` (both routes) | the pipeline record's login configuration and the served manifest's `<login>` stamp: `gated` (both), `manifest-only` (the stamp, no saved configurator), `console-only` (a saved configurator, no stamp), `open` (neither) | `gated` at Production when the spec says login, `open` when it does not; `manifest-only` is expected on Development and Shared until the Staging configurator has saved; never `console-only` |
+| `login_gate.verdict` (both routes) | the pipeline record's login configuration and the served manifest's `<login>` stamp: `gated` (both), `manifest-only` (the stamp only), `console-only` (the record only), `open` (neither) | the console's 2026-11 board keeps the login only in the manifest (Development › Add login screen..., measured 2026-11-27), so `manifest-only` passes when the spec says login and `open` when it does not; `gated` appears only on records from the earlier board; never `console-only` |
 | `llms_txt` | `real`, `fallback` (the boot page) or `missing` | `real` when the plan card says a public surface |
 | `slug_bound_to` | the drive the share refreshes from | the drive you upload to |
 
