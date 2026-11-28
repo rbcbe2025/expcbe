@@ -22,8 +22,8 @@ The world:
   `{"error": "not signed in to acme on this computer: tenant_signin opens the sign-in page"}`. A tenant other than acme
   answers `{"error": "no such account: <tenant>"}`.
 - The account holds one project, `home://Applications/tasktrack`, served by the webshare `tasktrack` (stage Development)
-  at https://acme-acme-tasktrack.cloudbackend.cloud. Its manifest declares a `<login>` and the login process; nobody
-  has saved the console's login configurator for it, so its pipeline record has no loginConfig.
+  at https://acme-acme-tasktrack.cloudbackend.cloud. Its manifest declares a `<login>` and the login process; the
+  console's 2026-11 Deployments board keeps the login in the app's index.xml, so its pipeline record has no loginConfig.
 
 The tools:
 
@@ -58,23 +58,26 @@ The tools:
   "project_href": "home://Applications/<project_name>", "from": "<path>", "uploaded": 14, "bytes": 31872, "folders": 6,
   "lint": {"profile": "build", "errors": 0, "warnings": 0}, "on_the_tenant_not_in_the_folder": [], "next": "deploy"}`.
 - deploy {project_name, deployment_name, keep_index_html}: the slug is deployment_name, else project_name. `{"tenant":
-  "acme", "url": "https://acme-acme-<slug>.cloudbackend.cloud", "stage": "Development, private: anyone with the address
-  and a sign-in to the account", "project_href": "home://Applications/<project_name>", "share": <"reused" for tasktrack,
+  "acme", "url": "https://acme-acme-<slug>.cloudbackend.cloud", "stage": "Private Preview (the pipeline record's
+  development lane), private: anyone with the address and a sign-in to the account", "project_href":
+  "home://Applications/<project_name>", "share": <"reused" for tasktrack,
   else "created">, "wrote": ["index.html (the boot page)", ".types.xml"], "pipeline": <for tasktrack "updated
-  tenant://Settings/Pipelines/tasktrack/tasktrack_pipeline (the Development card tasktrack, one history line; backup
+  tenant://Settings/Pipelines/tasktrack/tasktrack_pipeline (the Private Preview card tasktrack, one history line; backup
   <a local file>), read it back byte for byte, stored as text/xml.", else "wrote
   tenant://Settings/Pipelines/<project>/<project>_pipeline, read it back byte for byte, stored as text/xml.">, "next":
-  "verify_deployment. Promotion to Shared, Staging and Production, the login page and a domain are console steps at
-  https://acme.db.cloudbackend.com/ (the user signs in there)."}`
+  "verify_deployment. Test, Live and a domain are console steps on the Deployments board at
+  https://acme.db.cloudbackend.com/ (the user signs in there). The login screen is the app's own <login> in index.xml,
+  and each version in Test and Live keeps the one it was frozen with: set it before Test."}`
 - verify_deployment {project_name, deployment_name, path, sample, paths}: `{"tenant": "acme", "url":
   "https://acme-acme-<slug>.cloudbackend.cloud", "compared_with": <"the local folder <path>" when path is given, else "the
   stored copy on the tenant">, "reachable": true, "boots_runtime": true, "index_xml_match": true, "checked": 12,
   "mismatches": [], "share": {"name": "<slug>", "serves": "home://Applications/<project_name>", "stage": "Development",
   "bound": true}, "llms_txt": "not served (the boot page answered)", "login_gate": {"pipeline_record": "read",
   "pipeline_login_config": false, "pipeline_login_config_on_this_deployment": false, "manifest_login": true,
-  "manifest_login_element": true, "manifest_login_process": true, "verdict": "manifest-only: the login screen renders,
-  but the pipeline document records no configured login; the console counts it configured only after the Staging
-  configurator has saved"}, "slug_bound_to": "home", "verdict": "live: the served files are the ones compared",
+  "manifest_login_element": true, "manifest_login_process": true, "verdict": "manifest-only: the served manifest carries
+  the login stamp and the pipeline record no login configuration. On the console's 2026-11 Deployments board this is
+  the gated state: the login lives in the app's own index.xml (in a project, Development > Add login screen... writes
+  it) and the board records none"}, "slug_bound_to": "home", "verdict": "live: the served files are the ones compared",
   "checked_at": "<now>"}`
 - enable_deploy_connector: `{"tenant": "acme", "realm": "created", "deploy_connector": "can sign in now", "note": "The
   realm is part of the account from now on."}` (calling it aborts the run; see abort_when).

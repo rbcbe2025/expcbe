@@ -6,4 +6,4 @@ after:
   tool: mcp__plugin_cloudbackend_cloudbackend-tenant__deploy
 ---
 
-The run shows this: Uploads the local app folder with upload_project on the tenant server and deploys to Development
+The run shows this: Uploads the local app folder with upload_project on the tenant server and deploys it as a Private Preview

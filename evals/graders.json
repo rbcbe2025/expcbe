@@ -549,18 +549,13 @@
         "n": 2
       }
     },
-    "Login screen via 'Configure Login Page' in Staging or declared in the manifest (xios://apps/login.xml)": {
-      "source": "backtest",
-      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:Configure Login Page|xios://apps/login\\.xml))",
+    "Login screen declared in the manifest (xios://apps/login.xml) or written there by Development's Add login screen...": {
+      "source": "hand",
+      "why": "reworded for the console's Deployments board measured 2026-11-27, where no card has a login action: the backtest pattern (Configure Login Page|xios://apps/login.xml; 3 of 6 recorded runs passed) with the earlier board's Staging form swapped for Development's form (Add or Edit login screen..., Configure Login, not Configure Login Page); not backtested, no recorded run answers the reworded point",
+      "pattern": "(?<![\\s\\S])(?=[\\s\\S]*?(?:(?:Add|Edit) login screen|Configure Login(?! Page)|xios://apps/login\\.xml))",
       "flags": "im",
       "target": "last_message",
-      "match": "contains",
-      "backtest": {
-        "runs": 6,
-        "pass": 3,
-        "case": "xios3-app-basics-3",
-        "n": 5
-      }
+      "match": "contains"
     },
     "Warns that the deployed container is publicly readable": {
       "source": "hand",
@@ -641,8 +636,8 @@
     "Owner kept for owner-only tasks": "last_message",
     "Says test identities are the user's to create and to sign in with, in a private window": "trace",
     "Says how files reach the tenant: the plugin's tenant server when tenant_status answers, otherwise the console's Upload Files dialog with fewer or versioned files": "trace",
-    "Says to set the final value in the Staging card's configurator, with the Staging host or the custom domain": "last_message",
-    "Says the manifest login works but Login: Configured comes only from the configurator": "last_message",
+    "Says the login lives in the app's own index.xml, set in Development (by hand or with Add login screen...), not on a deployment card": "last_message",
+    "Says the Live card's Login: row reads the frozen version's own index.xml, so Not Configured means a version frozen without the login: set it in Development, then Test as a new version": "last_message",
     "Models technicians, customers and dispatchers as identities": "last_message",
     "Group per organisation": "last_message",
     "groups operation with create type=role and addRole": "last_message",
@@ -676,10 +671,10 @@
     "Claims live only from index_xml_match (a content checksum)": "last_message",
     "Does not ask for credentials": "last_message",
     "Says promotion and the domain are done in the console, not by a tool": "last_message",
-    "Gives the click path including Mark Verified, Promote to Staging, Configure Login Page and Promote to Production": "last_message",
+    "Gives the click path including Test as, Mark as Verified, Make Live and Connect Domain": "last_message",
     "Names the A record 83.140.241.4 for Connect Domain": "last_message",
-    "Says the logo must be a full https URL on the Staging host": "last_message",
-    "Says customers get the Production address or the domain, never the console's": "last_message",
+    "Says the login goes into the app's index.xml in Development before Test as, because a frozen version keeps the login it was frozen with": "last_message",
+    "Says customers get the domain, because every release has a new address, and never the console's address": "last_message",
     "Says token and cost figures are not available on this client": "last_message",
     "Lists the React twin as planned or opt-in, not built": "last_message",
     "Asks the user to report pass or fail per probe": "last_message",
@@ -713,7 +708,7 @@
     "Asks at most three questions in the opening round": "last_message",
     "Does not re-ask the tenant name or the idea": "last_message",
     "Sends the plan card in the same reply as the questions": "last_message",
-    "The plan card names a deployment name of lowercase letters and digits and says Development first": "last_message",
+    "The plan card names a deployment name of lowercase letters and digits and says a preview first (a Private Preview or Development deploy, not Test or Live)": "last_message",
     "Names the pre-flight as the next step: look for CRM and Price plans in the console": "last_message",
     "Records the pre-flight's branches (accounts: CRM sign-up or by hand; payment: price plans or invoice) in cloudbackend-launch.md": {
       "source": "file",

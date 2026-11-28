@@ -3,7 +3,7 @@ type: llm
 focus: last_message
 ---
 
-The run shows this: The plan card names a deployment name of lowercase letters and digits and says Development first
+The run shows this: The plan card names a deployment name of lowercase letters and digits and says a preview first (a Private Preview or Development deploy, not Test or Live)
 
 PASS if the run's messages, tool calls or written files show it. FAIL if it is missing, contradicted, or only claimed
 without the matching content or call. Judge this one point only.

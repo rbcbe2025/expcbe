@@ -7,9 +7,9 @@
 // token the API returns is posted back to this server. The token is kept in a file only the user can read
 // (CBE_SESSION_DIR, the plugin's data folder) and never appears in a tool result. Claude never sees the password.
 //
-// With the session: list_projects, upload_project (a local package folder, linted first), deploy (a private
-// Development deployment: boot page, datatypes, webshare and the console's pipeline record, the steps of the deploy
-// connector's tool over the REST calls the developer portal's own deploys use), verify_deployment (served bytes, never a
+// With the session: list_projects, upload_project (a local package folder, linted first), deploy (a Private Preview:
+// boot page, datatypes, webshare and the console's pipeline record, the steps of the deploy connector's tool over the
+// REST calls the developer portal's own deploys use), verify_deployment (served bytes, never a
 // bare 200) and enable_deploy_connector (the owner creates the account's sign-in realm, after which the deploy connector
 // signs in too). Node's built-ins only.
 
@@ -321,8 +321,9 @@ function bootPage(s) {
  *  other byte as it was. It refuses a record it cannot read, and a record that changed while it worked. It keeps a local
  *  backup, reads its write back byte for byte (putting the backup back when it differs), and keeps the stored type
  *  text/xml: the tenant types an upload by its name and stores <project>_pipeline as ISO-8859-1 text, which the console
- *  cannot open, and the console's next save wrote an empty record over it (the workshop, 2026-10-12). Promotion (Shared,
- *  Staging, Production and their tenant://Deployments/<project>_<stamp> copies), loginConfig and domains stay the
+ *  cannot open, and the console's next save wrote an empty record over it (the workshop, 2026-10-12). The record keeps
+ *  the earlier board's lane names: on the board measured 2026-11-27 <development> is Private Preview, <shared> Project,
+ *  <staging> Test and <production> Live. Those other lanes with their frozen copies, loginConfig and domains stay the
  *  console's: nothing here writes them. */
 const pipelineKey = (projectName) => String(projectName).toLowerCase().replace(/[^a-z0-9]/g, '');
 const recordName = (projectName) => `${pipelineKey(projectName)}_pipeline`;
@@ -477,7 +478,7 @@ async function writePipeline(s, { projectName, slug, url }) {
     const backup = backupRecord(s.tenant, name, before);
     const again = await readBytes(s, entry.href, `reading ${where} again`);
     if (!again.equals(before)) return `left as it is: ${where} changed while deploy worked (a console Deployments board saves its copy whenever it draws). Close the boards, reload the console and deploy again. Backup: ${backup}.`;
-    verb = `updated ${where} (the Development card ${slug}, one history line; backup ${backup})`;
+    verb = `updated ${where} (the Private Preview card ${slug}, one history line; backup ${backup})`;
   } else {
     sent = Buffer.from(mergeDevelopment(`<pipelines name="${escXml(projectName)}" git="" origin="home" shared="">\n  <pipeline name="Web">\n    <development/>\n`
       + '    <shared/>\n    <staging/>\n    <production/>\n  </pipeline>\n</pipelines>\n', card), 'utf8');
@@ -504,8 +505,9 @@ async function readPipeline(s, projectName) {
 }
 
 /** The login gate as the deploy connector reads it (cbemcp tools/verify.py): two documents, not a look. The pipeline
- *  record's loginConfig (the console writes it when the Staging configurator saves) and the served manifest's
- *  <login> element with the login application's process. */
+ *  record's loginConfig (the earlier board's Staging configurator wrote it; the board measured 2026-11-27 keeps the
+ *  login in the app's own index.xml and records none) and the served manifest's <login> element with the login
+ *  application's process. On that board manifest-only is the gated state, and open the failure. */
 function loginGate(pipelineXml, manifestXml, slug, record) {
   const configTag = /<(?:[\w-]+:)?loginconfig\b/i;
   const mine = (pipelineXml.match(/<deploy\b[\s\S]*?<\/deploy>/g) || []).find((d) => d.includes(`internal-version="${slug}"`));
@@ -517,7 +519,7 @@ function loginGate(pipelineXml, manifestXml, slug, record) {
     pipeline_record: record, pipeline_login_config: configured, pipeline_login_config_on_this_deployment: !!mine && configTag.test(mine),
     manifest_login: stamped, manifest_login_element: element, manifest_login_process: process,
     verdict: stamped && configured ? 'gated: the manifest carries the login stamp and the pipeline records a configured login screen'
-      : stamped ? 'manifest-only: the login screen renders, but the pipeline document records no configured login; the console counts it configured only after the Staging configurator has saved'
+      : stamped ? 'manifest-only: the served manifest carries the login stamp and the pipeline record no login configuration. On the console\'s 2026-11 Deployments board this is the gated state: the login lives in the app\'s own index.xml (in a project, Development > Add login screen... writes it) and the board records none'
       : configured ? 'console-only: the pipeline records a configured login screen, but the served manifest carries no <login> and login process'
       : 'open: no login stamp in the served manifest and no configured login in the pipeline document (a private webshare is not authentication)',
   };
@@ -562,9 +564,10 @@ async function deploy({ project_name, deployment_name, tenant, keep_index_html =
   try { pipeline = await writePipeline(s, { projectName: project_name, slug, url }); }
   catch (e) { pipeline = `not written (${e.message}). The address works; the console's Deployments view will not list it.`; }
   return {
-    tenant: s.tenant, url, stage: 'Development, private: anyone with the address and a sign-in to the account', project_href: href, share, wrote, pipeline,
-    next: 'verify_deployment. Promotion to Shared, Staging and Production, the login page and a domain are console steps at '
-      + `https://${s.tenant}.db.cloudbackend.com/ (the user signs in there).`,
+    tenant: s.tenant, url, stage: 'Private Preview (the pipeline record\'s development lane), private: anyone with the address and a sign-in to the account', project_href: href, share, wrote, pipeline,
+    next: 'verify_deployment. Test, Live and a domain are console steps on the Deployments board at '
+      + `https://${s.tenant}.db.cloudbackend.com/ (the user signs in there). The login screen is the app's own <login> in `
+      + 'index.xml, and each version in Test and Live keeps the one it was frozen with: set it before Test.',
   };
 }
 
@@ -911,15 +914,15 @@ export const TOOLS = {
     run: uploadProject,
   },
   deploy: {
-    title: 'Deploy a project to Development',
-    description: 'Publishes home://Applications/<project_name> as a private Development deployment at https://<tenant>-<identity>-<deployment_name>.cloudbackend.cloud: writes the boot page index.html (unless keep_index_html and one exists) and .types.xml into the project, creates the webshare or reuses the one that already serves this project, and adds or updates its own Development card in the console\'s pipeline record tenant://Settings/Pipelines/<project>/<project>_pipeline, never replacing the record: it refuses one it cannot read or that changes while it works, keeps a local backup, reads its write back byte for byte and keeps the stored type text/xml. Shared, Staging, Production, their tenant://Deployments copies, loginConfig and domains are the console\'s. Refuses an address that serves another project. Promotion beyond Development is a console step.',
+    title: 'Deploy a project as a Private Preview',
+    description: 'Publishes home://Applications/<project_name> as a private deployment at https://<tenant>-<identity>-<deployment_name>.cloudbackend.cloud, which the console\'s Deployments board shows under Private Preview: writes the boot page index.html (unless keep_index_html and one exists) and .types.xml into the project, creates the webshare or reuses the one that already serves this project, and adds or updates its own card in the development lane of the console\'s pipeline record tenant://Settings/Pipelines/<project>/<project>_pipeline, never replacing the record: it refuses one it cannot read or that changes while it works, keeps a local backup, reads its write back byte for byte and keeps the stored type text/xml. The record keeps the earlier lane names (development, shared, staging and production are the board\'s Private Preview, Project, Test and Live); the other lanes, their frozen copies, loginConfig and domains are the console\'s. Refuses an address that serves another project. Test, Live and a domain are console steps.',
     inputSchema: { type: 'object', properties: { project_name: PROJECT_ARG, deployment_name: DEPLOYMENT_ARG, tenant: TENANT_ARG, keep_index_html: { type: 'boolean', default: false, description: 'Keep an index.html the project already has instead of writing the boot page.' } }, required: ['project_name'] },
     annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
     run: deploy,
   },
   verify_deployment: {
     title: 'Verify a deployment by its served files',
-    description: 'Fetches a deployment\'s files anonymously and compares their bytes with the local package folder (`path`) or, without it, with the stored copy on the tenant: index.xml first, then up to `sample` files, or exactly `paths`. An unknown path on a webshare answers 200 with the boot page, so each mismatch says whether the boot page was served instead. Also reports whether the boot page loads the runtime, which webshare serves the project and from which drive (slug_bound_to), whether llms.txt is served, and the login gate as two documents (login_gate): the pipeline record\'s login configuration and the served manifest\'s <login> with the login application\'s process, with a verdict of gated, manifest-only, console-only or open.',
+    description: 'Fetches a deployment\'s files anonymously and compares their bytes with the local package folder (`path`) or, without it, with the stored copy on the tenant: index.xml first, then up to `sample` files, or exactly `paths`. An unknown path on a webshare answers 200 with the boot page, so each mismatch says whether the boot page was served instead. Also reports whether the boot page loads the runtime, which webshare serves the project and from which drive (slug_bound_to), whether llms.txt is served, and the login gate as two documents (login_gate): the pipeline record\'s login configuration and the served manifest\'s <login> with the login application\'s process, with a verdict of gated, manifest-only, console-only or open. The console\'s 2026-11 Deployments board keeps the login in the app\'s index.xml and records no login configuration, so there manifest-only is the gated state and open the failure.',
     inputSchema: { type: 'object', properties: { project_name: PROJECT_ARG, deployment_name: DEPLOYMENT_ARG, tenant: TENANT_ARG, path: { type: 'string', description: 'The local package folder to compare with; without it, the stored copy on the tenant.' }, sample: { type: 'integer', minimum: 1, maximum: 200, default: 20, description: 'How many files to compare, index.xml first.' }, paths: { type: 'array', items: { type: 'string' }, description: 'Exactly these package paths instead of a sample.' } }, required: ['project_name'] },
     annotations: ro,
     run: verifyDeployment,
@@ -935,7 +938,7 @@ export const TOOLS = {
 
 // ---- MCP over stdio ---------------------------------------------------------------------------------------------------
 
-const INSTRUCTIONS = 'The plugin\'s route to a CloudBackend PaaS account; CloudBackend\'s own deploy connector is optional and added by hand. tenant_signin gives the user a sign-in page on this computer: the password goes from their browser to CloudBackend and never through the conversation; never ask for it. Then upload_project (a local package folder, linted first), deploy (Development) and verify_deployment (served bytes). enable_deploy_connector creates the account\'s sign-in realm: an account change only the owner may make, so ask first.';
+const INSTRUCTIONS = 'The plugin\'s route to a CloudBackend PaaS account; CloudBackend\'s own deploy connector is optional and added by hand. tenant_signin gives the user a sign-in page on this computer: the password goes from their browser to CloudBackend and never through the conversation; never ask for it. Then upload_project (a local package folder, linted first), deploy (a Private Preview) and verify_deployment (served bytes). enable_deploy_connector creates the account\'s sign-in realm: an account change only the owner may make, so ask first.';
 const send = (msg) => process.stdout.write(JSON.stringify({ jsonrpc: '2.0', ...msg }) + '\n');
 export async function handle(req) {
   const { id, method, params = {} } = req;

@@ -32,7 +32,7 @@
 - [ ] W5 verify
 - [ ] W6 harden
 - [ ] W7 document
-- [ ] W8 ship — unverified: Shared, Staging and Production are the user's clicks; verify after each
+- [ ] W8 ship — unverified: Test, Live and the domain are the user's clicks; verify after each move
 
 ## Benchmark
 (not written yet)

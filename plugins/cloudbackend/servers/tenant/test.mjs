@@ -191,6 +191,8 @@ test('upload copies the folder, folders and binaries included, and lists what on
 test('deploy: boot page, datatypes, webshare, pipeline record; a second deploy reuses the share and updates its own card', async () => {
   const r = await run('deploy', { project_name: 'probe' });
   assert.equal(r.url, `${BASE}/share/acme-sara-probe`); assert.equal(r.share, 'created');
+  assert.match(r.stage, /^Private Preview \(the pipeline record's development lane\)/);
+  assert.match(r.next, /^verify_deployment\. Test, Live and a domain are console steps/); assert.doesNotMatch(r.next, /Shared|Staging|Production/);
   const boot = project().docs.get('index.html').bytes.toString();
   assert.match(boot, /tenant:"acme"/); assert.match(boot, /tenantId:"777"/); assert.match(boot, /\/xios\/boot\.js/);
   assert.ok(project().docs.get('.types.xml').bytes.length > 10000);
@@ -234,6 +236,7 @@ test('verify reads the login gate from the pipeline record and the served manife
   proj.docs.set('index.xml', { ...manifest, bytes: Buffer.from(manifest.bytes.toString().replace('</application>', `${stamp}</application>`)) });
   let r = await run('verify_deployment', { project_name: 'probe' });
   assert.equal(r.index_xml_match, true); assert.match(r.login_gate.verdict, /^manifest-only/);
+  assert.match(r.login_gate.verdict, /2026-11 Deployments board this is the gated state/, 'the board measured 2026-11-27 records no login');
   assert.equal(r.login_gate.manifest_login_element, true); assert.equal(r.login_gate.manifest_login_process, true); assert.equal(r.login_gate.pipeline_login_config, false);
   pipes.docs.set('probe_pipeline', { ...record, bytes: Buffer.from(record.bytes.toString().replace('<history', '<loginConfig logo="https://x/logo.svg"/><history')) });
   r = await run('verify_deployment', { project_name: 'probe' });
@@ -347,6 +350,10 @@ test('stdio: eight tools, each titled and annotated, and a refusal comes back as
   const tools = lines.find((l) => l.id === 2).result.tools;
   assert.equal(tools.length, 8);
   for (const t of tools) { assert.ok(t.title, t.name); assert.ok(t.annotations && 'readOnlyHint' in t.annotations, t.name); }
+  const text = (name) => { const t = tools.find((x) => x.name === name); return `${t.title} ${t.description}`; };
+  assert.match(text('deploy'), /Private Preview/); assert.match(text('verify_deployment'), /manifest-only is the gated state/);
+  assert.doesNotMatch(text('deploy') + text('verify_deployment'), /Staging configurator|Promotion beyond|to Development/, 'the 2026-11 board\'s lanes, not the earlier board\'s');
+  assert.match(lines.find((l) => l.id === 1).result.instructions, /deploy \(a Private Preview\)/);
   const refused = lines.find((l) => l.id === 3).result;
   assert.equal(refused.isError, true); assert.match(refused.content[0].text, /Not signed in/);
 });
